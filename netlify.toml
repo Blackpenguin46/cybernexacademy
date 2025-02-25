@@ -1,0 +1,35 @@
+[build]
+  # Use absolute path and verbose npm
+  command = "echo 'Current directory:' && pwd && echo 'Directory contents:' && ls -la && npm --verbose ci && npm --verbose run build"
+  publish = ".next"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+  NETLIFY_USE_NPM = "true"
+  NEXT_TELEMETRY_DISABLED = "1"
+  # Add debug flags
+  NPM_CONFIG_LOGLEVEL = "verbose"
+  DEBUG = "*"
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = true
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[functions]
+  directory = "netlify/functions"
+  external_node_modules = ["@supabase/supabase-js", "stripe"]
+  included_files = ["app/api/**"]
+
+# Remove conflicting production and preview contexts 
