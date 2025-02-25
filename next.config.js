@@ -12,6 +12,10 @@ const nextConfig = {
   },
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
+  },
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, path: false };
+    return config;
   }
 }
 

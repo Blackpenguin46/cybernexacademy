@@ -1,6 +1,6 @@
 [build]
   # Use absolute path and verbose npm
-  command = "echo 'Current directory:' && pwd && echo 'Directory contents:' && ls -la && npm --verbose ci && npm --verbose run build"
+  command = "npm ci && npm run build"
   publish = ".next"
   functions = "netlify/functions"
 
