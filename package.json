@@ -18,7 +18,8 @@
     "fix-dependencies": "node scripts/fix-dependencies.js",
     "fix-jsconfig-paths": "node scripts/fix-jsconfig-paths.js",
     "fix-next-config": "node scripts/fix-next-config.js",
-    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run fix-missing-components && npm run fix-dependencies && npm run fix-jsconfig-paths && npm run fix-next-config && npm run convert-imports && next build"
+    "fix-cybernex-plus-dashboard": "node scripts/fix-cybernex-plus-dashboard.js",
+    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run fix-missing-components && npm run fix-dependencies && npm run fix-jsconfig-paths && npm run fix-next-config && npm run fix-cybernex-plus-dashboard && npm run convert-imports && next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
