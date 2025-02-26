@@ -22,7 +22,7 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
   [plugins.inputs]
-    nodeModulesPaths = ["node_modules"]
+    skipBuildScript = true
 
 [[redirects]]
   from = "/api/*"

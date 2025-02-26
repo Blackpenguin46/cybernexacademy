@@ -8,13 +8,12 @@ const nextConfig = {
   },
   distDir: '.next',
   experimental: {
-    serverActions: true,
-    esmExternals: 'loose'
+    serverActions: true
   },
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     config.resolve.fallback = {
       fs: false,
       path: false,
