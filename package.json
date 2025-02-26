@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "CI=false SKIP_OPTIONAL_PACKAGES=true next build || echo 'Proceeding despite build errors'",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "init-db": "ts-node scripts/init-supabase.ts",
@@ -40,7 +40,9 @@
     "fix-jsconfig-paths-issues": "node scripts/fix-jsconfig-paths-issues.js",
     "preinstall": "npx npm-force-resolutions || true",
     "fix-optional-deps-aggressive": "node scripts/fix-optional-deps-aggressive.js",
-    "build-netlify": "node scripts/fix-optional-deps-aggressive.js && node scripts/fix-minimal-deploy.js"
+    "fix-netlify-plugin-missing": "node scripts/fix-netlify-plugin-missing.js",
+    "build-static": "node scripts/build-static.js",
+    "build-netlify": "node scripts/fix-netlify-plugin-missing.js && node scripts/build-static.js"
   },
   "engines": {
     "node": "18.17.0",
@@ -48,7 +50,7 @@
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
-    "@netlify/plugin-nextjs": "^4.41.3",
+    "@netlify/plugin-nextjs": "4.41.3",
     "@radix-ui/react-accordion": "^1.1.2",
     "@stripe/stripe-js": "^1.54.0",
     "@supabase/auth-helpers-nextjs": "^0.8.7",
@@ -81,7 +83,6 @@
   },
   "devDependencies": {
     "@netlify/functions": "^3.0.0",
-    "@netlify/plugin-nextjs": "latest",
     "@types/jsonwebtoken": "9.0.9",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -103,5 +104,8 @@
     "@next/swc-linux-x64-musl": "14.0.4",
     "fsevents": "2.3.3"
   },
-  "optionalDependencies": {}
+  "optionalDependencies": {},
+  "resolutions": {
+    "@netlify/plugin-nextjs": "4.41.3"
+  }
 }
