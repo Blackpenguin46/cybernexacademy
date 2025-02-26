@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '@/app/contexts/AuthContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { X, Eye, EyeOff, Github } from 'lucide-react'
 
 interface AuthModalProps {

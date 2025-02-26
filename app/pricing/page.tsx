@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAuth } from '@/app/contexts/AuthContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { loadStripe } from '@stripe/stripe-js'
 import { Shield, Check, Zap, Crown } from 'lucide-react'
 

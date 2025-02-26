@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useAuth } from '@/app/contexts/AuthContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { useState, useEffect } from 'react'
 import { User, Crown, ChevronDown } from 'lucide-react'
 import { AuthModal } from './AuthModal'
