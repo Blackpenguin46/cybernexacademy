@@ -6,9 +6,7 @@ const nextConfig = {
     domains: ['localhost', 'vxxpwaloyrtwvpmatzpc.supabase.co'],
     unoptimized: true
   },
-  experimental: {
-    appDir: true
-  },
+  experimental: {},
   webpack: (config, { isServer }) => {
     // Disable the jsconfig-paths-plugin
     config.resolve.plugins = config.resolve.plugins.filter(
