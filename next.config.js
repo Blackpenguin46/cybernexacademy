@@ -7,7 +7,8 @@ const nextConfig = {
     domains: ['vxxpwaloyrtwvpmatzpc.supabase.co']
   },
   experimental: {
-    serverActions: true
+    serverActions: true,
+    appDir: true
   }
 }
 
