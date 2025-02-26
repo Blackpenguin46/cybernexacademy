@@ -31,7 +31,19 @@
     "fix-module-resolution": "node scripts/fix-module-resolution.js",
     "fix-netlify-plugin": "node scripts/fix-netlify-plugin.js",
     "fix-jsconfig-paths-plugin": "node scripts/fix-jsconfig-paths-plugin.js",
-    "build-netlify": "node scripts/fix-module-errors.js && node scripts/fix-module-resolution.js && node scripts/fix-netlify-plugin.js && node scripts/fix-jsconfig-paths-plugin.js && CI=false next build"
+    "fix-missing-modules": "node scripts/fix-missing-modules.js",
+    "fix-absolute-paths": "node scripts/fix-absolute-paths.js",
+    "fix-dependency-resolution": "node scripts/fix-dependency-resolution.js",
+    "fix-jsconfig-paths-configuration": "node scripts/fix-jsconfig-paths-configuration.js",
+    "fix-optional-dependencies": "node scripts/fix-optional-dependencies.js",
+    "validate-package-json": "node scripts/validate-package-json.js",
+    "fix-jsconfig-paths-issues": "node scripts/fix-jsconfig-paths-issues.js",
+    "preinstall": "npx npm-force-resolutions || true",
+    "build-netlify": "node scripts/validate-package-json.js && node scripts/fix-jsconfig-paths-issues.js && CI=false next build"
+  },
+  "engines": {
+    "node": "18.17.0",
+    "npm": "9.9.4"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
@@ -56,8 +68,8 @@
     "lucide-react": "^0.303.0",
     "next": "14.0.4",
     "postcss": "^8",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-icons": "^5.5.0",
     "stripe": "^14.10.0",
     "tailwind-merge": "^2.2.1",
@@ -77,6 +89,7 @@
     "@typescript-eslint/parser": "5.62.0",
     "eslint": "^8",
     "postcss": "^8",
-    "typescript": "^5"
+    "typescript": "^5",
+    "glob": "^10.3.10"
   }
 }
