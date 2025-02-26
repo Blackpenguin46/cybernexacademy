@@ -3,8 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    unoptimized: true,
-    domains: ['vxxpwaloyrtwvpmatzpc.supabase.co']
+    domains: ['localhost', 'your-supabase-project.supabase.co'],
+    unoptimized: true
+  },
+  experimental: {
+    appDir: true
   }
 }
 

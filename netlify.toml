@@ -5,7 +5,11 @@
   functions = "netlify/functions"
 
 [build.environment]
+  NEXT_PUBLIC_SUPABASE_URL = "https://vxxpwaloyrtwvpmatzpc.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM"
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = "pk_live_51Ql07aFFerMkt7DHSGH7zeNFHTB3AehZJqwbYMgJiJxPujccc2K1NQsLju3YnDHs9tiArr7CcJUFVYWa3Ba3E3d100IDLb8cp2"
   NODE_VERSION = "18"
+  NPM_FLAGS = "--legacy-peer-deps"
   NPM_VERSION = "9"
   NETLIFY_USE_NPM = "true"
   NEXT_TELEMETRY_DISABLED = "1"
