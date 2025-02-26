@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@netlify/functions": "^3.0.0",
-    "@netlify/plugin-nextjs": "^4.40.1",
+    "@netlify/plugin-nextjs": "^5.9.4",
     "eslint": "^8.56.0",
     "eslint-config-next": "13.4.19"
   }
