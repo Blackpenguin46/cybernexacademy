@@ -8,13 +8,28 @@ const nextConfig = {
   },
   distDir: '.next',
   experimental: {
-    serverActions: true
+    serverActions: true,
+    esmExternals: 'loose'
   },
   env: {
     NEXT_TELEMETRY_DISABLED: '1'
   },
-  webpack: (config) => {
-    config.resolve.fallback = { fs: false, path: false };
+  webpack: (config, { isServer }) => {
+    config.resolve.fallback = {
+      fs: false,
+      path: false,
+      "crypto": false
+    };
+    
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': '.',
+      '@/lib': './lib',
+      '@/components': './components',
+      '@/app': './app',
+      '@/contexts': './contexts'
+    };
+    
     return config;
   }
 }

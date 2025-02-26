@@ -21,6 +21,8 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    nodeModulesPaths = ["node_modules"]
 
 [[redirects]]
   from = "/api/*"
@@ -31,5 +33,6 @@
   directory = "netlify/functions"
   external_node_modules = ["@supabase/supabase-js", "stripe"]
   included_files = ["app/api/**"]
+  node_bundler = "esbuild"
 
 # Remove conflicting production and preview contexts 
