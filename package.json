@@ -24,7 +24,9 @@
     "fix-netlify-dependencies": "node scripts/fix-netlify-dependencies.js",
     "fix-job-listings": "node scripts/fix-job-listings.js",
     "fix-node-version": "node scripts/fix-node-version.js",
-    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run fix-missing-components && npm run fix-netlify-dependencies && npm run fix-jsconfig-paths && npm run fix-next-config && npm run replace-problematic-files && npm run fix-job-listings && npm run fix-node-version && npm run convert-imports && CI=false next build"
+    "fix-final-issues": "node scripts/fix-final-issues.js",
+    "simplified-build": "node scripts/simplified-build.js",
+    "build-netlify": "node scripts/simplified-build.js"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
