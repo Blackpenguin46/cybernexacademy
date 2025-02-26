@@ -28,7 +28,8 @@
     "simplified-build": "node scripts/simplified-build.js",
     "deploy-fix": "node scripts/deploy-fix.js",
     "fix-module-errors": "node scripts/fix-module-errors.js",
-    "build-netlify": "node scripts/fix-module-errors.js && next build"
+    "fix-module-resolution": "node scripts/fix-module-resolution.js",
+    "build-netlify": "node scripts/fix-module-errors.js && node scripts/fix-module-resolution.js && next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
