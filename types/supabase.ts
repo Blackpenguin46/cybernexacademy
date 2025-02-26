@@ -9,28 +9,39 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      user_profiles: {
+      profiles: {
         Row: {
           id: string
-          username: string | null
-          full_name: string | null
-          avatar_url: string | null
+          email: string
+          full_name?: string
+          username?: string
           created_at: string
-          updated_at: string
+          progress: {
+            [courseId: string]: {
+              completed: boolean
+              lastAccessed: string
+              progress: number
+            }
+          }
+          bookmarks: string[]
         }
         Insert: {
           id: string
-          username?: string | null
-          full_name?: string | null
-          avatar_url?: string | null
+          email: string
+          full_name?: string
+          username?: string
           created_at?: string
-          updated_at?: string
+          progress?: Json
+          bookmarks?: string[]
         }
         Update: {
-          username?: string | null
-          full_name?: string | null
-          avatar_url?: string | null
-          updated_at?: string
+          id?: string
+          email?: string
+          full_name?: string
+          username?: string
+          created_at?: string
+          progress?: Json
+          bookmarks?: string[]
         }
       }
       subscriptions: {

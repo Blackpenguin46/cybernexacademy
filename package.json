@@ -34,7 +34,13 @@
   "devDependencies": {
     "@netlify/functions": "^3.0.0",
     "@netlify/plugin-nextjs": "^5.9.4",
+    "@types/node": "^20.4.5",
+    "@types/react": "^18.2.17",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.56.0",
-    "eslint-config-next": "13.4.19"
+    "eslint-config-next": "13.4.19",
+    "typescript": "^5.1.6"
   }
 }
