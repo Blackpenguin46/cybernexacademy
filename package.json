@@ -30,7 +30,8 @@
     "fix-module-errors": "node scripts/fix-module-errors.js",
     "fix-module-resolution": "node scripts/fix-module-resolution.js",
     "fix-netlify-plugin": "node scripts/fix-netlify-plugin.js",
-    "build-netlify": "node scripts/fix-module-errors.js && node scripts/fix-module-resolution.js && node scripts/fix-netlify-plugin.js && CI=false next build"
+    "fix-jsconfig-paths-plugin": "node scripts/fix-jsconfig-paths-plugin.js",
+    "build-netlify": "node scripts/fix-module-errors.js && node scripts/fix-module-resolution.js && node scripts/fix-netlify-plugin.js && node scripts/fix-jsconfig-paths-plugin.js && CI=false next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
