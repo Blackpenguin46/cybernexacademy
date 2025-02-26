@@ -20,7 +20,8 @@
     "fix-next-config": "node scripts/fix-next-config.js",
     "fix-cybernex-plus-dashboard": "node scripts/fix-cybernex-plus-dashboard.js",
     "fix-jsx-syntax-errors": "node scripts/fix-jsx-syntax-errors.js",
-    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run fix-missing-components && npm run fix-dependencies && npm run fix-jsconfig-paths && npm run fix-next-config && npm run fix-cybernex-plus-dashboard && npm run fix-jsx-syntax-errors && npm run convert-imports && next build"
+    "replace-problematic-files": "node scripts/replace-problematic-files.js",
+    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run fix-missing-components && npm run fix-dependencies && npm run fix-jsconfig-paths && npm run fix-next-config && npm run replace-problematic-files && npm run convert-imports && next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
