@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { ExternalLink } from "lucide-react"
+import { useEffect, useState } from 'react'
+import { Briefcase, MapPin, Building } from 'lucide-react'
 
 interface Job {
   id: string
@@ -12,7 +12,11 @@ interface Job {
   source: string
 }
 
-export default function JobListings({ jobType }: { jobType: "internship" | "job" }) {
+interface JobListingsProps {
+  type: 'internship' | 'job'
+}
+
+export default function JobListings({ type }: JobListingsProps) {
   const [jobs, setJobs] = useState<Job[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -20,45 +24,52 @@ export default function JobListings({ jobType }: { jobType: "internship" | "job"
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        // In a real-world scenario, this would be your API endpoint
-        const response = await fetch(`/api/jobs?type=${jobType}`)
-        if (!response.ok) {
-          throw new Error("Failed to fetch jobs")
-        }
+        const response = await fetch(`/api/jobs?type=${type}`)
+        if (!response.ok) throw new Error('Failed to fetch jobs')
         const data = await response.json()
         setJobs(data)
       } catch (err) {
-        setError("Failed to load job listings. Please try again later.")
+        setError('Failed to load job listings')
+        console.error('Error fetching jobs:', err)
       } finally {
         setLoading(false)
       }
     }
 
     fetchJobs()
-  }, [jobType])
+  }, [type])
 
-  if (loading) {
-    return <div>Loading job listings...</div>
-  }
-
-  if (error) {
-    return <div className="text-red-500">{error}</div>
-  }
+  if (loading) return <div className="text-center py-8">Loading job listings...</div>
+  if (error) return <div className="text-center py-8 text-red-500">{error}</div>
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div className="space-y-6">
       {jobs.map((job) => (
-        <div key={job.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-          <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100">{job.title}</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{job.company}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-400">{job.location}</p>
+        <div key={job.id} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{job.title}</h3>
+            <span className="text-sm text-gray-500 dark:text-gray-400">{job.source}</span>
+          </div>
+          
+          <div className="space-y-2 mb-4">
+            <div className="flex items-center text-gray-600 dark:text-gray-300">
+              <Building className="w-4 h-4 mr-2" />
+              {job.company}
+            </div>
+            <div className="flex items-center text-gray-600 dark:text-gray-300">
+              <MapPin className="w-4 h-4 mr-2" />
+              {job.location}
+            </div>
+          </div>
+
           <a
             href={job.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center text-sm"
+            className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
           >
-            View on {job.source} <ExternalLink className="ml-1 w-4 h-4" />
+            <Briefcase className="w-4 h-4 mr-2" />
+            View Listing
           </a>
         </div>
       ))}

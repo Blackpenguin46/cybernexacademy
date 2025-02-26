@@ -1,34 +1,39 @@
 "use client"
 
-import type React from "react"
-import { useEffect, useState } from "react"
-import { supabase } from "../lib/supabaseClient"
+import { useState, useEffect } from 'react'
+import { supabase } from '@/lib/supabase'
 
-const SupabaseConnectionTest: React.FC = () => {
-  const [connectionStatus, setConnectionStatus] = useState<string>("Testing...")
+export default function SupabaseConnectionTest() {
+  const [status, setStatus] = useState<'loading' | 'connected' | 'error'>('loading')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   useEffect(() => {
-    const testConnection = async () => {
+    async function testConnection() {
       try {
-        const { data, error } = await supabase.from("test").select("*").limit(1)
+        // Simple query to test the connection
+        const { error } = await supabase.from('profiles').select('count', { count: 'exact' }).limit(0)
+        
         if (error) throw error
-        setConnectionStatus("Connected successfully to Supabase!")
-      } catch (error) {
-        console.error("Error connecting to Supabase:", error)
-        setConnectionStatus("Failed to connect to Supabase. Check console for details.")
+        setStatus('connected')
+      } catch (error: unknown) {
+        console.error('Supabase connection error:', error)
+        setStatus('error')
+        const err = error as Error
+        setErrorMessage(err.message || 'Unknown error')
       }
     }
 
     testConnection()
   }, [])
 
-  return (
-    <div className="bg-gray-100 border border-gray-300 rounded p-4 mt-4">
-      <h2 className="text-lg font-semibold mb-2">Supabase Connection Test</h2>
-      <p>{connectionStatus}</p>
-    </div>
-  )
-}
+  if (status === 'loading') {
+    return <div>Testing connection to Supabase...</div>
+  }
 
-export default SupabaseConnectionTest
+  if (status === 'error') {
+    return <div className="text-red-500">Failed to connect to Supabase: {errorMessage}</div>
+  }
+
+  return <div className="text-green-500">Successfully connected to Supabase!</div>
+}
 

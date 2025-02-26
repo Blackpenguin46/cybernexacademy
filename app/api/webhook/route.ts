@@ -1,55 +1,87 @@
-import { headers } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2022-11-15',
-})
+export async function POST(request: NextRequest) {
+  const stripeKey = process.env.STRIPE_SECRET_KEY || ''
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 
-export async function POST(request: Request) {
-  const body = await request.text()
-  const sig = request.headers.get('stripe-signature')!
+  const stripe = new Stripe(stripeKey, {
+    apiVersion: '2022-11-15',
+  })
 
-  let event: Stripe.Event
+  const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
   try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
+    const body = await request.text()
+    const signature = request.headers.get('stripe-signature') || ''
+
+    let event: Stripe.Event
+
+    try {
+      event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+    } catch (err) {
+      const error = err as Error
+      return NextResponse.json(
+        { error: `Webhook signature verification failed: ${error.message}` },
+        { status: 400 }
+      )
+    }
+
+    // Handle the event
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object as Stripe.Checkout.Session
+        
+        if (session.customer && session.subscription) {
+          // Create a new subscription record
+          await supabase.from('subscriptions').insert({
+            user_id: session.client_reference_id,
+            stripe_customer_id: session.customer.toString(),
+            stripe_subscription_id: session.subscription.toString(),
+            status: 'active',
+            plan_type: session.metadata?.plan || 'plus',
+            current_period_end: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+        }
+        break
+
+      case 'customer.subscription.updated':
+      case 'customer.subscription.deleted':
+        const subscription = event.data.object as Stripe.Subscription
+        
+        // Update the subscription status
+        const { data: subscriptionData } = await supabase
+          .from('subscriptions')
+          .select('user_id')
+          .eq('stripe_subscription_id', subscription.id)
+          .single()
+
+        if (subscriptionData) {
+          await supabase
+            .from('subscriptions')
+            .update({
+              status: subscription.status,
+              updated_at: new Date().toISOString(),
+            })
+            .eq('stripe_subscription_id', subscription.id)
+        }
+        break
+
+      default:
+        console.log(`Unhandled event type: ${event.type}`)
+    }
+
+    return NextResponse.json({ received: true })
+  } catch (error) {
+    const err = error as Error
+    return NextResponse.json(
+      { error: err.message || 'Something went wrong' },
+      { status: 500 }
     )
-  } catch (err) {
-    // Type guard to ensure err is Error
-    const error = err instanceof Error ? err.message : 'Unknown error'
-    return NextResponse.json({ error: `Webhook Error: ${error}` }, { status: 400 })
   }
-
-  switch (event.type) {
-    case 'customer.subscription.created':
-    case 'customer.subscription.updated':
-      const subscription = event.data.object as Stripe.Subscription
-      const planType = subscription.items.data[0].price.id === 
-        process.env.STRIPE_CYBERNEX_PRO_PRICE_ID ? 'pro' : 'plus'
-
-      await supabase
-        .from('subscriptions')
-        .upsert({
-          user_id: subscription.metadata.user_id,
-          plan_type: planType,
-          stripe_subscription_id: subscription.id,
-          updated_at: new Date().toISOString(),
-        })
-      break
-
-    case 'customer.subscription.deleted':
-      const deletedSubscription = event.data.object as Stripe.Subscription
-      await supabase
-        .from('subscriptions')
-        .delete()
-        .eq('stripe_subscription_id', deletedSubscription.id)
-      break
-  }
-
-  return NextResponse.json({ received: true })
 } 

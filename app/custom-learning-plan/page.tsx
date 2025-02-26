@@ -1,148 +1,203 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { ArrowLeft, Book, Briefcase, Award } from 'lucide-react'
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Book, Briefcase, Award, ArrowRight } from "lucide-react"
+
+type LearningGoal = 'career-change' | 'skill-improvement' | 'certification' | 'general-knowledge'
+type ExperienceLevel = 'beginner' | 'intermediate' | 'advanced'
+type InterestArea = 'network-security' | 'application-security' | 'cloud-security' | 'offensive-security' | 'defensive-security'
+
+interface FormData {
+  goal: LearningGoal | null
+  experience: ExperienceLevel | null
+  interests: InterestArea[]
+  timeCommitment: number
+}
+
+interface LearningPlan {
+  title: string
+  description: string
+  resources: Resource[]
+  timeline: string
+  nextSteps: string[]
+}
+
+interface Resource {
+  title: string
+  type: 'course' | 'book' | 'tool' | 'project'
+  link: string
+  description: string
+}
 
 export default function CustomLearningPlanPage() {
-  const [goal, setGoal] = useState('')
-  const [experience, setExperience] = useState('')
-  const [interests, setInterests] = useState<string[]>([])
-  const [plan, setPlan] = useState<any>(null)
+  const router = useRouter()
+  const [step, setStep] = useState(1)
+  const [formData, setFormData] = useState<FormData>({
+    goal: null,
+    experience: null,
+    interests: [],
+    timeCommitment: 5,
+  })
+  const [plan, setPlan] = useState<LearningPlan | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // In a real application, this would involve more complex logic and possibly API calls
-    const customPlan = generateCustomPlan(goal, experience, interests)
-    setPlan(customPlan)
-  }
-
-  const generateCustomPlan = (goal: string, experience: string, interests: string[]) => {
-    // This is a simplified version. In a real application, this would be more comprehensive
-    const courses = [
-      { title: "Introduction to Cybersecurity", duration: "4 weeks" },
-      { title: "Network Security Fundamentals", duration: "6 weeks" },
-      { title: "Ethical Hacking Basics", duration: "8 weeks" },
-      { title: "Web Application Security", duration: "6 weeks" },
-      { title: "Cloud Security Essentials", duration: "5 weeks" },
-    ]
-
-    const certifications = [
-      "CompTIA Security+",
-      "Certified Ethical Hacker (CEH)",
-      "Certified Information Systems Security Professional (CISSP)",
-    ]
-
+  const generatePlan = (_goal: LearningGoal | null, _experience: ExperienceLevel | null, _interests: InterestArea[]) => {
+    // This would typically call an API or use a more sophisticated algorithm
+    // For now, we'll just return a mock plan
     return {
-      courses: courses.slice(0, 3), // Simplified: just return the first 3 courses
-      certifications: certifications.slice(0, 2), // Simplified: just return the first 2 certifications
-      projects: [
-        "Build a simple firewall",
-        "Perform a vulnerability assessment on a web application",
+      title: "Cybersecurity Career Starter Plan",
+      description: "A comprehensive plan to help you build foundational cybersecurity skills and prepare for entry-level positions.",
+      resources: [
+        {
+          title: "CompTIA Security+ Certification",
+          type: "course",
+          link: "/courses/security-plus",
+          description: "Industry-standard certification for cybersecurity fundamentals"
+        },
+        {
+          title: "Network Security Fundamentals",
+          type: "course",
+          link: "/courses/network-security",
+          description: "Learn the basics of securing networks and preventing unauthorized access"
+        },
+        {
+          title: "Introduction to Cryptography",
+          type: "course",
+          link: "/courses/cryptography",
+          description: "Understand encryption, hashing, and secure communication"
+        },
+        {
+          title: "Practical Malware Analysis",
+          type: "book",
+          link: "https://example.com/book",
+          description: "Learn to analyze and understand malicious software"
+        }
       ],
+      timeline: "3-6 months",
+      nextSteps: [
+        "Complete the Security+ certification",
+        "Build a home lab for practice",
+        "Join cybersecurity communities",
+        "Start working on capture-the-flag challenges"
+      ]
     }
   }
 
+  const handleNext = () => {
+    if (step === 4) {
+      const generatedPlan = generatePlan(formData.goal, formData.experience, formData.interests)
+      setPlan(generatedPlan)
+    }
+    setStep(step + 1)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    handleNext()
+  }
+
+  const handleInterestToggle = (interest: InterestArea) => {
+    setFormData(prev => {
+      const interests = prev.interests.includes(interest)
+        ? prev.interests.filter(i => i !== interest)
+        : [...prev.interests, interest]
+      return { ...prev, interests }
+    })
+  }
+
   return (
-    <div className="container mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold mb-8">Custom Learning Plan</h1>
+    <div className="container mx-auto px-4 py-12">
+      <h1 className="text-3xl font-bold text-center mb-8">Create Your Custom Learning Plan</h1>
       
-      <form onSubmit={handleSubmit} className="mb-8">
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">What's your main goal?</label>
-          <input
-            type="text"
-            value={goal}
-            onChange={(e) => setGoal(e.target.value)}
-            className="w-full p-2 border rounded"
-            placeholder="e.g., Become a Security Analyst"
-            required
-          />
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">What's your current experience level?</label>
-          <select
-            value={experience}
-            onChange={(e) => setExperience(e.target.value)}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Select experience level</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
-        </div>
-        
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Select your areas of interest:</label>
-          <div className="space-y-2">
-            {['Network Security', 'Web Security', 'Cloud Security', 'Ethical Hacking'].map((interest) => (
-              <label key={interest} className="flex items-center">
-                <input
-                  type="checkbox"
-                  value={interest}
-                  checked={interests.includes(interest)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setInterests([...interests, interest])
-                    } else {
-                      setInterests(interests.filter(i => i !== interest))
-                    }
-                  }}
-                  className="mr-2"
-                />
-                {interest}
-              </label>
-            ))}
-          </div>
-        </div>
-        
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Generate Plan
-        </button>
-      </form>
-
-      {plan && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">Your Custom Learning Plan</h2>
-          
+      {step <= 4 ? (
+        <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
           <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Recommended Courses</h3>
-            <ul className="list-disc list-inside">
-              {plan.courses.map((course: any, index: number) => (
-                <li key={index}>{course.title} - {course.duration}</li>
-              ))}
-            </ul>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-gray-500">Step {step} of 4</span>
+              <span className="text-sm font-medium text-gray-500">{step * 25}%</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2.5">
+              <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: `${step * 25}%` }}></div>
+            </div>
           </div>
           
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">Recommended Certifications</h3>
-            <ul className="list-disc list-inside">
-              {plan.certifications.map((cert: string, index: number) => (
-                <li key={index}>{cert}</li>
-              ))}
-            </ul>
-          </div>
+          {/* Form content based on current step */}
+          {/* ... form steps ... */}
           
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Suggested Projects</h3>
-            <ul className="list-disc list-inside">
-              {plan.projects.map((project: string, index: number) => (
-                <li key={index}>{project}</li>
-              ))}
-            </ul>
+          <div className="flex justify-between mt-8">
+            {step > 1 && (
+              <button
+                type="button"
+                onClick={() => setStep(step - 1)}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              >
+                Back
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={handleNext}
+              className="ml-auto px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            >
+              {step === 4 ? "Generate Plan" : "Next"}
+            </button>
           </div>
         </div>
+      ) : (
+        plan && (
+          <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 className="text-2xl font-bold mb-4">{plan.title}</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">{plan.description}</p>
+            
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-4">Recommended Resources</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {plan.resources.map((resource, index) => (
+                  <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <h4 className="font-medium mb-2">{resource.title}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{resource.description}</p>
+                    <a 
+                      href={resource.link} 
+                      className="text-blue-600 hover:text-blue-800 text-sm flex items-center"
+                    >
+                      View Resource <ArrowRight className="ml-1 h-4 w-4" />
+                    </a>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold mb-2">Estimated Timeline</h3>
+              <p>{plan.timeline}</p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-semibold mb-4">Next Steps</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                {plan.nextSteps.map((step, index) => (
+                  <li key={index}>{step}</li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+              <button
+                onClick={() => setStep(1)}
+                className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 mr-4"
+              >
+                Start Over
+              </button>
+              <button
+                onClick={() => window.print()}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              >
+                Save Plan
+              </button>
+            </div>
+          </div>
+        )
       )}
-
-      <div className="mt-8">
-        <Link href="/" className="text-blue-600 hover:underline inline-flex items-center">
-          <ArrowLeft className="mr-2" />
-          Back to Home
-        </Link>
-      </div>
     </div>
   )
 }

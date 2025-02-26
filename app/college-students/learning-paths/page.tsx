@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowLeft, Book, Code, Shield, Globe, Database, Lock, Cpu, Key, Network, Terminal, Bug, Eye, Server, Cloud, User, Settings } from 'lucide-react';
+import { ArrowLeft, Network, Lock, Cpu, Code, Cloud, Bug, Key, Eye } from 'lucide-react';
 
 export default function LearningPathsPage() {
   const learningPaths = [
@@ -227,7 +227,7 @@ export default function LearningPathsPage() {
             <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Overview:</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">{path.overview}</p>
 
-            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Why It’s Applicable:</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Why It's Applicable:</h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">{path.whyApplicable}</p>
 
             <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Resources:</h3>

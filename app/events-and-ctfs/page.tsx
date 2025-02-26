@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Calendar, ExternalLink, ChevronDown, ChevronUp, Search } from "lucide-react"
 import { useState } from "react"
 
+type EventCategory = 'upcoming' | 'past' | 'virtual' | null;
+
 // Event data organized into categories
 const events = {
   CTFs: [
@@ -156,10 +158,10 @@ const events = {
 
 export default function EventsAndCTFsPage() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [openCategory, setOpenCategory] = useState(null)
+  const [openCategory, setOpenCategory] = useState<EventCategory>(null)
 
   // Toggle category visibility
-  const toggleCategory = (category) => {
+  const toggleCategory = (category: EventCategory) => {
     setOpenCategory(openCategory === category ? null : category)
   }
 
@@ -208,7 +210,7 @@ export default function EventsAndCTFsPage() {
         {Object.keys(filteredEvents).map((category) => (
           <div key={category} className="mb-8">
             <button
-              onClick={() => toggleCategory(category)}
+              onClick={() => toggleCategory(category as EventCategory)}
               className="w-full flex justify-between items-center bg-gray-800 p-4 rounded-lg hover:bg-gray-700 transition-colors"
             >
               <h2 className="text-2xl font-semibold text-white">{category}</h2>

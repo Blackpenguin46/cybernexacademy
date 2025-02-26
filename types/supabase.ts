@@ -9,113 +9,145 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      profiles: {
+      user_profiles: {
         Row: {
           id: string
-          email: string
-          full_name?: string
-          username?: string
-          created_at: string
-          progress: {
-            [courseId: string]: {
-              completed: boolean
-              lastAccessed: string
-              progress: number
-            }
-          }
-          bookmarks: string[]
+          full_name: string | null
+          username: string | null
+          avatar_url: string | null
+          website: string | null
+          updated_at: string | null
         }
         Insert: {
           id: string
-          email: string
-          full_name?: string
-          username?: string
-          created_at?: string
-          progress?: Json
-          bookmarks?: string[]
+          full_name?: string | null
+          username?: string | null
+          avatar_url?: string | null
+          website?: string | null
+          updated_at?: string | null
         }
         Update: {
           id?: string
-          email?: string
-          full_name?: string
-          username?: string
-          created_at?: string
-          progress?: Json
-          bookmarks?: string[]
+          full_name?: string | null
+          username?: string | null
+          avatar_url?: string | null
+          website?: string | null
+          updated_at?: string | null
         }
       }
       subscriptions: {
         Row: {
           id: string
           user_id: string
-          plan_type: 'plus' | 'pro'
-          status: 'active' | 'canceled' | 'past_due'
-          stripe_customer_id: string
-          stripe_subscription_id: string
+          status: string
+          plan: string
           current_period_end: string
           created_at: string
-          updated_at: string
         }
         Insert: {
-          user_id: string
-          plan_type: 'plus' | 'pro'
-          status: 'active' | 'canceled' | 'past_due'
-          stripe_customer_id: string
-          stripe_subscription_id: string
-          current_period_end: string
-        }
-        Update: {
-          status?: 'active' | 'canceled' | 'past_due'
-          current_period_end?: string
-        }
-      }
-      user_progress: {
-        Row: {
           id: string
           user_id: string
-          content_id: string
-          progress: number
-          completed: boolean
-          last_accessed: string
-        }
-        Insert: {
-          user_id: string
-          content_id: string
-          progress?: number
-          completed?: boolean
+          status: string
+          plan: string
+          current_period_end: string
+          created_at?: string
         }
         Update: {
-          progress?: number
-          completed?: boolean
-          last_accessed?: string
+          id?: string
+          user_id?: string
+          status?: string
+          plan?: string
+          current_period_end?: string
+          created_at?: string
         }
       }
-      premium_content: {
+      courses: {
         Row: {
           id: string
           title: string
-          description: string | null
-          content_url: string | null
-          access_level: 'plus' | 'pro'
+          description: string
+          image_url: string | null
+          slug: string
+          is_premium: boolean
           created_at: string
         }
         Insert: {
           id?: string
           title: string
-          description?: string | null
-          content_url?: string | null
-          access_level: 'plus' | 'pro'
+          description: string
+          image_url?: string | null
+          slug: string
+          is_premium: boolean
           created_at?: string
         }
         Update: {
           id?: string
           title?: string
-          description?: string | null
-          content_url?: string | null
-          access_level?: 'plus' | 'pro'
+          description?: string
+          image_url?: string | null
+          slug?: string
+          is_premium?: boolean
           created_at?: string
         }
       }
+      course_progress: {
+        Row: {
+          id: string
+          user_id: string
+          course_id: string
+          progress: number
+          completed: boolean
+          last_accessed: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          course_id: string
+          progress: number
+          completed: boolean
+          last_accessed: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          course_id?: string
+          progress?: number
+          completed?: boolean
+          last_accessed?: string
+        }
+      }
+      topics: {
+        Row: {
+          id: string
+          title: string
+          content: string
+          domain: string
+          order: number
+        }
+        Insert: {
+          id?: string
+          title: string
+          content: string
+          domain: string
+          order: number
+        }
+        Update: {
+          id?: string
+          title?: string
+          content?: string
+          domain?: string
+          order?: number
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      [_ in never]: never
+    }
+    Enums: {
+      [_ in never]: never
     }
   }
 } 

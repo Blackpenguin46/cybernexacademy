@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { loadStripe } from '@stripe/stripe-js'
 import { Shield, Check, Zap, Crown } from 'lucide-react'
 
 const STRIPE_LINKS = {
@@ -12,7 +11,7 @@ const STRIPE_LINKS = {
 }
 
 export default function PricingPage() {
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const { user } = useAuth()
   const router = useRouter()
 
@@ -22,7 +21,14 @@ export default function PricingPage() {
       return
     }
 
-    window.location.href = STRIPE_LINKS[plan]
+    setIsLoading(true)
+    try {
+      window.location.href = STRIPE_LINKS[plan]
+    } catch (error) {
+      console.error('Error redirecting to Stripe:', error)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -112,10 +118,10 @@ export default function PricingPage() {
 
             <button
               onClick={() => handleSubscribe('plus')}
-              disabled={loading}
+              disabled={isLoading}
               className="mt-8 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
             >
-              {loading ? 'Processing...' : 'Subscribe to Plus'}
+              {isLoading ? 'Processing...' : 'Subscribe to Plus'}
             </button>
           </div>
         </div>
@@ -156,10 +162,10 @@ export default function PricingPage() {
 
             <button
               onClick={() => handleSubscribe('pro')}
-              disabled={loading}
+              disabled={isLoading}
               className="mt-8 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700"
             >
-              {loading ? 'Processing...' : 'Subscribe to Pro'}
+              {isLoading ? 'Processing...' : 'Subscribe to Pro'}
             </button>
           </div>
         </div>

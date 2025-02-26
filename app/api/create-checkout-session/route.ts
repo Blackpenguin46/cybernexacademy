@@ -1,37 +1,20 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { supabase } from '@/lib/supabase'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2022-11-15',
-})
-
-const DOMAIN = process.env.NEXT_PUBLIC_DOMAIN || 'http://localhost:3000'
-
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const { plan, userId } = await request.json()
-    
-    const supabase = createRouteHandlerClient({ cookies })
-    const { data: { session } } = await supabase.auth.getSession()
+    const stripeKey = process.env.STRIPE_SECRET_KEY || ''
+    const stripe = new Stripe(stripeKey, {
+      apiVersion: '2022-11-15',
+    })
 
-    if (!session) {
-      return NextResponse.json({ error: 'Not authenticated' }, { status: 401 })
-    }
+    const searchParams = request.nextUrl.searchParams
+    const priceId = searchParams.get('priceId') || ''
+    const userId = searchParams.get('userId') || ''
 
-    // Verify user matches session
-    if (session.user.id !== userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
-    }
-
-    const priceId = plan === 'pro' 
-      ? process.env.STRIPE_CYBERNEX_PRO_PRICE_ID 
-      : process.env.STRIPE_CYBERNEX_PLUS_PRICE_ID
-
-    const checkoutSession = await stripe.checkout.sessions.create({
-      customer_email: session.user.email,
+    // Create a checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
       line_items: [
         {
           price: priceId,
@@ -39,19 +22,17 @@ export async function POST(request: Request) {
         },
       ],
       mode: 'subscription',
-      success_url: `${DOMAIN}/dashboard?success=true`,
-      cancel_url: `${DOMAIN}/pricing?canceled=true`,
+      success_url: `${request.nextUrl.origin}/cybernex-plus/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${request.nextUrl.origin}/cybernex-plus`,
       metadata: {
-        userId: userId,
-        plan: plan,
+        userId,
       },
     })
 
-    return NextResponse.json({ sessionId: checkoutSession.id })
-  } catch (error) {
-    console.error('Error:', error)
+    return NextResponse.json({ id: session.id })
+  } catch (error: any) {
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: error.message || 'Something went wrong' },
       { status: 500 }
     )
   }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '@/app/contexts/AuthContext'
+import { useAuth } from '@/contexts/AuthContext'
 import { createClient } from '@/lib/auth'
 
 interface ProgressTrackerProps {
@@ -9,90 +9,80 @@ interface ProgressTrackerProps {
   totalSteps: number
 }
 
-export function ProgressTracker({ courseId, totalSteps }: ProgressTrackerProps) {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [loading, setLoading] = useState(true)
+export default function ProgressTracker({ courseId, totalSteps }: ProgressTrackerProps) {
   const { user } = useAuth()
+  const [progress, setProgress] = useState(0)
+  const [loading, setLoading] = useState(true)
   const supabase = createClient()
 
   useEffect(() => {
-    async function loadProgress() {
-      if (!user) return
+    const fetchProgress = async () => {
+      if (!user) {
+        setLoading(false)
+        return
+      }
 
       try {
-        const { data: profile, error } = await supabase
-          .from('user_profiles')
-          .select('progress')
-          .eq('id', user.id)
+        const { data, error } = await supabase
+          .from('course_progress')
+          .select('current_step')
+          .eq('user_id', user.id)
+          .eq('course_id', courseId)
           .single()
 
-        if (error) throw error
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error fetching progress:', error)
+        }
 
-        const courseProgress = profile.progress[courseId]
-        if (courseProgress) {
-          setCurrentStep(courseProgress.progress)
+        if (data) {
+          setProgress(data.current_step)
         }
       } catch (error) {
-        console.error('Error loading progress:', error)
+        console.error('Error:', error)
       } finally {
         setLoading(false)
       }
     }
 
-    loadProgress()
-  }, [courseId, user, supabase])
+    fetchProgress()
+  }, [user, courseId, supabase])
 
   const updateProgress = async (step: number) => {
     if (!user) return
 
     try {
-      setLoading(true)
-      const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('progress')
-        .eq('id', user.id)
-        .single()
+      const { error } = await supabase
+        .from('course_progress')
+        .upsert({
+          user_id: user.id,
+          course_id: courseId,
+          current_step: step,
+          updated_at: new Date().toISOString()
+        })
 
-      if (profileError) throw profileError
-
-      const newProgress = {
-        ...profile.progress,
-        [courseId]: {
-          progress: step,
-          lastAccessed: new Date().toISOString(),
-          completed: step === totalSteps
-        }
-      }
-
-      const { error: updateError } = await supabase
-        .from('user_profiles')
-        .update({ progress: newProgress })
-        .eq('id', user.id)
-
-      if (updateError) throw updateError
-
-      setCurrentStep(step)
+      if (error) throw error
+      setProgress(step)
     } catch (error) {
       console.error('Error updating progress:', error)
-    } finally {
-      setLoading(false)
     }
   }
 
+  if (loading) {
+    return <div className="h-2 bg-gray-200 rounded-full animate-pulse"></div>
+  }
+
+  const progressPercentage = Math.round((progress / totalSteps) * 100)
+
   return (
     <div className="w-full">
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-600 dark:text-gray-400">
-          Progress: {Math.round((currentStep / totalSteps) * 100)}%
-        </span>
-        <span className="text-sm text-gray-600 dark:text-gray-400">
-          Step {currentStep} of {totalSteps}
-        </span>
+      <div className="flex justify-between text-sm mb-1">
+        <span>Progress</span>
+        <span>{progressPercentage}%</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2.5">
-        <div 
-          className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" 
-          style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+      <div className="h-2 bg-gray-200 rounded-full">
+        <div
+          className="h-2 bg-blue-600 rounded-full"
+          style={{ width: `${progressPercentage}%` }}
         ></div>
       </div>
     </div>

@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import Link from "next/link"
 import { CheckCircle, ArrowRight } from "lucide-react"
 import { useAuth } from "@/contexts/AuthContext"
-import { supabase } from "@/lib/supabase"
-import LoadingSpinner from '@/components/LoadingSpinner'
-import { createClient } from "@/lib/auth"
+import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { createClientComponent } from "@/lib/auth"
+import Image from 'next/image'
 
 type Subscription = {
   id: string
@@ -17,221 +17,219 @@ type Subscription = {
   updated_at: string
 }
 
-interface Course {
+type Course = {
   id: string
   title: string
   description: string
-  duration: string
   level: string
+  duration: string
+  image_url: string
+  slug: string
   progress?: number
 }
 
 export default function CyberNexPlusPage() {
-  const { user, loading: authLoading } = useAuth()
+  const { user, loading } = useAuth()
   const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [courses, setCourses] = useState<Course[]>([])
-  const [loading, setLoading] = useState(true)
-  const supabase = createClient()
+  const [pageLoading, setPageLoading] = useState(true)
+  const supabase = createClientComponent()
 
   useEffect(() => {
-    if (user) {
-      fetchSubscription()
-      loadCourses()
-    }
-  }, [user])
+    async function checkSubscription() {
+      if (!user) return
 
-  const fetchSubscription = async () => {
-    if (!user) return
+      try {
+        const { data, error } = await supabase
+          .from('subscriptions')
+          .select('*')
+          .eq('user_id', user.id)
+          .eq('status', 'active')
+          .single()
 
-    const { data, error } = await supabase.from("subscriptions").select("*").eq("user_id", user.id).single()
+        if (error && error.code !== 'PGRST116') {
+          console.error('Error checking subscription:', error)
+        }
 
-    if (error) {
-      console.error("Error fetching subscription:", error)
-    } else {
-      setSubscription(data)
-    }
-  }
-
-  const handleSubscribe = async (plan: string) => {
-    if (!user) {
-      // Redirect to login or show error
-      return
+        setSubscription(data || null)
+      } catch (error) {
+        console.error('Error:', error)
+      }
     }
 
-    // In a real application, you would integrate with a payment provider here
-    // For this example, we'll just update the subscription status directly
-    const { data, error } = await supabase
-      .from("subscriptions")
-      .upsert({ user_id: user.id, plan, status: "active" })
-      .select()
-      .single()
+    async function fetchCourses() {
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .eq('is_premium', true)
+          .order('created_at', { ascending: false })
 
-    if (error) {
-      console.error("Error updating subscription:", error)
-    } else {
-      setSubscription(data)
+        if (error) throw error
+        setCourses(data || [])
+      } catch (error) {
+        console.error('Error fetching courses:', error)
+      } finally {
+        setPageLoading(false)
+      }
     }
-  }
 
-  const loadCourses = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('plus_courses')
-        .select('*')
-      
-      if (error) throw error
-      setCourses(data || [])
-    } catch (error) {
-      console.error('Error loading courses:', error)
-    } finally {
-      setLoading(false)
+    if (!loading) {
+      checkSubscription()
+      fetchCourses()
     }
-  }
+  }, [user, loading, supabase])
 
-  if (authLoading || loading) {
+  if (loading || pageLoading) {
     return <LoadingSpinner />
   }
 
+  // Function to handle subscription button click
+  const handleSubscribe = useCallback(async (plan: string) => {
+    if (!user) {
+      // Redirect to login
+      window.location.href = `/login?redirect=${encodeURIComponent('/cybernex-plus')}`
+      return
+    }
+
+    try {
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          plan,
+          userId: user.id,
+        }),
+      })
+
+      const { url } = await response.json()
+      window.location.href = url
+    } catch (error) {
+      console.error('Error creating checkout session:', error)
+    }
+  }, [user])
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
-      <div className="container mx-auto px-4 py-12">
-        {/* Header Section */}
-        <header className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gold to-yellow-400">
-            CyberNex Premium Plans
-          </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Elevate your cybersecurity journey with our premium services designed to provide personalized support and
-            accelerate your career growth.
+    <div className="container mx-auto px-4 py-12">
+      <h1 className="text-4xl font-bold mb-2">CyberNex Plus</h1>
+      <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">Advanced cybersecurity training and resources</p>
+      
+      {subscription ? (
+        <div className="bg-green-100 dark:bg-green-900 p-4 rounded-lg mb-8">
+          <p className="text-green-800 dark:text-green-200 font-medium">
+            You are currently subscribed to CyberNex Plus! Enjoy your premium access.
           </p>
-        </header>
-
-        {/* Features Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-semibold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-yellow-400">
-            What's Included in Our Premium Plans
-          </h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {[
-              "1-on-1 meeting to discuss your goals, plans, and interests",
-              "Tailored cybersecurity plan for your individual needs",
-              "Custom labs to practice and hone your skills",
-              "Access to weekly town halls with industry experts",
-              "Bi-weekly meetings with industry professionals",
-              "Access to exclusive courses taught by industry leaders",
-              "1-on-1 mentoring with experienced cybersecurity professionals",
-              "Premium Discord community access",
-            ].map((feature, index) => (
-              <li
-                key={index}
-                className="flex items-start bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-gold transition-all"
-              >
-                <CheckCircle className="w-6 h-6 text-gold mr-3 flex-shrink-0 mt-1" />
-                <span className="text-gray-300">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Pricing Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-semibold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-gold to-yellow-400">
-            Choose Your Plan
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* CyberNex+ Plan */}
-            <div className="bg-gray-800 p-8 rounded-lg border-2 border-transparent hover:border-gold transition-all shadow-lg hover:shadow-xl">
-              <h3 className="text-2xl font-semibold mb-4 text-gold">CyberNex+</h3>
-              <p className="text-4xl font-bold mb-6 text-white">
-                $10<span className="text-xl text-gray-300">/month</span>
-              </p>
-              <ul className="mb-8 space-y-3 text-gray-300">
-                <li>1-on-1 meeting to discuss goals, plans, and interests</li>
-                <li>Tailored cybersecurity plan</li>
-                <li>Access to weekly town halls</li>
-                <li>Access to exclusive courses</li>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-4">Monthly</h2>
+              <p className="text-3xl font-bold mb-4">$19.99<span className="text-gray-500 text-base font-normal">/month</span></p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Access to all premium courses</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Hands-on labs and virtual environments</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Community forum access</span>
+                </li>
               </ul>
-              <button
-                onClick={() => handleSubscribe("plus")}
-                className="block w-full text-center bg-gradient-to-r from-gold to-yellow-500 text-gray-900 px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-opacity"
+              <button 
+                onClick={() => handleSubscribe('monthly')}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
               >
-                {subscription?.plan === "plus" ? "Current Plan" : "Get Started with CyberNex+"}
-              </button>
-            </div>
-
-            {/* CyberNex Pro Plan */}
-            <div className="bg-gray-800 p-8 rounded-lg border-2 border-transparent hover:border-gold transition-all shadow-lg hover:shadow-xl">
-              <h3 className="text-2xl font-semibold mb-4 text-gold">CyberNex Pro</h3>
-              <p className="text-4xl font-bold mb-6 text-white">
-                $20<span className="text-xl text-gray-300">/month</span>
-              </p>
-              <ul className="mb-8 space-y-3 text-gray-300">
-                <li>Everything in CyberNex+, plus:</li>
-                <li>Custom labs for hands-on practice</li>
-                <li>Bi-weekly meetings with industry professionals</li>
-                <li>1-on-1 mentoring with industry professionals</li>
-              </ul>
-              <button
-                onClick={() => handleSubscribe("pro")}
-                className="block w-full text-center bg-gradient-to-r from-gold to-yellow-500 text-gray-900 px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-opacity"
-              >
-                {subscription?.plan === "pro" ? "Current Plan" : "Get Started with CyberNex Pro"}
+                Subscribe Monthly
               </button>
             </div>
           </div>
-        </section>
-
-        {/* Call-to-Action Section */}
-        <section className="text-center mb-16">
-          <h2 className="text-3xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gold to-yellow-400">
-            Ready to Take Your Cybersecurity Career to the Next Level?
-          </h2>
-          <p className="mb-8 text-gray-300 max-w-2xl mx-auto">
-            Join CyberNex Premium today and unlock a world of exclusive content, personalized guidance, and networking
-            opportunities to accelerate your cybersecurity journey.
-          </p>
-        </section>
-
-        {/* Back to Home Link */}
-        <div className="text-center">
-          <Link href="/" className="inline-flex items-center text-gold hover:text-yellow-400 transition-colors">
-            <ArrowRight className="w-4 h-4 mr-2" />
-            Back to Home
-          </Link>
-        </div>
-
-        <div className="mt-16">
-          <h2 className="text-3xl font-bold mb-8">CyberNex+ Courses</h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {courses.map((course) => (
-              <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">{course.description}</p>
-                <div className="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span>{course.duration}</span>
-                  <span>{course.level}</span>
-                </div>
-                {course.progress !== undefined && (
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
-                    <div 
-                      className="bg-blue-600 h-2.5 rounded-full" 
-                      style={{ width: `${course.progress}%` }}
-                    ></div>
-                  </div>
-                )}
-                <Link
-                  href={`/cybernex-plus/courses/${course.id}`}
-                  className="block w-full text-center bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-                >
-                  {course.progress ? 'Continue Learning' : 'Start Course'}
-                </Link>
-              </div>
-            ))}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border-2 border-blue-500">
+            <div className="bg-blue-500 text-white text-center py-2">
+              <span className="font-medium">BEST VALUE</span>
+            </div>
+            <div className="p-6">
+              <h2 className="text-2xl font-bold mb-4">Annual</h2>
+              <p className="text-3xl font-bold mb-4">$199.99<span className="text-gray-500 text-base font-normal">/year</span></p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>All monthly benefits</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Save over 15% compared to monthly</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Priority support</span>
+                </li>
+                <li className="flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>Exclusive webinars and events</span>
+                </li>
+              </ul>
+              <button 
+                onClick={() => handleSubscribe('annual')}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded"
+              >
+                Subscribe Annually
+              </button>
+            </div>
           </div>
         </div>
+      )}
+      
+      <h2 className="text-2xl font-bold mb-6">Premium Courses</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {courses.map((course) => (
+          <div key={course.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            {course.image_url && (
+              <div className="h-40 overflow-hidden">
+                <img 
+                  src={course.image_url} 
+                  alt={course.title} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
+            
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">{course.title}</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">{course.description}</p>
+              
+              <div className="flex justify-between text-sm mb-4">
+                <span>{course.duration}</span>
+                <span>{course.level}</span>
+              </div>
+              {course.progress !== undefined && (
+                <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+                  <div 
+                    className="bg-blue-600 h-2.5 rounded-full" 
+                    style={{ width: `${course.progress}%` }}
+                  ></div>
+                </div>
+              )}
+              
+              <Link 
+                href={`/courses/${course.slug}`}
+                className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Start Learning <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
+
 

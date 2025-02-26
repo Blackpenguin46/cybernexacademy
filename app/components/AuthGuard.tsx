@@ -1,30 +1,45 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '@/app/contexts/AuthContext'
+import { useEffect, useState } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import { useAuth } from "@/contexts/AuthContext"
 
-export function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { user, subscription } = useAuth()
+export default function AuthGuard({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth()
   const router = useRouter()
+  const pathname = usePathname() || '/'
+  const [isAuthorized, setIsAuthorized] = useState(false)
 
   useEffect(() => {
-    if (!user) {
-      router.push('/login')
-      return
+    if (!loading) {
+      // If not logged in and not on a public page, redirect to login
+      if (!user && !isPublicPage(pathname)) {
+        router.push(`/login?redirect=${encodeURIComponent(pathname)}`)
+      } else {
+        setIsAuthorized(true)
+      }
     }
+  }, [user, loading, pathname, router])
 
-    // Check subscription for protected routes
-    if (window.location.pathname.includes('cybernex-plus') && !subscription) {
-      router.push('/pricing')
-      return
-    }
-
-    if (window.location.pathname.includes('cybernex-pro') && subscription !== 'pro') {
-      router.push('/pricing')
-      return
-    }
-  }, [user, subscription, router])
+  if (loading || !isAuthorized) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>
+  }
 
   return <>{children}</>
+}
+
+function isPublicPage(pathname: string): boolean {
+  const publicPaths = [
+    '/',
+    '/login',
+    '/signup',
+    '/about',
+    '/contact',
+    '/pricing',
+    '/blog',
+    '/terms',
+    '/privacy',
+  ]
+  
+  return publicPaths.includes(pathname) || pathname.startsWith('/blog/')
 } 

@@ -3,9 +3,21 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ArrowLeft, Briefcase, Calendar, MapPin } from "lucide-react"
 
+// Add type for the internshipsByCategory
+type InternshipType = {
+  company: string
+  position: string
+  location: string
+  deadline: string
+}
+
+type InternshipCategories = {
+  [key: string]: InternshipType[]  // Add index signature
+}
+
 export default function InternshipsPage() {
   // Sample internships organized by job categories
-  const internshipsByCategory = {
+  const internshipsByCategory: InternshipCategories = {
     "GRC Internships": [
       { company: "Google", position: "GRC Intern", location: "Mountain View, CA", deadline: "2024-01-15" },
       { company: "Microsoft", position: "Governance Intern", location: "Redmond, WA", deadline: "2024-01-30" },
@@ -40,10 +52,12 @@ export default function InternshipsPage() {
   // Filter internships based on filters
   const filteredInternships = allInternships.filter((internship) => {
     return (
-      (!filters.location || internship.location.includes(filters.location)) &&
+      (!filters.location || internship.location.toLowerCase().includes(filters.location.toLowerCase())) &&
       (!filters.deadline || internship.deadline <= filters.deadline) &&
       (!filters.company || internship.company.toLowerCase().includes(filters.company.toLowerCase())) &&
-      (!filters.category || internshipsByCategory[filters.category].includes(internship))
+      (!filters.category || (
+        internshipsByCategory[filters.category as keyof InternshipCategories]?.includes(internship)
+      ))
     )
   })
 
@@ -52,12 +66,16 @@ export default function InternshipsPage() {
   const indexOfFirstInternship = indexOfLastInternship - internshipsPerPage
   const currentInternships = filteredInternships.slice(indexOfFirstInternship, indexOfLastInternship)
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber)
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber)
 
   // Countdown timer component
-  const CountdownTimer = ({ deadline }) => {
-    const calculateTimeLeft = (deadline) => {
-      const difference = new Date(deadline) - new Date()
+  interface CountdownTimerProps {
+    deadline: string
+  }
+
+  const CountdownTimer = ({ deadline }: CountdownTimerProps) => {
+    const calculateTimeLeft = (deadlineDate: string) => {
+      const difference = +new Date(deadlineDate) - +new Date()
       return {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),

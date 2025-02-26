@@ -1,10 +1,8 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClientComponentClient } from '@supabase/ssr'
 import { type Database } from '@/types/supabase'
+import { createClient } from '@supabase/supabase-js'
 
-export const supabaseClient = createClientComponentClient<Database>({
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-})
+export const supabaseClient = createClientComponentClient<Database>()
 
 export interface UserProfile {
   id: string
@@ -31,3 +29,5 @@ export interface Subscription {
 }
 
 // Add your auth helper functions here 
+
+export { createClient } 

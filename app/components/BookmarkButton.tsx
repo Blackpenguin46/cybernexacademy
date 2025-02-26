@@ -1,69 +1,64 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '@/app/contexts/AuthContext'
-import { Bookmark, BookmarkCheck } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
+import { Bookmark, BookMarked } from 'lucide-react'
 import { createClient } from '@/lib/auth'
 
 interface BookmarkButtonProps {
-  contentId: string
-  initialBookmarked?: boolean
+  resourceId: string
+  resourceType: 'article' | 'tutorial' | 'tool'
 }
 
-export function BookmarkButton({ contentId, initialBookmarked = false }: BookmarkButtonProps) {
-  const [isBookmarked, setIsBookmarked] = useState(initialBookmarked)
-  const [loading, setLoading] = useState(false)
+export default function BookmarkButton({ resourceId, resourceType }: BookmarkButtonProps) {
   const { user } = useAuth()
-  const supabase = createClient()
+  const [isBookmarked, setIsBookmarked] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const toggleBookmark = async () => {
     if (!user) return
     
+    setIsLoading(true)
     try {
-      setLoading(true)
-      const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('bookmarks')
-        .eq('id', user.id)
-        .single()
-
-      if (profileError) throw profileError
-
-      let newBookmarks = [...(profile.bookmarks || [])]
+      const supabase = createClient()
       
       if (isBookmarked) {
-        newBookmarks = newBookmarks.filter(id => id !== contentId)
+        // Remove bookmark
+        await supabase
+          .from('bookmarks')
+          .delete()
+          .match({ user_id: user.id, resource_id: resourceId })
       } else {
-        newBookmarks.push(contentId)
+        // Add bookmark
+        await supabase
+          .from('bookmarks')
+          .insert({
+            user_id: user.id,
+            resource_id: resourceId,
+            resource_type: resourceType
+          })
       }
-
-      const { error: updateError } = await supabase
-        .from('user_profiles')
-        .update({ bookmarks: newBookmarks })
-        .eq('id', user.id)
-
-      if (updateError) throw updateError
       
       setIsBookmarked(!isBookmarked)
     } catch (error) {
       console.error('Error toggling bookmark:', error)
     } finally {
-      setLoading(false)
+      setIsLoading(false)
     }
   }
 
   return (
     <button
       onClick={toggleBookmark}
-      disabled={loading || !user}
-      className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-      title={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+      disabled={!user || isLoading}
+      className="flex items-center text-gray-600 hover:text-blue-600 disabled:opacity-50"
     >
       {isBookmarked ? (
-        <BookmarkCheck className="w-6 h-6 text-blue-600" />
+        <BookMarked className="h-5 w-5 mr-1" />
       ) : (
-        <Bookmark className="w-6 h-6" />
+        <Bookmark className="h-5 w-5 mr-1" />
       )}
+      {isBookmarked ? 'Bookmarked' : 'Bookmark'}
     </button>
   )
 } 

@@ -3,14 +3,20 @@
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { useState, useEffect } from 'react'
-import { User, Crown, ChevronDown } from 'lucide-react'
-import { AuthModal } from './AuthModal'
+import { User, Crown, ChevronDown, Menu, X, Moon, Sun } from 'lucide-react'
+import AuthModal from '@/components/AuthModal'
+import { usePathname } from "next/navigation"
+import { useTheme } from "@/contexts/ThemeContext"
 
-export function Navigation() {
+export default function Navigation() {
   const { user, loading, signOut } = useAuth()
   const [showAuthModal, setShowAuthModal] = useState(false)
-  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login')
+  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin')
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const pathname = usePathname()
+  const { theme, toggleTheme } = useTheme()
 
   useEffect(() => {
     console.log('Auth State:', { 
@@ -19,6 +25,24 @@ export function Navigation() {
       userData: user 
     })
   }, [user, loading])
+
+  useEffect(() => {
+    // Check if user prefers dark mode
+    if (typeof window !== "undefined") {
+      const isDark = localStorage.getItem("darkMode") === "true" || 
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      
+      setIsDarkMode(isDark)
+      if (isDark) {
+        document.documentElement.classList.add("dark")
+      }
+    }
+  }, [])
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [pathname])
 
   const navigationItems = {
     'Learn': {
@@ -80,6 +104,53 @@ export function Navigation() {
 
   const handleClick = (title: string) => {
     setActiveDropdown(activeDropdown === title ? null : title)
+  }
+
+  const toggleDropdown = (key: string) => {
+    if (activeDropdown === key) {
+      setActiveDropdown(null)
+    } else {
+      setActiveDropdown(key)
+    }
+  }
+
+  const handleAuthClick = (mode: 'signin' | 'signup') => {
+    setAuthMode(mode)
+    setShowAuthModal(true)
+  }
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode)
+    if (typeof window !== "undefined") {
+      localStorage.setItem("darkMode", (!isDarkMode).toString())
+      document.documentElement.classList.toggle("dark")
+    }
+  }
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen)
+  }
+
+  const handleDropdown = (dropdown: string) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown)
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
+    setActiveDropdown(null)
+  }
+
+  const openAuthModal = (mode: "signin" | "signup") => {
+    setAuthMode(mode)
+    setShowAuthModal(true)
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+    } catch (error) {
+      console.error("Error signing out:", error)
+    }
   }
 
   return (
@@ -201,14 +272,7 @@ export function Navigation() {
                       My Profile
                     </Link>
                     <button
-                      onClick={async () => {
-                        try {
-                          await signOut()
-                          window.location.href = '/'
-                        } catch (error) {
-                          console.error('Sign out failed:', error)
-                        }
-                      }}
+                      onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700"
                     >
                       Sign Out
@@ -218,19 +282,13 @@ export function Navigation() {
               ) : (
                 <div className="flex items-center space-x-4">
                   <button
-                    onClick={() => {
-                      setAuthMode('login')
-                      setShowAuthModal(true)
-                    }}
+                    onClick={() => openAuthModal('signin')}
                     className="text-gray-700 hover:text-blue-600 dark:text-gray-300"
                   >
                     Login
                   </button>
                   <button
-                    onClick={() => {
-                      setAuthMode('signup')
-                      setShowAuthModal(true)
-                    }}
+                    onClick={() => openAuthModal('signup')}
                     className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
                   >
                     Sign Up
@@ -245,7 +303,7 @@ export function Navigation() {
       <AuthModal 
         isOpen={showAuthModal} 
         onClose={() => setShowAuthModal(false)} 
-        initialMode={authMode}
+        mode={authMode}
       />
     </>
   )

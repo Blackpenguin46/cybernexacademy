@@ -1,6 +1,6 @@
 [build]
   # Use absolute path and verbose npm
-  command = "npm ci && npm run build"
+  command = "npm run build"
   publish = ".next"
   functions = "netlify/functions"
 
@@ -12,6 +12,7 @@
   # Add debug flags
   NPM_CONFIG_LOGLEVEL = "verbose"
   DEBUG = "*"
+  NEXT_USE_NETLIFY_EDGE = "true"
 
 [build.processing]
   skip_processing = false
@@ -23,8 +24,8 @@
   package = "@netlify/plugin-nextjs"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 [functions]

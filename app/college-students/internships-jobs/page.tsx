@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
-import JobListings from '@/app/components/JobListings';
+import JobListings from '@/components/JobListings';
 
-export default function InternshipsJobsPage() {
+export default function InternshipsAndJobs() {
   return (
     <div className="container mx-auto px-6 py-12">
       <Link href="/college-students" className="text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center mb-6">
@@ -19,13 +19,13 @@ export default function InternshipsJobsPage() {
       {/* Internships Section */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Internships</h2>
-        <JobListings jobType="internship" />
+        <JobListings type="internship" />
       </section>
 
       {/* Full-time Positions Section */}
       <section className="mb-12">
         <h2 className="text-2xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Full-time Positions</h2>
-        <JobListings jobType="job" />
+        <JobListings type="job" />
       </section>
 
       {/* Tips for Applying Section */}
@@ -127,5 +127,4 @@ export default function InternshipsJobsPage() {
     </div>
   );
 }
-o
 

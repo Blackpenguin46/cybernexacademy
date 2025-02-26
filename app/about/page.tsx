@@ -3,34 +3,89 @@ import { ArrowLeft } from 'lucide-react'
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">About Cybernex</h1>
+    <div className="container mx-auto px-4 py-12">
+      <h1 className="text-4xl font-bold mb-8 text-center">About CyberNex</h1>
       
-      <div className="space-y-6 text-gray-600 dark:text-gray-400">
-        <p>
-          At Cybernex, our mission is to empower individuals at every stage of their cybersecurity journey. Whether you're a beginner just stepping into the world of cybersecurity or an advanced professional looking to sharpen your skills, Cybernex is your one-stop destination for all the resources you need to succeed.
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-6">
+          At CyberNex, our mission is to make cybersecurity education accessible, practical, and engaging for everyone. 
+          We believe that in today's digital world, understanding cybersecurity is not just for specialists—it's an 
+          essential skill for anyone who uses technology.
         </p>
-        
-        <p>
-          The cybersecurity industry can be overwhelming, with countless tutorials, videos, and career paths to navigate. Cybernex simplifies this process by curating the best resources, tools, and guidance in one place. No more endless searching—just a clear, structured path to help you achieve your goals.
-        </p>
-        
-        <p>
-          For beginners, we provide step-by-step guidance on how to get started, including foundational tutorials, recommended projects, and career advice tailored to your interests. For seasoned professionals, we offer advanced training, industry insights, and opportunities to connect with like-minded individuals.
-        </p>
-        
-        <p>
-          Cybernex is more than just a platform—it's a community. We aim to break down the barriers of the cybersecurity industry by providing passionate individuals with the tools, knowledge, and support they need to thrive. Join us and take the next step in your cybersecurity journey.
+        <p className="text-gray-700 dark:text-gray-300">
+          We're committed to bridging the cybersecurity skills gap by providing high-quality, hands-on learning 
+          experiences that prepare individuals for real-world challenges and opportunities in the field of cybersecurity.
         </p>
       </div>
-
-      <Link 
-        href="/" 
-        className="mt-8 text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center"
-      >
-        <ArrowLeft className="mr-2" />
-        Back to Home
-      </Link>
+      
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Our Approach</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-4">
+          We believe effective learning happens through:
+        </p>
+        <ul className="list-disc pl-6 mb-6 text-gray-700 dark:text-gray-300 space-y-2">
+          <li><strong>Practical Application</strong> - Learning by doing through hands-on projects and labs</li>
+          <li><strong>Real-World Relevance</strong> - Focusing on current threats and industry-relevant skills</li>
+          <li><strong>Progressive Learning</strong> - Building knowledge from fundamentals to advanced concepts</li>
+          <li><strong>Community Support</strong> - Learning together with peers and mentors</li>
+        </ul>
+        <p className="text-gray-700 dark:text-gray-300">
+          Our curriculum is continuously updated to reflect the evolving cybersecurity landscape, ensuring 
+          that our students are prepared for both current and emerging threats.
+        </p>
+      </div>
+      
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 mb-12">
+        <h2 className="text-2xl font-semibold mb-4">Our Team</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-6">
+          CyberNex was founded by a team of cybersecurity professionals and educators who recognized the need for 
+          more accessible, practical cybersecurity education. Our team combines decades of experience in:
+        </p>
+        <ul className="list-disc pl-6 text-gray-700 dark:text-gray-300 space-y-2">
+          <li>Offensive security and penetration testing</li>
+          <li>Security architecture and engineering</li>
+          <li>Incident response and digital forensics</li>
+          <li>Security compliance and risk management</li>
+          <li>Cybersecurity education and training</li>
+        </ul>
+      </div>
+      
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+        <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
+        <p className="text-gray-700 dark:text-gray-300 mb-6">
+          We'd love to hear from you! Whether you have questions about our courses, feedback on your learning 
+          experience, or inquiries about partnerships, our team is here to help.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-medium text-gray-900 dark:text-white">Email</h3>
+            <p className="text-gray-700 dark:text-gray-300">support@cybernex.edu</p>
+          </div>
+          <div>
+            <h3 className="font-medium text-gray-900 dark:text-white">Address</h3>
+            <p className="text-gray-700 dark:text-gray-300">
+              123 Cyber Street<br />
+              San Francisco, CA 94105<br />
+              United States
+            </p>
+          </div>
+          <div>
+            <h3 className="font-medium text-gray-900 dark:text-white">Social Media</h3>
+            <div className="flex space-x-4 mt-2">
+              <a href="#" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                Twitter
+              </a>
+              <a href="#" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                LinkedIn
+              </a>
+              <a href="#" className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
