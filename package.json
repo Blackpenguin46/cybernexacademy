@@ -11,7 +11,10 @@
     "fix-imports": "node scripts/fix-imports.js",
     "fix-imports-netlify": "node scripts/fix-imports-for-netlify.js",
     "convert-imports": "node scripts/convert-all-imports.js",
-    "build-netlify": "npm run convert-imports && next build"
+    "cleanup-project": "node scripts/cleanup-project.js",
+    "remove-src-pages": "node scripts/remove-src-pages.js",
+    "check-structure": "node scripts/check-project-structure.js",
+    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run convert-imports && next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
