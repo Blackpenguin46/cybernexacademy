@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "init-db": "ts-node scripts/init-supabase.ts",
-    "fix-imports": "node scripts/fix-imports.js"
+    "fix-imports": "node scripts/fix-imports.js",
+    "fix-imports-netlify": "node scripts/fix-imports-for-netlify.js",
+    "build-netlify": "npm run fix-imports-netlify && next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",

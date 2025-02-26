@@ -1,6 +1,6 @@
 [build]
   # Use absolute path and verbose npm
-  command = "npm run fix-imports && npm run build"
+  command = "npm run build-netlify"
   publish = ".next"
   functions = "netlify/functions"
 
