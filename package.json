@@ -14,7 +14,8 @@
     "cleanup-project": "node scripts/cleanup-project.js",
     "remove-src-pages": "node scripts/remove-src-pages.js",
     "check-structure": "node scripts/check-project-structure.js",
-    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run convert-imports && next build"
+    "fix-missing-components": "node scripts/fix-missing-components.js",
+    "build-netlify": "npm run check-structure && npm run remove-src-pages && npm run fix-missing-components && npm run convert-imports && next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
