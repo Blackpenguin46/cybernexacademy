@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "init-db": "ts-node scripts/init-supabase.ts"
+    "init-db": "ts-node scripts/init-supabase.ts",
+    "fix-imports": "node scripts/fix-imports.js"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
