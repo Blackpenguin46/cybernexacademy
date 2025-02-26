@@ -26,7 +26,8 @@
     "fix-node-version": "node scripts/fix-node-version.js",
     "fix-final-issues": "node scripts/fix-final-issues.js",
     "simplified-build": "node scripts/simplified-build.js",
-    "build-netlify": "node scripts/simplified-build.js"
+    "deploy-fix": "node scripts/deploy-fix.js",
+    "build-netlify": "next build"
   },
   "dependencies": {
     "@netlify/functions": "^2.0.0",
