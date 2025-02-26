@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useAuth } from "@/app/contexts/AuthContext"
-import { LoadingSpinner } from "@/app/components/LoadingSpinner"
+import { useAuth } from "@/contexts/AuthContext"
+import LoadingSpinner from "@/components/LoadingSpinner"
 import type { UserProfile } from "@/lib/auth"
 import { createClient } from "@/lib/auth"
 

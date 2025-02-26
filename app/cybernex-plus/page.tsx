@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { CheckCircle, ArrowRight } from "lucide-react"
-import { useAuth } from "../../contexts/AuthContext"
-import { supabase } from "../../lib/supabase"
-import { LoadingSpinner } from "@/app/components/LoadingSpinner"
+import { useAuth } from "@/contexts/AuthContext"
+import { supabase } from "@/lib/supabase"
+import LoadingSpinner from '@/components/LoadingSpinner'
 import { createClient } from "@/lib/auth"
 
 type Subscription = {
