@@ -21,8 +21,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    skipBuildScript = true
 
 [[redirects]]
   from = "/api/*"
