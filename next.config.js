@@ -9,8 +9,19 @@ const nextConfig = {
   experimental: {
     appDir: true
   },
-  webpack: (config) => {
-    config.resolve.fallback = { fs: false, path: false };
+  webpack: (config, { isServer }) => {
+    // Disable the jsconfig-paths-plugin
+    config.resolve.plugins = config.resolve.plugins.filter(
+      plugin => plugin.constructor.name !== 'JsConfigPathsPlugin'
+    );
+    
+    // Add fallbacks for node modules
+    config.resolve.fallback = { 
+      ...config.resolve.fallback,
+      fs: false, 
+      path: false 
+    };
+    
     return config;
   }
 }
