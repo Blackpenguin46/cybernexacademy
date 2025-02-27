@@ -5,48 +5,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "init-db": "ts-node scripts/init-supabase.ts",
-    "fix-imports": "node scripts/fix-imports.js",
-    "fix-imports-netlify": "node scripts/fix-imports-for-netlify.js",
-    "convert-imports": "node scripts/convert-all-imports.js",
-    "cleanup-project": "node scripts/cleanup-project.js",
-    "remove-src-pages": "node scripts/remove-src-pages.js",
-    "check-structure": "node scripts/check-project-structure.js",
-    "fix-missing-components": "node scripts/fix-missing-components.js",
-    "fix-dependencies": "node scripts/fix-dependencies.js",
-    "fix-jsconfig-paths": "node scripts/fix-jsconfig-paths.js",
-    "fix-next-config": "node scripts/fix-next-config.js",
-    "fix-cybernex-plus-dashboard": "node scripts/fix-cybernex-plus-dashboard.js",
-    "fix-jsx-syntax-errors": "node scripts/fix-jsx-syntax-errors.js",
-    "replace-problematic-files": "node scripts/replace-problematic-files.js",
-    "fix-netlify-dependencies": "node scripts/fix-netlify-dependencies.js",
-    "fix-job-listings": "node scripts/fix-job-listings.js",
-    "fix-node-version": "node scripts/fix-node-version.js",
-    "fix-final-issues": "node scripts/fix-final-issues.js",
-    "simplified-build": "node scripts/simplified-build.js",
-    "deploy-fix": "node scripts/deploy-fix.js",
-    "fix-module-errors": "node scripts/fix-module-errors.js",
-    "fix-module-resolution": "node scripts/fix-module-resolution.js",
-    "fix-netlify-plugin": "node scripts/fix-netlify-plugin.js",
-    "fix-jsconfig-paths-plugin": "node scripts/fix-jsconfig-paths-plugin.js",
-    "fix-missing-modules": "node scripts/fix-missing-modules.js",
-    "fix-absolute-paths": "node scripts/fix-absolute-paths.js",
-    "fix-dependency-resolution": "node scripts/fix-dependency-resolution.js",
-    "fix-jsconfig-paths-configuration": "node scripts/fix-jsconfig-paths-configuration.js",
-    "fix-optional-dependencies": "node scripts/fix-optional-dependencies.js",
-    "validate-package-json": "node scripts/validate-package-json.js",
-    "preinstall": "npx npm-force-resolutions || true",
-    "build-netlify": "node scripts/validate-package-json.js && node scripts/simplified-build.js"
+    "start": "next start"
   },
   "dependencies": {
-    "next": "14.0.4",
+    "next": "13.4.19",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
-  "engines": {
-    "node": "18.17.0",
-    "npm": "9.9.4"
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "4.41.3",
+    "@types/node": "18.11.18",
+    "@types/react": "18.0.26",
+    "typescript": "4.9.4"
   }
 }

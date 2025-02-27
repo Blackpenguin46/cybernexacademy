@@ -1,28 +1,36 @@
-import type React from "react"
-import { useAuth } from "../contexts/AuthContext"
+import React, { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { useRouter } from 'next/router';
 
-const Dashboard: React.FC = () => {
-  const { user } = useAuth()
+export default function Dashboard() {
+  const { currentUser, logout } = useAuth();
+  const router = useRouter();
+  const [error, setError] = useState('');
+
+  async function handleLogout() {
+    try {
+      setError('');
+      await logout();
+      router.push('/');
+    } catch {
+      setError('Failed to log out');
+    }
+  }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-      {user ? (
-        <div>
-          <p className="mb-4">Welcome, {user.email}!</p>
-          <h2 className="text-2xl font-semibold mb-4">Your Progress</h2>
-          {/* Add progress tracking components here */}
-          <h2 className="text-2xl font-semibold mb-4">Recommended Courses</h2>
-          {/* Add course recommendation components here */}
-          <h2 className="text-2xl font-semibold mb-4">Recent Community Activity</h2>
-          {/* Add community activity components here */}
-        </div>
-      ) : (
-        <p>Please log in to view your dashboard.</p>
-      )}
+    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
+      <h2>Dashboard</h2>
+      {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
+      <div style={{ background: '#f0f0f0', padding: '1rem', borderRadius: '0.25rem', marginBottom: '1rem' }}>
+        <strong>Email:</strong> {currentUser?.email}
+      </div>
+      <button 
+        onClick={handleLogout}
+        style={{ padding: '0.5rem 1rem', background: '#0070f3', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}
+      >
+        Log Out
+      </button>
     </div>
-  )
+  );
 }
-
-export default Dashboard
 
