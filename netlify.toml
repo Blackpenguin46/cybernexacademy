@@ -1,9 +1,17 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  ignore = "git diff --quiet HEAD^ HEAD ./"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    skipBuildCache = true
+
+[[redirects]]
+  from = "/_next/static/*"
+  to = "/static/:splat"
+  status = 200
 
 [[redirects]]
   from = "/*"
@@ -21,7 +29,7 @@
   STRIPE_CYBERNEX_PRO_PRICE_ID = ""
   STRIPE_SECRET_KEY = ""
   NEXT_USE_NETLIFY_EDGE = "true"
-  NEXT_PRIVATE_TARGET = "server"
+  NEXT_PRIVATE_TARGET = "experimental-serverless-trace"
   NODE_VERSION = "18"
 
 # Opt out of using Netlify's build image defaults
