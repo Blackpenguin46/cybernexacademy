@@ -37,75 +37,16 @@
     "fix-jsconfig-paths-configuration": "node scripts/fix-jsconfig-paths-configuration.js",
     "fix-optional-dependencies": "node scripts/fix-optional-dependencies.js",
     "validate-package-json": "node scripts/validate-package-json.js",
-    "fix-jsconfig-paths-issues": "node scripts/fix-jsconfig-paths-issues.js",
     "preinstall": "npx npm-force-resolutions || true",
-    "fix-optional-deps-aggressive": "node scripts/fix-optional-deps-aggressive.js",
-    "fix-netlify-plugin-missing": "node scripts/fix-netlify-plugin-missing.js",
-    "build-static": "node scripts/build-static.js",
-    "build-netlify": "node scripts/fix-netlify-plugin-missing.js && node scripts/build-static.js"
+    "build-netlify": "node scripts/validate-package-json.js && node scripts/simplified-build.js"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "engines": {
     "node": "18.17.0",
     "npm": "9.9.4"
-  },
-  "dependencies": {
-    "@netlify/functions": "^2.0.0",
-    "@netlify/plugin-nextjs": "4.41.3",
-    "@radix-ui/react-accordion": "^1.1.2",
-    "@stripe/stripe-js": "^1.54.0",
-    "@supabase/auth-helpers-nextjs": "^0.8.7",
-    "@supabase/auth-helpers-react": "^0.4.2",
-    "@supabase/ssr": "latest",
-    "@supabase/supabase-js": "^2.39.3",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "autoprefixer": "^10.0.1",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "dotenv": "^16.3.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.4",
-    "jose": "^5.0.0",
-    "jsonwebtoken": "9.0.2",
-    "lucide-react": "^0.303.0",
-    "next": "14.0.4",
-    "postcss": "^8",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^5.5.0",
-    "stripe": "^14.10.0",
-    "tailwind-merge": "^2.2.1",
-    "tailwindcss": "^3.3.0",
-    "tailwindcss-animate": "^1.0.7",
-    "ts-node": "^10.9.2",
-    "typescript": "^5"
-  },
-  "devDependencies": {
-    "@netlify/functions": "^3.0.0",
-    "@types/jsonwebtoken": "9.0.9",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "@typescript-eslint/eslint-plugin": "5.62.0",
-    "@typescript-eslint/parser": "5.62.0",
-    "eslint": "^8",
-    "postcss": "^8",
-    "typescript": "^5",
-    "glob": "^10.3.10"
-  },
-  "overrides": {
-    "@next/swc-win32-x64-msvc": "14.0.4",
-    "@next/swc-darwin-arm64": "14.0.4", 
-    "@next/swc-darwin-x64": "14.0.4",
-    "@next/swc-linux-arm64-gnu": "14.0.4",
-    "@next/swc-linux-arm64-musl": "14.0.4",
-    "@next/swc-linux-x64-gnu": "14.0.4",
-    "@next/swc-linux-x64-musl": "14.0.4",
-    "fsevents": "2.3.3"
-  },
-  "optionalDependencies": {},
-  "resolutions": {
-    "@netlify/plugin-nextjs": "4.41.3"
   }
 }
