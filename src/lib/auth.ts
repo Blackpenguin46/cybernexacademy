@@ -1,19 +1,20 @@
 // Basic authentication utility functions
 
-export async function signIn(email: string, password: string) {
-  // Mock implementation
-  return { user: { email } };
-}
+export const auth = {
+  async signIn(email: string, password: string) {
+    // Implement your sign in logic here
+    return { user: { email } };
+  },
 
-export async function signUp(email: string, password: string) {
-  // Mock implementation
-  return { user: { email } };
-}
+  async signUp(email: string, password: string) {
+    // Implement your sign up logic here
+    return { user: { email } };
+  },
 
-export async function signOut() {
-  // Mock implementation
-  return true;
-}
+  async signOut() {
+    // Implement your sign out logic here
+  }
+};
 
 export function getCurrentUser() {
   // Mock implementation

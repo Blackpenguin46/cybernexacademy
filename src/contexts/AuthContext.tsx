@@ -1,45 +1,35 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-
-interface User {
-  email: string;
-}
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { auth } from '@/lib/auth';
 
 interface AuthContextType {
-  currentUser: User | null;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
+  currentUser: any;
+  signIn: (email: string, password: string) => Promise<any>;
+  signUp: (email: string, password: string) => Promise<any>;
+  signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function useAuth() {
-  return useContext(AuthContext) as AuthContextType;
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
-  async function signup(email: string, password: string) {
-    // Mock signup functionality
-    setCurrentUser({ email });
-  }
-
-  async function login(email: string, password: string) {
-    // Mock login functionality
-    setCurrentUser({ email });
-  }
-
-  async function logout() {
-    // Mock logout functionality
-    setCurrentUser(null);
-  }
+  useEffect(() => {
+    // Add auth state listener here if needed
+  }, []);
 
   const value = {
     currentUser,
-    login,
-    signup,
-    logout
+    signIn: auth.signIn,
+    signUp: auth.signUp,
+    signOut: auth.signOut
   };
 
   return (

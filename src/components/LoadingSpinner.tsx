@@ -1,29 +1,9 @@
 import React from 'react';
 
-const LoadingSpinner = () => {
+export default function LoadingSpinner() {
   return (
-    <div style={{ 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center', 
-      height: '100px' 
-    }}>
-      <div style={{
-        border: '4px solid rgba(0, 0, 0, 0.1)',
-        borderLeft: '4px solid #3498db',
-        borderRadius: '50%',
-        width: '30px',
-        height: '30px',
-        animation: 'spin 1s linear infinite',
-      }}></div>
-      <style jsx>{`
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
+    <div className="flex justify-center items-center h-screen">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
     </div>
   );
-};
-
-export default LoadingSpinner; 
+} 

@@ -1,50 +1,37 @@
 import type React from "react"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import { useAuth } from "../contexts/AuthContext"
 
 const Header: React.FC = () => {
-  const { user, signOut } = useAuth()
+  const { currentUser } = useAuth()
 
   return (
-    <header className="bg-gray-800 text-white">
-      <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">
-          CyberNex
-        </Link>
-        <div className="space-x-4">
-          <Link to="/learn" className="hover:text-gray-300">
-            Learn
+    <header className="bg-gray-800 text-white py-4">
+      <div className="container mx-auto px-4">
+        <nav className="flex justify-between items-center">
+          <Link href="/" className="text-xl font-bold">
+            CyberNex
           </Link>
-          <Link to="/certifications-careers" className="hover:text-gray-300">
-            Certifications & Careers
-          </Link>
-          <Link to="/tools-utilities" className="hover:text-gray-300">
-            Tools & Utilities
-          </Link>
-          <Link to="/community" className="hover:text-gray-300">
-            Community
-          </Link>
-          {user ? (
-            <>
-              <Link to="/dashboard" className="hover:text-gray-300">
-                Dashboard
+          
+          <div className="flex space-x-4">
+            <Link href="/about-fundamentals" className="hover:text-gray-300">
+              About
+            </Link>
+            <Link href="/careers/jobs" className="hover:text-gray-300">
+              Careers
+            </Link>
+            {currentUser ? (
+              <Link href="/cybernex-plus" className="hover:text-gray-300">
+                CyberNex Plus
               </Link>
-              <button onClick={signOut} className="hover:text-gray-300">
-                Sign Out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:text-gray-300">
+            ) : (
+              <Link href="/login" className="hover:text-gray-300">
                 Login
               </Link>
-              <Link to="/signup" className="hover:text-gray-300">
-                Sign Up
-              </Link>
-            </>
-          )}
-        </div>
-      </nav>
+            )}
+          </div>
+        </nav>
+      </div>
     </header>
   )
 }

@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import { useRouter } from 'next/router';
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function Dashboard() {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, signOut } = useAuth();
   const router = useRouter();
   const [error, setError] = useState('');
 
   async function handleLogout() {
     try {
-      setError('');
-      await logout();
-      router.push('/');
+      await signOut();
+      router.push('/login');
     } catch {
       setError('Failed to log out');
     }
   }
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto', fontFamily: 'system-ui, sans-serif' }}>
-      <h2>Dashboard</h2>
-      {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
-      <div style={{ background: '#f0f0f0', padding: '1rem', borderRadius: '0.25rem', marginBottom: '1rem' }}>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+      <div className="bg-white p-4 rounded shadow">
         <strong>Email:</strong> {currentUser?.email}
+        <button
+          onClick={handleLogout}
+          className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Log Out
+        </button>
       </div>
-      <button 
-        onClick={handleLogout}
-        style={{ padding: '0.5rem 1rem', background: '#0070f3', color: 'white', border: 'none', borderRadius: '0.25rem', cursor: 'pointer' }}
-      >
-        Log Out
-      </button>
     </div>
   );
 }
