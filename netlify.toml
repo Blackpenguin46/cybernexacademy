@@ -3,7 +3,12 @@
   publish = ".next"
 
 [build.environment]
-  GO_VERSION = "1.19"
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
+  NEXT_PUBLIC_SUPABASE_URL = ""
+  STRIPE_CYBERNEX_PLUS_PRICE_ID = ""
+  STRIPE_CYBERNEX_PRO_PRICE_ID = ""
+  STRIPE_SECRET_KEY = ""
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
