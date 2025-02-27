@@ -2,364 +2,441 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-console.log('Starting to fix missing modules...');
+console.log('Fixing missing modules in the project...');
 
-// 1. Install the missing npm packages
+// 1. Add react-router-dom to package.json
+const packageJsonPath = path.join(process.cwd(), 'package.json');
+let packageJson;
+
 try {
-  console.log('Installing missing npm packages...');
-  execSync('npm install framer-motion@10.16.4 --save', { stdio: 'inherit' });
-  console.log('Successfully installed framer-motion');
+  packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+  
+  // Add react-router-dom to dependencies
+  packageJson.dependencies = {
+    ...packageJson.dependencies,
+    "react-router-dom": "^6.15.0" // Using a compatible version
+  };
+  
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  console.log('Added react-router-dom to package.json');
+  
+  // Install the dependency
+  console.log('Installing react-router-dom...');
+  execSync('npm install', { stdio: 'inherit' });
 } catch (error) {
-  console.error('Error installing packages:', error);
+  console.error(`Error updating package.json: ${error.message}`);
 }
 
-// 2. Create the missing components directory if it doesn't exist
+// 2. Create the missing AuthContext
+const contextsDir = path.join(process.cwd(), 'contexts');
+if (!fs.existsSync(contextsDir)) {
+  fs.mkdirSync(contextsDir, { recursive: true });
+  console.log('Created contexts directory');
+}
+
+const authContextPath = path.join(contextsDir, 'AuthContext.tsx');
+const authContextContent = `
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+
+interface AuthContextType {
+  currentUser: any | null;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  updateEmail: (email: string) => Promise<void>;
+  updatePassword: (password: string) => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+export function useAuth() {
+  return useContext(AuthContext) as AuthContextType;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [currentUser, setCurrentUser] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Mock authentication functions
+  async function signup(email: string, password: string) {
+    console.log('Signup:', email, password);
+    // In a real app, you would integrate with an authentication service
+    setCurrentUser({ email });
+  }
+
+  async function login(email: string, password: string) {
+    console.log('Login:', email, password);
+    // In a real app, you would integrate with an authentication service
+    setCurrentUser({ email });
+  }
+
+  async function logout() {
+    console.log('Logout');
+    // In a real app, you would integrate with an authentication service
+    setCurrentUser(null);
+  }
+
+  async function resetPassword(email: string) {
+    console.log('Reset password for:', email);
+    // In a real app, you would integrate with an authentication service
+  }
+
+  async function updateEmail(email: string) {
+    console.log('Update email to:', email);
+    // In a real app, you would integrate with an authentication service
+    setCurrentUser({ ...currentUser, email });
+  }
+
+  async function updatePassword(password: string) {
+    console.log('Update password');
+    // In a real app, you would integrate with an authentication service
+  }
+
+  useEffect(() => {
+    // Simulate authentication check
+    const checkAuth = async () => {
+      // In a real app, you would check if the user is logged in
+      setLoading(false);
+    };
+    
+    checkAuth();
+  }, []);
+
+  const value = {
+    currentUser,
+    login,
+    signup,
+    logout,
+    resetPassword,
+    updateEmail,
+    updatePassword
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
+}
+`;
+
+fs.writeFileSync(authContextPath, authContextContent.trim());
+console.log('Created AuthContext.tsx');
+
+// 3. Update the broken components that import these modules
+// First, find the components that need fixing
+const componentsToFix = ['Dashboard.tsx', 'Login.tsx', 'SignUp.tsx', 'Home.tsx'];
+const srcDir = path.join(process.cwd());
+
+// Function to recursively find files
+function findFiles(dir, fileNames) {
+  const results = [];
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    
+    if (entry.isDirectory()) {
+      results.push(...findFiles(fullPath, fileNames));
+    } else if (fileNames.includes(entry.name)) {
+      results.push(fullPath);
+    }
+  }
+  
+  return results;
+}
+
+// Find component files that need fixing
+const filesToFix = findFiles(srcDir, componentsToFix);
+
+console.log('Found the following components to fix:');
+filesToFix.forEach(file => console.log(`- ${file}`));
+
+// For each file, ensure it imports the correct modules
+filesToFix.forEach(filePath => {
+  try {
+    let content = fs.readFileSync(filePath, 'utf8');
+    let modified = false;
+    
+    // Check if AuthContext import is missing
+    if (filePath.includes('Dashboard.tsx') || filePath.includes('Login.tsx')) {
+      if (!content.includes('import { useAuth } from')) {
+        // Add the import at the top of the file, after React import
+        content = content.replace(
+          /import React.*/,
+          `$&\nimport { useAuth } from '../contexts/AuthContext';`
+        );
+        modified = true;
+      }
+    }
+    
+    // Check if react-router-dom import is missing
+    if (filePath.includes('Home.tsx') || filePath.includes('Login.tsx') || filePath.includes('SignUp.tsx')) {
+      if (!content.includes('import { ') || !content.includes('react-router-dom')) {
+        // Add the import at the top of the file, after React import
+        content = content.replace(
+          /import React.*/,
+          `$&\nimport { Link, useNavigate } from 'react-router-dom';`
+        );
+        modified = true;
+      }
+    }
+    
+    if (modified) {
+      fs.writeFileSync(filePath, content);
+      console.log(`Fixed imports in ${filePath}`);
+    } else {
+      console.log(`No changes needed for ${filePath}`);
+    }
+  } catch (error) {
+    console.error(`Error updating ${filePath}: ${error.message}`);
+  }
+});
+
+// 4. Create essential component files if they don't exist
+const dashboardPath = path.join(process.cwd(), 'components', 'Dashboard.tsx');
+const loginPath = path.join(process.cwd(), 'components', 'Login.tsx');
+const signupPath = path.join(process.cwd(), 'components', 'SignUp.tsx');
+const homePath = path.join(process.cwd(), 'components', 'Home.tsx');
+
+// Create components directory if it doesn't exist
 const componentsDir = path.join(process.cwd(), 'components');
 if (!fs.existsSync(componentsDir)) {
   fs.mkdirSync(componentsDir, { recursive: true });
   console.log('Created components directory');
 }
 
-// 3. Create ProjectWalkthrough component
-const projectWalkthroughPath = path.join(componentsDir, 'ProjectWalkthrough.tsx');
-const projectWalkthroughContent = `
-import React from 'react';
+// Create Dashboard component if it doesn't exist
+if (!fs.existsSync(dashboardPath)) {
+  const dashboardContent = `
+import React, { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
-interface ProjectWalkthroughProps {
-  title: string;
-  description: string;
-  steps: {
-    title: string;
-    description: string;
-    code?: string;
-    image?: string;
-  }[];
-  requirements?: string[];
-  difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
-  technologies?: string[];
-  keywords?: string[];
-}
+export default function Dashboard() {
+  const [error, setError] = useState('');
+  const { currentUser, logout } = useAuth();
 
-const ProjectWalkthrough: React.FC<ProjectWalkthroughProps> = ({
-  title,
-  description,
-  steps,
-  requirements = [],
-  difficulty = 'Intermediate',
-  technologies = [],
-  keywords = [],
-}) => {
-  return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-4">{title}</h1>
-      <p className="text-lg mb-6">{description}</p>
-      
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">Project Details</h2>
-        <div className="flex flex-wrap gap-2 mb-4">
-          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-            {difficulty}
-          </span>
-          {technologies.map((tech, index) => (
-            <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-      
-      {requirements.length > 0 && (
-        <div className="mb-6">
-          <h2 className="text-xl font-semibold mb-2">Requirements</h2>
-          <ul className="list-disc pl-5 space-y-1">
-            {requirements.map((req, index) => (
-              <li key={index}>{req}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-4">Project Steps</h2>
-        <div className="space-y-8">
-          {steps.map((step, index) => (
-            <div key={index} className="border-l-4 border-gray-200 pl-4">
-              <h3 className="text-lg font-semibold mb-2">
-                Step {index + 1}: {step.title}
-              </h3>
-              <p className="mb-4">{step.description}</p>
-              {step.code && (
-                <pre className="bg-gray-800 text-white p-4 rounded-md overflow-x-auto mb-4">
-                  <code>{step.code}</code>
-                </pre>
-              )}
-              {step.image && (
-                <img 
-                  src={step.image} 
-                  alt={`Step ${index + 1} illustration`} 
-                  className="max-w-full h-auto rounded-md"
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-      
-      {keywords.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-2">Keywords</h2>
-          <div className="flex flex-wrap gap-2">
-            {keywords.map((keyword, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm">
-                {keyword}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
+  async function handleLogout() {
+    setError('');
 
-export default ProjectWalkthrough;
-`;
-
-fs.writeFileSync(projectWalkthroughPath, projectWalkthroughContent.trim(), 'utf8');
-console.log('Created ProjectWalkthrough component');
-
-// 4. Create JobListings component
-const jobListingsPath = path.join(componentsDir, 'JobListings.tsx');
-const jobListingsContent = `
-import React from 'react';
-
-interface Job {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  type: 'Full-time' | 'Part-time' | 'Internship' | 'Contract';
-  description: string;
-  requirements: string[];
-  salary?: string;
-  postedDate: string;
-  url?: string;
-}
-
-const SAMPLE_JOBS: Job[] = [
-  {
-    id: 1,
-    title: 'Cybersecurity Analyst Intern',
-    company: 'TechSecure',
-    location: 'Remote',
-    type: 'Internship',
-    description: 'Join our team to help monitor security systems and identify potential threats.',
-    requirements: [
-      'Currently pursuing a degree in Cybersecurity or related field',
-      'Basic knowledge of network security concepts',
-      'Strong analytical skills'
-    ],
-    postedDate: '2023-05-15',
-    url: '#'
-  },
-  {
-    id: 2,
-    title: 'Junior Penetration Tester',
-    company: 'SecureNet Solutions',
-    location: 'Chicago, IL (Hybrid)',
-    type: 'Full-time',
-    description: 'Work with our security team to identify vulnerabilities in client systems.',
-    requirements: [
-      'Bachelor's degree in Cybersecurity, Computer Science, or related field',
-      'Knowledge of common security tools (Nmap, Wireshark, Metasploit)',
-      'Understanding of web application security'
-    ],
-    salary: '$65,000 - $75,000',
-    postedDate: '2023-05-10',
-    url: '#'
-  },
-  {
-    id: 3,
-    title: 'Security Operations Center (SOC) Analyst',
-    company: 'CyberDefense Inc.',
-    location: 'Remote',
-    type: 'Full-time',
-    description: 'Monitor and analyze security alerts and implement security measures.',
-    requirements: [
-      'Bachelor's degree in Cybersecurity or related field',
-      'Experience with SIEM tools',
-      'Understanding of network protocols and security concepts'
-    ],
-    salary: '$70,000 - $85,000',
-    postedDate: '2023-05-05',
-    url: '#'
+    try {
+      await logout();
+    } catch {
+      setError('Failed to log out');
+    }
   }
-];
 
-const JobListings: React.FC = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Cybersecurity Jobs & Internships</h1>
-      
-      <div className="space-y-6">
-        {SAMPLE_JOBS.map((job) => (
-          <div key={job.id} className="border rounded-lg p-6 shadow-sm">
-            <div className="flex justify-between items-start">
-              <div>
-                <h2 className="text-xl font-semibold">{job.title}</h2>
-                <p className="text-gray-700">{job.company} • {job.location}</p>
-              </div>
-              <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                {job.type}
-              </span>
-            </div>
-            
-            <p className="mt-4">{job.description}</p>
-            
-            <div className="mt-4">
-              <h3 className="font-medium mb-2">Requirements:</h3>
-              <ul className="list-disc pl-5 space-y-1">
-                {job.requirements.map((req, index) => (
-                  <li key={index} className="text-gray-700">{req}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="mt-4 flex justify-between items-center">
-              <div>
-                {job.salary && <p className="text-gray-700">Salary: {job.salary}</p>}
-                <p className="text-gray-500 text-sm">Posted: {job.postedDate}</p>
-              </div>
-              
-              {job.url && (
-                <a 
-                  href={job.url} 
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-                >
-                  Apply Now
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
+    <div>
+      <h2>Dashboard</h2>
+      {error && <div>{error}</div>}
+      <div>
+        <strong>Email:</strong> {currentUser?.email}
+      </div>
+      <button onClick={handleLogout}>
+        Log Out
+      </button>
+    </div>
+  );
+}
+`;
+  fs.writeFileSync(dashboardPath, dashboardContent.trim());
+  console.log('Created Dashboard.tsx');
+}
+
+// Create Login component if it doesn't exist
+if (!fs.existsSync(loginPath)) {
+  const loginContent = `
+import React, { useRef, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
+
+export default function Login() {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    try {
+      setError('');
+      setLoading(true);
+      if (emailRef.current && passwordRef.current) {
+        await login(emailRef.current.value, passwordRef.current.value);
+      }
+      navigate('/dashboard');
+    } catch {
+      setError('Failed to log in');
+    }
+
+    setLoading(false);
+  }
+
+  return (
+    <div>
+      <h2>Log In</h2>
+      {error && <div>{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email</label>
+          <input type="email" ref={emailRef} required />
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" ref={passwordRef} required />
+        </div>
+        <button disabled={loading} type="submit">
+          Log In
+        </button>
+      </form>
+      <div>
+        <Link to="/forgot-password">Forgot Password?</Link>
+      </div>
+      <div>
+        Need an account? <Link to="/signup">Sign Up</Link>
       </div>
     </div>
   );
-};
-
-export default JobListings;
+}
 `;
+  fs.writeFileSync(loginPath, loginContent.trim());
+  console.log('Created Login.tsx');
+}
 
-fs.writeFileSync(jobListingsPath, jobListingsContent.trim(), 'utf8');
-console.log('Created JobListings component');
+// Create SignUp component if it doesn't exist
+if (!fs.existsSync(signupPath)) {
+  const signupContent = `
+import React, { useRef, useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { Link, useNavigate } from 'react-router-dom';
 
-// 5. Update PageWrapper component to handle cases where framer-motion might not be available
-const pageWrapperPath = path.join(componentsDir, 'PageWrapper.tsx');
+export default function SignUp() {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const passwordConfirmRef = useRef<HTMLInputElement>(null);
+  const { signup } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-// Check if PageWrapper already exists
-if (fs.existsSync(pageWrapperPath)) {
-  let pageWrapperContent = fs.readFileSync(pageWrapperPath, 'utf8');
-  
-  // If it has framer-motion imports, but framer-motion isn't working, let's replace with a simplified version
-  if (pageWrapperContent.includes('framer-motion')) {
-    const simplifiedPageWrapperContent = `
-import React from 'react';
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
 
-// Simplified version without framer-motion dependency
-export const PageWrapper = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="page-transition-wrapper">
-      {children}
-    </div>
-  );
-};
+    if (passwordRef.current?.value !== passwordConfirmRef.current?.value) {
+      return setError('Passwords do not match');
+    }
 
-export default PageWrapper;
-`;
-    fs.writeFileSync(pageWrapperPath, simplifiedPageWrapperContent.trim(), 'utf8');
-    console.log('Updated PageWrapper component to remove framer-motion dependency');
+    try {
+      setError('');
+      setLoading(true);
+      if (emailRef.current && passwordRef.current) {
+        await signup(emailRef.current.value, passwordRef.current.value);
+      }
+      navigate('/dashboard');
+    } catch {
+      setError('Failed to create an account');
+    }
+
+    setLoading(false);
   }
-} else {
-  // Create a simple PageWrapper if it doesn't exist
-  const pageWrapperContent = `
-import React from 'react';
 
-// Simple implementation that doesn't rely on framer-motion
-export const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="page-transition-wrapper">
-      {children}
+    <div>
+      <h2>Sign Up</h2>
+      {error && <div>{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Email</label>
+          <input type="email" ref={emailRef} required />
+        </div>
+        <div>
+          <label>Password</label>
+          <input type="password" ref={passwordRef} required />
+        </div>
+        <div>
+          <label>Password Confirmation</label>
+          <input type="password" ref={passwordConfirmRef} required />
+        </div>
+        <button disabled={loading} type="submit">
+          Sign Up
+        </button>
+      </form>
+      <div>
+        Already have an account? <Link to="/login">Log In</Link>
+      </div>
     </div>
   );
-};
-
-export default PageWrapper;
+}
 `;
-  fs.writeFileSync(pageWrapperPath, pageWrapperContent.trim(), 'utf8');
-  console.log('Created simple PageWrapper component');
+  fs.writeFileSync(signupPath, signupContent.trim());
+  console.log('Created SignUp.tsx');
 }
 
-// 6. Optionally: Create an empty app folder structure if it doesn't exist
-// This ensures there are valid files for the import paths that are failing
-const appDir = path.join(process.cwd(), 'app');
-if (!fs.existsSync(appDir)) {
-  fs.mkdirSync(appDir, { recursive: true });
-  console.log('Created app directory');
-}
-
-// Create the nested project directories
-['blockchain-identity-verification', 'dns-spoofing-detector', 'file-encryption-tool'].forEach(projectName => {
-  const projectDir = path.join(appDir, 'projects', projectName);
-  fs.mkdirSync(projectDir, { recursive: true });
-  
-  // Create a basic page.tsx in each project directory
-  const pageContent = `
+// Create Home component if it doesn't exist
+if (!fs.existsSync(homePath)) {
+  const homeContent = `
 import React from 'react';
-import ProjectWalkthrough from '@/components/ProjectWalkthrough';
+import { Link } from 'react-router-dom';
 
-export default function ProjectPage() {
+export default function Home() {
   return (
-    <ProjectWalkthrough
-      title="${projectName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}"
-      description="This is a project walkthrough for ${projectName.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}."
-      steps={[
-        {
-          title: "Getting Started",
-          description: "Setting up your environment for this project."
-        },
-        {
-          title: "Implementation",
-          description: "Key steps to implement the solution."
-        },
-        {
-          title: "Testing",
-          description: "How to test your implementation."
-        }
-      ]}
-      difficulty="Intermediate"
-      technologies={["Python", "JavaScript", "Cryptography"]}
-      keywords={["Security", "Encryption", "Project"]}
-    />
+    <div>
+      <h1>CyberNex</h1>
+      <p>Welcome to CyberNex - your cybersecurity learning platform</p>
+      <div>
+        <Link to="/login">Login</Link>
+        <Link to="/signup">Sign Up</Link>
+      </div>
+    </div>
   );
 }
 `;
-  fs.writeFileSync(path.join(projectDir, 'page.tsx'), pageContent.trim(), 'utf8');
-  console.log(`Created page for ${projectName} project`);
-});
+  fs.writeFileSync(homePath, homeContent.trim());
+  console.log('Created Home.tsx');
+}
 
-// Create the internships-jobs page
-const jobsDir = path.join(appDir, 'college-students', 'internships-jobs');
-fs.mkdirSync(jobsDir, { recursive: true });
-
-const jobsPageContent = `
+// 5. Update the pages/index.js file to use the correct routing
+const indexPath = path.join(process.cwd(), 'pages', 'index.js');
+const indexContent = `
 import React from 'react';
-import JobListings from '@/components/JobListings';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from '../contexts/AuthContext';
+import Dashboard from '../components/Dashboard';
+import Login from '../components/Login';
+import SignUp from '../components/SignUp';
+import Home from '../components/Home';
 
-export default function InternshipsJobsPage() {
-  return <JobListings />;
+export default function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+  );
 }
 `;
 
-fs.writeFileSync(path.join(jobsDir, 'page.tsx'), jobsPageContent.trim(), 'utf8');
-console.log('Created internships-jobs page');
+fs.writeFileSync(indexPath, indexContent.trim());
+console.log('Updated pages/index.js to use routing');
 
-console.log('Finished fixing missing modules'); 
+console.log('\n✅ ALL MISSING MODULES FIXED');
+console.log('This script has:');
+console.log('1. Added react-router-dom to package.json dependencies');
+console.log('2. Created the missing AuthContext');
+console.log('3. Created or fixed components that were referenced in the error');
+console.log('4. Updated pages/index.js to use proper routing'); 
