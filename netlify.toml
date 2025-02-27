@@ -1,12 +1,14 @@
+# Basic build settings
 [build]
   # Use absolute path and verbose npm
   command = "npm run build"
   publish = ".next"
 
+# Plugin configuration 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-# Corrected edge functions path
+# Functions directory
 [functions]
   directory = "netlify/functions"
 
