@@ -1,6 +1,7 @@
 module.exports = {
   onPreBuild: () => {
-    console.log('Current directory:', process.cwd());
-    console.log('Directory contents:', require('fs').readdirSync('.'));
+    console.log('Using Node.js for build process');
+    console.log('Node version:', process.version);
+    console.log('NPM version:', process.env.npm_version);
   }
 }; 

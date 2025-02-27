@@ -10,6 +10,7 @@
   NEXT_TELEMETRY_DISABLED = "1"
   NODE_VERSION = "18.17.0"
   NPM_VERSION = "9.6.7"
+  PYTHON_VERSION = "false"
 
 [[redirects]]
   from = "/*"
@@ -23,6 +24,7 @@
     "package-lock.json"
   ]
   node_bundler = "esbuild"
+  runtime = "nodejs18.x"
 
 [build.processing]
   skip_processing = false
