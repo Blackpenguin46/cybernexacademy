@@ -1,41 +1,19 @@
 [build]
   command = "npm run build"
   publish = ".next"
-  ignore = "git diff --quiet HEAD^ HEAD ./"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    skipBuildCache = true
 
-[[redirects]]
-  from = "/_next/static/*"
-  to = "/static/:splat"
-  status = 200
+[build.environment]
+  NEXT_USE_NETLIFY_EDGE = "true"
+  NODE_VERSION = "18"
+  NEXT_PRIVATE_TARGET = "experimental-serverless-trace"
+
+[functions]
+  included_files = ["node_modules/**"]
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  included_files = ["node_modules/**"]
-
-[build.environment]
-  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
-  NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
-  NEXT_PUBLIC_SUPABASE_URL = ""
-  STRIPE_CYBERNEX_PLUS_PRICE_ID = ""
-  STRIPE_CYBERNEX_PRO_PRICE_ID = ""
-  STRIPE_SECRET_KEY = ""
-  NEXT_USE_NETLIFY_EDGE = "true"
-  NEXT_PRIVATE_TARGET = "experimental-serverless-trace"
-  NODE_VERSION = "18"
-
-# Opt out of using Netlify's build image defaults
-[build.processing]
-  skip_processing = true
-
-[dev]
-  framework = "next"
-  targetPort = 3000
