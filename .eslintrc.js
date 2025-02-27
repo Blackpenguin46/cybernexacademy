@@ -10,9 +10,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-explicit-any': 'warn'
   },
+  parserOptions: {
+    project: './tsconfig.json'
+  },
   settings: {
     next: {
-      rootDir: ['./'],
-    },
-  },
+      rootDir: './'
+    }
+  }
 } 
