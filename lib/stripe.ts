@@ -1,7 +1,7 @@
 import Stripe from 'stripe'
 
 if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required environment variable: STRIPE_SECRET_KEY')
+  throw new Error('Missing STRIPE_SECRET_KEY')
 }
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
