@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button"
-import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "@/components/ui/select"
+import { Button } from "../components/ui/button"
+import { CardTitle, CardHeader, CardContent, Card } from "../components/ui/card"
+import { Label } from "../components/ui/label"
+import { Input } from "../components/ui/input"
+import { SelectValue, SelectTrigger, SelectItem, SelectContent, Select } from "../components/ui/select"
 import { BellIcon, BotIcon, MessageCircleIcon, Package2Icon, UserIcon } from "lucide-react"
 
 export default function Home() {
