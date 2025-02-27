@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
   publish = ".next"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF . ':!package-lock.json'"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -9,6 +10,7 @@
   NEXT_USE_NETLIFY_EDGE = "true"
   NODE_VERSION = "18"
   NEXT_TELEMETRY_DISABLED = "1"
+  NPM_FLAGS = "--no-audit --no-fund"
 
 [[redirects]]
   from = "/*"
@@ -16,4 +18,21 @@
   status = 200
 
 [functions]
-  included_files = ["node_modules/**"]
+  included_files = [
+    "node_modules/**",
+    "package.json",
+    "package-lock.json"
+  ]
+
+[build.processing]
+  skip_processing = false
+[build.processing.css]
+  bundle = true
+  minify = true
+[build.processing.js]
+  bundle = true
+  minify = true
+[build.processing.html]
+  pretty_urls = true
+[build.processing.images]
+  compress = true
