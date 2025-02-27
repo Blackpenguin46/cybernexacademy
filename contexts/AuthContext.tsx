@@ -1,84 +1,109 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect } from 'react'
-import type { User } from '@supabase/supabase-js'
-import { supabase } from '@/lib/supabase'
-import type { UserProfile, Subscription } from '@/lib/auth'
 
-interface AuthContextType {
-  user: User | null
-  profile: UserProfile | null
-  subscription: Subscription | null
-  loading: boolean
-  signIn: (email: string, password: string) => Promise<void>
-  signUp: (email: string, password: string) => Promise<void>
-  signOut: () => Promise<void>
+type User = {
+  email: string;
+  name?: string;
+  role?: 'user' | 'admin';
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [subscription, setSubscription] = useState<Subscription | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // Check active sessions and sets the user
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
-
-    // Listen for changes on auth state (signed in, signed out, etc.)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null)
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
-
-  const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
-    if (error) throw error
-  }
-
-  const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    if (error) throw error
-  }
-
-  const signOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
-  }
-
-  return (
-    <AuthContext.Provider value={{
-      user,
-      profile,
-      subscription,
-      loading,
-      signIn,
-      signUp,
-      signOut
-    }}>
-      {children}
-    </AuthContext.Provider>
-  )
+type AuthContextType = {
+  user: User | null;
+  loading: boolean;
+  error: string | null;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  clearError: () => void;
 }
+
+const AuthContext = createContext<AuthContextType | null>(null)
 
 export function useAuth() {
   const context = useContext(AuthContext)
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider')
   }
   return context
+}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    // Check for stored session
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+    setLoading(false)
+  }, [])
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      setLoading(true)
+      setError(null)
+      // Mock authentication
+      const user = { email, name: 'Test User', role: 'user' as const }
+      setUser(user)
+      localStorage.setItem('user', JSON.stringify(user))
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in')
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const signUp = async (email: string, password: string) => {
+    try {
+      setLoading(true)
+      setError(null)
+      // Mock registration
+      const user = { email, name: 'New User', role: 'user' as const }
+      setUser(user)
+      localStorage.setItem('user', JSON.stringify(user))
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign up')
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const signOut = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      setUser(null)
+      localStorage.removeItem('user')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign out')
+      throw err
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const clearError = () => setError(null)
+
+  return (
+    <AuthContext.Provider 
+      value={{
+        user,
+        loading,
+        error,
+        signIn,
+        signUp,
+        signOut,
+        clearError
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 

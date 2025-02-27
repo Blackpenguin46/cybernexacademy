@@ -2,6 +2,17 @@
   command = "npm run build"
   publish = ".next"
 
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  included_files = ["node_modules/**"]
+
 [build.environment]
   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY = ""
   NEXT_PUBLIC_SUPABASE_ANON_KEY = ""
@@ -9,6 +20,14 @@
   STRIPE_CYBERNEX_PLUS_PRICE_ID = ""
   STRIPE_CYBERNEX_PRO_PRICE_ID = ""
   STRIPE_SECRET_KEY = ""
+  NEXT_USE_NETLIFY_EDGE = "true"
+  NEXT_PRIVATE_TARGET = "server"
+  NODE_VERSION = "18"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Opt out of using Netlify's build image defaults
+[build.processing]
+  skip_processing = true
+
+[dev]
+  framework = "next"
+  targetPort = 3000
