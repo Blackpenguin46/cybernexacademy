@@ -1,0 +1,19 @@
+/* Base styles */
+@layer base {
+  body {
+    @apply antialiased;
+  }
+
+  /* Form elements */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500;
+  }
+
+  /* Buttons */
+  button {
+    @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+} 
