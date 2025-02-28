@@ -14,27 +14,16 @@
     "next": "13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "stripe": "13.10.0",
-    "tailwindcss": "3.3.5",
-    "autoprefixer": "10.4.16",
-    "postcss": "8.4.31"
+    "stripe": "13.10.0"
   },
   "devDependencies": {
+    "autoprefixer": "10.4.16",
     "eslint": "8.56.0",
     "eslint-config-next": "13.5.6",
-    "eslint-plugin-react": "7.33.2",
-    "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-import": "2.29.0",
-    "eslint-plugin-jsx-a11y": "6.8.0"
+    "postcss": "8.4.31",
+    "tailwindcss": "3.3.5"
   },
   "engines": {
     "node": ">=16.0.0 <19.0.0"
-  },
-  "overrides": {
-    "semver": "^7.5.3",
-    "glob": "^8.1.0",
-    "rimraf": "^4.4.1",
-    "@humanwhocodes/config-array": "0.11.13",
-    "@humanwhocodes/object-schema": "2.0.2"
   }
-}
+} 
