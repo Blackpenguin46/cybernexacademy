@@ -2,12 +2,13 @@
   command = "npm run build"
   publish = ".next"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
-  NODE_VERSION = "18.17.0"
+  NODE_VERSION = "18"
+  NEXT_USE_SSR = "true"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/*"
@@ -15,26 +16,14 @@
   status = 200
 
 [functions]
-  included_files = [
-    "node_modules/**",
-    "package.json",
-    "package-lock.json"
-  ]
+  directory = "netlify/functions"
   node_bundler = "esbuild"
-  runtime = "nodejs18.x"
 
 [build.processing]
-  skip_processing = false
-[build.processing.css]
-  bundle = true
-  minify = true
-[build.processing.js]
-  bundle = true
-  minify = true
-[build.processing.html]
-  pretty_urls = true
-[build.processing.images]
-  compress = true
+  css.minify = true
+  js.minify = true
+  html.pretty_urls = true
+  images.compress = true
 
 [[headers]]
   for = "/*"
