@@ -1,17 +1,21 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
+import Head from 'next/head'
+import Layout from './Layout'
 
-export function PageWrapper({ children }: { children: React.ReactNode }) {
+export function PageWrapper({ children, title, description }) {
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-      >
+    <Layout>
+      <Head>
+        <title>{title} - CyberNex Academy</title>
+        <meta name="description" content={description} />
+      </Head>
+      <div className="container mx-auto px-4 py-8">
         {children}
-      </motion.div>
-    </AnimatePresence>
+      </div>
+    </Layout>
   )
-} 
+}
+
+export default PageWrapper 

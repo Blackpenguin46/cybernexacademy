@@ -1,29 +1,26 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
-export default function Card({ title, description, href, image }) {
+const Card = ({ title, description, href, imageSrc }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden">
-      {image && (
-        <div className="relative h-48 w-full">
-          <img 
-            src={image} 
-            alt={title} 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-      <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 mb-4">{description}</p>
-        {href && (
-          <Link 
-            href={href}
-            className="text-blue-600 hover:text-blue-800 font-medium"
-          >
-            Learn more →
-          </Link>
+    <Link href={href}>
+      <a className="block bg-white shadow rounded-lg p-6 hover:shadow-md transition-shadow">
+        {imageSrc && (
+          <div className="relative w-full h-48 mb-4">
+            <Image
+              src={imageSrc}
+              alt={title}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+          </div>
         )}
-      </div>
-    </div>
+        <h3 className="text-lg font-semibold mb-2">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+      </a>
+    </Link>
   )
-} 
+}
+
+export default Card 
