@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --no-save eslint && npm run build"
+  command = "npm install --no-save tailwindcss autoprefixer postcss && npm run build"
   publish = ".next"
 
 [build.environment]
@@ -7,7 +7,7 @@
   NODE_VERSION = "18.17.1"
   NEXT_USE_SSR = "true"
   NEXT_PUBLIC_APP_URL = "https://cybernexacademy.netlify.app"
-  NPM_FLAGS = "--legacy-peer-deps --no-fund --no-audit"
+  NPM_FLAGS = "--legacy-peer-deps --no-fund --no-audit --production=false"
   NETLIFY_USE_YARN = "false"
 
 [[plugins]]
