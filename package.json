@@ -9,25 +9,33 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^4.41.3",
-    "@supabase/supabase-js": "^2.39.3",
-    "next": "14.1.0",
+    "@netlify/plugin-nextjs": "4.40.2",
+    "@supabase/supabase-js": "2.39.3",
+    "next": "13.5.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "stripe": "^14.13.0",
-    "tailwindcss": "^3.4.1",
-    "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.33"
+    "stripe": "13.10.0",
+    "tailwindcss": "3.3.5",
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.31"
   },
   "devDependencies": {
     "eslint": "8.56.0",
-    "eslint-config-next": "14.1.0",
+    "eslint-config-next": "13.5.6",
     "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-import": "2.29.0",
     "eslint-plugin-jsx-a11y": "6.8.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=16.0.0 <19.0.0"
+  },
+  "overrides": {
+    "semver": ">=7.5.3",
+    "glob": "^8.1.0",
+    "rimraf": "^4.4.1",
+    "@humanwhocodes/config-array": "0.11.13",
+    "@humanwhocodes/object-schema": "2.0.2",
+    "inflight": "^2.0.0"
   }
 }

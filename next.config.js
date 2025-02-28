@@ -1,12 +1,10 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
     domains: ['localhost', 'vxxpwaloyrtwvpmatzpc.supabase.co', 'cybernexacademy.netlify.app'],
     unoptimized: true
-  },
-  experimental: {
-    appDir: false,
   },
   webpack: (config) => {
     config.resolve.fallback = { 
