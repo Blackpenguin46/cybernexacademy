@@ -15,14 +15,14 @@ export default function Header() {
           </div>
           
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/learn">Learn</Link>
-            <Link href="/college">College</Link>
-            <Link href="/career">Career</Link>
-            <Link href="/communities">Communities</Link>
+            <Link href="/learn" className="hover:text-blue-600">Learn</Link>
+            <Link href="/college" className="hover:text-blue-600">College</Link>
+            <Link href="/career" className="hover:text-blue-600">Career</Link>
+            <Link href="/communities" className="hover:text-blue-600">Communities</Link>
             {user ? (
               <>
                 <Link href="/premium" className="text-primary-600">Premium</Link>
-                <button onClick={signOut}>Sign Out</button>
+                <button onClick={signOut} className="hover:text-blue-600">Sign Out</button>
               </>
             ) : (
               <Link href="/login" className="text-primary-600">Sign In</Link>

@@ -10,24 +10,24 @@
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^4.41.3",
-    "@supabase/supabase-js": "^1.35.7",
-    "next": "12.3.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "next": "14.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "stripe": "^10.12.0",
-    "tailwindcss": "^3.1.8",
-    "autoprefixer": "^10.4.12",
-    "postcss": "^8.4.16"
+    "stripe": "^14.13.0",
+    "tailwindcss": "^3.4.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.33"
   },
   "devDependencies": {
-    "eslint": "8.23.1",
-    "eslint-config-next": "12.3.0",
-    "eslint-plugin-react": "7.31.8",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.1.0",
+    "eslint-plugin-react": "7.33.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsx-a11y": "6.6.1"
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jsx-a11y": "6.8.0"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0"
   }
 }
