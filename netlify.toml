@@ -1,5 +1,5 @@
 [build]
-  command = "rm -rf netlify/edge-functions && mkdir -p netlify/edge-functions && npm ci && NEXT_LINT=false npm run build"
+  command = "NEXT_DEBUG=true npm ci && NODE_OPTIONS='--trace-warnings' NEXT_LINT=false npm run build"
   publish = ".next"
 
 [build.environment]
@@ -10,6 +10,7 @@
   NEXT_PUBLIC_SUPABASE_URL = "https://vxxpwaloyrtwvpmatzpc.supabase.co"
   NETLIFY_USE_YARN = "false"
   NPM_CONFIG_LEGACY_PEER_DEPS = "true"
+  DEBUG = "*"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
@@ -24,8 +25,8 @@
   node_bundler = "esbuild"
 
 [build.processing]
-  css.minify = true
-  js.minify = true
+  css.minify = false
+  js.minify = false
   html.pretty_urls = true
   images.compress = true
 

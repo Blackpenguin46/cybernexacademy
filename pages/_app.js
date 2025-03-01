@@ -11,20 +11,11 @@ function SafeHydrate({ children }) {
 }
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
-    // Add global error handler
-    window.addEventListener('error', (event) => {
-      console.error('Caught in global handler:', event.error);
-    });
-  }, []);
-
-  return (
-    <AuthProvider>
-      <SafeHydrate>
-        <Component {...pageProps} />
-      </SafeHydrate>
-    </AuthProvider>
-  )
+  if (typeof window !== 'undefined') {
+    console.log('Client-side rendering');
+  }
+  
+  return <Component {...pageProps} />;
 }
 
-export default MyApp 
+export default MyApp; 
