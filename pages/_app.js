@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import '../styles/globals.css'
-import { AuthProvider } from '../lib/AuthContext'
+import { AuthProvider } from '../lib/auth'
 
 class ErrorBoundary extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { supabase } from '../lib/supabase';
+import { useAuth } from '../lib/auth';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -9,6 +9,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const { signUp } = useAuth();
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -27,10 +28,7 @@ export default function Signup() {
       setLoading(true);
       setError(null);
       
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      const { error } = await signUp(email, password);
       
       if (error) throw error;
       
