@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/remove-babelrc.js && node scripts/fix-duplicate-pages.js && npm install glob && npm ci && npm run build"
+  command = "npm ci && npm run build"
   publish = ".next"
 
 [build.environment]
