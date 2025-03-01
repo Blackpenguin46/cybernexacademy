@@ -1,61 +1,35 @@
-import React from 'react';
-import Link from 'next/link';
-import { withAuth } from '../lib/withAuth';
+import { useEffect, useState } from 'react'
 
-// Export a config that disables SSG/ISR/SSR
+// This tells Next.js not to prerender this page
 export const config = {
-  unstable_runtimeJS: true
-};
-
-// This ensures getStaticProps is minimal
-export function getStaticProps() {
-  return { props: {} };
+  unstable_runtimeJS: true,
 }
 
-function Dashboard({ user }) {
-  // Import signOut directly to avoid hooks during SSR
-  const { useAuth } = require('../lib/auth');
-  const { signOut } = useAuth();
+export default function Dashboard() {
+  const [Component, setComponent] = useState(null)
   
-  const handleSignOut = async () => {
-    await signOut();
-    window.location.href = '/';
-  };
-
-  return (
-    <div style={{ 
-      fontFamily: 'Arial, sans-serif',
-      maxWidth: '800px',
-      margin: '40px auto',
-      padding: '30px',
-      borderRadius: '8px',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      backgroundColor: '#f9f9f9'
-    }}>
-      <h1 style={{ fontSize: '2rem', color: '#333' }}>Dashboard</h1>
-      
-      <div style={{ marginTop: '20px' }}>
-        <p>Welcome, {user?.email || 'User'}!</p>
-        <p>You are now signed in to your account.</p>
+  // Only load the real component on client side
+  useEffect(() => {
+    import('../components/DashboardContent').then((mod) => {
+      setComponent(() => mod.default)
+    })
+  }, [])
+  
+  // Show loading state until client component is loaded
+  if (!Component) {
+    return (
+      <div style={{ 
+        fontFamily: 'Arial, sans-serif',
+        maxWidth: '800px',
+        margin: '40px auto',
+        padding: '30px',
+        textAlign: 'center'
+      }}>
+        <h2>Loading dashboard...</h2>
       </div>
-      
-      <button
-        onClick={handleSignOut}
-        style={{
-          backgroundColor: '#3182ce',
-          color: 'white',
-          padding: '10px 15px',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          marginTop: '20px'
-        }}
-      >
-        Sign Out
-      </button>
-    </div>
-  );
-}
-
-// Wrap component with auth protection
-export default withAuth(Dashboard); 
+    )
+  }
+  
+  // Render the dynamically loaded component
+  return <Component />
+} 

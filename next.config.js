@@ -2,23 +2,36 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // Disable image optimization for best Netlify compatibility
   images: {
-    domains: ['localhost', 'vxxpwaloyrtwvpmatzpc.supabase.co', 'cybernexacademy.netlify.app'],
-    unoptimized: true
+    unoptimized: true,  
   },
-  webpack: (config) => {
-    config.resolve.fallback = { 
-      ...config.resolve.fallback,
-      fs: false, 
-      path: false 
-    };
-    return config;
+  // Configure your protected routes to be dynamic
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
   },
-  env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    NEXT_PUBLIC_APP_URL: 'https://cybernexacademy.netlify.app'
-  }
+  // For Netlify compatibility
+  output: 'standalone',
+  // Modify runtime settings
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
+  compiler: {
+    styledComponents: true,
+  },
+  // Set routes to be server-side rendered or completely static
+  async headers() {
+    return [
+      {
+        source: '/(dashboard|premium/dashboard|communities/mentorship)',
+        headers: [
+          {
+            key: 'x-auth-protected',
+            value: 'true',
+          },
+        ],
+      },
+    ]
+  },
 }
 
 module.exports = nextConfig
