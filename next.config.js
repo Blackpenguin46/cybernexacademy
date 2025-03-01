@@ -5,9 +5,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Force pages to be completely client-side rendered
+  // Environment variables must be strings in Next.js
   env: {
-    IS_BUILD: process.env.NODE_ENV === 'production',
+    IS_BUILD: process.env.NODE_ENV === 'production' ? 'true' : 'false',
   },
   // Use webpack to replace auth implementation during build
   webpack: (config, { isServer, dev }) => {
