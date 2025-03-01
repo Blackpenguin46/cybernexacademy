@@ -1,11 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../../lib/auth';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
-export default function Mentorship() {
-  const { user, loading, isAuthenticated } = useAuth();
+// Create a client-side only component that uses auth
+const MentorshipContent = () => {
   const router = useRouter();
+  
+  // Import auth hook dynamically to avoid SSR issues
+  const { useAuth } = require('../../lib/auth');
+  const { user, loading, isAuthenticated } = useAuth();
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -87,4 +91,36 @@ export default function Mentorship() {
       </div>
     </div>
   );
+};
+
+// Create a loading component for initial render
+function LoadingFallback() {
+  return (
+    <div style={{ 
+      fontFamily: 'Arial, sans-serif',
+      maxWidth: '800px',
+      margin: '40px auto',
+      padding: '30px',
+      textAlign: 'center'
+    }}>
+      <h2>Loading...</h2>
+    </div>
+  );
+}
+
+// Export a dynamic component with SSR disabled
+export default function Mentorship() {
+  const [isClient, setIsClient] = useState(false);
+  
+  // Set isClient to true on component mount
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Show loading fallback until client-side
+  if (!isClient) {
+    return <LoadingFallback />;
+  }
+  
+  return <MentorshipContent />;
 }

@@ -1,10 +1,14 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useAuth } from '../lib/auth';
+import Link from 'next/link';
 
-export default function Dashboard() {
-  const { user, loading, isAuthenticated, signOut } = useAuth();
+// Create a client-side only component that uses auth
+const DashboardContent = () => {
   const router = useRouter();
+  
+  // Import auth hook dynamically to avoid SSR issues
+  const { useAuth } = require('../lib/auth');
+  const { user, loading, isAuthenticated, signOut } = useAuth();
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -23,7 +27,7 @@ export default function Dashboard() {
   }
 
   // If we get here and user is null, we're in the process of redirecting
-  if (!user) {
+  if (!isAuthenticated) {
     return null;
   }
 
@@ -40,7 +44,7 @@ export default function Dashboard() {
       <h1 style={{ fontSize: '2rem', color: '#333' }}>Dashboard</h1>
       
       <div style={{ marginTop: '20px' }}>
-        <p>Welcome, {user.email || 'User'}!</p>
+        <p>Welcome, {user?.email || 'User'}!</p>
         <p>You are now signed in to your account.</p>
       </div>
       
@@ -63,4 +67,36 @@ export default function Dashboard() {
       </button>
     </div>
   );
+};
+
+// Create a loading component for initial render
+function LoadingFallback() {
+  return (
+    <div style={{ 
+      fontFamily: 'Arial, sans-serif',
+      maxWidth: '800px',
+      margin: '40px auto',
+      padding: '30px',
+      textAlign: 'center'
+    }}>
+      <h2>Loading...</h2>
+    </div>
+  );
+}
+
+// Export a component that only renders client-side
+export default function Dashboard() {
+  const [isClient, setIsClient] = useState(false);
+  
+  // Set isClient to true on component mount
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
+  // Show loading fallback until client-side
+  if (!isClient) {
+    return <LoadingFallback />;
+  }
+  
+  return <DashboardContent />;
 } 
