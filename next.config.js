@@ -5,20 +5,24 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Environment variables must be strings in Next.js
-  env: {
-    IS_BUILD: process.env.NODE_ENV === 'production' ? 'true' : 'false',
-  },
-  // Use webpack to replace auth implementation during build
-  webpack: (config, { isServer, dev }) => {
-    if (!dev && isServer) {
-      // Replace auth imports with mock implementation during build
-      config.resolve.alias['lib/auth'] = require.resolve('./lib/mock-auth.js');
-    }
-    return config;
-  },
   // For Netlify compatibility
   output: 'standalone',
+  // Experimental features config for Next.js 14
+  experimental: {
+    // Disable app directory
+    appDir: false,
+    // Disable middleware
+    serverComponentsExternalPackages: [],
+    esmExternals: true,
+  },
+  // Avoid bundling @netlify/edge-functions incorrectly
+  webpack: (config, { isServer }) => {
+    // Fix for Netlify edge functions
+    if (isServer) {
+      config.externals = [...(config.externals || []), '@netlify/edge-functions']
+    }
+    return config
+  },
 }
 
 module.exports = nextConfig

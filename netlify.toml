@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci && npm install babel-plugin-transform-imports --save-dev && NODE_OPTIONS=--max-old-space-size=4096 npm run build"
+  command = "npm ci && NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS=--max-old-space-size=4096 npm run build"
   publish = ".next"
 
 [build.environment]
@@ -9,6 +9,11 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  
+  [plugins.inputs]
+  # Disable features that might cause problems
+  frameworkVersion = "nextjs@14"
+  useNewMiddlewareHelper = false
 
 [[headers]]
   for = "/*"
