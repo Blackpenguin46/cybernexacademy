@@ -29,13 +29,6 @@
   html.pretty_urls = true
   images.compress = true
 
-# Cache Netlify build plugins
-[[plugins]]
-  package = "netlify-plugin-cache"
-  
-  [plugins.inputs]
-    paths = [ ".next/cache" ]
-
 [[headers]]
   for = "/*"
   [headers.values]
