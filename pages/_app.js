@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import React from 'react'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { AuthProvider } from '../lib/auth'
 
@@ -51,14 +51,9 @@ function SafeHydrate({ children }) {
   );
 }
 
-function MyApp({ Component, pageProps }) {
-  // Create a Supabase client for the browser
-  const [supabaseClient] = useState(() => 
-    createBrowserSupabaseClient({
-      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-      supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    })
-  )
+export default function MyApp({ Component, pageProps }) {
+  // Create client-side Supabase client
+  const supabaseClient = createClientComponentClient()
 
   return (
     <ErrorBoundary>
@@ -69,6 +64,4 @@ function MyApp({ Component, pageProps }) {
       </SessionContextProvider>
     </ErrorBoundary>
   )
-}
-
-export default MyApp 
+} 
