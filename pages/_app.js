@@ -1,5 +1,6 @@
-import { Component } from 'react';
-import '../styles/globals.css'
+import { useState } from 'react'
+import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
+import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { AuthProvider } from '../lib/auth'
 
 class ErrorBoundary extends Component {
@@ -51,13 +52,23 @@ function SafeHydrate({ children }) {
 }
 
 function MyApp({ Component, pageProps }) {
+  // Create a Supabase client for the browser
+  const [supabaseClient] = useState(() => 
+    createBrowserSupabaseClient({
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    })
+  )
+
   return (
     <ErrorBoundary>
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
+      <SessionContextProvider supabaseClient={supabaseClient}>
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
+      </SessionContextProvider>
     </ErrorBoundary>
-  );
+  )
 }
 
-export default MyApp; 
+export default MyApp 
