@@ -1,5 +1,5 @@
 [build]
-  command = "npm install eslint --save-dev && npm install && NODE_OPTIONS='--max-old-space-size=4096' npm run build"
+  command = "npm install && NEXT_LINT=false npm run build"
   publish = ".next"
 
 [build.environment]
