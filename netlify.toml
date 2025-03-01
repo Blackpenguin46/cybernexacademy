@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --force && NEXT_LINT=false npm run build"
+  command = "npm ci && NEXT_LINT=false npm run build"
   publish = ".next"
 
 [build.environment]
@@ -9,8 +9,7 @@
   NEXT_PUBLIC_APP_URL = "https://cybernexacademy.netlify.app"
   NEXT_PUBLIC_SUPABASE_URL = "https://vxxpwaloyrtwvpmatzpc.supabase.co"
   NETLIFY_USE_YARN = "false"
-  NEXT_LINT = "false"
-  NPM_FLAGS = "--legacy-peer-deps --force"
+  NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
