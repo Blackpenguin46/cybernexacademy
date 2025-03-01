@@ -1,13 +1,4 @@
 {
   "presets": ["next/babel"],
-  "plugins": [
-    [
-      "babel-plugin-transform-imports",
-      {
-        "lib/auth": {
-          "transform": "lib/mock-auth"
-        }
-      }
-    ]
-  ]
+  "plugins": []
 } 

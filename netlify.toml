@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci && NODE_OPTIONS=--max-old-space-size=4096 npm run build"
+  command = "npm ci && npm install babel-plugin-transform-imports --save-dev && NODE_OPTIONS=--max-old-space-size=4096 npm run build"
   publish = ".next"
 
 [build.environment]
