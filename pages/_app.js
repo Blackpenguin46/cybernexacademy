@@ -1,6 +1,5 @@
 import React from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { SessionContextProvider } from '@supabase/auth-helpers-react'
+import { createBrowserClient } from '@supabase/ssr'
 import dynamic from 'next/dynamic'
 
 // Import real AuthProvider only on client-side
@@ -9,26 +8,39 @@ const DynamicAuthProvider = dynamic(
   { ssr: false }
 )
 
-// Create the Supabase client outside of the component
-const supabaseClient = createClientComponentClient()
-
 // Standard Next.js App component with destructured props
 function MyApp({ Component, pageProps }) {
+  // Create Supabase client on the client side only
+  const [supabaseClient, setSupabaseClient] = React.useState(null)
+  
   // Create a wrapper component for client-side rendering
   const ClientOnly = ({ children }) => {
     const [mounted, setMounted] = React.useState(false)
-    React.useEffect(() => setMounted(true), [])
+    
+    React.useEffect(() => {
+      setMounted(true)
+      
+      // Initialize Supabase client on the client side
+      if (!supabaseClient) {
+        const client = createBrowserClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        )
+        setSupabaseClient(client)
+      }
+    }, [])
+    
     return mounted ? children : null
   }
 
   return (
-    <SessionContextProvider supabaseClient={supabaseClient}>
-      <ClientOnly>
-        <DynamicAuthProvider>
+    <ClientOnly>
+      {supabaseClient && (
+        <DynamicAuthProvider supabaseClient={supabaseClient}>
           <Component {...pageProps} />
         </DynamicAuthProvider>
-      </ClientOnly>
-    </SessionContextProvider>
+      )}
+    </ClientOnly>
   )
 }
 
