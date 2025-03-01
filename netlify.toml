@@ -1,12 +1,11 @@
 [build]
-  command = "npm install && npm run build"
+  command = "npm install eslint --save-dev && npm install && NODE_OPTIONS='--max-old-space-size=4096' npm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18.18.0"
   NEXT_TELEMETRY_DISABLED = "1"
   NEXT_USE_SSR = "true"
-  NEXT_PUBLIC_SUPABASE_URL = "https://vxxpwaloyrtwvpmatzpc.supabase.co"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
