@@ -2,36 +2,19 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // Disable SSG/SSR for auth-protected pages
+  // This is the most reliable way to prevent the build error
+  unstable_excludeFiles: [
+    '**/components/DashboardContent.js',
+    '**/components/PremiumDashboardContent.js',
+    '**/components/MentorshipContent.js',
+  ],
   // Disable image optimization for best Netlify compatibility
   images: {
-    unoptimized: true,  
-  },
-  // Configure your protected routes to be dynamic
-  experimental: {
-    optimizeCss: true,
-    scrollRestoration: true,
+    unoptimized: true,
   },
   // For Netlify compatibility
   output: 'standalone',
-  // Modify runtime settings
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  compiler: {
-    styledComponents: true,
-  },
-  // Set routes to be server-side rendered or completely static
-  async headers() {
-    return [
-      {
-        source: '/(dashboard|premium/dashboard|communities/mentorship)',
-        headers: [
-          {
-            key: 'x-auth-protected',
-            value: 'true',
-          },
-        ],
-      },
-    ]
-  },
 }
 
 module.exports = nextConfig

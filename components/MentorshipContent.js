@@ -1,33 +1,33 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { useAuth } from '../lib/auth';
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { useAuth } from '../lib/auth'
 
 export default function MentorshipContent() {
-  const router = useRouter();
-  const { user, loading, isAuthenticated } = useAuth();
-
+  const router = useRouter()
+  const { user, loading, isAuthenticated } = useAuth()
+  
   // Redirect if not authenticated
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      router.push('/login?redirect=/communities/mentorship');
+      router.push('/login?redirect=/communities/mentorship')
     }
-  }, [loading, isAuthenticated, router]);
-
+  }, [loading, isAuthenticated, router])
+  
   // Show loading state
   if (loading) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
         Loading...
       </div>
-    );
+    )
   }
-
+  
   // If we get here and not authenticated, we're in the process of redirecting
   if (!isAuthenticated) {
-    return null;
+    return null
   }
-
+  
   return (
     <div style={{ 
       fontFamily: 'Arial, sans-serif',
@@ -86,5 +86,5 @@ export default function MentorshipContent() {
         </Link>
       </div>
     </div>
-  );
-} 
+  )
+}
