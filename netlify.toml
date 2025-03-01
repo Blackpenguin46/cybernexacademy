@@ -9,8 +9,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    skipBuildCommand = true # Skip the build command since we run it ourselves
 
 [[headers]]
   for = "/*"
