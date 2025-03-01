@@ -1,38 +1,78 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { withAuth } from '../../lib/withAuth';
 
-// Static fallback component that shows during SSR
-function MentorshipFallback() {
+// Export a config that disables SSG/ISR/SSR
+export const config = {
+  unstable_runtimeJS: true
+};
+
+// This ensures getStaticProps is minimal
+export function getStaticProps() {
+  return { props: {} };
+}
+
+function Mentorship({ user }) {
   return (
     <div style={{ 
       fontFamily: 'Arial, sans-serif',
       maxWidth: '800px',
       margin: '40px auto',
       padding: '30px',
-      textAlign: 'center'
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      backgroundColor: '#f9f9f9'
     }}>
-      <h2>Loading Mentorship Community...</h2>
+      <h1 style={{ fontSize: '2rem', color: '#333' }}>Mentorship Community</h1>
+      
+      <div style={{ 
+        padding: '20px',
+        backgroundColor: '#EBF8FF', 
+        borderRadius: '8px',
+        marginTop: '20px' 
+      }}>
+        <h2 style={{ fontSize: '1.5rem', color: '#2D3748' }}>
+          Connect with Mentors
+        </h2>
+        <p>
+          Welcome, {user?.email || 'Community Member'}! This is where you can find and connect with cybersecurity mentors.
+        </p>
+      </div>
+      
+      <div style={{ marginTop: '30px' }}>
+        <h3 style={{ fontSize: '1.2rem', color: '#4A5568' }}>Available Mentors</h3>
+        <p>Our mentorship program is currently being set up. Check back soon for available mentors.</p>
+      </div>
+      
+      <div style={{ 
+        display: 'flex',
+        gap: '15px',
+        marginTop: '30px',
+        flexWrap: 'wrap'
+      }}>
+        <Link href="/dashboard" style={{
+          padding: '10px 15px',
+          backgroundColor: '#3182CE',
+          color: 'white',
+          borderRadius: '4px',
+          textDecoration: 'none'
+        }}>
+          Dashboard
+        </Link>
+        
+        <Link href="/" style={{
+          padding: '10px 15px',
+          backgroundColor: '#718096',
+          color: 'white',
+          borderRadius: '4px',
+          textDecoration: 'none'
+        }}>
+          Home
+        </Link>
+      </div>
     </div>
   );
 }
 
-// Dynamically import the component with auth (client-side only)
-const MentorshipWithAuth = dynamic(
-  () => import('../../components/MentorshipContent'),
-  { 
-    ssr: false,
-    loading: () => <MentorshipFallback />
-  }
-);
-
-// Main export - simply returns the dynamic component
-export default function Mentorship() {
-  return <MentorshipWithAuth />;
-}
-
-// This tells Next.js not to try to render this page during build
-export async function getStaticProps() {
-  return {
-    props: {}
-  };
-}
+// Wrap component with auth protection
+export default withAuth(Mentorship);
