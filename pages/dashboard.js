@@ -1,76 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import React from 'react';
+import dynamic from 'next/dynamic';
 
-// Create a client-side only component that uses auth
-const DashboardContent = () => {
-  const router = useRouter();
-  
-  // Import auth hook dynamically to avoid SSR issues
-  const { useAuth } = require('../lib/auth');
-  const { user, loading, isAuthenticated, signOut } = useAuth();
-
-  // Redirect if not authenticated
-  useEffect(() => {
-    if (!loading && !isAuthenticated) {
-      router.push('/login');
-    }
-  }, [loading, isAuthenticated, router]);
-
-  // Show loading state
-  if (loading) {
-    return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        Loading...
-      </div>
-    );
-  }
-
-  // If we get here and user is null, we're in the process of redirecting
-  if (!isAuthenticated) {
-    return null;
-  }
-
-  return (
-    <div style={{ 
-      fontFamily: 'Arial, sans-serif',
-      maxWidth: '800px',
-      margin: '40px auto',
-      padding: '30px',
-      borderRadius: '8px',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      backgroundColor: '#f9f9f9'
-    }}>
-      <h1 style={{ fontSize: '2rem', color: '#333' }}>Dashboard</h1>
-      
-      <div style={{ marginTop: '20px' }}>
-        <p>Welcome, {user?.email || 'User'}!</p>
-        <p>You are now signed in to your account.</p>
-      </div>
-      
-      <button
-        onClick={async () => {
-          await signOut();
-          router.push('/');
-        }}
-        style={{
-          backgroundColor: '#3182ce',
-          color: 'white',
-          padding: '10px 15px',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          marginTop: '20px'
-        }}
-      >
-        Sign Out
-      </button>
-    </div>
-  );
-};
-
-// Create a loading component for initial render
-function LoadingFallback() {
+// Static fallback component that shows during SSR
+function DashboardFallback() {
   return (
     <div style={{ 
       fontFamily: 'Arial, sans-serif',
@@ -79,24 +11,28 @@ function LoadingFallback() {
       padding: '30px',
       textAlign: 'center'
     }}>
-      <h2>Loading...</h2>
+      <h2>Loading Dashboard...</h2>
     </div>
   );
 }
 
-// Export a component that only renders client-side
-export default function Dashboard() {
-  const [isClient, setIsClient] = useState(false);
-  
-  // Set isClient to true on component mount
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-  
-  // Show loading fallback until client-side
-  if (!isClient) {
-    return <LoadingFallback />;
+// Dynamically import the component with auth (client-side only)
+const DashboardWithAuth = dynamic(
+  () => import('../components/DashboardContent'),
+  { 
+    ssr: false,
+    loading: () => <DashboardFallback />
   }
-  
-  return <DashboardContent />;
+);
+
+// Main export - simply returns the dynamic component
+export default function Dashboard() {
+  return <DashboardWithAuth />;
+}
+
+// This tells Next.js not to try to render this page during build
+export async function getStaticProps() {
+  return {
+    props: {}
+  };
 } 
