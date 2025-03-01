@@ -1,9 +1,9 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 
 const Accordion = ({ items }) => {
-  const [openIndex, React.useState(null)]
+  const [openIndex, setOpenIndex] = useState(null)
 
   const toggleItem = (index) => {
     setOpenIndex(openIndex === index ? null : index)

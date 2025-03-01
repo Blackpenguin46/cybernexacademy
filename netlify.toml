@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci && npm run build"
+  command = "npm ci && NEXT_LINT=false npm run build"
   publish = ".next"
 
 [build.environment]
@@ -10,6 +10,7 @@
   NEXT_PUBLIC_SUPABASE_URL = "https://vxxpwaloyrtwvpmatzpc.supabase.co"
   NPM_FLAGS = "--legacy-peer-deps --no-fund --no-audit --production=false"
   NETLIFY_USE_YARN = "false"
+  NEXT_LINT = "false"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

@@ -1,10 +1,12 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import React from 'react'
+// Commenting out unused imports to avoid warnings
+// import { motion, AnimatePresence } from 'framer-motion'
 import Head from 'next/head'
 import Layout from './Layout'
 
-export function PageWrapper({ children, title, description }) {
+const PageWrapper = ({ children, title, description }) => {
   return (
     <Layout>
       <Head>
