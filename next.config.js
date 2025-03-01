@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -7,21 +9,33 @@ const nextConfig = {
   },
   // For Netlify compatibility
   output: 'standalone',
-  // Experimental features config for Next.js 14
+  // Explicitly disable experimental edge features
   experimental: {
-    // Disable app directory
     appDir: false,
-    // Disable middleware
-    serverComponentsExternalPackages: [],
-    esmExternals: true,
+    serverActions: false,
+    serverComponents: false
   },
-  // Avoid bundling @netlify/edge-functions incorrectly
+  // Replace edge functions module completely
   webpack: (config, { isServer }) => {
-    // Fix for Netlify edge functions
-    if (isServer) {
-      config.externals = [...(config.externals || []), '@netlify/edge-functions']
-    }
-    return config
+    // Add resolver to replace @netlify/edge-functions with our mock
+    config.resolve.alias['@netlify/edge-functions'] = path.resolve(__dirname, './lib/netlify-edge-mock.js');
+    
+    // If there are any middleware files, prevent them from using edge runtime
+    config.module.rules.push({
+      test: /middleware\.(js|ts)x?$/,
+      use: [
+        {
+          loader: 'string-replace-loader',
+          options: {
+            search: 'export const runtime = "edge"',
+            replace: '// export const runtime = "edge" - disabled',
+            flags: 'g'
+          }
+        }
+      ]
+    });
+    
+    return config;
   },
 }
 

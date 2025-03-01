@@ -1,6 +1,10 @@
-// Empty middleware file to prevent Next.js from trying to use edge functions
-export { middleware } from 'next/server'
+// Empty middleware file with no functionality
+// This ensures we don't accidentally use edge runtime
+
+export default function middleware() {
+  return null; // Do nothing
+}
 
 export const config = {
-  matcher: [], // No routes matched means this middleware won't be used
-} 
+  matcher: [] // Match no paths
+}; 
