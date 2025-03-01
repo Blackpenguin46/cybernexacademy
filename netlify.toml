@@ -9,11 +9,7 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  
-  [plugins.inputs]
-  # Disable features that might cause problems
-  frameworkVersion = "nextjs@14"
-  useNewMiddlewareHelper = false
+  # No inputs - the plugin doesn't accept them in the current version
 
 [[headers]]
   for = "/*"
