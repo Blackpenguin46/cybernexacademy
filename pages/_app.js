@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import '../styles/globals.css'
-import { AuthProvider } from '../lib/auth'
+import { AuthProvider } from '../lib/AuthContext'
 
 function SafeHydrate({ children }) {
   return (
@@ -11,7 +11,11 @@ function SafeHydrate({ children }) {
 }
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  );
 }
 
 export default MyApp; 
