@@ -1,18 +1,20 @@
 {
-  "name": "cybernex-academy",
+  "name": "cybernex",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm install --no-save eslint && next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "npm install --no-save eslint"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "4.40.2",
-    "@supabase/supabase-js": "^2.39.3",
+    "@supabase/supabase-js": "2.39.3",
     "autoprefixer": "10.4.16",
+    "eslint": "8.56.0", 
+    "eslint-config-next": "13.5.6",
+    "eslint-plugin-react": "7.33.2",
     "next": "13.5.6",
     "postcss": "8.4.31",
     "react": "18.2.0",
@@ -21,11 +23,7 @@
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "1.0.7"
   },
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-next": "13.5.6",
-    "eslint-plugin-react": "7.33.2"
-  },
+  "devDependencies": {},
   "engines": {
     "node": ">=16.0.0 <19.0.0"
   }

@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --no-save tailwindcss autoprefixer postcss && npm run build"
+  command = "npm ci && npm run build"
   publish = ".next"
 
 [build.environment]
@@ -7,6 +7,7 @@
   NODE_VERSION = "18.17.1"
   NEXT_USE_SSR = "true"
   NEXT_PUBLIC_APP_URL = "https://cybernexacademy.netlify.app"
+  NEXT_PUBLIC_SUPABASE_URL = "https://vxxpwaloyrtwvpmatzpc.supabase.co"
   NPM_FLAGS = "--legacy-peer-deps --no-fund --no-audit --production=false"
   NETLIFY_USE_YARN = "false"
 
@@ -27,6 +28,13 @@
   js.minify = true
   html.pretty_urls = true
   images.compress = true
+
+# Cache Netlify build plugins
+[[plugins]]
+  package = "netlify-plugin-cache"
+  
+  [plugins.inputs]
+    paths = [ ".next/cache" ]
 
 [[headers]]
   for = "/*"
