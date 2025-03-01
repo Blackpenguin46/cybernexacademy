@@ -11,10 +11,6 @@ function SafeHydrate({ children }) {
 }
 
 function MyApp({ Component, pageProps }) {
-  if (typeof window !== 'undefined') {
-    console.log('Client-side rendering');
-  }
-  
   return <Component {...pageProps} />;
 }
 
