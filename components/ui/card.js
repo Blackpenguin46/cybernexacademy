@@ -8,7 +8,7 @@ const Card = ({
   footer
 }) => {
   return (
-    <div className={`rounded-lg shadow bg-white overflow-hidden ${className}`}>
+    <div className={`rounded-lg shadow-md overflow-hidden ${className}`}>
       {title && (
         <div className="border-b px-4 py-3">
           <h3 className="text-lg font-medium">{title}</h3>
@@ -58,4 +58,13 @@ const CardContent = React.forwardRef<
 ))
 CardContent.displayName = "CardContent"
 
-export { Card, CardHeader, CardTitle, CardContent } 
+const CardFooter = ({ className = '', children, ...props }) => (
+  <div 
+    className={`p-6 border-t ${className}`} 
+    {...props}
+  >
+    {children}
+  </div>
+)
+
+export { Card, CardHeader, CardTitle, CardContent, CardFooter } 
