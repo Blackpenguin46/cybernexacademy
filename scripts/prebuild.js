@@ -55,4 +55,51 @@ if (fs.existsSync(babelrcPath)) {
   console.log('Removed .babelrc');
 }
 
+// 4. Fix duplicate pages
+const pagesDir = path.join(process.cwd(), 'pages');
+if (fs.existsSync(pagesDir)) {
+  console.log('Checking for duplicate pages...');
+  
+  // Specific known duplicate: events.js and events/index.js
+  const eventsPath = path.join(pagesDir, 'communities', 'events.js');
+  const eventsIndexPath = path.join(pagesDir, 'communities', 'events', 'index.js');
+  
+  if (fs.existsSync(eventsPath) && fs.existsSync(eventsIndexPath)) {
+    console.log('Found duplicate: communities/events.js and communities/events/index.js');
+    console.log('Renaming communities/events.js to communities/events.js.bak');
+    fs.renameSync(eventsPath, `${eventsPath}.bak`);
+  }
+  
+  // Check for other potential duplicates
+  const findDuplicates = (dir, baseRoute = '') => {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    
+    // Check for index.js and parent.js pattern
+    const hasIndex = entries.some(entry => !entry.isDirectory() && entry.name === 'index.js');
+    
+    if (hasIndex && baseRoute) {
+      const parentRoute = path.dirname(baseRoute);
+      const parentName = path.basename(baseRoute);
+      const parentFilePath = path.join(pagesDir, parentRoute, `${parentName}.js`);
+      
+      if (fs.existsSync(parentFilePath)) {
+        console.log(`Found duplicate: ${parentRoute}/${parentName}.js and ${baseRoute}/index.js`);
+        console.log(`Renaming ${parentRoute}/${parentName}.js to ${parentRoute}/${parentName}.js.bak`);
+        fs.renameSync(parentFilePath, `${parentFilePath}.bak`);
+      }
+    }
+    
+    // Recursively check subdirectories
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const newRoute = baseRoute ? `${baseRoute}/${entry.name}` : entry.name;
+        findDuplicates(path.join(dir, entry.name), newRoute);
+      }
+    }
+  };
+  
+  findDuplicates(pagesDir);
+  console.log('Duplicate page check completed');
+}
+
 console.log('Prebuild cleanup completed successfully'); 
