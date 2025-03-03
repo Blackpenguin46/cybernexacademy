@@ -24,8 +24,7 @@
     "eslint-config-next": "13.4.1",
     "postcss": "8.4.23",
     "tailwindcss": "3.3.2",
-    "typescript": "5.0.4",
-    "@netlify/plugin-nextjs": "^4.29.5"
+    "typescript": "5.0.4"
   }
 }
 
