@@ -1,70 +1,52 @@
 import React from 'react'
-import { cn } from "../../lib/utils"
 
-const Card = ({
-  title,
-  children,
-  className = '',
-  footer
-}) => {
+// Simple Card component
+function Card({ className = '', children, ...props }) {
   return (
-    <div className={`rounded-lg shadow-md overflow-hidden ${className}`}>
-      {title && (
-        <div className="border-b px-4 py-3">
-          <h3 className="text-lg font-medium">{title}</h3>
-        </div>
-      )}
-      <div className="p-4">
-        {children}
-      </div>
-      {footer && (
-        <div className="border-t px-4 py-3 bg-gray-50">
-          {footer}
-        </div>
-      )}
+    <div 
+      className={`rounded-lg shadow-md overflow-hidden ${className}`} 
+      {...props}
+    >
+      {children}
     </div>
   )
 }
 
-const CardHeader = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-))
-CardHeader.displayName = "CardHeader"
+// Card Header component
+function CardHeader({ className = '', children, ...props }) {
+  return (
+    <div 
+      className={`p-6 border-b ${className}`} 
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
 
-const CardTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn("font-semibold leading-none tracking-tight", className)}
-    {...props}
-  />
-))
-CardTitle.displayName = "CardTitle"
+// Card Content component
+function CardContent({ className = '', children, ...props }) {
+  return (
+    <div 
+      className={`p-6 ${className}`} 
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
 
-const CardContent = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-))
-CardContent.displayName = "CardContent"
+// Card Footer component
+function CardFooter({ className = '', children, ...props }) {
+  return (
+    <div 
+      className={`p-6 border-t ${className}`} 
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
 
-const CardFooter = ({ className = '', children, ...props }) => (
-  <div 
-    className={`p-6 border-t ${className}`} 
-    {...props}
-  >
-    {children}
-  </div>
-)
-
-export { Card, CardHeader, CardTitle, CardContent, CardFooter } 
+// Export all components
+export { Card, CardHeader, CardContent, CardFooter } 

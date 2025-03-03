@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Button = ({ 
+function Button({ 
   className = '', 
   children, 
   variant = 'default', 
   size = 'md',
   ...props 
-}) => {
+}) {
   // Define variant classes
   const variantClasses = {
     default: 'bg-blue-600 text-white hover:bg-blue-700',
