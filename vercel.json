@@ -1,49 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "next build",
-  "devCommand": "next dev",
-  "installCommand": "npm install",
   "framework": "nextjs",
-  "outputDirectory": ".next",
-  "regions": ["sfo1"],
+  "regions": ["iad1", "sfo1"],
   "env": {
     "NEXT_TELEMETRY_DISABLED": "1"
-  },
-  "builds": [
-    {
-      "src": "next.config.js",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/learning-resources",
-      "dest": "/"
-    },
-    {
-      "src": "/community",
-      "dest": "/"
-    },
-    {
-      "src": "/careers",
-      "dest": "/"
-    },
-    {
-      "src": "/college-students",
-      "dest": "/"
-    },
-    {
-      "src": "/tools-utilities",
-      "dest": "/"
-    },
-    {
-      "src": "/cybernex-plus",
-      "dest": "/"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ]
+  }
 }
 
