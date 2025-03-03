@@ -4,3 +4,10 @@ export default () => {
     headers: { "content-type": "text/plain" },
   });
 }; 
+
+// Default export
+export default {
+  Context,
+  NextResponse,
+  NextRequest
+}; 

@@ -18,9 +18,10 @@ export const NextResponse = {
 
 export const NextRequest = class NextRequest {};
 
-// Default export
-export default {
-  Context,
-  NextResponse,
-  NextRequest
-}; 
+// Default export must be a function for Netlify Edge Functions
+export default async function handler(request, context) {
+  // Simple handler function that returns a text response
+  return new Response("Default edge function handler", {
+    headers: { "content-type": "text/plain" },
+  });
+} 
