@@ -4,6 +4,9 @@
   "regions": ["iad1", "sfo1"],
   "env": {
     "NEXT_TELEMETRY_DISABLED": "1"
-  }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
 }
 
