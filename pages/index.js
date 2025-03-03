@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Layout from '../components/Layout'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  useEffect(() => {
-    setIsLoaded(true)
-  }, [])
-
   const exploreCards = [
     {
       icon: "🎓",
@@ -67,90 +60,36 @@ export default function Home() {
     }
   ]
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  }
-
-  const cardVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5
-      }
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2
-      }
-    }
-  }
-
   return (
     <Layout>
       {/* Hero Section */}
-      <motion.section 
-        className="bg-black text-white py-20"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
+      <section className="bg-black text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h1 
-            className="text-5xl font-bold mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-          >
+          <h1 className="text-5xl font-bold mb-6 opacity-100 transition-opacity duration-500">
             Welcome to CyberNex
-          </motion.h1>
-          <motion.p 
-            className="text-xl text-gray-400 max-w-3xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
+          </h1>
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto opacity-100 transition-opacity duration-500 delay-200">
             Your central hub for all things cybersecurity, from beginner to professional.
-          </motion.p>
+          </p>
         </div>
-      </motion.section>
+      </section>
 
       {/* Explore Section */}
       <section className="bg-black py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.h2 
-            className="text-3xl font-bold text-white text-center mb-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
+          <h2 className="text-3xl font-bold text-white text-center mb-12">
             Explore CyberNex
-          </motion.h2>
+          </h2>
           
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {exploreCards.map((card, index) => (
-              <motion.div
+              <div
                 key={index}
-                variants={cardVariants}
-                whileHover="hover"
-                className="relative"
+                className="relative transform transition-transform duration-200 hover:scale-105"
               >
                 <Link 
                   href={card.href}
-                  className="block bg-gray-900 rounded-lg p-6 hover:bg-gray-800 transition-colors duration-200 h-full transform-gpu"
+                  className="block bg-gray-900 rounded-lg p-6 hover:bg-gray-800 transition-colors duration-200 h-full"
                 >
                   <div className="flex items-start space-x-4">
                     <span className="text-2xl">{card.icon}</span>
@@ -160,9 +99,9 @@ export default function Home() {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
     </Layout>
