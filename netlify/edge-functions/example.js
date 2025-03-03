@@ -1,5 +1,6 @@
-import { Context } from "@netlify/edge-functions"
-
-export default async (request, context) => {
-  return new Response("Hello from the Edge Function!");
+// Empty example edge function
+export default () => {
+  return new Response("Example edge function", {
+    headers: { "content-type": "text/plain" },
+  });
 }; 
