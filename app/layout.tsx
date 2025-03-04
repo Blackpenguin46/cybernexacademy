@@ -4,6 +4,7 @@ import "./globals.css"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import CursorTrail from "./components/CursorTrail"
+import AnimatedBackground from "./components/AnimatedBackground"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -15,10 +16,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-900`}>
+      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-900 scanline`}>
+        <AnimatedBackground />
         <CursorTrail />
         <Header />
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow relative z-10">{children}</div>
         <Footer />
       </body>
     </html>
