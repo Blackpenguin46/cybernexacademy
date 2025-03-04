@@ -10,7 +10,7 @@ export default function Home() {
       <section className="min-h-screen flex items-center justify-center text-center relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <h1 className="text-7xl font-bold mb-6 animate-glow">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">
+            <span className="cyber-gradient-text">
               CyberNex Academy
             </span>
           </h1>
@@ -21,17 +21,15 @@ export default function Home() {
           <div className="flex justify-center gap-4">
             <Link
               href="/academy/courses"
-              className="group relative px-8 py-3 overflow-hidden rounded-lg bg-transparent"
+              className="cyber-button"
             >
-              <div className="absolute inset-0 w-3 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-              <span className="relative text-white group-hover:text-white font-semibold">Start Learning</span>
+              Start Learning
             </Link>
             <Link
               href="/community"
-              className="group relative px-8 py-3 overflow-hidden rounded-lg bg-transparent border border-cyan-400"
+              className="cyber-button"
             >
-              <div className="absolute inset-0 w-0 bg-cyan-400/10 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-              <span className="relative text-cyan-400 group-hover:text-cyan-300 font-semibold">Join Community</span>
+              Join Community
             </Link>
           </div>
         </div>
@@ -39,35 +37,31 @@ export default function Home() {
 
       {/* Features Grid */}
       <section className="py-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/10 to-transparent"></div>
         <div className="container mx-auto px-4 relative z-10">
           <h2 className="text-4xl font-bold text-center mb-12">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
+            <span className="cyber-gradient-text">
               Why Choose CyberNex Academy?
             </span>
           </h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div className="group relative bg-gray-900/50 p-8 rounded-xl border border-gray-800 hover:border-cyan-400 transition-all duration-300 backdrop-blur-sm">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-              <Book className="w-12 h-12 mb-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+            <div className="cyber-card">
+              <Book className="w-12 h-12 mb-4 text-cyan-400" />
               <h3 className="text-2xl font-semibold mb-2 text-white">Comprehensive Curriculum</h3>
               <p className="text-cyan-100">
                 Access a wide range of courses designed by industry experts, covering both fundamentals and advanced topics.
               </p>
             </div>
 
-            <div className="group relative bg-gray-900/50 p-8 rounded-xl border border-gray-800 hover:border-cyan-400 transition-all duration-300 backdrop-blur-sm">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-              <Users className="w-12 h-12 mb-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+            <div className="cyber-card">
+              <Users className="w-12 h-12 mb-4 text-cyan-400" />
               <h3 className="text-2xl font-semibold mb-2 text-white">Active Community</h3>
               <p className="text-cyan-100">
                 Connect with fellow learners, share knowledge, and grow together in our vibrant community.
               </p>
             </div>
 
-            <div className="group relative bg-gray-900/50 p-8 rounded-xl border border-gray-800 hover:border-cyan-400 transition-all duration-300 backdrop-blur-sm">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
-              <Briefcase className="w-12 h-12 mb-4 text-cyan-400 group-hover:text-cyan-300 transition-colors" />
+            <div className="cyber-card">
+              <Briefcase className="w-12 h-12 mb-4 text-cyan-400" />
               <h3 className="text-2xl font-semibold mb-2 text-white">Career Support</h3>
               <p className="text-cyan-100">
                 Get guidance on career paths, job opportunities, and professional development in cybersecurity.
@@ -79,23 +73,22 @@ export default function Home() {
 
       {/* Stats Section */}
       <section className="py-20 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-900/10 to-transparent"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="text-4xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors mb-2">10K+</div>
+            <div className="cyber-box p-6 text-center">
+              <div className="text-4xl font-bold text-cyan-400 mb-2">10K+</div>
               <div className="text-cyan-100">Active Students</div>
             </div>
-            <div className="text-center group">
-              <div className="text-4xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors mb-2">500+</div>
+            <div className="cyber-box p-6 text-center">
+              <div className="text-4xl font-bold text-cyan-400 mb-2">500+</div>
               <div className="text-cyan-100">Video Lessons</div>
             </div>
-            <div className="text-center group">
-              <div className="text-4xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors mb-2">50+</div>
+            <div className="cyber-box p-6 text-center">
+              <div className="text-4xl font-bold text-cyan-400 mb-2">50+</div>
               <div className="text-cyan-100">Expert Instructors</div>
             </div>
-            <div className="text-center group">
-              <div className="text-4xl font-bold text-cyan-400 group-hover:text-cyan-300 transition-colors mb-2">95%</div>
+            <div className="cyber-box p-6 text-center">
+              <div className="text-4xl font-bold text-cyan-400 mb-2">95%</div>
               <div className="text-cyan-100">Success Rate</div>
             </div>
           </div>
@@ -104,16 +97,14 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-purple-600/20"></div>
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="cyber-box mx-4 md:mx-auto max-w-4xl p-12 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">Ready to Start Your Journey?</h2>
           <p className="text-xl text-cyan-100 mb-8">Join thousands of students already learning with CyberNex Academy.</p>
           <Link
             href="/auth/signup"
-            className="group relative inline-flex items-center px-8 py-3 overflow-hidden rounded-lg bg-transparent"
+            className="cyber-button"
           >
-            <div className="absolute inset-0 w-3 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-            <span className="relative text-white group-hover:text-white font-semibold">Get Started Today</span>
+            Get Started Today
           </Link>
         </div>
       </section>
