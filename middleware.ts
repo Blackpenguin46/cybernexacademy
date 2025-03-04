@@ -1,19 +1,19 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// This middleware function runs on every request
 export function middleware(request: NextRequest) {
-  // Only apply middleware to api requests 
-  if (request.nextUrl.pathname.startsWith('/api/')) {
-    return NextResponse.next();
-  }
-  
-  // Let Vercel handle other routes via the rewrites in vercel.json
+  // Simply pass through all requests to be handled by the Next.js router
   return NextResponse.next();
 }
 
 // See: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
   matcher: [
-    '/api/:path*'
+    /*
+     * Skip all internal paths (_next, api)
+     * Skip all static files (images, media)
+     */
+    '/((?!_next|api|.*\\.[\\w]+$).*)',
   ],
-} 
+}

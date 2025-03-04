@@ -1,4 +1,4 @@
-"use client"
+"ble use client"
 
 import { useEffect, useRef } from "react"
 
@@ -35,7 +35,7 @@ const CursorTrail = () => {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      trail.forEach((point, index) => {
+      trail.forEach((point) => {
         point.alpha *= 0.92
 
         ctx.beginPath()
