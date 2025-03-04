@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Shield, Book, Users, Briefcase, GraduationCap, PenToolIcon as Tool } from "lucide-react"
 import AnimatedBackground from "./components/AnimatedBackground"
@@ -6,7 +8,7 @@ export default function Home() {
   return (
     <>
       <AnimatedBackground />
-      <main className="relative">
+      <main className="relative pt-16">
         {/* Hero Section */}
         <section className="py-20 text-center relative overflow-hidden">
           <div className="container mx-auto px-4">
@@ -14,21 +16,21 @@ export default function Home() {
               Welcome to CyberNex Academy
             </h1>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-12 leading-relaxed">
-              Your gateway to cybersecurity knowledge and career growth. Explore our comprehensive resources, join our
-              community, and advance your cybersecurity journey.
+              Your gateway to cybersecurity knowledge and career growth. Join our community of learners and advance your
+              cybersecurity journey today.
             </p>
             <div className="flex justify-center gap-4">
               <Link
-                href="/get-started"
+                href="/academy/courses"
                 className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105"
               >
-                Get Started
+                Start Learning
               </Link>
               <Link
-                href="/courses"
+                href="/community"
                 className="bg-gray-800 hover:bg-gray-700 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105"
               >
-                Browse Courses
+                Join Community
               </Link>
             </div>
           </div>
@@ -37,60 +39,31 @@ export default function Home() {
         {/* Features Grid */}
         <section className="py-20 bg-gray-900/50 backdrop-blur-sm">
           <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">Why Choose CyberNex Academy?</h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <Link
-                href="/learning-resources"
-                className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1"
-              >
+              <div className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1">
                 <Book className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <h2 className="text-2xl font-semibold mb-2 text-white">Learning Resources</h2>
-                <p className="text-gray-400">Access comprehensive cybersecurity learning materials and guides.</p>
-              </Link>
+                <h3 className="text-2xl font-semibold mb-2 text-white">Comprehensive Curriculum</h3>
+                <p className="text-gray-400">
+                  Access a wide range of courses designed by industry experts, covering both fundamentals and advanced topics.
+                </p>
+              </div>
 
-              <Link
-                href="/community"
-                className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1"
-              >
+              <div className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1">
                 <Users className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <h2 className="text-2xl font-semibold mb-2 text-white">Community</h2>
-                <p className="text-gray-400">Connect with fellow cybersecurity enthusiasts and professionals.</p>
-              </Link>
+                <h3 className="text-2xl font-semibold mb-2 text-white">Active Community</h3>
+                <p className="text-gray-400">
+                  Connect with fellow learners, share knowledge, and grow together in our vibrant community.
+                </p>
+              </div>
 
-              <Link
-                href="/careers"
-                className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1"
-              >
+              <div className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1">
                 <Briefcase className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <h2 className="text-2xl font-semibold mb-2 text-white">Careers</h2>
-                <p className="text-gray-400">Explore cybersecurity career paths and job opportunities.</p>
-              </Link>
-
-              <Link
-                href="/college-students"
-                className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1"
-              >
-                <GraduationCap className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <h2 className="text-2xl font-semibold mb-2 text-white">College Students</h2>
-                <p className="text-gray-400">Resources and guidance specifically for college students.</p>
-              </Link>
-
-              <Link
-                href="/tools-utilities"
-                className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1"
-              >
-                <Tool className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <h2 className="text-2xl font-semibold mb-2 text-white">Tools & Utilities</h2>
-                <p className="text-gray-400">Access essential cybersecurity tools and utilities.</p>
-              </Link>
-
-              <Link
-                href="/cybernex-plus"
-                className="group bg-gray-800/50 backdrop-blur-sm p-8 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-700 hover:border-blue-500 transform hover:-translate-y-1"
-              >
-                <Shield className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <h2 className="text-2xl font-semibold mb-2 text-white">CyberNex+</h2>
-                <p className="text-gray-400">Unlock premium features and advanced learning resources.</p>
-              </Link>
+                <h3 className="text-2xl font-semibold mb-2 text-white">Career Support</h3>
+                <p className="text-gray-400">
+                  Get guidance on career paths, job opportunities, and professional development in cybersecurity.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -116,6 +89,20 @@ export default function Home() {
                 <div className="text-gray-400">Success Rate</div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl font-bold text-white mb-6">Ready to Start Your Journey?</h2>
+            <p className="text-xl text-blue-100 mb-8">Join thousands of students already learning with CyberNex Academy.</p>
+            <Link
+              href="/auth/signup"
+              className="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
+            >
+              Get Started Today
+            </Link>
           </div>
         </section>
       </main>
