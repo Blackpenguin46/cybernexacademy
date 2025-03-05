@@ -5,20 +5,21 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // Disable static generation for auth pages
-  experimental: {
-    appDir: true,
-  },
+  // Use standalone output for better deployment
   output: 'standalone',
-  // Mark auth pages as dynamic to prevent static generation
-  async generateStaticParams() {
-    return {
-      '/auth/login': { dynamic: true },
-      '/auth/register': { dynamic: true },
-      '/auth/forgot-password': { dynamic: true },
-      '/auth/reset-password': { dynamic: true },
+  // Enable server actions with size limit
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb'
     }
-  }
+  },
+  // Disable static page generation
+  generateStaticParams: false,
+  // Force dynamic rendering for all pages
+  dynamic: 'force-dynamic',
+  // Disable static exports
+  trailingSlash: false,
+  distDir: '.next'
 }
 
 module.exports = nextConfig

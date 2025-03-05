@@ -2,37 +2,203 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 0%;
-    --foreground: 210 40% 98%;
-    --card: 0 0% 4%;
-    --card-foreground: 210 40% 98%;
-    --popover: 0 0% 4%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 189 94% 43%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 189 94% 43%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 189 94% 43%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 189 94% 43%;
+:root {
+  /* Cyberpunk Theme Colors */
+  --neon-blue: #00f3ff;
+  --neon-pink: #ff00ff;
+  --neon-purple: #bc13fe;
+  --dark-bg: #0a0a0f;
+  --darker-bg: #050507;
+  --accent-bg: #1a1a2e;
+  --text-primary: #ffffff;
+  --text-secondary: #8f9aab;
+  --border-neon: 0 0 10px var(--neon-blue);
+}
+
+/* Base styles */
+body {
+  background: var(--dark-bg);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Neon text effect */
+.neon-text {
+  text-shadow: 0 0 5px var(--neon-blue),
+               0 0 10px var(--neon-blue),
+               0 0 20px var(--neon-blue);
+}
+
+.neon-text-pink {
+  text-shadow: 0 0 5px var(--neon-pink),
+               0 0 10px var(--neon-pink),
+               0 0 20px var(--neon-pink);
+}
+
+/* Gradient backgrounds */
+.cyber-gradient {
+  background: linear-gradient(135deg, var(--darker-bg) 0%, var(--accent-bg) 100%);
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at center,
+              rgba(0, 243, 255, 0.1) 0%,
+              rgba(10, 10, 15, 0.95) 100%);
+}
+
+/* Card styles */
+.cyber-card {
+  background: var(--accent-bg);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: var(--border-neon);
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+
+/* Button styles */
+.cyber-button {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  color: var(--neon-blue);
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-button:hover {
+  background: var(--neon-blue);
+  color: var(--darker-bg);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.cyber-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(0, 243, 255, 0.4),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.cyber-button:hover::before {
+  left: 100%;
+}
+
+/* Navigation styles */
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--neon-blue);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--neon-blue);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Grid layouts */
+.cyber-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Animations */
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px var(--neon-blue);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--neon-blue),
+                0 0 30px var(--neon-blue);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--neon-blue);
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+.glow-effect {
+  animation: glow 2s infinite;
+}
+
+/* Responsive typography */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
   }
-  body {
-    @apply bg-background text-foreground;
+  h2 {
+    font-size: 1.5rem;
   }
+  p {
+    font-size: 1rem;
+  }
+}
+
+/* Loading effects */
+.loading-bar {
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--darker-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-bg);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-blue);
 }
 
 /* Cyber Background */
@@ -120,57 +286,6 @@
   background-size: 100% 4px;
   pointer-events: none;
   z-index: 50;
-}
-
-/* Button Styles */
-.cyber-button {
-  position: relative;
-  background: transparent;
-  border: 1px solid rgb(6, 182, 212);
-  color: rgb(6, 182, 212);
-  padding: 0.75rem 2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-
-.cyber-button:hover {
-  background: rgba(6, 182, 212, 0.1);
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
-}
-
-.cyber-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(6, 182, 212, 0.4),
-    transparent
-  );
-  transition: 0.5s;
-}
-
-.cyber-button:hover::before {
-  left: 100%;
-}
-
-/* Card Styles */
-.cyber-card {
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgb(6, 182, 212);
-  padding: 1.5rem;
-  transition: all 0.3s;
-}
-
-.cyber-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 30px rgba(6, 182, 212, 0.2);
 }
 
 /* Gradient Text */
