@@ -204,16 +204,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--darker-bg);
+  @apply bg-gray-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-bg);
-  border-radius: 4px;
+  @apply bg-cyan-900 rounded;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-blue);
+  @apply bg-cyan-800;
 }
 
 /* Cyber Background */
@@ -305,10 +304,7 @@ body {
 
 /* Gradient Text */
 .cyber-gradient-text {
-  background: linear-gradient(45deg, rgb(6, 182, 212), rgb(59, 130, 246));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
 }
 
 .animated-gradient {
@@ -506,6 +502,25 @@ html {
     text-shadow: 0 0 7px var(--neon-text-color),
                  0 0 10px var(--neon-text-color),
                  0 0 21px var(--neon-text-color);
+  }
+
+  .cyber-gradient-text {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce 3s infinite;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
 
