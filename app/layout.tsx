@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+import AnimatedBackground from "./components/AnimatedBackground"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -15,10 +16,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gray-900 text-white`}>
-        <Header />
-        <Navbar />
-        <main className="flex-grow">{children}</main>
+      <body className={`${inter.className} min-h-screen flex flex-col bg-gradient-to-br from-gray-900 to-gray-800`}>
+        <div className="relative">
+          <AnimatedBackground />
+          <Header />
+          <Navbar />
+        </div>
+        <main className="flex-grow relative z-10">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

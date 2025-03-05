@@ -1,83 +1,95 @@
 import Link from "next/link"
-import { Shield, Book, Users, Briefcase, GraduationCap, PenToolIcon as Tool } from "lucide-react"
-import Header from "./components/Header"
-import AnimatedBackground from "./components/AnimatedBackground"
+import { 
+  BookOpen, 
+  Users, 
+  Briefcase, 
+  GraduationCap, 
+  Wrench, 
+  Star 
+} from "lucide-react"
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
-      <AnimatedBackground />
-      <Header />
-
-      <main className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <section className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+    <div className="w-full">
+      {/* Hero Section */}
+      <section className="relative w-full min-h-[60vh] flex items-center justify-center px-4 py-16 overflow-hidden">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 text-white neon-text">
             Welcome to CyberNex Academy
           </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Your gateway to cybersecurity knowledge and career growth. Explore our comprehensive resources, join our
-            community, and advance your cybersecurity journey.
+          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12">
+            Your gateway to mastering cybersecurity skills with expert-led courses, 
+            hands-on labs, and a supportive community.
           </p>
-        </section>
+          <div className="flex gap-4 justify-center">
+            <Link 
+              href="/learning/courses" 
+              className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-cyan-500/25"
+            >
+              Start Learning
+            </Link>
+            <Link 
+              href="/about" 
+              className="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
+      </section>
 
-        {/* Main Navigation Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <Link
-            href="/learning-resources"
-            className="group bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500"
-          >
-            <Book className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-            <h2 className="text-2xl font-semibold mb-2 text-white">Learning Resources</h2>
-            <p className="text-gray-400">Access comprehensive cybersecurity learning materials and guides.</p>
+      {/* Main Navigation Grid */}
+      <section className="w-full px-4 py-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Link href="/learning/courses" className="cyber-card group">
+            <div className="p-8 flex flex-col items-center text-center">
+              <BookOpen className="w-12 h-12 mb-4 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+              <h3 className="text-xl font-semibold mb-2">Learning Resources</h3>
+              <p className="text-gray-400">Access our comprehensive library of courses and tutorials.</p>
+            </div>
           </Link>
 
-          <Link
-            href="/community"
-            className="group bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500"
-          >
-            <Users className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-            <h2 className="text-2xl font-semibold mb-2 text-white">Community</h2>
-            <p className="text-gray-400">Connect with fellow cybersecurity enthusiasts and professionals.</p>
+          <Link href="/community" className="cyber-card group">
+            <div className="p-8 flex flex-col items-center text-center">
+              <Users className="w-12 h-12 mb-4 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+              <h3 className="text-xl font-semibold mb-2">Community</h3>
+              <p className="text-gray-400">Join our vibrant community of cybersecurity enthusiasts.</p>
+            </div>
           </Link>
 
-          <Link
-            href="/careers"
-            className="group bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500"
-          >
-            <Briefcase className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-            <h2 className="text-2xl font-semibold mb-2 text-white">Careers</h2>
-            <p className="text-gray-400">Explore cybersecurity career paths and job opportunities.</p>
+          <Link href="/careers" className="cyber-card group">
+            <div className="p-8 flex flex-col items-center text-center">
+              <Briefcase className="w-12 h-12 mb-4 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+              <h3 className="text-xl font-semibold mb-2">Careers</h3>
+              <p className="text-gray-400">Explore career opportunities in cybersecurity.</p>
+            </div>
           </Link>
 
-          <Link
-            href="/college-students"
-            className="group bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500"
-          >
-            <GraduationCap className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-            <h2 className="text-2xl font-semibold mb-2 text-white">College Students</h2>
-            <p className="text-gray-400">Resources and guidance specifically for college students.</p>
+          <Link href="/college" className="cyber-card group">
+            <div className="p-8 flex flex-col items-center text-center">
+              <GraduationCap className="w-12 h-12 mb-4 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+              <h3 className="text-xl font-semibold mb-2">College Students</h3>
+              <p className="text-gray-400">Special resources and programs for college students.</p>
+            </div>
           </Link>
 
-          <Link
-            href="/tools-utilities"
-            className="group bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500"
-          >
-            <Tool className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-            <h2 className="text-2xl font-semibold mb-2 text-white">Tools & Utilities</h2>
-            <p className="text-gray-400">Access essential cybersecurity tools and utilities.</p>
+          <Link href="/tools" className="cyber-card group">
+            <div className="p-8 flex flex-col items-center text-center">
+              <Wrench className="w-12 h-12 mb-4 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+              <h3 className="text-xl font-semibold mb-2">Tools & Utilities</h3>
+              <p className="text-gray-400">Essential tools for cybersecurity professionals.</p>
+            </div>
           </Link>
 
-          <Link
-            href="/cybernex-plus"
-            className="group bg-gray-800 p-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-700 hover:border-blue-500"
-          >
-            <Shield className="w-12 h-12 mb-4 text-blue-400 group-hover:text-blue-300 transition-colors" />
-            <h2 className="text-2xl font-semibold mb-2 text-white">CyberNex+</h2>
-            <p className="text-gray-400">Unlock premium features and advanced learning resources.</p>
+          <Link href="/plus" className="cyber-card group">
+            <div className="p-8 flex flex-col items-center text-center">
+              <Star className="w-12 h-12 mb-4 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
+              <h3 className="text-xl font-semibold mb-2">CyberNex+</h3>
+              <p className="text-gray-400">Premium features and exclusive content.</p>
+            </div>
           </Link>
         </div>
-      </main>
+      </section>
     </div>
   )
 }
