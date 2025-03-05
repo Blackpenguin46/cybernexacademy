@@ -1,230 +1,142 @@
-import Link from "next/link"
-import Image from "next/image"
-import { 
-  BookOpen, 
-  Users, 
-  Briefcase, 
-  GraduationCap, 
-  Wrench, 
-  Star,
-  ArrowRight,
-  Shield
-} from "lucide-react"
+import Link from "next/link";
+import { Shield, Book, Users, Briefcase, GraduationCap, PenToolIcon as Tool, ArrowRight } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[80vh] flex items-center justify-center px-4 py-16">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
-        <div className="max-w-7xl mx-auto text-center relative">
-          <div className="inline-block animate-bounce-slow mb-4">
-            <span className="px-4 py-2 rounded-full border border-cyan-500 text-cyan-400 text-sm font-medium">
-              New Courses Available
-            </span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-white neon-text">
-            Welcome to <br />
-            <span className="cyber-gradient-text">CyberNex Academy</span>
+    <div className="min-h-screen bg-black">
+      <main className="container mx-auto px-4 py-12">
+        {/* Hero Section */}
+        <section className="text-center mb-16 relative z-10">
+          <h1 className="text-5xl font-bold mb-6 glow-text">
+            Welcome to <span className="text-blue-500">CyberNex Academy</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12">
-            Your gateway to mastering cybersecurity skills with expert-led courses, 
-            hands-on labs, and a supportive community.
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            Your gateway to mastering cybersecurity skills with expert-led courses, hands-on labs, and a supportive community.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="mt-8 flex justify-center gap-4">
             <Link 
-              href="/learning/courses" 
-              className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-cyan-500/25 w-full sm:w-auto"
+              href="/learning-resources" 
+              className="cta-button"
             >
-              <span className="flex items-center justify-center gap-2">
-                Start Learning
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </span>
+              Start Learning <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
             <Link 
               href="/about" 
-              className="group px-8 py-4 bg-gray-800/50 backdrop-blur-sm text-white rounded-lg hover:bg-gray-700/50 transition-all duration-300 border border-gray-700 hover:border-cyan-500 w-full sm:w-auto"
+              className="px-4 py-2 border border-gray-600 rounded-md hover:border-blue-500 transition-colors"
             >
               Learn More
             </Link>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Featured Courses Section */}
-      <section className="w-full py-16 bg-gray-900/50">
-        <div className="max-w-7xl mx-auto px-4">
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+          {[
+            { label: "Courses", value: "50+" },
+            { label: "Students", value: "10k+" },
+            { label: "Success Rate", value: "95%" },
+            { label: "Support", value: "24/7" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
+              <div className="text-gray-400">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Featured Courses Section */}
+        <section className="mb-16">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold">Featured Courses</h2>
-            <Link href="/courses" className="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
-              View All <ArrowRight className="w-4 h-4" />
+            <Link href="/courses" className="text-blue-500 hover:text-blue-400 flex items-center">
+              View All <ArrowRight className="ml-1 w-4 h-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="cyber-card group p-6">
-                <div className="aspect-video w-full bg-gray-800 rounded-lg mb-4 overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
-                    <Shield className="w-12 h-12 text-cyan-500/50" />
-                  </div>
+          
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3].map((id) => (
+              <div key={id} className="course-card">
+                <div className="flex items-center mb-4">
+                  <Shield className="w-8 h-8 text-blue-500 mr-3" />
+                  <h3 className="text-xl font-semibold">Cybersecurity Fundamentals {id}</h3>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">
-                  Cybersecurity Fundamentals {i}
-                </h3>
-                <p className="text-gray-400 mb-4">Learn the basics of cybersecurity and build a strong foundation.</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-cyan-400 font-semibold">$49.99</span>
-                  <button className="text-sm text-gray-300 hover:text-cyan-400 transition-colors">
-                    Learn More →
-                  </button>
+                <p className="text-gray-400 mb-6">
+                  Learn the basics of cybersecurity and build a strong foundation.
+                </p>
+                <div className="flex items-center justify-between">
+                  <span className="text-2xl font-bold">$49.99</span>
+                  <Link
+                    href={`/courses/${id}`}
+                    className="cta-button"
+                  >
+                    Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Stats Section */}
-      <section className="w-full py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-cyan-400 mb-2">50+</div>
-              <div className="text-gray-400">Courses</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-cyan-400 mb-2">10k+</div>
-              <div className="text-gray-400">Students</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-cyan-400 mb-2">95%</div>
-              <div className="text-gray-400">Success Rate</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-cyan-400 mb-2">24/7</div>
-              <div className="text-gray-400">Support</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Navigation Grid */}
-      <section className="w-full px-4 py-16 bg-gray-900/50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            Explore Our <span className="text-cyan-400">Platform</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/learning/courses" className="cyber-card group">
-              <div className="p-8 flex flex-col items-center text-center">
-                <div className="relative w-16 h-16 mb-6">
-                  <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/30 transition-colors"></div>
-                  <div className="relative flex items-center justify-center">
-                    <BookOpen className="w-12 h-12 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">Learning Resources</h3>
-                <p className="text-gray-400">Access our comprehensive library of courses and tutorials.</p>
-              </div>
+        {/* Main Navigation Grid */}
+        <section>
+          <h2 className="text-3xl font-bold mb-8">Explore Our Platform</h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <Link
+              href="/learning-resources"
+              className="course-card flex flex-col"
+            >
+              <Book className="w-12 h-12 mb-4 text-blue-500" />
+              <h2 className="text-2xl font-semibold mb-2">Learning Resources</h2>
+              <p className="text-gray-400">Access comprehensive cybersecurity learning materials and guides.</p>
             </Link>
 
-            <Link href="/community" className="cyber-card group">
-              <div className="p-8 flex flex-col items-center text-center">
-                <div className="relative w-16 h-16 mb-6">
-                  <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/30 transition-colors"></div>
-                  <div className="relative flex items-center justify-center">
-                    <Users className="w-12 h-12 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">Community</h3>
-                <p className="text-gray-400">Join our vibrant community of cybersecurity enthusiasts.</p>
-              </div>
+            <Link
+              href="/community"
+              className="course-card flex flex-col"
+            >
+              <Users className="w-12 h-12 mb-4 text-blue-500" />
+              <h2 className="text-2xl font-semibold mb-2">Community</h2>
+              <p className="text-gray-400">Connect with fellow cybersecurity enthusiasts and professionals.</p>
             </Link>
 
-            <Link href="/careers" className="cyber-card group">
-              <div className="p-8 flex flex-col items-center text-center">
-                <div className="relative w-16 h-16 mb-6">
-                  <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/30 transition-colors"></div>
-                  <div className="relative flex items-center justify-center">
-                    <Briefcase className="w-12 h-12 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">Careers</h3>
-                <p className="text-gray-400">Explore career opportunities in cybersecurity.</p>
-              </div>
+            <Link
+              href="/careers"
+              className="course-card flex flex-col"
+            >
+              <Briefcase className="w-12 h-12 mb-4 text-blue-500" />
+              <h2 className="text-2xl font-semibold mb-2">Careers</h2>
+              <p className="text-gray-400">Explore cybersecurity career paths and job opportunities.</p>
             </Link>
 
-            <Link href="/college" className="cyber-card group">
-              <div className="p-8 flex flex-col items-center text-center">
-                <div className="relative w-16 h-16 mb-6">
-                  <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/30 transition-colors"></div>
-                  <div className="relative flex items-center justify-center">
-                    <GraduationCap className="w-12 h-12 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">College Students</h3>
-                <p className="text-gray-400">Special resources and programs for college students.</p>
-              </div>
+            <Link
+              href="/college-students"
+              className="course-card flex flex-col"
+            >
+              <GraduationCap className="w-12 h-12 mb-4 text-blue-500" />
+              <h2 className="text-2xl font-semibold mb-2">College Students</h2>
+              <p className="text-gray-400">Resources and guidance specifically for college students.</p>
             </Link>
 
-            <Link href="/tools" className="cyber-card group">
-              <div className="p-8 flex flex-col items-center text-center">
-                <div className="relative w-16 h-16 mb-6">
-                  <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/30 transition-colors"></div>
-                  <div className="relative flex items-center justify-center">
-                    <Wrench className="w-12 h-12 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">Tools & Utilities</h3>
-                <p className="text-gray-400">Essential tools for cybersecurity professionals.</p>
-              </div>
+            <Link
+              href="/tools-utilities"
+              className="course-card flex flex-col"
+            >
+              <Tool className="w-12 h-12 mb-4 text-blue-500" />
+              <h2 className="text-2xl font-semibold mb-2">Tools & Utilities</h2>
+              <p className="text-gray-400">Access essential cybersecurity tools and utilities.</p>
             </Link>
 
-            <Link href="/plus" className="cyber-card group">
-              <div className="p-8 flex flex-col items-center text-center">
-                <div className="relative w-16 h-16 mb-6">
-                  <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/30 transition-colors"></div>
-                  <div className="relative flex items-center justify-center">
-                    <Star className="w-12 h-12 text-cyan-500 group-hover:text-cyan-400 transition-colors" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">CyberNex+</h3>
-                <p className="text-gray-400">Premium features and exclusive content.</p>
-              </div>
+            <Link
+              href="/cybernex-plus"
+              className="course-card flex flex-col"
+            >
+              <Shield className="w-12 h-12 mb-4 text-blue-500" />
+              <h2 className="text-2xl font-semibold mb-2">CyberNex+</h2>
+              <p className="text-gray-400">Unlock premium features and advanced learning resources.</p>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="w-full py-24">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="cyber-card p-12 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10"></div>
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
-                <p className="text-gray-400 text-lg mb-0 md:mb-8">Join thousands of students learning cybersecurity today.</p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link 
-                  href="/signup" 
-                  className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 text-center"
-                >
-                  Get Started
-                </Link>
-                <Link 
-                  href="/contact" 
-                  className="px-8 py-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 text-center"
-                >
-                  Contact Sales
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </main>
     </div>
-  )
+  );
 }
-
