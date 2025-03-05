@@ -14,7 +14,7 @@ import {
   ChevronRight, 
   BookOpen 
 } from 'lucide-react';
-import { fetchCourses } from '@/lib/supabase';
+import { fetchCourses } from '../../../lib/supabase';
 
 interface Course {
   id: string;

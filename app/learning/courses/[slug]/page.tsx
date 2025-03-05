@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Clock, Award, Share2, Users, ChevronRight, BookOpen } from 'lucide-react';
-import { fetchCourseBySlug, fetchModulesForCourse, fetchInstructorById } from '@/lib/supabase';
-import EnrollButton from '@/app/components/EnrollButton';
+import { fetchCourseBySlug, fetchModulesForCourse, fetchInstructorById } from '../../../../lib/supabase';
+import EnrollButton from '../../../components/EnrollButton';
 
 interface Module {
   id: string;

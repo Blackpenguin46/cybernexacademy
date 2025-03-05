@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { seedDatabase } from '@/lib/seed-data';
+import { seedDatabase } from '../../../lib/seed-data';
 
 // This route should only be accessible in development mode
 // In production, you'd want to protect this with additional authentication
