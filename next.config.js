@@ -5,6 +5,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ['images.unsplash.com'], // Add any image domains you'll use
+  },
   // Use standalone output for better deployment
   output: 'standalone',
   // Enable server actions with size limit

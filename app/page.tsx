@@ -132,7 +132,7 @@ const HomePage = () => {
       <div className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 opacity-50" />
         <div className="absolute inset-0">
-          <div className="cyber-particles" /> {/* Add particle animation component */}
+          <div className="cyber-particles" />
         </div>
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <motion.div
@@ -241,52 +241,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-const features = [
-  {
-    icon: Shield,
-    title: "Comprehensive Learning Paths",
-    description:
-      "Structured courses designed for all skill levels, from beginners to advanced professionals.",
-  },
-  {
-    icon: Book,
-    title: "Certification Preparation",
-    description:
-      "Comprehensive study materials and practice tests for major cybersecurity certifications.",
-  },
-  {
-    icon: Users,
-    title: "Expert Mentorship",
-    description:
-      "Learn from industry professionals and get guidance for your cybersecurity career.",
-  },
-  {
-    icon: Briefcase,
-    title: "Career Support",
-    description:
-      "Get guidance on career paths, job opportunities, and professional development in cybersecurity.",
-  },
-];
-
-const communityFeatures = [
-  "24/7 Discussion Forums",
-  "Live Webinars & Workshops",
-  "Networking Opportunities",
-  "Mentorship Programs",
-  "CTF Competitions",
-];
-
-const testimonials = [
-  {
-    text: "CyberNex Academy transformed my career. The hands-on labs and mentorship program were invaluable.",
-    name: "Sarah Chen",
-    title: "Security Engineer",
-  },
-  {
-    text: "The community here is amazing. I learned more in 6 months than I did in 2 years of self-study.",
-    name: "Michael Rodriguez",
-    title: "Penetration Tester",
-  },
-];
 
