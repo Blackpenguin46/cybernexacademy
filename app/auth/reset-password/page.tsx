@@ -3,8 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { updatePassword } from '@/lib/supabase'
-import ErrorBoundary from '@/app/components/ErrorBoundary'
+import { updatePassword } from '../../../lib/supabase'
+import ErrorBoundary from '../../components/ErrorBoundary'
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState('')

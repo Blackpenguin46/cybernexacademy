@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { resetPassword } from '@/lib/supabase'
-import ErrorBoundary from '@/app/components/ErrorBoundary'
+import { resetPassword } from '../../../lib/supabase'
+import ErrorBoundary from '../../components/ErrorBoundary'
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState('')

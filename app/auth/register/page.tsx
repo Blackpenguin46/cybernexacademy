@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { signUp } from '@/lib/supabase'
-import ErrorBoundary from '@/app/components/ErrorBoundary'
+import { signUp } from '../../../lib/supabase'
+import ErrorBoundary from '../../components/ErrorBoundary'
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('')

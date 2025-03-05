@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { signIn } from '@/lib/supabase'
-import ErrorBoundary from '@/app/components/ErrorBoundary'
+import { signIn } from '../../../lib/supabase'
+import ErrorBoundary from '../../components/ErrorBoundary'
 
 export default function LoginPage() {
   console.log('LoginPage component rendering')
