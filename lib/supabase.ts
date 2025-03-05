@@ -1,6 +1,4 @@
 import { createBrowserClient } from '@supabase/ssr';
-import { createServerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
 import { Database } from './database.types';
 
 // Default values for Supabase URL and key if environment variables are not set
@@ -12,25 +10,6 @@ export const supabase = createBrowserClient<Database>(
   supabaseUrl,
   supabaseAnonKey
 );
-
-// Create a supabase client for server component use
-export const serverSupabase = () => {
-  return createServerClient<Database>(
-    supabaseUrl,
-    supabaseAnonKey,
-    {
-      cookies: {
-        get: (name) => cookies().get(name)?.value,
-        set: (name, value, options) => {
-          cookies().set(name, value, options);
-        },
-        remove: (name, options) => {
-          cookies().set(name, '', { ...options, maxAge: 0 });
-        },
-      },
-    }
-  );
-};
 
 // Function to check if Supabase connection is working
 export async function checkSupabaseConnection() {
@@ -167,77 +146,107 @@ export async function fetchInstructorById(id: string) {
   }
 }
 
+// Fetch content creators
 export async function fetchContentCreators() {
-  const { data, error } = await supabase
-    .from('content_creators')
-    .select('*')
-    .order('platform')
-  
-  if (error) {
-    console.error('Error fetching content creators:', error)
-    return []
+  try {
+    const { data, error } = await supabase
+      .from('content_creators')
+      .select('*');
+    
+    if (error) {
+      console.error('Error fetching content creators:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Error in fetchContentCreators:', error);
+    return [];
   }
-  
-  return data || []
 }
 
+// Fetch events
 export async function fetchEvents(limit = 3) {
-  const { data, error } = await supabase
-    .from('events')
-    .select('*')
-    .gte('event_date', new Date().toISOString())
-    .order('event_date', { ascending: true })
-    .limit(limit)
-  
-  if (error) {
-    console.error('Error fetching events:', error)
-    return []
+  try {
+    const { data, error } = await supabase
+      .from('events')
+      .select('*')
+      .order('start_date', { ascending: true })
+      .limit(limit);
+    
+    if (error) {
+      console.error('Error fetching events:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Error in fetchEvents:', error);
+    return [];
   }
-  
-  return data || []
 }
 
+// Fetch blog posts
 export async function fetchBlogPosts(limit = 5) {
-  const { data, error } = await supabase
-    .from('blog_posts')
-    .select('*, authors(*)')
-    .order('published_at', { ascending: false })
-    .limit(limit)
-  
-  if (error) {
-    console.error('Error fetching blog posts:', error)
-    return []
+  try {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*, content_creators(name, avatar_url)')
+      .order('published_at', { ascending: false })
+      .limit(limit);
+    
+    if (error) {
+      console.error('Error fetching blog posts:', error);
+      return [];
+    }
+    
+    return data || [];
+  } catch (error) {
+    console.error('Error in fetchBlogPosts:', error);
+    return [];
   }
-  
-  return data || []
 }
 
+// Get user profile
 export async function getUserProfile(userId: string) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', userId)
-    .single()
-  
-  if (error) {
-    console.error('Error fetching user profile:', error)
-    return null
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching user profile:', error);
+      return null;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error in getUserProfile:', error);
+    return null;
   }
-  
-  return data
 }
 
+// Update user profile
 export async function updateUserProfile(userId: string, updates: any) {
-  const { data, error } = await supabase
-    .from('profiles')
-    .update(updates)
-    .eq('id', userId)
-  
-  if (error) {
-    console.error('Error updating user profile:', error)
-    return null
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .update(updates)
+      .eq('user_id', userId)
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error updating user profile:', error);
+      return null;
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Error in updateUserProfile:', error);
+    return null;
   }
-  
-  return data
 }
 

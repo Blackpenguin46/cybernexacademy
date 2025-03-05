@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { serverSupabase } from '@/lib/supabase';
+import { createServerSupabaseClient } from '@/lib/supabase-server';
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = serverSupabase();
+    const supabase = createServerSupabaseClient();
     const { courseId } = await request.json();
 
     // Check if request has valid session
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = serverSupabase();
+    const supabase = createServerSupabaseClient();
     const url = new URL(request.url);
     const courseId = url.searchParams.get('courseId');
 

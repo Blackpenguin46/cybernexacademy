@@ -1,29 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
-    domains: ['images.unsplash.com'], // Add any image domains you'll use
+    domains: ['i.pravatar.cc', 'images.unsplash.com'],
   },
-  // Use standalone output for better deployment
-  output: 'standalone',
-  // Enable server actions with size limit
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb'
-    }
-  },
-  // Disable static page generation
-  generateStaticParams: false,
-  // Force dynamic rendering for all pages
-  dynamic: 'force-dynamic',
-  // Disable static exports
-  trailingSlash: false,
-  distDir: '.next'
-}
+  // Environment variables available on the client
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  }
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 
