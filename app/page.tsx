@@ -17,7 +17,8 @@ import {
   Cloud,
   ChevronDown,
   Beaker,
-  Calendar
+  Calendar,
+  Youtube
 } from "lucide-react"
 
 const HomePage = () => {
@@ -65,6 +66,12 @@ const HomePage = () => {
       color: 'blue-400',
       dropdownItems: [
         {
+          name: 'Content Creators',
+          href: '/community/creators',
+          description: 'Top cybersecurity creators across platforms',
+          icon: Youtube,
+        },
+        {
           name: 'Discussion Forum',
           href: '/community/forum',
           description: 'Engage in technical discussions',
@@ -81,12 +88,6 @@ const HomePage = () => {
           href: '/community/mentorship',
           description: 'Learn from industry experts',
           icon: Users,
-        },
-        {
-          name: 'Career Resources',
-          href: '/community/careers',
-          description: 'Advance your security career',
-          icon: GraduationCap,
         },
       ],
     },
