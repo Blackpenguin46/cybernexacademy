@@ -12,41 +12,47 @@ export interface Database {
       courses: {
         Row: {
           id: string
+          created_at: string
           title: string
           description: string
-          image_url: string
-          level: string
-          duration: string
+          image_url: string | null
           price: number
           instructor_id: string
           category: string
-          created_at: string
+          level: string
+          duration: number
+          popularity: number
+          is_featured: boolean
           slug: string
         }
         Insert: {
           id?: string
+          created_at?: string
           title: string
           description: string
-          image_url?: string
-          level: string
-          duration: string
+          image_url?: string | null
           price: number
           instructor_id: string
           category: string
-          created_at?: string
+          level: string
+          duration: number
+          popularity?: number
+          is_featured?: boolean
           slug: string
         }
         Update: {
           id?: string
+          created_at?: string
           title?: string
           description?: string
-          image_url?: string
-          level?: string
-          duration?: string
+          image_url?: string | null
           price?: number
           instructor_id?: string
           category?: string
-          created_at?: string
+          level?: string
+          duration?: number
+          popularity?: number
+          is_featured?: boolean
           slug?: string
         }
         Relationships: [
@@ -62,27 +68,30 @@ export interface Database {
       modules: {
         Row: {
           id: string
+          created_at: string
           title: string
           description: string
           course_id: string
-          order_index: number
-          created_at: string
+          order: number
+          content: Json
         }
         Insert: {
           id?: string
+          created_at?: string
           title: string
           description: string
           course_id: string
-          order_index: number
-          created_at?: string
+          order: number
+          content: Json
         }
         Update: {
           id?: string
+          created_at?: string
           title?: string
           description?: string
           course_id?: string
-          order_index?: number
-          created_at?: string
+          order?: number
+          content?: Json
         }
         Relationships: [
           {
@@ -121,24 +130,36 @@ export interface Database {
       profiles: {
         Row: {
           id: string
-          user_id: string
-          full_name: string
-          avatar_url: string
           created_at: string
+          updated_at: string
+          username: string | null
+          full_name: string | null
+          avatar_url: string | null
+          bio: string | null
+          website: string | null
+          email: string
         }
         Insert: {
-          id?: string
-          user_id: string
-          full_name: string
-          avatar_url?: string
+          id: string
           created_at?: string
+          updated_at?: string
+          username?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          website?: string | null
+          email: string
         }
         Update: {
           id?: string
-          user_id?: string
-          full_name?: string
-          avatar_url?: string
           created_at?: string
+          updated_at?: string
+          username?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          bio?: string | null
+          website?: string | null
+          email?: string
         }
         Relationships: [
           {
@@ -153,30 +174,30 @@ export interface Database {
       enrollments: {
         Row: {
           id: string
+          created_at: string
           user_id: string
           course_id: string
-          status: string
+          completed: boolean
+          last_accessed: string | null
           progress: number
-          enrolled_at: string
-          completed_at: string | null
         }
         Insert: {
           id?: string
+          created_at?: string
           user_id: string
           course_id: string
-          status?: string
+          completed?: boolean
+          last_accessed?: string | null
           progress?: number
-          enrolled_at?: string
-          completed_at?: string | null
         }
         Update: {
           id?: string
+          created_at?: string
           user_id?: string
           course_id?: string
-          status?: string
+          completed?: boolean
+          last_accessed?: string | null
           progress?: number
-          enrolled_at?: string
-          completed_at?: string | null
         }
         Relationships: [
           {

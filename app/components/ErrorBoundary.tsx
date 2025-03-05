@@ -1,39 +1,46 @@
 "use client"
 
-import React, { type ErrorInfo, type ReactNode } from "react"
+import React, { Component, ErrorInfo, ReactNode } from 'react'
 
-interface ErrorBoundaryProps {
+interface Props {
   children: ReactNode
+  fallback?: ReactNode
 }
 
-interface ErrorBoundaryState {
+interface State {
   hasError: boolean
   error?: Error
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
+class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
     super(props)
     this.state = { hasError: false }
   }
 
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+  static getDerivedStateFromError(error: Error): State {
     return { hasError: true, error }
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo)
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    console.error('ErrorBoundary caught an error:', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-900">
-          <div className="text-white text-center">
-            <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
-            <p className="mb-4">Please try refreshing the page or contact support if the problem persists.</p>
-            <p className="text-sm text-gray-400">Error: {this.state.error?.message}</p>
-          </div>
+      // You can render any custom fallback UI
+      return this.props.fallback || (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+          <h2 className="text-lg font-semibold text-red-800">Something went wrong</h2>
+          <p className="mt-2 text-sm text-red-700">
+            {this.state.error?.message || 'An unknown error occurred'}
+          </p>
+          <button
+            className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+            onClick={() => this.setState({ hasError: false })}
+          >
+            Try again
+          </button>
         </div>
       )
     }

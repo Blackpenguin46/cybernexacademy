@@ -1,15 +1,12 @@
-import { createBrowserClient } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
 
 // Default values for Supabase URL and key if environment variables are not set
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyMDY2Mjk4NiwiZXhwIjoxOTM2MjM4OTg2fQ.aNz8iAFd5ngZMxQ2oIisz7FUYsLgdWTiVV4AZxW9nsk';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://your-project.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key';
 
 // Create a supabase client for client-side component use
-export const supabase = createBrowserClient<Database>(
-  supabaseUrl,
-  supabaseAnonKey
-);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Function to check if Supabase connection is working
 export async function checkSupabaseConnection() {
@@ -247,6 +244,97 @@ export async function updateUserProfile(userId: string, updates: any) {
   } catch (error) {
     console.error('Error in updateUserProfile:', error);
     return null;
+  }
+}
+
+export interface AuthError {
+  message: string;
+  status?: number;
+}
+
+export async function signIn(email: string, password: string) {
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+
+    if (error) {
+      return { success: false, error: error.message }
+    }
+
+    return { success: true, data }
+  } catch (error) {
+    console.error('Login error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+export async function signUp(email: string, password: string) {
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    })
+
+    if (error) {
+      return { success: false, error: error.message }
+    }
+
+    return { success: true, data }
+  } catch (error) {
+    console.error('Registration error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+export async function resetPassword(email: string) {
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset-password`,
+    })
+
+    if (error) {
+      return { success: false, error: error.message }
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Password reset error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+export async function updatePassword(password: string) {
+  try {
+    const { error } = await supabase.auth.updateUser({
+      password,
+    })
+
+    if (error) {
+      return { success: false, error: error.message }
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('Password update error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+export async function signOut() {
+  try {
+    const { error } = await supabase.auth.signOut()
+    
+    if (error) {
+      console.error('Sign out error:', error)
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true }
+  } catch (error) {
+    console.error('Sign out error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
   }
 }
 
