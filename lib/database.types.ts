@@ -16,13 +16,13 @@ export interface Database {
           title: string
           description: string
           image_url: string | null
-          price: number
-          instructor_id: string
-          category: string
           level: string
-          duration: number
-          popularity: number
+          duration: string
+          category: string
+          instructor: string
+          price: number | null
           is_featured: boolean
+          is_published: boolean
           slug: string
         }
         Insert: {
@@ -31,13 +31,13 @@ export interface Database {
           title: string
           description: string
           image_url?: string | null
-          price: number
-          instructor_id: string
-          category: string
           level: string
-          duration: number
-          popularity?: number
+          duration: string
+          category: string
+          instructor: string
+          price?: number | null
           is_featured?: boolean
+          is_published?: boolean
           slug: string
         }
         Update: {
@@ -46,13 +46,13 @@ export interface Database {
           title?: string
           description?: string
           image_url?: string | null
-          price?: number
-          instructor_id?: string
-          category?: string
           level?: string
-          duration?: number
-          popularity?: number
+          duration?: string
+          category?: string
+          instructor?: string
+          price?: number | null
           is_featured?: boolean
+          is_published?: boolean
           slug?: string
         }
         Relationships: [
@@ -137,7 +137,8 @@ export interface Database {
           avatar_url: string | null
           bio: string | null
           website: string | null
-          email: string
+          email: string | null
+          role: string
         }
         Insert: {
           id: string
@@ -148,7 +149,8 @@ export interface Database {
           avatar_url?: string | null
           bio?: string | null
           website?: string | null
-          email: string
+          email?: string | null
+          role?: string
         }
         Update: {
           id?: string
@@ -159,7 +161,8 @@ export interface Database {
           avatar_url?: string | null
           bio?: string | null
           website?: string | null
-          email?: string
+          email?: string | null
+          role?: string
         }
         Relationships: [
           {
@@ -392,6 +395,23 @@ export interface Database {
             referencedColumns: ["id"]
           }
         ]
+      }
+      health_check: {
+        Row: {
+          id: number
+          status: string
+          timestamp: string
+        }
+        Insert: {
+          id?: number
+          status: string
+          timestamp?: string
+        }
+        Update: {
+          id?: number
+          status?: string
+          timestamp?: string
+        }
       }
     }
     Views: {

@@ -1,22 +1,26 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
 
-// Default values for Supabase URL and key if environment variables are not set
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://your-project.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'your-anon-key';
+// Initialize the Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
-// Create a supabase client for client-side component use
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Function to check if Supabase connection is working
+// Check if Supabase connection is working
 export async function checkSupabaseConnection() {
   try {
-    const { data, error } = await supabase.from('courses').select('*').limit(1);
-    if (error) throw error;
-    return { success: true, data };
+    const { data, error } = await supabase.from('health_check').select('*').limit(1)
+    
+    if (error) {
+      console.error('Supabase connection error:', error)
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true, data }
   } catch (error) {
-    console.error('Supabase connection error:', error);
-    return { success: false, error };
+    console.error('Unexpected error checking Supabase connection:', error)
+    return { success: false, error: 'Failed to connect to database' }
   }
 }
 
@@ -252,6 +256,7 @@ export interface AuthError {
   status?: number;
 }
 
+// Sign in with email and password
 export async function signIn(email: string, password: string) {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -263,13 +268,14 @@ export async function signIn(email: string, password: string) {
       return { success: false, error: error.message }
     }
 
-    return { success: true, data }
+    return { success: true, user: data.user }
   } catch (error) {
-    console.error('Login error:', error)
+    console.error('Sign in error:', error)
     return { success: false, error: 'An unexpected error occurred' }
   }
 }
 
+// Sign up with email and password
 export async function signUp(email: string, password: string) {
   try {
     const { data, error } = await supabase.auth.signUp({
@@ -281,59 +287,77 @@ export async function signUp(email: string, password: string) {
       return { success: false, error: error.message }
     }
 
-    return { success: true, data }
+    return { success: true, user: data.user }
   } catch (error) {
-    console.error('Registration error:', error)
+    console.error('Sign up error:', error)
     return { success: false, error: 'An unexpected error occurred' }
   }
 }
 
-export async function resetPassword(email: string) {
-  try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
-    })
-
-    if (error) {
-      return { success: false, error: error.message }
-    }
-
-    return { success: true }
-  } catch (error) {
-    console.error('Password reset error:', error)
-    return { success: false, error: 'An unexpected error occurred' }
-  }
-}
-
-export async function updatePassword(password: string) {
-  try {
-    const { error } = await supabase.auth.updateUser({
-      password,
-    })
-
-    if (error) {
-      return { success: false, error: error.message }
-    }
-
-    return { success: true }
-  } catch (error) {
-    console.error('Password update error:', error)
-    return { success: false, error: 'An unexpected error occurred' }
-  }
-}
-
+// Sign out
 export async function signOut() {
   try {
     const { error } = await supabase.auth.signOut()
     
     if (error) {
-      console.error('Sign out error:', error)
       return { success: false, error: error.message }
     }
     
     return { success: true }
   } catch (error) {
     console.error('Sign out error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+// Reset password
+export async function resetPassword(email: string) {
+  try {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/reset-password`,
+    })
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true }
+  } catch (error) {
+    console.error('Reset password error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+// Update password
+export async function updatePassword(password: string) {
+  try {
+    const { error } = await supabase.auth.updateUser({
+      password,
+    })
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true }
+  } catch (error) {
+    console.error('Update password error:', error)
+    return { success: false, error: 'An unexpected error occurred' }
+  }
+}
+
+// Get current user
+export async function getCurrentUser() {
+  try {
+    const { data, error } = await supabase.auth.getUser()
+    
+    if (error) {
+      return { success: false, error: error.message }
+    }
+    
+    return { success: true, user: data.user }
+  } catch (error) {
+    console.error('Get current user error:', error)
     return { success: false, error: 'An unexpected error occurred' }
   }
 }
