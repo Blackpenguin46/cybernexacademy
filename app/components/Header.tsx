@@ -1,84 +1,165 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { Shield, ChevronDown } from "lucide-react"
+import { useState } from "react"
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  const [learningOpen, setLearningOpen] = useState(false)
+  const [communityOpen, setCommunityOpen] = useState(false)
+  const [careersOpen, setCareersOpen] = useState(false)
+  const [collegeStudentsOpen, setCollegeStudentsOpen] = useState(false)
+  const [toolsOpen, setToolsOpen] = useState(false)
 
   return (
-    <header
-      className={`w-full transition-all duration-300 ${
-        isScrolled ? "bg-opacity-90 backdrop-blur-md" : "bg-opacity-0"
-      } bg-darker-bg border-b border-accent-bg`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-full bg-neon-blue/20 flex items-center justify-center">
-              <span className="text-2xl font-bold text-neon-blue">C</span>
-            </div>
-            <span className="text-2xl font-bold neon-text">CyberNex</span>
+    <header className="bg-gray-800 text-white py-4">
+      <div className="container mx-auto px-4 flex justify-between items-center">
+        <Link href="/" className="flex items-center">
+          <Shield className="w-8 h-8 mr-2 text-blue-400" />
+          <span className="text-xl font-bold">CyberNex Academy</span>
+        </Link>
+        <nav className="flex-grow">
+          <ul className="flex justify-center space-x-6">
+            <li className="relative group">
+              <button className="flex items-center hover:text-blue-400" onClick={() => setLearningOpen(!learningOpen)}>
+                Learning <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {learningOpen && (
+                <ul className="absolute left-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
+                  <li>
+                    <Link href="/learning/fundamentals" className="block px-4 py-2 hover:bg-gray-600">
+                      Fundamentals
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/learning/advanced" className="block px-4 py-2 hover:bg-gray-600">
+                      Advanced Topics
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/learning/certifications" className="block px-4 py-2 hover:bg-gray-600">
+                      Certifications
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li className="relative group">
+              <button
+                className="flex items-center hover:text-blue-400"
+                onClick={() => setCommunityOpen(!communityOpen)}
+              >
+                Community <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {communityOpen && (
+                <ul className="absolute left-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
+                  <li>
+                    <Link href="/community/forums" className="block px-4 py-2 hover:bg-gray-600">
+                      Forums
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/community/events" className="block px-4 py-2 hover:bg-gray-600">
+                      Events
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/community/mentorship" className="block px-4 py-2 hover:bg-gray-600">
+                      Mentorship
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li className="relative group">
+              <button className="flex items-center hover:text-blue-400" onClick={() => setCareersOpen(!careersOpen)}>
+                Careers <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {careersOpen && (
+                <ul className="absolute left-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
+                  <li>
+                    <Link href="/careers/job-board" className="block px-4 py-2 hover:bg-gray-600">
+                      Job Board
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/careers/resume-builder" className="block px-4 py-2 hover:bg-gray-600">
+                      Resume Builder
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/careers/interview-prep" className="block px-4 py-2 hover:bg-gray-600">
+                      Interview Prep
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li className="relative group">
+              <button
+                className="flex items-center hover:text-blue-400"
+                onClick={() => setCollegeStudentsOpen(!collegeStudentsOpen)}
+              >
+                College Students <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {collegeStudentsOpen && (
+                <ul className="absolute left-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
+                  <li>
+                    <Link href="/college-students/internships" className="block px-4 py-2 hover:bg-gray-600">
+                      Internships
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/college-students/scholarships" className="block px-4 py-2 hover:bg-gray-600">
+                      Scholarships
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/college-students/resources" className="block px-4 py-2 hover:bg-gray-600">
+                      Student Resources
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li className="relative group">
+              <button className="flex items-center hover:text-blue-400" onClick={() => setToolsOpen(!toolsOpen)}>
+                Tools & Utilities <ChevronDown className="ml-1 w-4 h-4" />
+              </button>
+              {toolsOpen && (
+                <ul className="absolute left-0 mt-2 w-48 bg-gray-700 rounded-md shadow-lg z-10">
+                  <li>
+                    <Link href="/tools/password-generator" className="block px-4 py-2 hover:bg-gray-600">
+                      Password Generator
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/tools/encryption-tools" className="block px-4 py-2 hover:bg-gray-600">
+                      Encryption Tools
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/tools/network-scanner" className="block px-4 py-2 hover:bg-gray-600">
+                      Network Scanner
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+          </ul>
+        </nav>
+        <div className="flex items-center space-x-4">
+          <Link href="/auth/login" className="hover:text-blue-400">
+            Login
           </Link>
-
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/auth/login" className="nav-link">
-              Login
-            </Link>
-            <Link href="/auth/register" className="cyber-button">
-              Join Now
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6 text-neon-blue" />
-            ) : (
-              <Menu className="w-6 h-6 text-neon-blue" />
-            )}
-          </button>
+          <Link href="/auth/register" className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">
+            Sign Up
+          </Link>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden cyber-gradient border-t border-accent-bg">
-          <div className="px-4 pt-2 pb-4 space-y-4">
-            <Link
-              href="/auth/login"
-              className="block w-full text-center py-2 nav-link"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Login
-            </Link>
-            <Link
-              href="/auth/register"
-              className="block w-full text-center cyber-button"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Join Now
-            </Link>
-          </div>
-        </div>
-      )}
     </header>
   )
 }
 
-export default Header 
+export default Header
+

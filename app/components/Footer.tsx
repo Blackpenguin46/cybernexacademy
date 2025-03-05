@@ -1,7 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { Github, Twitter, Linkedin, Mail } from "lucide-react"
+import { 
+  Linkedin, 
+  Instagram, 
+  Twitter, 
+  Youtube, 
+  Mail, 
+  Globe, 
+  Shield 
+} from "lucide-react"
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -46,86 +54,148 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Github, href: 'https://github.com', label: 'GitHub' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://linkedin.com/company/cybernex-academy', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://instagram.com/cybernexacademy', label: 'Instagram' },
+    { icon: Twitter, href: 'https://twitter.com/cybernexacademy', label: 'Twitter' },
+    { icon: Youtube, href: 'https://youtube.com/c/cybernexacademy', label: 'YouTube' },
     { icon: Mail, href: 'mailto:contact@cybernex.com', label: 'Email' },
   ];
 
   return (
-    <footer className="bg-darker-bg border-t border-accent-bg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-          {sections.map((section) => (
-            <div key={section.title}>
-              <h3 className="text-lg font-semibold mb-4 neon-text">
-                {section.title}
-              </h3>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-text-secondary hover:text-neon-blue transition-colors"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+    <footer className="bg-gray-900 border-t border-gray-800">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Column 1: Logo and Description */}
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Shield className="w-8 h-8 text-blue-500" />
+              <span className="text-xl font-bold text-white">CyberNex</span>
             </div>
-          ))}
-        </div>
-
-        {/* Newsletter Section */}
-        <div className="border-t border-accent-bg pt-8 mb-8">
-          <div className="max-w-md mx-auto text-center">
-            <h3 className="text-lg font-semibold mb-4 neon-text-pink">
-              Stay Updated
-            </h3>
-            <p className="text-text-secondary mb-4">
-              Subscribe to our newsletter for the latest cybersecurity insights and
-              updates.
+            <p className="text-gray-400 text-sm">
+              Your gateway to mastering cybersecurity skills with expert-led courses, 
+              hands-on labs, and a supportive community.
             </p>
-            <form className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-2 bg-accent-bg border border-neon-blue rounded-md focus:outline-none focus:ring-2 focus:ring-neon-blue"
-              />
-              <button
-                type="submit"
-                className="cyber-button"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Bottom Section */}
-        <div className="border-t border-accent-bg pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-text-secondary">
-              © {currentYear} CyberNex Academy. All rights reserved.
-            </div>
-
-            {/* Social Links */}
-            <div className="flex space-x-6">
+            <div className="flex space-x-4 pt-2">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-secondary hover:text-neon-blue transition-colors"
+                  className="text-gray-400 hover:text-blue-400 transition-colors"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Column 2: Navigation */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Navigation</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/learning" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Learning
+                </Link>
+              </li>
+              <li>
+                <Link href="/community" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Community
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Tools & Utilities
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Blog
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Resources */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Resources</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="/resources/documentation" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Documentation
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy-policy" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms-of-service" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Newsletter */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Stay Updated</h3>
+            <p className="text-gray-400 text-sm mb-4">
+              Subscribe to our newsletter for the latest cybersecurity insights and updates.
+            </p>
+            <form className="space-y-2">
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="Your email address"
+                  className="bg-gray-800 border border-gray-700 rounded-l-lg px-4 py-2 text-sm text-white w-full focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-r-lg px-4 transition-colors"
+                >
+                  <Mail className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-gray-500 text-xs">
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-500 text-sm">
+            © {currentYear} CyberNex Academy. All rights reserved.
+          </p>
+          <div className="flex space-x-4 mt-4 md:mt-0">
+            <Link href="/sitemap" className="text-gray-500 hover:text-blue-400 text-xs">
+              Sitemap
+            </Link>
+            <Link href="/accessibility" className="text-gray-500 hover:text-blue-400 text-xs">
+              Accessibility
+            </Link>
+            <Link href="/cookies" className="text-gray-500 hover:text-blue-400 text-xs">
+              Cookie Policy
+            </Link>
           </div>
         </div>
       </div>
