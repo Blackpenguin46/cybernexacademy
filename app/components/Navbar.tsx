@@ -2,125 +2,165 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Terminal, Shield, Book, Users } from 'lucide-react';
+import { ChevronDown, Terminal, Shield, Book, Users, Menu, X } from 'lucide-react';
 
-const Navbar = () => {
+const navigation = [
+  {
+    name: 'Learning',
+    href: '/learning',
+    items: [
+      { name: 'Courses', href: '/learning/courses' },
+      { name: 'Labs', href: '/learning/labs' },
+      { name: 'Certifications', href: '/learning/certifications' },
+    ],
+  },
+  {
+    name: 'Community',
+    href: '/community',
+    items: [
+      { name: 'Forums', href: '/community/forums' },
+      { name: 'Events', href: '/community/events' },
+      { name: 'Blog', href: '/community/blog' },
+    ],
+  },
+  {
+    name: 'Resources',
+    href: '/resources',
+    items: [
+      { name: 'Tools', href: '/resources/tools' },
+      { name: 'Documentation', href: '/resources/docs' },
+      { name: 'Support', href: '/resources/support' },
+    ],
+  },
+  { name: 'About', href: '/about' },
+];
+
+export default function Navbar() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-  const mainNavItems = [
-    {
-      title: 'Academy',
-      icon: Terminal,
-      items: [
-        { name: 'Learning Paths', href: '/academy/paths', description: 'Structured learning tracks for all levels' },
-        { name: 'Hands-on Labs', href: '/academy/labs', description: 'Practice in real-world environments' },
-        { name: 'Certifications', href: '/academy/certifications', description: 'Professional certification prep' },
-        { name: 'Challenges', href: '/academy/challenges', description: 'Test your skills with CTF challenges' },
-      ],
-    },
-    {
-      title: 'Community',
-      icon: Users,
-      items: [
-        { name: 'Discussion Forum', href: '/community/forum', description: 'Engage with the community' },
-        { name: 'Events', href: '/community/events', description: 'Upcoming webinars and meetups' },
-        { name: 'Mentorship', href: '/community/mentorship', description: 'Connect with industry experts' },
-        { name: 'Blog', href: '/community/blog', description: 'Latest insights and articles' },
-      ],
-    },
-    {
-      title: 'Resources',
-      icon: Book,
-      items: [
-        { name: 'Documentation', href: '/resources/docs', description: 'Comprehensive guides and references' },
-        { name: 'Tools', href: '/resources/tools', description: 'Cybersecurity tools and utilities' },
-        { name: 'Research', href: '/resources/research', description: 'Latest security research' },
-        { name: 'Guides', href: '/resources/guides', description: 'Step-by-step tutorials' },
-      ],
-    },
-    {
-      title: 'Security',
-      icon: Shield,
-      items: [
-        { name: 'Threat Intel', href: '/security/threats', description: 'Real-time threat intelligence' },
-        { name: 'Advisories', href: '/security/advisories', description: 'Security advisories and alerts' },
-        { name: 'Best Practices', href: '/security/practices', description: 'Security best practices' },
-        { name: 'News', href: '/security/news', description: 'Latest security news' },
-      ],
-    },
-  ];
-
   return (
-    <nav className="bg-darker-bg border-b border-accent-bg">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between">
-          <div className="flex">
-            {mainNavItems.map((item) => (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-2xl font-bold cyber-gradient-text">CyberNex</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-8">
+            {navigation.map((item) => (
               <div
-                key={item.title}
+                key={item.name}
                 className="relative group"
-                onMouseEnter={() => setActiveDropdown(item.title)}
+                onMouseEnter={() => setActiveDropdown(item.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <button
-                  className={`flex items-center px-4 py-3 text-sm font-medium transition-colors
-                    ${
-                      activeDropdown === item.title
-                        ? 'text-neon-blue bg-accent-bg'
-                        : 'text-text-secondary hover:text-neon-blue hover:bg-accent-bg'
-                    }`}
+                <Link
+                  href={item.href}
+                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-300 hover:text-cyan-400 transition-colors"
                 >
-                  <item.icon className="w-4 h-4 mr-2" />
-                  {item.title}
-                  <ChevronDown className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" />
-                </button>
+                  {item.name}
+                  {item.items && (
+                    <ChevronDown className="ml-1 h-4 w-4 text-gray-400 group-hover:text-cyan-400" />
+                  )}
+                </Link>
 
-                {/* Mega Menu Dropdown */}
-                <div
-                  className={`absolute left-0 mt-0 w-64 opacity-0 invisible group-hover:opacity-100 
-                    group-hover:visible transition-all duration-300 z-50`}
-                >
-                  <div className="cyber-card py-2 shadow-xl">
+                {item.items && activeDropdown === item.name && (
+                  <div className="absolute left-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-gray-900 ring-1 ring-black ring-opacity-5">
                     {item.items.map((subItem) => (
                       <Link
                         key={subItem.name}
                         href={subItem.href}
-                        className="block px-4 py-2 hover:bg-accent-bg transition-colors"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-gray-800 hover:text-cyan-400"
                       >
-                        <div className="text-sm font-medium text-text-primary">
-                          {subItem.name}
-                        </div>
-                        <div className="text-xs text-text-secondary">
-                          {subItem.description}
-                        </div>
+                        {subItem.name}
                       </Link>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
 
-          {/* Quick Actions */}
-          <div className="flex items-center space-x-4 px-4">
+          {/* CTA Buttons */}
+          <div className="hidden md:flex md:items-center md:space-x-4">
             <Link
-              href="/search"
-              className="text-text-secondary hover:text-neon-blue transition-colors"
+              href="/login"
+              className="text-gray-300 hover:text-cyan-400 px-3 py-2 text-sm font-medium"
             >
-              Quick Search
+              Log in
             </Link>
-            <div className="h-4 w-px bg-accent-bg"></div>
             <Link
-              href="/dashboard"
-              className="text-text-secondary hover:text-neon-blue transition-colors"
+              href="/signup"
+              className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
             >
-              Dashboard
+              Sign up
             </Link>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              type="button"
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? (
+                <X className="block h-6 w-6" />
+              ) : (
+                <Menu className="block h-6 w-6" />
+              )}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-gray-900">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            {navigation.map((item) => (
+              <div key={item.name}>
+                <Link
+                  href={item.href}
+                  className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800 rounded-md"
+                >
+                  {item.name}
+                </Link>
+                {item.items && (
+                  <div className="pl-4 space-y-1">
+                    {item.items.map((subItem) => (
+                      <Link
+                        key={subItem.name}
+                        href={subItem.href}
+                        className="block px-3 py-2 text-sm font-medium text-gray-400 hover:text-cyan-400 hover:bg-gray-800 rounded-md"
+                      >
+                        {subItem.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            <div className="pt-4 space-y-2">
+              <Link
+                href="/login"
+                className="block w-full px-4 py-2 text-center text-base font-medium text-gray-300 hover:text-cyan-400 hover:bg-gray-800 rounded-md"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="block w-full px-4 py-2 text-center text-base font-medium bg-cyan-500 hover:bg-cyan-600 text-white rounded-md"
+              >
+                Sign up
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
-};
-
-export default Navbar; 
+} 

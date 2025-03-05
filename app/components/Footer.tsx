@@ -8,8 +8,53 @@ import {
   Youtube, 
   Mail, 
   Globe, 
-  Shield 
+  Shield,
+  Facebook,
+  Github
 } from "lucide-react"
+
+const navigation = {
+  company: [
+    { name: 'About', href: '/about' },
+    { name: 'Careers', href: '/careers' },
+    { name: 'Press', href: '/press' },
+    { name: 'Blog', href: '/blog' },
+  ],
+  support: [
+    { name: 'Documentation', href: '/docs' },
+    { name: 'Guides', href: '/guides' },
+    { name: 'API Status', href: '/api-status' },
+    { name: 'Support', href: '/support' },
+  ],
+  legal: [
+    { name: 'Privacy', href: '/privacy' },
+    { name: 'Terms', href: '/terms' },
+    { name: 'Cookie Policy', href: '/cookies' },
+    { name: 'Licensing', href: '/licensing' },
+  ],
+  social: [
+    {
+      name: 'Facebook',
+      href: '#',
+      icon: Facebook,
+    },
+    {
+      name: 'Twitter',
+      href: '#',
+      icon: Twitter,
+    },
+    {
+      name: 'LinkedIn',
+      href: '#',
+      icon: Linkedin,
+    },
+    {
+      name: 'GitHub',
+      href: '#',
+      icon: Github,
+    },
+  ],
+}
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -62,141 +107,125 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 border-t border-gray-800">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Column 1: Logo and Description */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Shield className="w-8 h-8 text-blue-500" />
-              <span className="text-xl font-bold text-white">CyberNex</span>
-            </div>
-            <p className="text-gray-400 text-sm">
-              Your gateway to mastering cybersecurity skills with expert-led courses, 
-              hands-on labs, and a supportive community.
+    <footer className="bg-gray-900" aria-labelledby="footer-heading">
+      <h2 id="footer-heading" className="sr-only">
+        Footer
+      </h2>
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
+          <div className="space-y-8 xl:col-span-1">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="text-2xl font-bold cyber-gradient-text">CyberNex</span>
+            </Link>
+            <p className="text-gray-400 text-base">
+              Empowering the next generation of cybersecurity professionals through
+              expert-led training and hands-on experience.
             </p>
-            <div className="flex space-x-4 pt-2">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-blue-400 transition-colors"
-                  aria-label={social.label}
+            <div className="flex space-x-6">
+              {navigation.social.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-400 hover:text-cyan-400 transition-colors"
                 >
-                  <social.icon className="w-5 h-5" />
-                </a>
+                  <span className="sr-only">{item.name}</span>
+                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                </Link>
               ))}
             </div>
           </div>
-
-          {/* Column 2: Navigation */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Navigation</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/learning" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Learning
-                </Link>
-              </li>
-              <li>
-                <Link href="/community" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Community
-                </Link>
-              </li>
-              <li>
-                <Link href="/tools" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Tools & Utilities
-                </Link>
-              </li>
-              <li>
-                <Link href="/about" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Blog
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Resources */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/resources/documentation" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Documentation
-                </Link>
-              </li>
-              <li>
-                <Link href="/faq" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link href="/privacy-policy" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms-of-service" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" className="text-gray-400 hover:text-blue-400 transition-colors text-sm">
-                  Contact Us
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Newsletter */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Stay Updated</h3>
-            <p className="text-gray-400 text-sm mb-4">
-              Subscribe to our newsletter for the latest cybersecurity insights and updates.
-            </p>
-            <form className="space-y-2">
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="bg-gray-800 border border-gray-700 rounded-l-lg px-4 py-2 text-sm text-white w-full focus:outline-none focus:ring-1 focus:ring-blue-500"
-                />
-                <button
-                  type="submit"
-                  className="bg-blue-500 hover:bg-blue-600 text-white rounded-r-lg px-4 transition-colors"
-                >
-                  <Mail className="w-4 h-4" />
-                </button>
+          <div className="mt-12 grid grid-cols-2 gap-8 xl:mt-0 xl:col-span-2">
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              <div>
+                <h3 className="text-sm font-semibold text-cyan-400 tracking-wider uppercase">
+                  Company
+                </h3>
+                <ul role="list" className="mt-4 space-y-4">
+                  {navigation.company.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-base text-gray-400 hover:text-cyan-400 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <p className="text-gray-500 text-xs">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
-            </form>
+              <div className="mt-12 md:mt-0">
+                <h3 className="text-sm font-semibold text-cyan-400 tracking-wider uppercase">
+                  Support
+                </h3>
+                <ul role="list" className="mt-4 space-y-4">
+                  {navigation.support.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-base text-gray-400 hover:text-cyan-400 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="md:grid md:grid-cols-2 md:gap-8">
+              <div>
+                <h3 className="text-sm font-semibold text-cyan-400 tracking-wider uppercase">
+                  Legal
+                </h3>
+                <ul role="list" className="mt-4 space-y-4">
+                  {navigation.legal.map((item) => (
+                    <li key={item.name}>
+                      <Link
+                        href={item.href}
+                        className="text-base text-gray-400 hover:text-cyan-400 transition-colors"
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-12 md:mt-0">
+                <h3 className="text-sm font-semibold text-cyan-400 tracking-wider uppercase">
+                  Subscribe to our newsletter
+                </h3>
+                <p className="mt-4 text-base text-gray-400">
+                  Get the latest news and updates delivered to your inbox.
+                </p>
+                <form className="mt-4 sm:flex sm:max-w-md">
+                  <label htmlFor="email-address" className="sr-only">
+                    Email address
+                  </label>
+                  <input
+                    type="email"
+                    name="email-address"
+                    id="email-address"
+                    autoComplete="email"
+                    required
+                    className="w-full min-w-0 px-4 py-2 text-base text-gray-300 placeholder-gray-500 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                    placeholder="Enter your email"
+                  />
+                  <div className="mt-3 sm:mt-0 sm:ml-3 sm:flex-shrink-0">
+                    <button
+                      type="submit"
+                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-cyan-500 hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+                    >
+                      Subscribe
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-sm">
-            © {currentYear} CyberNex Academy. All rights reserved.
+        <div className="mt-12 border-t border-gray-800 pt-8">
+          <p className="text-base text-gray-400 xl:text-center">
+            &copy; {currentYear} CyberNex Academy. All rights reserved.
           </p>
-          <div className="flex space-x-4 mt-4 md:mt-0">
-            <Link href="/sitemap" className="text-gray-500 hover:text-blue-400 text-xs">
-              Sitemap
-            </Link>
-            <Link href="/accessibility" className="text-gray-500 hover:text-blue-400 text-xs">
-              Accessibility
-            </Link>
-            <Link href="/cookies" className="text-gray-500 hover:text-blue-400 text-xs">
-              Cookie Policy
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
