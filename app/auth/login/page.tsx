@@ -31,9 +31,9 @@ function LoginPage() {
     console.log("LoginPage useEffect running")
     const checkConnection = async () => {
       try {
-        const isConnected = await checkSupabaseConnection()
-        console.log("Supabase connection check result:", isConnected)
-        setIsSupabaseConnected(isConnected)
+        const result = await checkSupabaseConnection()
+        console.log("Supabase connection check result:", result)
+        setIsSupabaseConnected(result.success)
       } catch (error) {
         console.error("Error checking Supabase connection:", error)
         setIsSupabaseConnected(false)

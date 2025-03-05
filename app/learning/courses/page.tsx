@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -30,7 +30,19 @@ interface Course {
   slug: string;
 }
 
-export default function CoursesPage() {
+// Loading component
+function CoursesLoading() {
+  return (
+    <div className="min-h-screen bg-gray-900 py-12">
+      <div className="container mx-auto px-4 text-center">
+        <h2 className="text-2xl text-white">Loading courses...</h2>
+      </div>
+    </div>
+  );
+}
+
+// Main component with search params
+function CoursesContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -149,7 +161,7 @@ export default function CoursesPage() {
     if (page < 1 || page > totalPages) return;
     updateFilters({ page: page.toString() });
   };
-  
+
   return (
     <div className="min-h-screen bg-gray-900 py-12">
       <div className="container mx-auto px-4">
@@ -439,5 +451,14 @@ export default function CoursesPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// Export the page component with Suspense
+export default function CoursesPage() {
+  return (
+    <Suspense fallback={<CoursesLoading />}>
+      <CoursesContent />
+    </Suspense>
   );
 }
