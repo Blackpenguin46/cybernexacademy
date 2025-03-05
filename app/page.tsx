@@ -7,7 +7,8 @@ import {
   GraduationCap, 
   Wrench, 
   Star,
-  ArrowRight
+  ArrowRight,
+  Shield
 } from "lucide-react"
 
 export default function Home() {
@@ -50,8 +51,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Featured Courses Section */}
       <section className="w-full py-16 bg-gray-900/50">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold">Featured Courses</h2>
+            <Link href="/courses" className="text-cyan-400 hover:text-cyan-300 flex items-center gap-2">
+              View All <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="cyber-card group p-6">
+                <div className="aspect-video w-full bg-gray-800 rounded-lg mb-4 overflow-hidden">
+                  <div className="w-full h-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
+                    <Shield className="w-12 h-12 text-cyan-500/50" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-cyan-400 transition-colors">
+                  Cybersecurity Fundamentals {i}
+                </h3>
+                <p className="text-gray-400 mb-4">Learn the basics of cybersecurity and build a strong foundation.</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-cyan-400 font-semibold">$49.99</span>
+                  <button className="text-sm text-gray-300 hover:text-cyan-400 transition-colors">
+                    Learn More →
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="w-full py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
@@ -75,7 +109,7 @@ export default function Home() {
       </section>
 
       {/* Main Navigation Grid */}
-      <section className="w-full px-4 py-16">
+      <section className="w-full px-4 py-16 bg-gray-900/50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
             Explore Our <span className="text-cyan-400">Platform</span>
@@ -158,6 +192,35 @@ export default function Home() {
                 <p className="text-gray-400">Premium features and exclusive content.</p>
               </div>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="w-full py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="cyber-card p-12 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10"></div>
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="flex-1">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Journey?</h2>
+                <p className="text-gray-400 text-lg mb-0 md:mb-8">Join thousands of students learning cybersecurity today.</p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link 
+                  href="/signup" 
+                  className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 text-center"
+                >
+                  Get Started
+                </Link>
+                <Link 
+                  href="/contact" 
+                  className="px-8 py-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-all duration-300 border border-gray-700 text-center"
+                >
+                  Contact Sales
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
