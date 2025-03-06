@@ -83,7 +83,7 @@ const AboutPage = () => {
             About CyberNex Academy
           </h1>
           <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            We're on a mission to make cybersecurity education accessible, practical, and engaging for everyone.
+            We&apos;re on a mission to make cybersecurity education accessible, practical, and engaging for everyone.
           </p>
         </motion.div>
 

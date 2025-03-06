@@ -436,7 +436,7 @@ function CoursesContent() {
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No Courses Found</h3>
             <p className="text-gray-400 mb-6">
-              We couldn't find any courses matching your criteria. Try adjusting your filters.
+              We couldn&apos;t find any courses matching your criteria. Try adjusting your filters.
             </p>
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
