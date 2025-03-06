@@ -2,8 +2,8 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Inter, Space_Mono, Orbitron } from "next/font/google"
 import Header from "./components/Header"
-import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+import Sidebar from "./components/Sidebar"
 import { Providers } from "./providers"
 
 // Font configurations
@@ -48,21 +48,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* Accent lines - top */}
           <div className="fixed top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-70"></div>
           
-          {/* Header and Navigation */}
-          <div className="relative z-50">
-            <Header />
-            <Navbar />
-          </div>
+          {/* Sidebar Navigation */}
+          <Sidebar />
           
           {/* Main Content */}
-          <main className="flex-grow relative z-10 mt-32 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {children}
-          </main>
+          <div className="flex flex-col flex-1 min-h-screen">
+            {/* Main Content Area */}
+            <main className="flex-grow mt-6 md:mt-0 pb-20 w-full">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:pl-[280px] transition-all duration-300">
+                {children}
+              </div>
+            </main>
+            
+            {/* Footer - Only visible at bottom of page */}
+            <div className="md:pl-[280px] transition-all duration-300">
+              <Footer />
+            </div>
+          </div>
           
           {/* Accent lines - bottom */}
           <div className="fixed bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-pink to-transparent opacity-70"></div>
-          
-          <Footer />
         </Providers>
       </body>
     </html>
