@@ -1,30 +1,69 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Space_Mono, Orbitron } from "next/font/google"
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
+import { Providers } from "./providers"
 
-const inter = Inter({ subsets: ["latin"] })
+// Font configurations
+const inter = Inter({ 
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-inter'
+})
+
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-space-mono'
+})
+
+const orbitron = Orbitron({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-orbitron'
+})
 
 export const metadata: Metadata = {
   title: "CyberNex Academy",
   description: "Your gateway to mastering cybersecurity skills with expert-led courses, hands-on labs, and a supportive community.",
+  keywords: ["cybersecurity", "academy", "courses", "learning", "cyber", "security", "education", "online courses"],
+  authors: [{ name: "CyberNex Academy Team" }],
+  creator: "CyberNex Academy",
+  viewport: "width=device-width, initial-scale=1",
+  themeColor: "#111827",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900`}>
-        <div className="fixed inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] pointer-events-none"></div>
-        <div className="relative z-50">
-          <Header />
-          <Navbar />
-        </div>
-        <main className="flex-grow relative z-10 mt-32">
-          {children}
-        </main>
-        <Footer />
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${spaceMono.variable} ${orbitron.variable}`}>
+      <body className="min-h-screen flex flex-col bg-dark text-white font-sans">
+        <Providers>
+          {/* Animated background with grid and gradients */}
+          <div className="fixed inset-0 bg-cyber-grid bg-grid-md opacity-20 pointer-events-none"></div>
+          <div className="fixed inset-0 bg-gradient-radial from-cyber-purple/5 via-dark to-dark pointer-events-none"></div>
+          
+          {/* Accent lines - top */}
+          <div className="fixed top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-70"></div>
+          
+          {/* Header and Navigation */}
+          <div className="relative z-50">
+            <Header />
+            <Navbar />
+          </div>
+          
+          {/* Main Content */}
+          <main className="flex-grow relative z-10 mt-32 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {children}
+          </main>
+          
+          {/* Accent lines - bottom */}
+          <div className="fixed bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-pink to-transparent opacity-70"></div>
+          
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
