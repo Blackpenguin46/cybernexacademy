@@ -27,11 +27,16 @@
   --ring: 224.3 76.3% 48%;
   
   /* Neon colors */
-  --neon-blue: 189 100% 50%;
-  --neon-pink: 300 100% 50%;
-  --neon-green: 142 100% 50%;
-  --neon-purple: 275 100% 50%;
+  --neon-blue: 37, 99, 235;
+  --neon-green: 16, 185, 129;
+  --neon-pink: 236, 72, 153;
+  --neon-purple: 139, 92, 246;
   --neon-yellow: 60 100% 50%;
+  
+  --dark-background: 10, 10, 13;
+  --dark-card: 17, 17, 23;
+  --dark-border: 38, 38, 45;
+  --dark-lighter: 30, 30, 35;
 }
 
 @layer base {
