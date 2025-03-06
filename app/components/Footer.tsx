@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Shield, Github, Twitter, Linkedin, Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
 import { motion } from "framer-motion";
+import { footerLinks } from '../config/navigation';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -41,30 +42,15 @@ const Footer = () => {
   const sections = [
     {
       title: "Learning",
-      links: [
-        { name: "Learning Paths", href: "/learning/paths" },
-        { name: "Hands-On Labs", href: "/learning/labs" },
-        { name: "Certifications", href: "/learning/certifications" },
-        { name: "CTF Challenges", href: "/learning/challenges" },
-      ],
+      links: footerLinks.learning
     },
     {
       title: "Community",
-      links: [
-        { name: "Discussion Forum", href: "/community/forum" },
-        { name: "Events", href: "/community/events" },
-        { name: "Mentorship", href: "/community/mentorship" },
-        { name: "Blog", href: "/community/blog" },
-      ],
+      links: footerLinks.community
     },
     {
       title: "Resources",
-      links: [
-        { name: "About Us", href: "/about" },
-        { name: "Contact", href: "/contact" },
-        { name: "Privacy Policy", href: "/privacy" },
-        { name: "Terms of Service", href: "/terms" },
-      ],
+      links: footerLinks.resources
     },
   ];
 

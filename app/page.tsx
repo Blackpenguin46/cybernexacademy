@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Shield, Book, Users, Briefcase, GraduationCap, PenToolIcon as Tool, ArrowRight, ChevronRight, Terminal, Code, Lock, Zap, Award, Cpu } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { featuredCourses as courses, platformFeatures } from './config/navigation';
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -52,79 +52,18 @@ export default function Home() {
   };
 
   const stats = [
-    { label: "Courses", value: "50+", icon: <Book className="w-5 h-5" /> },
-    { label: "Students", value: "10k+", icon: <Users className="w-5 h-5" /> },
-    { label: "Success Rate", value: "95%", icon: <Award className="w-5 h-5" /> },
-    { label: "Support", value: "24/7", icon: <Zap className="w-5 h-5" /> },
-  ];
-
-  const featuredCourses = [
-    {
-      id: 1,
-      title: "Ethical Hacking Fundamentals",
-      description: "Master the essential skills and techniques used by ethical hackers to secure systems.",
-      price: 49.99,
-      level: "Beginner",
-      duration: "8 weeks",
-      icon: <Terminal className="w-8 h-8" />
-    },
-    {
-      id: 2,
-      title: "Network Security Specialist",
-      description: "Learn to protect networks from unauthorized access, misuse, and cyber threats.",
-      price: 59.99,
-      level: "Intermediate",
-      duration: "10 weeks",
-      icon: <Cpu className="w-8 h-8" />
-    },
-    {
-      id: 3,
-      title: "Secure Coding Practices",
-      description: "Develop applications with security in mind and prevent common vulnerabilities.",
-      price: 54.99,
-      level: "Advanced",
-      duration: "12 weeks",
-      icon: <Code className="w-8 h-8" />
-    },
-  ];
-
-  const platformFeatures = [
-    {
-      href: "/learning-resources",
-      icon: <Book className="w-12 h-12" />,
-      title: "Learning Resources",
-      description: "Access comprehensive cybersecurity learning materials and guides."
-    },
-    {
-      href: "/community",
-      icon: <Users className="w-12 h-12" />,
-      title: "Community",
-      description: "Connect with fellow cybersecurity enthusiasts and professionals."
-    },
-    {
-      href: "/careers",
-      icon: <Briefcase className="w-12 h-12" />,
-      title: "Careers",
-      description: "Explore cybersecurity career paths and job opportunities."
-    },
-    {
-      href: "/college-students",
-      icon: <GraduationCap className="w-12 h-12" />,
-      title: "College Students",
-      description: "Resources and guidance specifically for college students."
-    },
-    {
-      href: "/tools-utilities",
-      icon: <Tool className="w-12 h-12" />,
-      title: "Tools & Utilities",
-      description: "Access essential cybersecurity tools and utilities."
-    },
-    {
-      href: "/cybernex-plus",
-      icon: <Shield className="w-12 h-12" />,
-      title: "CyberNex+",
-      description: "Unlock premium features and advanced learning resources."
-    },
+    { label: "Courses", value: "50+", icon: <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+    </svg> },
+    { label: "Students", value: "10k+", icon: <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg> },
+    { label: "Success Rate", value: "95%", icon: <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+    </svg> },
+    { label: "Support", value: "24/7", icon: <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg> },
   ];
 
   return (
@@ -174,7 +113,7 @@ export default function Home() {
             
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
               <Link 
-                href="/learning-resources" 
+                href="/learning/courses" 
                 className="cyber-btn cyber-btn-lg group"
               >
                 <span>Start Learning</span>
@@ -234,14 +173,16 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-2">Featured Courses</h2>
               <div className="h-1 w-16 bg-gradient-to-r from-neon-blue to-primary-500 rounded-full"></div>
             </div>
-            <Link href="/courses" className="text-neon-blue hover:text-primary-400 flex items-center mt-4 md:mt-0 group transition-colors">
+            <Link href="/learning/courses" className="text-neon-blue hover:text-primary-400 flex items-center mt-4 md:mt-0 group transition-colors">
               <span>View All Courses</span>
-              <ChevronRight className="ml-1 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <svg className="ml-1 w-5 h-5 group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </Link>
           </motion.div>
           
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredCourses.map((course, index) => (
+            {courses.map((course) => (
               <motion.div 
                 key={course.id} 
                 variants={fadeInUpVariants}
@@ -249,7 +190,7 @@ export default function Home() {
               >
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 rounded-lg bg-neon-blue/10 flex items-center justify-center text-neon-blue mr-4 group-hover:bg-neon-blue/20 transition-colors">
-                    {course.icon}
+                    <course.icon className="w-8 h-8" />
                   </div>
                   <h3 className="text-xl font-semibold">{course.title}</h3>
                 </div>
@@ -265,7 +206,7 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <span className="text-2xl font-bold text-white">${course.price}</span>
                   <Link
-                    href={`/courses/${course.id}`}
+                    href={`/learning/courses/${course.slug}`}
                     className="flex items-center text-neon-blue hover:text-primary-400 group/btn"
                   >
                     <span>Learn More</span>
@@ -297,9 +238,9 @@ export default function Home() {
                   className="cyber-card flex flex-col h-full group hover:shadow-glow transition-all duration-300"
                 >
                   <div className="w-16 h-16 rounded-lg bg-neon-blue/10 flex items-center justify-center text-neon-blue mb-6 group-hover:bg-neon-blue/20 transition-colors">
-                    {feature.icon}
+                    <feature.icon className="w-12 h-12" />
                   </div>
-                  <h2 className="text-2xl font-semibold mb-3 group-hover:text-neon-blue transition-colors">{feature.title}</h2>
+                  <h2 className="text-2xl font-semibold mb-3 group-hover:text-neon-blue transition-colors">{feature.name}</h2>
                   <p className="text-gray-400 mb-4 flex-grow">{feature.description}</p>
                   <div className="flex items-center text-neon-blue/70 group-hover:text-neon-blue transition-colors">
                     <span>Explore</span>

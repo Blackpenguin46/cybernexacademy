@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Shield, ChevronDown, Menu, X, User, LogIn, UserPlus, Lock } from 'lucide-react';
+import { Shield, LogIn, UserPlus } from 'lucide-react';
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { mainNavigation } from '../config/navigation';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,25 +31,6 @@ const Header = () => {
 
   const toggleDropdown = (dropdown: string) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-  };
-
-  const dropdownLinks = {
-    learning: [
-      { href: "/learning/courses", label: "Courses" },
-      { href: "/learning/paths", label: "Learning Paths" },
-      { href: "/learning/labs", label: "Hands-On Labs" },
-      { href: "/learning/certifications", label: "Certifications" },
-    ],
-    community: [
-      { href: "/community/forum", label: "Discussion Forum" },
-      { href: "/community/events", label: "Events" },
-      { href: "/community/mentorship", label: "Mentorship" },
-    ],
-    resources: [
-      { href: "/resources/tools", label: "Tools" },
-      { href: "/resources/blog", label: "Blog" },
-      { href: "/resources/help", label: "Help Center" },
-    ]
   };
 
   // Animation variants
@@ -116,25 +98,29 @@ const Header = () => {
             className="hidden md:block"
           >
             <ul className="flex space-x-8">
-              {Object.entries(dropdownLinks).map(([key, links]) => (
-                <motion.li key={key} className="relative" variants={itemVariants}>
+              {mainNavigation.map((item) => (
+                <motion.li key={item.name} className="relative" variants={itemVariants}>
                   <button
                     className={`flex items-center py-2 px-1 hover:text-neon-blue transition-colors duration-300 border-b-2 ${
-                      activeDropdown === key ? "border-neon-blue text-neon-blue" : "border-transparent"
+                      activeDropdown === item.name ? "border-neon-blue text-neon-blue" : "border-transparent"
                     }`}
-                    onClick={() => toggleDropdown(key)}
-                    aria-expanded={activeDropdown === key}
+                    onClick={() => toggleDropdown(item.name)}
+                    aria-expanded={activeDropdown === item.name}
                   >
-                    <span className="mr-1 first-letter:uppercase">{key}</span> 
-                    <motion.div
-                      animate={{ rotate: activeDropdown === key ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </motion.div>
+                    <span className="mr-1">{item.name}</span> 
+                    {item.items && (
+                      <motion.div
+                        animate={{ rotate: activeDropdown === item.name ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </motion.div>
+                    )}
                   </button>
                   <AnimatePresence>
-                    {activeDropdown === key && (
+                    {item.items && activeDropdown === item.name && (
                       <motion.ul
                         initial="hidden"
                         animate="visible"
@@ -142,13 +128,13 @@ const Header = () => {
                         variants={dropdownVariants}
                         className="absolute left-0 mt-2 w-56 bg-dark-card/90 backdrop-blur-sm rounded-md shadow-lg border border-dark-border z-50 overflow-hidden"
                       >
-                        {links.map((link) => (
+                        {item.items.map((link) => (
                           <li key={link.href}>
                             <Link 
                               href={link.href} 
                               className="block px-4 py-3 hover:bg-neon-blue/10 hover:text-neon-blue transition-colors duration-200"
                             >
-                              {link.label}
+                              {link.name}
                             </Link>
                           </li>
                         ))}
@@ -157,16 +143,6 @@ const Header = () => {
                   </AnimatePresence>
                 </motion.li>
               ))}
-              <motion.li variants={itemVariants}>
-                <Link 
-                  href="/about" 
-                  className={`block py-2 px-1 hover:text-neon-blue transition-colors duration-300 border-b-2 ${
-                    pathname === '/about' ? "border-neon-blue text-neon-blue" : "border-transparent"
-                  }`}
-                >
-                  About
-                </Link>
-              </motion.li>
             </ul>
           </motion.nav>
 
@@ -211,7 +187,15 @@ const Header = () => {
                 exit={{ opacity: 0, rotate: 90 }}
                 transition={{ duration: 0.2 }}
               >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {mobileMenuOpen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
               </motion.div>
             </AnimatePresence>
           </button>
@@ -235,22 +219,26 @@ const Header = () => {
                 variants={navVariants}
                 className="space-y-1"
               >
-                {Object.entries(dropdownLinks).map(([key, links]) => (
-                  <motion.li key={key} variants={itemVariants}>
+                {mainNavigation.map((item) => (
+                  <motion.li key={item.name} variants={itemVariants}>
                     <button
                       className="flex items-center justify-between w-full py-3 px-2 rounded-md hover:bg-dark-lighter/50"
-                      onClick={() => toggleDropdown(key)}
+                      onClick={() => toggleDropdown(item.name)}
                     >
-                      <span className="font-medium first-letter:uppercase">{key}</span>
-                      <motion.div
-                        animate={{ rotate: activeDropdown === key ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <ChevronDown className="w-5 h-5 text-neon-blue/70" />
-                      </motion.div>
+                      <span className="font-medium">{item.name}</span>
+                      {item.items && (
+                        <motion.div
+                          animate={{ rotate: activeDropdown === item.name ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <svg className="w-5 h-5 text-neon-blue/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </motion.div>
+                      )}
                     </button>
                     <AnimatePresence>
-                      {activeDropdown === key && (
+                      {item.items && activeDropdown === item.name && (
                         <motion.ul
                           initial="hidden"
                           animate="visible"
@@ -258,10 +246,10 @@ const Header = () => {
                           variants={dropdownVariants}
                           className="pl-4 mt-1 mb-2 space-y-1 border-l border-dark-border"
                         >
-                          {links.map((link) => (
+                          {item.items.map((link) => (
                             <motion.li key={link.href} variants={itemVariants}>
                               <Link href={link.href} className="block py-2 px-2 rounded-md hover:bg-dark-lighter/50">
-                                {link.label}
+                                {link.name}
                               </Link>
                             </motion.li>
                           ))}
@@ -270,11 +258,6 @@ const Header = () => {
                     </AnimatePresence>
                   </motion.li>
                 ))}
-                <motion.li variants={itemVariants}>
-                  <Link href="/about" className="block py-3 px-2 rounded-md hover:bg-dark-lighter/50">
-                    About
-                  </Link>
-                </motion.li>
                 <motion.li variants={itemVariants} className="pt-4">
                   <div className="grid grid-cols-2 gap-3 mt-2">
                     <Link href="/auth/login" className="flex items-center justify-center py-2 px-4 rounded-md bg-dark-lighter hover:bg-dark-lighter/70 border border-dark-border transition-colors">

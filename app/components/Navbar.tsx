@@ -2,40 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronDown, Search, HelpCircle, Zap, TrendingUp, FileText } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const navigation = [
-  {
-    name: 'Learning',
-    href: '/learning',
-    items: [
-      { name: 'Courses', href: '/learning/courses', icon: <FileText className="w-4 h-4" /> },
-      { name: 'Labs', href: '/learning/labs', icon: <Zap className="w-4 h-4" /> },
-      { name: 'Certifications', href: '/learning/certifications', icon: <FileText className="w-4 h-4" /> },
-    ],
-  },
-  {
-    name: 'Community',
-    href: '/community',
-    items: [
-      { name: 'Forums', href: '/community/forums', icon: <FileText className="w-4 h-4" /> },
-      { name: 'Events', href: '/community/events', icon: <FileText className="w-4 h-4" /> },
-      { name: 'Blog', href: '/community/blog', icon: <FileText className="w-4 h-4" /> },
-    ],
-  },
-  {
-    name: 'Resources',
-    href: '/resources',
-    items: [
-      { name: 'Tools', href: '/resources/tools', icon: <FileText className="w-4 h-4" /> },
-      { name: 'Documentation', href: '/resources/docs', icon: <FileText className="w-4 h-4" /> },
-      { name: 'Support', href: '/resources/support', icon: <FileText className="w-4 h-4" /> },
-    ],
-  },
-  { name: 'About', href: '/about' },
-];
+import { mainNavigation, featuredLinks, utilityLinks } from '../config/navigation';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -126,32 +96,21 @@ export default function Navbar() {
             variants={containerVariants}
             className="flex-1 flex items-center space-x-6"
           >
-            <motion.div variants={itemVariants}>
-              <Link 
-                href="/featured" 
-                className={`flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/featured') 
-                    ? 'text-neon-blue bg-neon-blue/10' 
-                    : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                }`}
-              >
-                <Zap className="w-4 h-4 mr-1.5" />
-                <span>Featured</span>
-              </Link>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <Link 
-                href="/trending" 
-                className={`flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/trending') 
-                    ? 'text-neon-blue bg-neon-blue/10' 
-                    : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                }`}
-              >
-                <TrendingUp className="w-4 h-4 mr-1.5" />
-                <span>Trending</span>
-              </Link>
-            </motion.div>
+            {featuredLinks.map((link) => (
+              <motion.div key={link.href} variants={itemVariants}>
+                <Link 
+                  href={link.href} 
+                  className={`flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
+                    isActive(link.href) 
+                      ? 'text-neon-blue bg-neon-blue/10' 
+                      : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                  }`}
+                >
+                  {link.icon && <link.icon className="w-4 h-4 mr-1.5" />}
+                  <span>{link.name}</span>
+                </Link>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* Center Section - Main Navigation */}
@@ -161,12 +120,12 @@ export default function Navbar() {
             variants={containerVariants}
             className="flex-1 hidden md:flex items-center justify-center space-x-8"
           >
-            {navigation.map((item) => (
+            {mainNavigation.map((item) => (
               <motion.div
                 key={item.name}
                 variants={itemVariants}
                 className="relative"
-                onMouseEnter={() => setActiveDropdown(item.name)}
+                onMouseEnter={() => item.items && setActiveDropdown(item.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 <Link
@@ -201,7 +160,7 @@ export default function Navbar() {
                       <div className="py-1">
                         {item.items.map((subItem) => (
                           <Link
-                            key={subItem.name}
+                            key={subItem.href}
                             href={subItem.href}
                             className={`flex items-center px-4 py-2 text-sm transition-colors ${
                               isActive(subItem.href)
@@ -209,7 +168,7 @@ export default function Navbar() {
                                 : 'text-gray-300 hover:bg-dark-lighter hover:text-neon-blue'
                             }`}
                           >
-                            <span className="mr-2 text-neon-blue/70">{subItem.icon}</span>
+                            {subItem.icon && <span className="mr-2 text-neon-blue/70"><subItem.icon className="w-4 h-4" /></span>}
                             {subItem.name}
                           </Link>
                         ))}
@@ -228,32 +187,21 @@ export default function Navbar() {
             variants={containerVariants}
             className="flex-1 flex items-center justify-end space-x-6"
           >
-            <motion.div variants={itemVariants}>
-              <Link 
-                href="/search" 
-                className={`flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/search') 
-                    ? 'text-neon-blue bg-neon-blue/10' 
-                    : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                }`}
-              >
-                <Search className="w-4 h-4 mr-1.5" />
-                <span>Search</span>
-              </Link>
-            </motion.div>
-            <motion.div variants={itemVariants}>
-              <Link 
-                href="/help" 
-                className={`flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
-                  isActive('/help') 
-                    ? 'text-neon-blue bg-neon-blue/10' 
-                    : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                }`}
-              >
-                <HelpCircle className="w-4 h-4 mr-1.5" />
-                <span>Help</span>
-              </Link>
-            </motion.div>
+            {utilityLinks.map((link) => (
+              <motion.div key={link.href} variants={itemVariants}>
+                <Link 
+                  href={link.href} 
+                  className={`flex items-center px-2 py-1 rounded-md text-sm font-medium transition-colors ${
+                    isActive(link.href) 
+                      ? 'text-neon-blue bg-neon-blue/10' 
+                      : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                  }`}
+                >
+                  {link.icon && <link.icon className="w-4 h-4 mr-1.5" />}
+                  <span>{link.name}</span>
+                </Link>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
@@ -270,23 +218,19 @@ export default function Navbar() {
           >
             <div className="px-2 pt-2 pb-3 space-y-3">
               <div className="grid grid-cols-2 gap-3 p-2 border-b border-dark-border">
-                <Link 
-                  href="/featured" 
-                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-dark-lighter/50 hover:bg-dark-lighter transition-colors"
-                >
-                  <Zap className="w-4 h-4 mr-2 text-neon-blue/70" />
-                  <span>Featured</span>
-                </Link>
-                <Link 
-                  href="/trending" 
-                  className="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-dark-lighter/50 hover:bg-dark-lighter transition-colors"
-                >
-                  <TrendingUp className="w-4 h-4 mr-2 text-neon-blue/70" />
-                  <span>Trending</span>
-                </Link>
+                {featuredLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center px-3 py-2 rounded-md text-sm font-medium bg-dark-lighter/50 hover:bg-dark-lighter transition-colors"
+                  >
+                    {link.icon && <link.icon className="w-4 h-4 mr-2 text-neon-blue/70" />}
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
               </div>
               
-              {navigation.map((item) => (
+              {mainNavigation.map((item) => (
                 <div key={item.name} className="px-2">
                   <Link
                     href={item.href}
@@ -302,7 +246,7 @@ export default function Navbar() {
                     <div className="mt-1 pl-4 space-y-1 border-l border-dark-border">
                       {item.items.map((subItem) => (
                         <Link
-                          key={subItem.name}
+                          key={subItem.href}
                           href={subItem.href}
                           className={`flex items-center px-3 py-2 rounded-md text-sm transition-colors ${
                             isActive(subItem.href) 
@@ -310,7 +254,7 @@ export default function Navbar() {
                               : 'text-gray-400 hover:text-gray-200 hover:bg-dark-lighter/50'
                           }`}
                         >
-                          <span className="mr-2 text-neon-blue/70">{subItem.icon}</span>
+                          {subItem.icon && <span className="mr-2 text-neon-blue/70"><subItem.icon className="w-4 h-4" /></span>}
                           {subItem.name}
                         </Link>
                       ))}
@@ -320,20 +264,16 @@ export default function Navbar() {
               ))}
               
               <div className="grid grid-cols-2 gap-3 p-2 border-t border-dark-border">
-                <Link 
-                  href="/search" 
-                  className="flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium bg-dark-lighter/50 hover:bg-dark-lighter transition-colors"
-                >
-                  <Search className="w-4 h-4 mr-2 text-neon-blue/70" />
-                  <span>Search</span>
-                </Link>
-                <Link 
-                  href="/help" 
-                  className="flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium bg-dark-lighter/50 hover:bg-dark-lighter transition-colors"
-                >
-                  <HelpCircle className="w-4 h-4 mr-2 text-neon-blue/70" />
-                  <span>Help</span>
-                </Link>
+                {utilityLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium bg-dark-lighter/50 hover:bg-dark-lighter transition-colors"
+                  >
+                    {link.icon && <link.icon className="w-4 h-4 mr-2 text-neon-blue/70" />}
+                    <span>{link.name}</span>
+                  </Link>
+                ))}
               </div>
             </div>
           </motion.div>
