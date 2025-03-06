@@ -41,20 +41,20 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { 
-      icon: <MessagesSquare className="w-5 h-5" />, 
-      href: "https://discord.gg/cybernex", 
-      label: "Discord",
-      highlight: true
+    {
+      name: 'Discord',
+      href: 'https://discord.gg/cybernex',
+      icon: MessagesSquare,
+      color: '#5865F2',
+      isExternal: true,
     },
-    { 
-      icon: <Instagram className="w-5 h-5" />, 
-      href: "https://instagram.com/cybernexacademy", 
-      label: "Instagram",
-      highlight: true
+    {
+      name: 'Instagram',
+      href: 'https://instagram.com/cybernexacademy',
+      icon: Instagram, 
+      color: '#E1306C',
+      isExternal: true,
     },
-    { icon: <Github className="w-5 h-5" />, href: "https://github.com", label: "GitHub" },
-    { icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com", label: "LinkedIn" },
   ];
 
   const sections = [
@@ -77,150 +77,139 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative bg-dark py-16 overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-10">
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
-        <div className="grid grid-cols-12 h-full w-full">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="border-r border-neon-blue/10 h-full"></div>
-          ))}
-        </div>
-        <div className="grid grid-rows-12 h-full w-full">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="border-b border-neon-blue/10 w-full"></div>
-          ))}
-        </div>
-      </div>
+    <footer className="bg-dark-card border-t border-dark-border mt-auto relative">
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-blue/20 to-transparent"></div>
       
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-6"
-        >
-          <motion.div variants={itemVariants} className="md:col-span-2">
-            <div className="flex items-center mb-6 group">
-              <div className="relative">
-                <Shield className="w-6 h-6 mr-2 text-neon-blue group-hover:text-primary-400 transition-colors duration-300" />
-                <div className="absolute inset-0 bg-neon-blue/20 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
-              <span className="text-xl font-display font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-primary-500">
-                CyberNex Academy
+      <div className="max-w-7xl mx-auto pt-12 pb-8 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+          {/* Logo and company info */}
+          <div className="md:col-span-2">
+            <Link href="/" className="flex items-center mb-4">
+              <Shield className="w-7 h-7 text-neon-blue mr-2" />
+              <span className="text-xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
+                CyberNex
               </span>
-            </div>
-            <p className="text-gray-400 mb-6 leading-relaxed">
-              Your free hub for cybersecurity resources, structured learning paths, community connection, and industry insights.
+            </Link>
+            <p className="text-gray-400 mb-8 max-w-sm">
+              Your free cybersecurity resource hub with expert-curated content, community support, and structured learning paths.
             </p>
-
-            {/* Social Media Highlight Section */}
-            <div className="p-4 bg-dark-card rounded-lg border border-dark-border mb-6">
-              <h3 className="text-white font-semibold mb-3">Connect With Us</h3>
-              <div className="grid grid-cols-2 gap-3">
-                <a 
-                  href="https://discord.gg/cybernex" 
-                  target="_blank" 
+            <div className="flex space-x-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2 px-3 bg-[#5865F2]/20 hover:bg-[#5865F2]/30 rounded-md transition-colors duration-300 border border-[#5865F2]/30 hover:border-[#5865F2]/50"
+                  className="flex items-center justify-center w-10 h-10 rounded-full"
+                  style={{ 
+                    backgroundColor: `${social.color}20`,
+                    color: social.color 
+                  }}
                 >
-                  <MessagesSquare className="w-5 h-5 text-[#5865F2]" />
-                  <span className="font-medium">Discord</span>
-                </a>
-                <a 
-                  href="https://instagram.com/cybernexacademy" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2 px-3 bg-[#E1306C]/20 hover:bg-[#E1306C]/30 rounded-md transition-colors duration-300 border border-[#E1306C]/30 hover:border-[#E1306C]/50"
-                >
-                  <Instagram className="w-5 h-5 text-[#E1306C]" />
-                  <span className="font-medium">Instagram</span>
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-5 mb-8">
-              {socialLinks.filter(link => !link.highlight).map((link, index) => (
-                <a 
-                  key={index} 
-                  href={link.href} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-dark-lighter hover:bg-dark-card border border-dark-border hover:border-neon-blue/50 group transition-all duration-300"
-                  aria-label={link.label}
-                >
-                  <span className="text-gray-400 group-hover:text-neon-blue transition-colors duration-300">
-                    {link.icon}
-                  </span>
+                  <social.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
-            <div className="space-y-3">
-              <div className="flex items-start space-x-3">
-                <Mail className="w-5 h-5 text-neon-blue/70 mt-0.5" />
-                <span className="text-gray-400">contact@cybernex.academy</span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <Phone className="w-5 h-5 text-neon-blue/70 mt-0.5" />
-                <span className="text-gray-400">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-5 h-5 text-neon-blue/70 mt-0.5" />
-                <span className="text-gray-400">123 Cyber Street, Digital City</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {sections.map((section, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <h3 className="text-lg font-display font-bold mb-6 text-white">{section.title}</h3>
-              <ul className="space-y-3">
-                {section.links.map((link, linkIndex) => (
-                  <li key={linkIndex}>
-                    {link.href.startsWith('http') ? (
-                      <a 
-                        href={link.href} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-gray-400 hover:text-neon-blue group flex items-center transition-colors duration-300"
-                      >
-                        <span className="border-b border-transparent group-hover:border-neon-blue/30 pb-0.5">
-                          {link.name}
-                        </span>
-                        <ExternalLink className="ml-1.5 w-3 h-3 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" />
-                      </a>
-                    ) : (
-                      <Link 
-                        href={link.href} 
-                        className="text-gray-400 hover:text-neon-blue group flex items-center transition-colors duration-300"
-                      >
-                        <span className="border-b border-transparent group-hover:border-neon-blue/30 pb-0.5">
-                          {link.name}
-                        </span>
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mt-16 pt-8 text-center text-gray-500 border-t border-dark-border relative"
-        >
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-blue/20 to-transparent"></div>
-          <p className="flex flex-col sm:flex-row items-center justify-center gap-2 text-sm">
-            <span>&copy; {currentYear} CyberNex Academy. All rights reserved.</span>
-            <span className="hidden sm:block">•</span>
-            <span>Empowering the cybersecurity community with free resources.</span>
+          </div>
+          
+          {/* Navigation links */}
+          <div>
+            <h3 className="text-base font-semibold mb-4 text-white">Community</h3>
+            <ul className="space-y-3">
+              <li>
+                <a href="https://discord.gg/cybernex" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-neon-green transition-colors flex items-center">
+                  Discord Server
+                  <ExternalLink className="w-3 h-3 ml-1.5 opacity-70" />
+                </a>
+              </li>
+              <li>
+                <a href="https://instagram.com/cybernexacademy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-neon-green transition-colors flex items-center">
+                  Instagram
+                  <ExternalLink className="w-3 h-3 ml-1.5 opacity-70" />
+                </a>
+              </li>
+              <li>
+                <Link href="/community/hub" className="text-gray-400 hover:text-neon-green transition-colors">
+                  Community Hub
+                </Link>
+              </li>
+              <li>
+                <Link href="/community/events" className="text-gray-400 hover:text-neon-green transition-colors">
+                  Events
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-base font-semibold mb-4 text-white">Insights</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/insights/news" className="text-gray-400 hover:text-[#E1306C] transition-colors">
+                  Latest News
+                </Link>
+              </li>
+              <li>
+                <Link href="/insights/blog" className="text-gray-400 hover:text-[#E1306C] transition-colors">
+                  Blog Articles
+                </Link>
+              </li>
+              <li>
+                <Link href="/insights/trends" className="text-gray-400 hover:text-[#E1306C] transition-colors">
+                  Industry Trends
+                </Link>
+              </li>
+              <li>
+                <Link href="/insights/jobs" className="text-gray-400 hover:text-[#E1306C] transition-colors">
+                  Job Market
+                </Link>
+              </li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-base font-semibold mb-4 text-white">Academy</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link href="/academy/paths" className="text-gray-400 hover:text-neon-blue transition-colors">
+                  Learning Paths
+                </Link>
+              </li>
+              <li>
+                <Link href="/academy/certifications" className="text-gray-400 hover:text-neon-blue transition-colors">
+                  Certifications
+                </Link>
+              </li>
+              <li>
+                <Link href="/academy/youtube" className="text-gray-400 hover:text-neon-blue transition-colors">
+                  YouTube Channels
+                </Link>
+              </li>
+              <li>
+                <Link href="/academy/careers" className="text-gray-400 hover:text-neon-blue transition-colors">
+                  Career Resources
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="mt-10 pt-8 border-t border-dark-border flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-500 text-sm mb-4 md:mb-0">
+            © {new Date().getFullYear()} CyberNex Academy. All rights reserved.
           </p>
-        </motion.div>
+          <div className="flex space-x-6">
+            <Link href="/about" className="text-gray-500 hover:text-gray-300 text-sm">
+              About Us
+            </Link>
+            <Link href="/privacy-policy" className="text-gray-500 hover:text-gray-300 text-sm">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-service" className="text-gray-500 hover:text-gray-300 text-sm">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
