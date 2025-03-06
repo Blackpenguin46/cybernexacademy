@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Shield, LogIn, UserPlus } from 'lucide-react';
+import { Shield, LogIn, UserPlus, ExternalLink } from 'lucide-react';
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -130,12 +130,30 @@ const Header = () => {
                       >
                         {item.items.map((link) => (
                           <li key={link.href}>
-                            <Link 
-                              href={link.href} 
-                              className="block px-4 py-3 hover:bg-neon-blue/10 hover:text-neon-blue transition-colors duration-200"
-                            >
-                              {link.name}
-                            </Link>
+                            {link.isExternal ? (
+                              <a 
+                                href={link.href} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className={`block px-4 py-3 hover:bg-neon-blue/10 hover:text-neon-blue transition-colors duration-200 flex items-center justify-between ${
+                                  (link.name === 'Discord Server' || link.name === 'Instagram') ? 'bg-dark-lighter' : ''
+                                }`}
+                              >
+                                <span className="flex items-center">
+                                  {link.icon && <link.icon className="w-4 h-4 mr-2" />}
+                                  {link.name}
+                                </span>
+                                <ExternalLink className="w-3 h-3 ml-2 opacity-70" />
+                              </a>
+                            ) : (
+                              <Link 
+                                href={link.href} 
+                                className="block px-4 py-3 hover:bg-neon-blue/10 hover:text-neon-blue transition-colors duration-200 flex items-center"
+                              >
+                                {link.icon && <link.icon className="w-4 h-4 mr-2" />}
+                                {link.name}
+                              </Link>
+                            )}
                           </li>
                         ))}
                       </motion.ul>
@@ -248,9 +266,30 @@ const Header = () => {
                         >
                           {item.items.map((link) => (
                             <motion.li key={link.href} variants={itemVariants}>
-                              <Link href={link.href} className="block py-2 px-2 rounded-md hover:bg-dark-lighter/50">
-                                {link.name}
-                              </Link>
+                              {link.isExternal ? (
+                                <a 
+                                  href={link.href} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className={`flex items-center justify-between py-2 px-2 rounded-md hover:bg-dark-lighter/50 ${
+                                    (link.name === 'Discord Server' || link.name === 'Instagram') ? 'bg-dark-lighter/30' : ''
+                                  }`}
+                                >
+                                  <span className="flex items-center">
+                                    {link.icon && <link.icon className="w-4 h-4 mr-2" />}
+                                    {link.name}
+                                  </span>
+                                  <ExternalLink className="w-3 h-3 ml-2 opacity-70" />
+                                </a>
+                              ) : (
+                                <Link 
+                                  href={link.href} 
+                                  className="flex items-center py-2 px-2 rounded-md hover:bg-dark-lighter/50"
+                                >
+                                  {link.icon && <link.icon className="w-4 h-4 mr-2" />}
+                                  {link.name}
+                                </Link>
+                              )}
                             </motion.li>
                           ))}
                         </motion.ul>

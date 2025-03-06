@@ -1,4 +1,35 @@
-import { BookOpen, Users, Briefcase, GraduationCap, PenToolIcon as Tool, Shield, Search, HelpCircle, Zap, TrendingUp, FileText, Terminal, Code, Lock, Award, Cpu } from 'lucide-react';
+import { 
+  BookOpen, 
+  Users, 
+  Briefcase, 
+  GraduationCap, 
+  PenToolIcon as Tool, 
+  Shield, 
+  Search, 
+  HelpCircle, 
+  Zap, 
+  TrendingUp, 
+  FileText, 
+  Terminal, 
+  Code, 
+  Cpu, 
+  Award, 
+  BookMarked, 
+  BarChart, 
+  Newspaper, 
+  Youtube, 
+  Flame, 
+  GraduationCap as Graduation,
+  Building2, 
+  CircleUser,
+  LucideIcon,
+  MessagesSquare,
+  Globe,
+  Instagram,
+  ArrowUpRight,
+  BookText,
+  LayoutDashboard
+} from 'lucide-react';
 
 export interface NavItem {
   name: string;
@@ -6,36 +37,55 @@ export interface NavItem {
   description?: string;
   icon?: any;
   items?: NavItem[];
+  isExternal?: boolean;
 }
 
+export interface ResourceItem {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  level?: string;
+  category: string;
+  type: string;
+  source?: string;
+  url?: string;
+  icon: LucideIcon;
+}
+
+// Main navigation structure based on CIA triad
 export const mainNavigation: NavItem[] = [
-  {
-    name: 'Learning',
-    href: '/learning',
-    items: [
-      { name: 'Courses', href: '/learning/courses', icon: FileText },
-      { name: 'Labs', href: '/learning/labs', icon: Zap },
-      { name: 'Certifications', href: '/learning/certifications', icon: Award },
-      { name: 'Learning Paths', href: '/learning/paths', icon: BookOpen },
-    ],
-  },
   {
     name: 'Community',
     href: '/community',
     items: [
-      { name: 'Forums', href: '/community/forums', icon: Users },
+      { name: 'Discord Server', href: 'https://discord.gg/cybernex', icon: MessagesSquare, isExternal: true },
+      { name: 'Instagram', href: 'https://instagram.com/cybernexacademy', icon: Instagram, isExternal: true },
+      { name: 'Community Hub', href: '/community/hub', icon: Users },
+      { name: 'Online Spaces', href: '/community/spaces', icon: Globe },
       { name: 'Events', href: '/community/events', icon: FileText },
-      { name: 'Blog', href: '/community/blog', icon: FileText },
-      { name: 'Creators', href: '/community/creators', icon: Users },
     ],
   },
   {
-    name: 'Resources',
-    href: '/resources',
+    name: 'Insights',
+    href: '/insights',
     items: [
-      { name: 'Tools', href: '/resources/tools', icon: Tool },
-      { name: 'Documentation', href: '/resources/docs', icon: FileText },
-      { name: 'Support', href: '/resources/support', icon: HelpCircle },
+      { name: 'News', href: '/insights/news', icon: Newspaper },
+      { name: 'Blog', href: '/insights/blog', icon: FileText },
+      { name: 'Industry Trends', href: '/insights/trends', icon: BarChart },
+      { name: 'Job Market', href: '/insights/jobs', icon: Building2 },
+    ],
+  },
+  {
+    name: 'Academy',
+    href: '/academy',
+    items: [
+      { name: 'Learning Paths', href: '/academy/paths', icon: BookOpen },
+      { name: 'YouTube Channels', href: '/academy/youtube', icon: Youtube },
+      { name: 'Certifications', href: '/academy/certifications', icon: Award },
+      { name: 'Hands-on Labs', href: '/academy/labs', icon: Terminal },
+      { name: 'College Students', href: '/academy/college', icon: Graduation },
+      { name: 'Job Resources', href: '/academy/careers', icon: Briefcase },
     ],
   },
   { name: 'About', href: '/about' },
@@ -43,13 +93,13 @@ export const mainNavigation: NavItem[] = [
 
 export const featuredLinks: NavItem[] = [
   { 
-    name: 'Featured', 
-    href: '/featured',
-    icon: Zap
+    name: 'Getting Started', 
+    href: '/academy/getting-started',
+    icon: Flame
   },
   { 
-    name: 'Trending', 
-    href: '/trending',
+    name: 'Latest Resources', 
+    href: '/resources/latest',
     icon: TrendingUp
   },
 ];
@@ -67,101 +117,151 @@ export const utilityLinks: NavItem[] = [
   },
 ];
 
+// Platform features for homepage
 export const platformFeatures: NavItem[] = [
-  {
-    name: 'Learning Resources',
-    href: '/learning-resources',
-    icon: BookOpen,
-    description: 'Access comprehensive cybersecurity learning materials and guides.'
-  },
   {
     name: 'Community',
     href: '/community',
     icon: Users,
-    description: 'Connect with fellow cybersecurity enthusiasts and professionals.'
+    description: 'Connect with fellow cybersecurity enthusiasts in our Discord, Instagram, and other online spaces.'
   },
   {
-    name: 'Careers',
-    href: '/careers',
-    icon: Briefcase,
-    description: 'Explore cybersecurity career paths and job opportunities.'
+    name: 'Insights',
+    href: '/insights',
+    icon: Newspaper,
+    description: 'Stay updated with the latest cybersecurity news, blogs, and industry trends.'
   },
   {
-    name: 'College Students',
-    href: '/college-students',
+    name: 'Learning Paths',
+    href: '/academy/paths',
+    icon: BookOpen,
+    description: 'Follow structured learning paths designed for different cybersecurity career tracks.'
+  },
+  {
+    name: 'College Resources',
+    href: '/academy/college',
     icon: GraduationCap,
-    description: 'Resources and guidance specifically for college students.'
+    description: 'Access scholarships, study materials, and career guidance for college students.'
   },
   {
-    name: 'Tools & Utilities',
-    href: '/tools-utilities',
-    icon: Tool,
-    description: 'Access essential cybersecurity tools and utilities.'
+    name: 'Certification Guides',
+    href: '/academy/certifications',
+    icon: Award,
+    description: 'Study resources for top cybersecurity certifications like Security+, CEH, and CISSP.'
   },
   {
-    name: 'CyberNex+',
-    href: '/cybernex-plus',
-    icon: Shield,
-    description: 'Unlock premium features and advanced learning resources.'
+    name: 'Career Resources',
+    href: '/academy/careers',
+    icon: Briefcase,
+    description: 'Improve your resume, prepare for interviews, and find job opportunities in cybersecurity.'
   },
 ];
 
-export const featuredCourses = [
+// Featured Resources (replacing courses)
+export const featuredResources: ResourceItem[] = [
   {
-    id: 1,
-    slug: 'ethical-hacking-fundamentals',
-    title: 'Ethical Hacking Fundamentals',
-    description: 'Master the essential skills and techniques used by ethical hackers to secure systems.',
-    price: 49.99,
+    id: '1',
+    slug: 'tryhackme-complete-beginner-path',
+    title: 'TryHackMe: Complete Beginner Path',
+    description: 'A comprehensive introduction to cybersecurity with hands-on labs and challenges.',
     level: 'Beginner',
-    duration: '8 weeks',
+    category: 'Hands-on Learning',
+    type: 'Platform',
+    source: 'TryHackMe',
+    url: 'https://tryhackme.com/path/outline/beginner',
     icon: Terminal
   },
   {
-    id: 2,
-    slug: 'network-security-specialist',
-    title: 'Network Security Specialist',
-    description: 'Learn to protect networks from unauthorized access, misuse, and cyber threats.',
-    price: 59.99,
-    level: 'Intermediate',
-    duration: '10 weeks',
-    icon: Cpu
+    id: '2',
+    slug: 'networkchuck-youtube',
+    title: 'NetworkChuck YouTube Channel',
+    description: 'Engaging videos covering networking, cybersecurity, and ethical hacking topics.',
+    level: 'Beginner to Intermediate',
+    category: 'Video Content',
+    type: 'YouTube',
+    source: 'NetworkChuck',
+    url: 'https://www.youtube.com/c/NetworkChuck',
+    icon: Youtube
   },
   {
-    id: 3,
-    slug: 'secure-coding-practices',
-    title: 'Secure Coding Practices',
-    description: 'Develop applications with security in mind and prevent common vulnerabilities.',
-    price: 54.99,
-    level: 'Advanced',
-    duration: '12 weeks',
-    icon: Code
+    id: '3',
+    slug: 'security-plus-study-guide',
+    title: 'CompTIA Security+ Study Guide',
+    description: 'Comprehensive study materials for the Security+ certification exam.',
+    level: 'Intermediate',
+    category: 'Certification',
+    type: 'Guide',
+    source: 'CompTIA',
+    url: 'https://www.comptia.org/certifications/security',
+    icon: BookText
   },
 ];
 
+// Learning paths replacing course structure
+export const learningPaths = [
+  {
+    id: '1',
+    slug: 'ethical-hacker',
+    title: 'Ethical Hacker Path',
+    description: 'Learn the skills needed to become an ethical hacker or penetration tester.',
+    icon: Terminal,
+    resources: [
+      'tryhackme-complete-beginner-path',
+      'hackthebox-starting-point',
+      'portswigger-web-security-academy'
+    ]
+  },
+  {
+    id: '2',
+    slug: 'security-analyst',
+    title: 'Security Analyst Path',
+    description: 'Prepare for a career as a SOC analyst or security operations specialist.',
+    icon: Shield,
+    resources: [
+      'security-plus-study-guide',
+      'blue-team-labs-online',
+      'lets-defend'
+    ]
+  },
+  {
+    id: '3',
+    slug: 'cloud-security',
+    title: 'Cloud Security Path',
+    description: 'Master cloud security concepts for AWS, Azure, and Google Cloud.',
+    icon: Cpu,
+    resources: [
+      'aws-security-fundamentals',
+      'azure-security-engineer',
+      'cloud-security-alliance-resources'
+    ]
+  },
+];
+
+// Footer links updated for new structure
 export const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
-    { name: 'Careers', href: '/careers' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Partners', href: '/partners' },
+    { name: 'Contributors', href: '/contributors' },
+    { name: 'Sponsors', href: '/sponsors' },
   ],
-  learning: [
-    { name: 'Learning Paths', href: '/learning/paths' },
-    { name: 'Hands-On Labs', href: '/learning/labs' },
-    { name: 'Certifications', href: '/learning/certifications' },
-    { name: 'CTF Challenges', href: '/learning/challenges' },
+  academy: [
+    { name: 'Learning Paths', href: '/academy/paths' },
+    { name: 'YouTube Channels', href: '/academy/youtube' },
+    { name: 'Certifications', href: '/academy/certifications' },
+    { name: 'Labs & CTFs', href: '/academy/labs' },
   ],
   community: [
-    { name: 'Discussion Forum', href: '/community/forum' },
+    { name: 'Discord Server', href: 'https://discord.gg/cybernex', isExternal: true },
+    { name: 'Instagram', href: 'https://instagram.com/cybernexacademy', isExternal: true },
+    { name: 'Online Spaces', href: '/community/spaces' },
     { name: 'Events', href: '/community/events' },
-    { name: 'Mentorship', href: '/community/mentorship' },
-    { name: 'Blog', href: '/community/blog' },
   ],
-  resources: [
-    { name: 'Tools', href: '/resources/tools' },
-    { name: 'Documentation', href: '/resources/docs' },
-    { name: 'Support', href: '/resources/support' },
+  insights: [
+    { name: 'News', href: '/insights/news' },
+    { name: 'Blog', href: '/insights/blog' },
+    { name: 'Industry Trends', href: '/insights/trends' },
+    { name: 'Job Market', href: '/insights/jobs' },
     { name: 'Privacy Policy', href: '/privacy' },
     { name: 'Terms of Service', href: '/terms' },
   ],
