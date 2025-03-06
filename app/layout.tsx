@@ -5,6 +5,7 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import Sidebar from "./components/Sidebar"
 import { Providers } from "./providers"
+import Navbar from './components/Navbar'
 
 // Font configurations
 const inter = Inter({ 
@@ -38,37 +39,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable} ${spaceMono.variable} ${orbitron.variable}`}>
-      <body className="min-h-screen flex flex-col bg-dark text-white font-sans">
-        <Providers>
-          {/* Animated background with grid and gradients */}
-          <div className="fixed inset-0 bg-cyber-grid bg-grid-md opacity-20 pointer-events-none"></div>
-          <div className="fixed inset-0 bg-gradient-radial from-cyber-purple/5 via-dark to-dark pointer-events-none"></div>
-          
-          {/* Accent lines - top */}
-          <div className="fixed top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-70"></div>
-          
-          {/* Sidebar Navigation */}
-          <Sidebar />
-          
-          {/* Main Content */}
-          <div className="flex flex-col flex-1 min-h-screen">
-            {/* Main Content Area */}
-            <main className="flex-grow mt-6 md:mt-0 pb-20 w-full">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:pl-[280px] transition-all duration-300">
-                {children}
-              </div>
-            </main>
-            
-            {/* Footer - Only visible at bottom of page */}
-            <div className="md:pl-[280px] transition-all duration-300">
-              <Footer />
-            </div>
-          </div>
-          
-          {/* Accent lines - bottom */}
-          <div className="fixed bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-pink to-transparent opacity-70"></div>
-        </Providers>
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${spaceMono.variable} ${orbitron.variable}`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${orbitron.variable} antialiased bg-dark-background text-white min-h-screen flex flex-col`}>
+        <div className="fixed inset-0 z-[-1]">
+          <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]" />
+          <div className="absolute left-1/2 top-1/3 w-[800px] h-[400px] bg-neon-blue/10 rounded-full blur-[120px] transform -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute right-1/4 bottom-1/4 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[100px]" />
+        </div>
+        
+        {/* Accent lines */}
+        <div className="fixed top-0 left-20 bottom-0 w-px bg-gradient-to-b from-neon-blue/0 via-neon-blue/10 to-neon-blue/0 z-[-1]" />
+        <div className="fixed top-20 left-0 right-0 h-px bg-gradient-to-r from-transparent via-dark-border to-transparent z-[-1]" />
+
+        {/* Main layout */}
+        <Navbar />
+        
+        <main className="flex-1 pt-16 w-full mx-auto max-w-[1920px]">
+          {children}
+        </main>
+        
+        <Footer />
       </body>
     </html>
   )

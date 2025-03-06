@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Shield, Github, Instagram, Linkedin, Mail, MapPin, Phone, ExternalLink, MessagesSquare } from 'lucide-react';
+import { Twitter, Github, Linkedin, Instagram, Youtube } from 'lucide-react';
 import { motion } from "framer-motion";
 import { footerLinks } from '../config/navigation';
 
@@ -40,174 +40,126 @@ const Footer = () => {
     }
   };
 
-  const socialLinks = [
+  const footerSections = [
     {
-      name: 'Discord',
-      href: 'https://discord.gg/cybernex',
-      icon: MessagesSquare,
-      color: '#5865F2',
-      isExternal: true,
+      title: "Platform",
+      links: [
+        { name: "Home", href: "/" },
+        { name: "Academy", href: "/academy" },
+        { name: "Community", href: "/community" },
+        { name: "Insights", href: "/insights" },
+        { name: "Dashboard", href: "/dashboard" }
+      ]
     },
     {
-      name: 'Instagram',
-      href: 'https://instagram.com/cybernexacademy',
-      icon: Instagram, 
-      color: '#E1306C',
-      isExternal: true,
+      title: "Resources",
+      links: [
+        { name: "Courses", href: "/learning/courses" },
+        { name: "Learning Paths", href: "/academy/paths" },
+        { name: "Tools", href: "/resources/tools" },
+        { name: "Challenges", href: "/academy/challenges" },
+        { name: "Events", href: "/community/events" }
+      ]
     },
-  ];
-
-  const sections = [
+    {
+      title: "Support",
+      links: [
+        { name: "Documentation", href: "/docs" },
+        { name: "FAQs", href: "/support/faq" },
+        { name: "Contact Us", href: "/support/contact" },
+        { name: "Terms of Service", href: "/legal/terms" },
+        { name: "Privacy Policy", href: "/legal/privacy" }
+      ]
+    },
     {
       title: "Company",
-      links: footerLinks.company
-    },
-    {
-      title: "Academy",
-      links: footerLinks.academy
-    },
-    {
-      title: "Community",
-      links: footerLinks.community
-    },
-    {
-      title: "Insights",
-      links: footerLinks.insights
-    },
+      links: [
+        { name: "About Us", href: "/about" },
+        { name: "Team", href: "/about/team" },
+        { name: "Careers", href: "/careers" },
+        { name: "Partners", href: "/partners" },
+        { name: "Blog", href: "/blog" }
+      ]
+    }
+  ];
+
+  const socialLinks = [
+    { name: "Twitter", icon: Twitter, href: "https://twitter.com/cybernex" },
+    { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/company/cybernex" },
+    { name: "GitHub", icon: Github, href: "https://github.com/cybernex" },
+    { name: "Instagram", icon: Instagram, href: "https://instagram.com/cybernex" },
+    { name: "YouTube", icon: Youtube, href: "https://youtube.com/cybernex" }
   ];
 
   return (
-    <footer className="bg-dark-card border-t border-dark-border mt-auto relative">
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-blue/20 to-transparent"></div>
-      
-      <div className="max-w-7xl mx-auto pt-12 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
-          {/* Logo and company info */}
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center mb-4">
-              <Shield className="w-7 h-7 text-neon-blue mr-2" />
-              <span className="text-xl font-display font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-neon-purple">
-                CyberNex
-              </span>
+    <footer className="border-t border-dark-border bg-dark-background/95 mt-auto">
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-5">
+          {/* Brand column */}
+          <div className="lg:col-span-1">
+            <Link href="/" className="text-2xl font-bold flex items-center gap-2">
+              <span className="text-neon-blue">Cyber</span>Nex
             </Link>
-            <p className="text-gray-400 mb-8 max-w-sm">
-              Your free cybersecurity resource hub with expert-curated content, community support, and structured learning paths.
+            <p className="mt-4 text-sm text-gray-400 max-w-xs">
+              Empowering cybersecurity professionals with cutting-edge education, resources, and community support.
             </p>
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
+            <div className="flex space-x-4 mt-6">
+              {socialLinks.map((link) => (
+                <a 
+                  key={link.name} 
+                  href={link.href} 
+                  target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center w-10 h-10 rounded-full"
-                  style={{ 
-                    backgroundColor: `${social.color}20`,
-                    color: social.color 
-                  }}
+                  className="text-gray-400 hover:text-neon-blue transition-colors"
+                  aria-label={link.name}
                 >
-                  <social.icon className="w-5 h-5" />
+                  <link.icon className="w-5 h-5" />
                 </a>
               ))}
             </div>
           </div>
           
-          {/* Navigation links */}
-          <div>
-            <h3 className="text-base font-semibold mb-4 text-white">Community</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="https://discord.gg/cybernex" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-neon-green transition-colors flex items-center">
-                  Discord Server
-                  <ExternalLink className="w-3 h-3 ml-1.5 opacity-70" />
-                </a>
-              </li>
-              <li>
-                <a href="https://instagram.com/cybernexacademy" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-neon-green transition-colors flex items-center">
-                  Instagram
-                  <ExternalLink className="w-3 h-3 ml-1.5 opacity-70" />
-                </a>
-              </li>
-              <li>
-                <Link href="/community/hub" className="text-gray-400 hover:text-neon-green transition-colors">
-                  Community Hub
-                </Link>
-              </li>
-              <li>
-                <Link href="/community/events" className="text-gray-400 hover:text-neon-green transition-colors">
-                  Events
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-base font-semibold mb-4 text-white">Insights</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/insights/news" className="text-gray-400 hover:text-[#E1306C] transition-colors">
-                  Latest News
-                </Link>
-              </li>
-              <li>
-                <Link href="/insights/blog" className="text-gray-400 hover:text-[#E1306C] transition-colors">
-                  Blog Articles
-                </Link>
-              </li>
-              <li>
-                <Link href="/insights/trends" className="text-gray-400 hover:text-[#E1306C] transition-colors">
-                  Industry Trends
-                </Link>
-              </li>
-              <li>
-                <Link href="/insights/jobs" className="text-gray-400 hover:text-[#E1306C] transition-colors">
-                  Job Market
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-base font-semibold mb-4 text-white">Academy</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/academy/paths" className="text-gray-400 hover:text-neon-blue transition-colors">
-                  Learning Paths
-                </Link>
-              </li>
-              <li>
-                <Link href="/academy/certifications" className="text-gray-400 hover:text-neon-blue transition-colors">
-                  Certifications
-                </Link>
-              </li>
-              <li>
-                <Link href="/academy/youtube" className="text-gray-400 hover:text-neon-blue transition-colors">
-                  YouTube Channels
-                </Link>
-              </li>
-              <li>
-                <Link href="/academy/careers" className="text-gray-400 hover:text-neon-blue transition-colors">
-                  Career Resources
-                </Link>
-              </li>
-            </ul>
+          {/* Nav columns */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 md:col-span-2 lg:col-span-4">
+            {footerSections.map((section) => (
+              <div key={section.title}>
+                <h3 className="text-sm font-semibold text-white tracking-wider uppercase mb-4">
+                  {section.title}
+                </h3>
+                <ul className="space-y-2">
+                  {section.links.map((link) => (
+                    <li key={link.name}>
+                      <Link 
+                        href={link.href}
+                        className="text-gray-400 hover:text-neon-blue transition-colors text-sm"
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
         
-        <div className="mt-10 pt-8 border-t border-dark-border flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} CyberNex Academy. All rights reserved.
-          </p>
-          <div className="flex space-x-6">
-            <Link href="/about" className="text-gray-500 hover:text-gray-300 text-sm">
-              About Us
-            </Link>
-            <Link href="/privacy-policy" className="text-gray-500 hover:text-gray-300 text-sm">
-              Privacy Policy
-            </Link>
-            <Link href="/terms-of-service" className="text-gray-500 hover:text-gray-300 text-sm">
-              Terms of Service
-            </Link>
+        {/* Bottom section */}
+        <div className="border-t border-dark-border mt-12 pt-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-xs text-gray-500">
+              &copy; {new Date().getFullYear()} CyberNex Academy. All rights reserved.
+            </p>
+            <div className="flex mt-4 md:mt-0 space-x-6">
+              <Link href="/legal/terms" className="text-xs text-gray-500 hover:text-neon-blue">
+                Terms of Service
+              </Link>
+              <Link href="/legal/privacy" className="text-xs text-gray-500 hover:text-neon-blue">
+                Privacy Policy
+              </Link>
+              <Link href="/legal/cookies" className="text-xs text-gray-500 hover:text-neon-blue">
+                Cookie Policy
+              </Link>
+            </div>
           </div>
         </div>
       </div>
