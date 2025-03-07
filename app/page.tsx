@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Shield, Book, Users, Bell, Lock, ArrowRight } from "lucide-react"
 import AnimatedBackground from "./components/AnimatedBackground"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import CountUp from "./components/CountUp"
 import TerminalEffect from "./components/TerminalEffect"
 
