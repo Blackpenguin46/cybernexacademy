@@ -11,10 +11,8 @@ const nextConfig = {
       exclude: ['error', 'warn'],
     } : false,
   },
-  // Enable dynamic rendering
-  experimental: {
-    // Server Actions are available by default
-  },
+  // Disable static optimization and enable dynamic rendering
+  staticPageGenerationTimeout: 0,
   // Ensure server-side rendering
   poweredByHeader: false,
   // Compress responses
