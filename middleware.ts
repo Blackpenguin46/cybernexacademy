@@ -1,19 +1,25 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// This middleware function runs on every request
+// This middleware runs for all requests
 export function middleware(request: NextRequest) {
-  // Simply pass through all requests to be handled by the Next.js router
-  return NextResponse.next();
+  const response = NextResponse.next();
+  
+  // Force dynamic rendering by setting a Cache-Control header
+  response.headers.set('Cache-Control', 'no-store, max-age=0');
+  
+  // Set additional headers to ensure dynamic content
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('X-XSS-Protection', '1; mode=block');
+  
+  return response;
 }
 
-// See: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
+// This matcher ensures the middleware runs for all HTML responses
 export const config = {
   matcher: [
-    /*
-     * Skip all internal paths (_next, api)
-     * Skip all static files (images, media)
-     */
-    '/((?!_next|api|.*\\.[\\w]+$).*)',
+    // Apply to all pages except api routes and static files
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
-}
+};

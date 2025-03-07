@@ -6,6 +6,10 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import CountUp from "./components/CountUp"
 import TerminalEffect from "./components/TerminalEffect"
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
+// This is now a Server Component
 export default function Home() {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">

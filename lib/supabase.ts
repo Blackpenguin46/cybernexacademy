@@ -1,11 +1,27 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
 
-// Initialize the Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+// Check if Supabase URL and key are available
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'example-key';
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Create a Supabase client
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+// Export a mock version for build/testing environments
+export const mockSupabase = {
+  from: () => ({
+    insert: () => Promise.resolve({ error: null }),
+    select: () => Promise.resolve({ data: [], error: null }),
+    update: () => Promise.resolve({ error: null }),
+    delete: () => Promise.resolve({ error: null }),
+  }),
+  auth: {
+    signUp: () => Promise.resolve({ data: null, error: null }),
+    signIn: () => Promise.resolve({ data: null, error: null }),
+    signOut: () => Promise.resolve({ error: null }),
+  }
+};
 
 // Check if Supabase connection is working
 export async function checkSupabaseConnection() {

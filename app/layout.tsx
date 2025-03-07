@@ -1,5 +1,5 @@
-import type React from "react"
-import type { Metadata } from "next"
+import React from "react"
+import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import Header from "./components/Header"
@@ -7,9 +7,32 @@ import Footer from "./components/Footer"
 
 const inter = Inter({ subsets: ["latin"] })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#000000' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
+}
+
 export const metadata: Metadata = {
   title: "CyberNex Academy - Your Gateway to Cybersecurity",
   description: "Comprehensive cybersecurity learning platform for students and professionals",
+  generator: 'Next.js',
+  applicationName: 'CyberNex Academy',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['cybersecurity', 'learning', 'academy', 'security', 'hacking', 'defense'],
+  authors: [{ name: 'CyberNex Team' }],
+  creator: 'CyberNex Academy',
+  publisher: 'CyberNex',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
 }
 
 export default function RootLayout({
@@ -21,7 +44,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-black text-white antialiased`}>
         <Header />
-        <main>{children}</main>
+        <main className="flex-grow flex flex-col min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
