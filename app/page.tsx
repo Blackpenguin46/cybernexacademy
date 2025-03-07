@@ -4,7 +4,7 @@ import AnimatedBackground from "./components/AnimatedBackground"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import CountUp from "./components/CountUp"
-import TerminalEffect from "./components/TerminalEffect"
+import { TerminalDisplay, HeroButton, CTAButton, StatisticsCounter } from "./components/ClientComponents"
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
@@ -27,11 +27,9 @@ export default function Home() {
               latest threats and defenses.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                Create Free Account <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <HeroButton />
               <Button size="lg" variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-950">
-                Explore Courses
+                Explore Academy <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -41,22 +39,30 @@ export default function Home() {
       {/* Stats Section */}
       <section className="relative z-10 py-16 bg-gradient-to-r from-gray-900/50 to-black/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
             <div className="text-center">
-              <div className="text-4xl font-bold text-white mb-2">
-                <CountUp end={10} suffix="K+" />
+              <div className="text-3xl font-bold text-blue-500 mb-2">
+                <StatisticsCounter end={1200} suffix="+" />
               </div>
-              <div className="text-gray-400">Trained Security Professionals</div>
+              <div className="text-sm text-gray-400">Curated Resources</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-white mb-2">
-                <CountUp end={500} suffix="+" />
+              <div className="text-3xl font-bold text-blue-500 mb-2">
+                <StatisticsCounter end={5000} suffix="+" />
               </div>
-              <div className="text-gray-400">Curated Learning Resources</div>
+              <div className="text-sm text-gray-400">Community Members</div>
             </div>
             <div className="text-center">
-              <div className="text-4xl font-bold text-white mb-2">24/7</div>
-              <div className="text-gray-400">Security Monitoring</div>
+              <div className="text-3xl font-bold text-blue-500 mb-2">
+                <StatisticsCounter end={25} suffix="" />
+              </div>
+              <div className="text-sm text-gray-400">Learning Paths</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-500 mb-2">
+                <StatisticsCounter end={365} suffix="/yr" />
+              </div>
+              <div className="text-sm text-gray-400">Daily Updates</div>
             </div>
           </div>
         </div>
@@ -147,8 +153,8 @@ export default function Home() {
             </div>
             <div className="lg:w-1/2 bg-black/60 p-6 rounded-lg border border-gray-800">
               <div className="text-sm text-gray-400 mb-2">CURRENT THREAT LEVEL: MODERATE</div>
-              <TerminalEffect
-                text={`$ nmap scan complete
+              <TerminalDisplay
+                commandText={`$ nmap scan complete
 → 3 potential vulnerabilities detected
 $ initiating countermeasures
 → security protocols activated

@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "NEXT_PUBLIC_RENDER_MODE=dynamic NEXT_STATIC_OPTIMIZATION=false next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "predeploy": "node deploy.js"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
