@@ -3,50 +3,59 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   
   // Navigation sections with cybersecurity icons
   const navSections = [
     {
+      id: "academy",
       title: "Academy",
       icon: Terminal,
       links: [
         { name: "Courses", href: "/academy" },
         { name: "Learning Paths", href: "/academy/paths" },
-        { name: "Resources", href: "/learning/courses" }
+        { name: "Resources", href: "/learning/courses" },
+        { name: "Certifications", href: "/academy/certifications" }
       ]
     },
     {
+      id: "community",
       title: "Community",
       icon: User,
       links: [
         { name: "Forums", href: "/community" },
         { name: "Creators", href: "/community/creators" },
-        { name: "Events", href: "/community/events" }
+        { name: "Events", href: "/community/events" },
+        { name: "Discord", href: "/community/discord" }
       ]
     },
     {
+      id: "insights",
       title: "Insights",
       icon: Zap,
       links: [
         { name: "News", href: "/insights" },
         { name: "Articles", href: "/insights/articles" },
-        { name: "Research", href: "/insights/research" }
+        { name: "Research", href: "/insights/research" },
+        { name: "Threat Intelligence", href: "/insights/threats" }
       ]
     },
     {
-      title: "About",
-      icon: Shield,
+      id: "tools",
+      title: "Tools",
+      icon: Database,
       links: [
-        { name: "Our Mission", href: "/about" },
-        { name: "Team", href: "/about/team" },
-        { name: "Contact", href: "/about/contact" }
+        { name: "Security Scanner", href: "/tools/scanner" },
+        { name: "Password Checker", href: "/tools/password" },
+        { name: "Encryption Tools", href: "/tools/encryption" },
+        { name: "Security Assessment", href: "/tools/assessment" }
       ]
     }
   ];
@@ -63,6 +72,7 @@ export default function Navbar() {
   // Close mobile menu when navigating
   useEffect(() => {
     setMobileMenuOpen(false);
+    setActiveDropdown(null);
   }, [pathname]);
 
   // Active link detection
@@ -73,95 +83,165 @@ export default function Navbar() {
     return pathname.startsWith(href);
   };
 
+  // Dropdown animation variants
+  const dropdownVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -5,
+      transition: {
+        duration: 0.2
+      }
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  // Mobile menu animation variants
+  const mobileMenuVariants = {
+    hidden: { 
+      height: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    visible: { 
+      height: "auto",
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-black/90 backdrop-blur-md border-b border-neon-blue/20' : 'bg-transparent'
+        scrolled ? 'bg-black/90 backdrop-blur-md shadow-lg shadow-neon-blue/10' : 'bg-transparent'
       }`}
     >
+      {/* Top accent line for cyber feel */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-80"></div>
+      
       <div className="max-w-[1920px] mx-auto">
-        {/* HUD-like horizontal lines for cyber feel */}
-        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue/60 to-transparent"></div>
-        <div className="absolute bottom-[-4px] left-1/4 right-1/4 h-[1px] bg-gradient-to-r from-transparent via-neon-green/30 to-transparent"></div>
-        
-        {/* Main navbar */}
         <div className="px-4 lg:px-8 py-4 flex justify-between items-center">
           {/* Logo with cybersecurity styling */}
           <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 relative group">
-            <div className="absolute -left-3 -top-3 w-10 h-10 border-t-2 border-l-2 border-neon-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div className="p-1.5 rounded bg-neon-blue/10 border border-neon-blue/20">
+            <div className="p-2 rounded bg-neon-blue/10 border border-neon-blue/20 group-hover:border-neon-blue/40 transition-colors duration-300">
               <Shield className="w-5 h-5 text-neon-blue" />
             </div>
-            <span className="text-neon-blue font-mono tracking-tight">Cyber</span>
-            <span className="text-neon-green font-mono tracking-tight">Nex</span>
-            <div className="absolute -right-3 -bottom-3 w-10 h-10 border-b-2 border-r-2 border-neon-green opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="flex flex-col">
+              <span className="text-neon-blue font-mono tracking-tight leading-none">CYBER</span>
+              <span className="text-neon-green font-mono tracking-tight leading-none">NEX</span>
+            </div>
           </Link>
 
           {/* Desktop - Center section with nav sections */}
-          <div className="hidden lg:flex space-x-8">
+          <div className="hidden lg:flex items-center space-x-1">
+            <Link href="/" className={`px-3 py-2 rounded-md transition-all duration-300 ${
+              isActive('/') && pathname === '/' 
+                ? 'text-neon-blue bg-neon-blue/5' 
+                : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+            }`}>
+              <div className="flex items-center gap-2">
+                <Home className="w-4 h-4" />
+                <span>Home</span>
+              </div>
+            </Link>
+            
             {navSections.map((section) => (
-              <div key={section.title} className="relative group">
-                <button className="flex items-center gap-2 text-gray-300 hover:text-neon-blue group-hover:text-neon-blue px-3 py-2 rounded-md transition-colors">
+              <div key={section.title} className="relative">
+                <button 
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
+                    (isActive(`/${section.id}`) || activeDropdown === section.id) 
+                      ? 'text-neon-blue bg-neon-blue/5' 
+                      : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                  }`}
+                  onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                  onMouseEnter={() => setActiveDropdown(section.id)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
                   <section.icon className="w-4 h-4" />
                   <span>{section.title}</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <motion.div 
+                    animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ChevronDown className="w-4 h-4" />
+                  </motion.div>
                 </button>
                 
-                <motion.div 
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 0, y: -10 }}
-                  whileHover={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute z-10 left-0 mt-1 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10 min-w-[200px]"
-                >
-                  {/* Cyber accent line */}
-                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent"></div>
-                  
-                  <div className="p-2">
-                    {section.links.map((link) => (
-                      <Link 
-                        key={link.name}
-                        href={link.href} 
-                        className={`block px-4 py-2 rounded-md hover:bg-neon-blue/10 ${
-                          isActive(link.href) 
-                            ? 'text-neon-blue bg-neon-blue/5' 
-                            : 'text-gray-300'
-                        } transition-colors duration-200`}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </div>
-                </motion.div>
+                <AnimatePresence>
+                  {activeDropdown === section.id && (
+                    <motion.div 
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                      variants={dropdownVariants}
+                      className="absolute z-10 left-0 mt-1 w-56 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
+                      onMouseEnter={() => setActiveDropdown(section.id)}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      {/* Top accent line */}
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue/60 to-transparent"></div>
+                      
+                      <div className="py-2">
+                        {section.links.map((link) => (
+                          <Link 
+                            key={link.name}
+                            href={link.href} 
+                            className={`flex items-center px-4 py-2 hover:bg-neon-blue/10 ${
+                              isActive(link.href) 
+                                ? 'text-neon-blue bg-neon-blue/5' 
+                                : 'text-gray-300'
+                            } transition-colors duration-200`}
+                          >
+                            <span className="ml-2">{link.name}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ))}
           </div>
 
           {/* Desktop - Right section with user actions */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-3">
             <button className="text-gray-400 hover:text-neon-blue p-2 rounded-md transition-colors relative group">
               <div className="absolute inset-0 border border-neon-blue/0 group-hover:border-neon-blue/30 rounded-md transition-colors"></div>
               <Search className="w-5 h-5" />
             </button>
             
             <Link href="/dashboard" 
-              className={`px-4 py-2 rounded-md transition-all duration-300 relative overflow-hidden group ${
+              className={`px-4 py-2 rounded-md transition-all duration-300 relative group overflow-hidden ${
                 isActive('/dashboard') 
-                  ? 'bg-neon-blue/20 text-neon-blue' 
-                  : 'text-gray-300 hover:text-neon-blue'
+                  ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/30' 
+                  : 'text-gray-300 hover:text-neon-blue border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5'
               }`}
             >
-              <span className="relative z-10">Dashboard</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/0 to-neon-blue/0 group-hover:via-neon-blue/10 transition-colors duration-300"></div>
-              {isActive('/dashboard') && (
-                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-neon-blue"></div>
-              )}
+              <div className="flex items-center gap-2">
+                <Settings className="w-4 h-4" />
+                <span>Dashboard</span>
+              </div>
+              <div className="absolute bottom-0 left-0 h-[1px] w-full bg-neon-blue/50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
             </Link>
             
-            <Link href="/auth/login" className="flex items-center gap-2 text-neon-blue border border-neon-blue/30 hover:border-neon-blue hover:bg-neon-blue/10 px-4 py-2 rounded-md transition-all duration-300 group">
+            <Link 
+              href="/auth/login" 
+              className="flex items-center gap-2 text-black bg-neon-blue hover:bg-neon-blue/90 px-4 py-2 rounded-md transition-all duration-300 group"
+            >
               <Lock className="w-4 h-4" />
-              <span>Access</span>
-              <div className="absolute -z-10 inset-0 bg-neon-blue/5 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"></div>
+              <span>Access Portal</span>
             </Link>
           </div>
 
@@ -175,58 +255,79 @@ export default function Navbar() {
         </div>
 
         {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-black/95 backdrop-blur-md border-t border-neon-blue/10 overflow-hidden"
-          >
-            <div className="px-4 py-4 space-y-6">
-              {/* Mobile nav sections */}
-              {navSections.map((section) => (
-                <div key={section.title} className="space-y-2">
-                  <h3 className="flex items-center text-neon-blue font-medium">
-                    <section.icon className="w-4 h-4 mr-2" />
-                    {section.title}
-                  </h3>
-                  <div className="pl-2 space-y-1 border-l border-neon-blue/20">
-                    {section.links.map((link) => (
-                      <Link 
-                        key={link.name}
-                        href={link.href} 
-                        className={`block py-2 ${
-                          isActive(link.href) ? 'text-neon-green' : 'text-gray-300 hover:text-neon-blue'
-                        } transition-colors`}
-                      >
-                        {link.name}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              {/* Mobile user actions */}
-              <div className="pt-4 border-t border-neon-blue/10 space-y-3">
-                <Link 
-                  href="/dashboard" 
-                  className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={mobileMenuVariants}
+              className="lg:hidden bg-black/95 backdrop-blur-md border-t border-neon-blue/20 overflow-hidden"
+            >
+              <div className="px-4 py-6 space-y-6">
+                <Link
+                  href="/"
+                  className={`flex items-center gap-2 px-4 py-2 rounded-md ${
+                    isActive('/') && pathname === '/'
+                      ? 'text-neon-blue bg-neon-blue/10'
+                      : 'text-gray-300'
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
                 >
-                  <Server className="w-5 h-5 text-neon-blue" />
-                  <span className="text-gray-300">Dashboard</span>
+                  <Home className="w-5 h-5" />
+                  <span>Home</span>
                 </Link>
                 
-                <Link 
-                  href="/auth/login" 
-                  className="flex items-center justify-center gap-2 bg-neon-blue/20 text-neon-blue px-4 py-3 rounded-md w-full hover:bg-neon-blue/30 transition-colors"
-                >
-                  <Lock className="w-5 h-5" />
-                  <span>Access Portal</span>
-                </Link>
+                {/* Mobile nav sections */}
+                {navSections.map((section) => (
+                  <div key={section.title} className="space-y-2">
+                    <h3 className="flex items-center text-neon-blue font-medium px-4">
+                      <section.icon className="w-5 h-5 mr-2" />
+                      {section.title}
+                    </h3>
+                    <div className="pl-4 space-y-1 border-l border-neon-blue/20">
+                      {section.links.map((link) => (
+                        <Link 
+                          key={link.name}
+                          href={link.href} 
+                          className={`block py-2 px-4 rounded-md ${
+                            isActive(link.href) 
+                              ? 'text-neon-green bg-neon-blue/5' 
+                              : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                          } transition-colors`}
+                          onClick={() => setMobileMenuOpen(false)}
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+
+                {/* Mobile user actions */}
+                <div className="pt-4 border-t border-neon-blue/20 space-y-3">
+                  <Link 
+                    href="/dashboard" 
+                    className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Settings className="w-5 h-5 text-neon-blue" />
+                    <span className="text-gray-300">Dashboard</span>
+                  </Link>
+                  
+                  <Link 
+                    href="/auth/login" 
+                    className="flex items-center justify-center gap-2 bg-neon-blue text-black px-4 py-3 rounded-md w-full hover:bg-neon-blue/90 transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Lock className="w-5 h-5" />
+                    <span>Access Portal</span>
+                  </Link>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );

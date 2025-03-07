@@ -3,302 +3,102 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-space-mono);
-  --font-display: var(--font-orbitron);
-  
-  /* Dark cyberpunk theme */
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 217 33% 17%;
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  --card: 222.2 84% 4.9%;
   --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
   --primary: 217.2 91.2% 59.8%;
   --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 143 64.2% 39.8%;
-  --secondary-foreground: 143 64.2% 97.9%;
-  --accent: 339 94.2% 60.8%;
-  --accent-foreground: 210 40% 98%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
   --muted: 217.2 32.6% 17.5%;
   --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
   --ring: 224.3 76.3% 48%;
-  
-  /* Neon colors */
-  --neon-blue: 37, 99, 235;
-  --neon-green: 16, 185, 129;
-  --neon-pink: 236, 72, 153;
-  --neon-purple: 139, 92, 246;
-  --neon-yellow: 60 100% 50%;
-  
-  --dark-background: 10, 10, 13;
-  --dark-card: 17, 17, 23;
-  --dark-border: 38, 38, 45;
-  --dark-lighter: 30, 30, 35;
 }
 
-@layer base {
-  * {
-    @apply antialiased;
-  }
-  
-  body {
-    @apply bg-dark text-white;
-  }
-  
-  /* Enhanced typography */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-wide text-balance;
-  }
-  
-  h1 {
-    @apply text-4xl sm:text-5xl md:text-6xl font-bold leading-tight;
-  }
-  
-  h2 {
-    @apply text-3xl sm:text-4xl font-bold leading-tight;
-  }
-  
-  h3 {
-    @apply text-2xl sm:text-3xl font-bold leading-snug;
-  }
-  
-  h4 {
-    @apply text-xl sm:text-2xl font-semibold leading-snug;
-  }
-  
-  p {
-    @apply leading-relaxed text-pretty font-normal text-gray-200;
-  }
-  
-  .text-balance {
-    text-wrap: balance;
-  }
-  
-  .text-pretty {
-    text-wrap: pretty;
-  }
-  
-  code, pre {
-    @apply font-mono text-sm bg-dark-lighter rounded px-1.5 py-0.5;
-  }
+body {
+  background-color: black;
+  color: white;
 }
 
-@layer components {
-  /* Enhanced card styling with refined hover effects */
-  .cyber-card {
-    @apply relative overflow-hidden bg-dark-card border border-dark-border rounded-lg 
-           shadow-md transition-all duration-300 p-6;
-  }
-  
-  .cyber-card:before {
-    content: '';
-    @apply absolute inset-0 border border-transparent opacity-0 transition-all duration-500 rounded-lg -z-10;
-  }
-  
-  .cyber-card:hover {
-    @apply shadow-card-hover border-neon-blue/30 transform;
-  }
-  
-  .cyber-card:hover:before {
-    @apply border-neon-blue opacity-100 scale-105;
-  }
-  
-  /* Refined glowing text effects */
-  .glow-text {
-    @apply relative;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
-  }
-  
-  .glow-text-sm {
-    @apply relative;
-    text-shadow: 0 0 5px rgba(59, 130, 246, 0.6), 0 0 10px rgba(59, 130, 246, 0.4);
-  }
-  
-  .glow-text-green {
-    text-shadow: 0 0 10px rgba(0, 255, 102, 0.7), 0 0 20px rgba(0, 255, 102, 0.5);
-  }
-  
-  .glow-text-pink {
-    text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.5);
-  }
-  
-  /* Enhanced Buttons */
-  .cyber-btn {
-    @apply relative inline-flex items-center justify-center px-6 py-3 bg-dark-light overflow-hidden transition-all 
-    duration-300 border border-neon-blue/50 text-white rounded-md font-medium shadow-sm;
-  }
-  
-  .cyber-btn:before {
-    content: '';
-    @apply absolute inset-0 bg-gradient-to-r from-neon-blue/10 to-neon-pink/10 opacity-0 transition-opacity duration-300;
-  }
-  
-  .cyber-btn:hover {
-    @apply shadow-neon-blue border-neon-blue/80 transform;
-  }
-  
-  .cyber-btn:hover:before {
-    @apply opacity-100;
-  }
-  
-  .cyber-btn-secondary {
-    @apply border-neon-green/50;
-  }
-  
-  .cyber-btn-secondary:hover {
-    @apply shadow-neon-green border-neon-green/80;
-  }
-  
-  .cyber-btn-secondary:before {
-    @apply bg-gradient-to-r from-neon-green/10 to-neon-blue/10;
-  }
-  
-  .cyber-btn-accent {
-    @apply border-neon-pink/50;
-  }
-  
-  .cyber-btn-accent:hover {
-    @apply shadow-neon-pink border-neon-pink/80;
-  }
-  
-  .cyber-btn-accent:before {
-    @apply bg-gradient-to-r from-neon-pink/10 to-neon-purple/10;
-  }
-  
-  /* Refined Input fields */
-  .cyber-input {
-    @apply bg-dark-light border border-dark-border rounded-md px-4 py-3 
-    focus:outline-none focus:ring-2 focus:ring-neon-blue/50 focus:border-neon-blue/50 transition-all duration-300 shadow-sm;
-  }
-  
-  /* Animated gradient background */
-  .animated-gradient {
-    background: linear-gradient(-45deg, rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.5), rgba(59, 130, 246, 0.5));
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-  }
-  
-  /* Layout classes */
-  .container {
-    @apply px-4 sm:px-6 lg:px-8 mx-auto;
-  }
-  
-  .section-spacing {
-    @apply py-12 md:py-20;
-  }
-  
-  .card-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
-  }
-  
-  /* Section headers */
-  .section-header {
-    @apply mb-12;
-  }
-  
-  .section-title {
-    @apply text-3xl md:text-4xl font-display font-bold mb-4;
-  }
-  
-  .section-subtitle {
-    @apply text-lg text-gray-400 max-w-3xl;
-  }
-  
-  /* Decorative accents */
-  .accent-bar {
-    @apply h-1 w-16 bg-gradient-to-r from-neon-blue to-primary-500 rounded-full my-4;
-  }
+/* Glowing text effect */
+.glow-text {
+  text-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
 }
 
-/* Glitch text effect */
-.glitch {
-  position: relative;
+/* Animated gradient background */
+.animated-gradient {
+  background: linear-gradient(-45deg, rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.5), rgba(59, 130, 246, 0.5));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
 }
 
-.glitch::before,
-.glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.glitch::before {
-  left: 2px;
-  text-shadow: -1px 0 rgba(0, 243, 255, 0.7);
-  animation: glitch-anim-1 2s infinite linear alternate-reverse;
-}
-
-.glitch::after {
-  left: -2px;
-  text-shadow: 1px 0 rgba(255, 0, 255, 0.7);
-  animation: glitch-anim-2 3s infinite linear alternate-reverse;
-}
-
-@keyframes glitch-anim-1 {
-  0% { clip-path: inset(30% 0 40% 0); }
-  20% { clip-path: inset(80% 0 1% 0); }
-  40% { clip-path: inset(43% 0 27% 0); }
-  60% { clip-path: inset(18% 0 79% 0); }
-  80% { clip-path: inset(54% 0 10% 0); }
-  100% { clip-path: inset(62% 0 3% 0); }
-}
-
-@keyframes glitch-anim-2 {
-  0% { clip-path: inset(24% 0 65% 0); }
-  20% { clip-path: inset(42% 0 5% 0); }
-  40% { clip-path: inset(15% 0 58% 0); }
-  60% { clip-path: inset(72% 0 35% 0); }
-  80% { clip-path: inset(40% 0 27% 0); }
-  100% { clip-path: inset(3% 0 82% 0); }
-}
-
-/* Gradient animations */
 @keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Scanline effect */
-.scanline {
-  position: relative;
-  overflow: hidden;
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.scanline::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background: rgba(0, 243, 255, 0.5);
-  animation: scanline 2s linear infinite;
+.animate-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
-@keyframes scanline {
-  0% { top: -100%; }
-  100% { top: 100%; }
+.slide-in-from-top-5 {
+  transform: translateY(-5%);
+  animation: slideDown 0.3s ease-out forwards;
 }
 
-/* Terminal typing effect */
-.typing {
-  border-right: 2px solid rgba(0, 243, 255, 0.8);
-  white-space: nowrap;
-  overflow: hidden;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+@keyframes slideDown {
+  from {
+    transform: translateY(-5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: rgba(0, 243, 255, 0.8) }
+/* Cursor animation */
+.cursor-blink {
+  animation: blink 1s step-end infinite;
 }
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
