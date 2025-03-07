@@ -1,53 +1,41 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 
 interface TerminalEffectProps {
   text: string;
   typingSpeed?: number;
-  className?: string;
-  cursorColor?: string;
 }
 
-const TerminalEffect: React.FC<TerminalEffectProps> = ({
-  text,
-  typingSpeed = 50,
-  className = '',
-  cursorColor = '#3B82F6'
-}) => {
+const TerminalEffect: React.FC<TerminalEffectProps> = ({ text, typingSpeed = 50 }) => {
   const [displayedText, setDisplayedText] = useState('');
-  const [isTyping, setIsTyping] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (displayedText.length < text.length) {
+    if (currentIndex < text.length) {
       const timer = setTimeout(() => {
-        setDisplayedText(text.substring(0, displayedText.length + 1));
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
       }, typingSpeed);
+
       return () => clearTimeout(timer);
-    } else {
-      setIsTyping(false);
     }
-  }, [displayedText, text, typingSpeed]);
+  }, [currentIndex, text, typingSpeed]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={`font-mono relative ${className}`}
-    >
-      <span>{displayedText}</span>
-      {isTyping && (
-        <span
-          className="inline-block w-2 ml-1 animate-pulse"
-          style={{ 
-            backgroundColor: cursorColor,
-            height: '1.2em',
-            verticalAlign: 'middle'
-          }}
-        ></span>
-      )}
-    </motion.div>
+    <div className="font-mono text-sm">
+      <div className="bg-black/50 rounded-lg p-4 backdrop-blur-sm border border-gray-800">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-3 h-3 rounded-full bg-red-500" />
+          <div className="w-3 h-3 rounded-full bg-yellow-500" />
+          <div className="w-3 h-3 rounded-full bg-green-500" />
+        </div>
+        <div className="text-gray-300">
+          {displayedText}
+          <span className="inline-block w-2 h-4 bg-blue-500 animate-pulse ml-1" />
+        </div>
+      </div>
+    </div>
   );
 };
 

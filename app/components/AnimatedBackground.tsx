@@ -1,128 +1,43 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import React from 'react';
 
-interface AnimatedBackgroundProps {
-  className?: string;
-}
-
-export default function AnimatedBackground({ className = '' }: AnimatedBackgroundProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // Set canvas size to match parent element
-    const resizeObserver = new ResizeObserver(() => {
-      if (canvas) {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-      }
-    });
-    resizeObserver.observe(canvas);
-
-    // Parameters for our grid
-    const gridCount = 20;
-    const dots: { x: number; y: number; vx: number; vy: number }[] = [];
-
-    // Generate dots
-    function generateDots() {
-      dots.length = 0;
-      if (!canvas) return;
-      
-      const spacing = Math.min(canvas.width, canvas.height) / gridCount;
-      
-      for (let i = 0; i < gridCount; i++) {
-        for (let j = 0; j < gridCount; j++) {
-          dots.push({
-            x: (spacing * i) + (Math.random() * spacing),
-            y: (spacing * j) + (Math.random() * spacing),
-            vx: (Math.random() - 0.5) * 0.2,
-            vy: (Math.random() - 0.5) * 0.2
-          });
-        }
-      }
-    }
-
-    // Initialize
-    generateDots();
-
-    // Animation function
-    function animate() {
-      if (!ctx || !canvas) return;
-      
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw dots
-      ctx.fillStyle = 'rgba(56, 182, 255, 0.3)';
-      dots.forEach(dot => {
-        // Update position
-        dot.x += dot.vx;
-        dot.y += dot.vy;
-        
-        // Bounce off edges
-        if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
-        if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
-        
-        // Draw dot
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, 1, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      
-      // Draw connections
-      ctx.strokeStyle = 'rgba(56, 182, 255, 0.15)';
-      ctx.lineWidth = 0.5;
-      
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dot1 = dots[i];
-          const dot2 = dots[j];
-          const distance = Math.hypot(dot1.x - dot2.x, dot1.y - dot2.y);
-          
-          // Only connect dots within a certain range
-          const maxDistance = canvas.width / 8;
-          if (distance < maxDistance) {
-            // Opacity based on distance
-            ctx.globalAlpha = 1 - (distance / maxDistance);
-            
-            ctx.beginPath();
-            ctx.moveTo(dot1.x, dot1.y);
-            ctx.lineTo(dot2.x, dot2.y);
-            ctx.stroke();
-          }
-        }
-      }
-      
-      ctx.globalAlpha = 1;
-      
-      // Continue animation
-      requestAnimationFrame(animate);
-    }
-
-    // Start animation
-    animate();
-
-    // Handle window resize
-    window.addEventListener('resize', generateDots);
-
-    // Cleanup
-    return () => {
-      resizeObserver.disconnect();
-      window.removeEventListener('resize', generateDots);
-    };
-  }, []);
-
+const AnimatedBackground = () => {
   return (
-    <canvas 
-      ref={canvasRef} 
-      className={`absolute inset-0 w-full h-full ${className}`}
-      style={{ pointerEvents: 'none' }}
-    />
+    <div className="fixed inset-0 z-0">
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-gray-900 to-black opacity-90" />
+      
+      {/* Animated dots */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="relative w-full h-full">
+          {[...Array(50)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-blue-500/20 animate-pulse"
+              style={{
+                width: Math.random() * 4 + 2 + 'px',
+                height: Math.random() * 4 + 2 + 'px',
+                top: Math.random() * 100 + '%',
+                left: Math.random() * 100 + '%',
+                animationDelay: Math.random() * 5 + 's',
+                animationDuration: Math.random() * 10 + 5 + 's',
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Gradient lines */}
+      <div className="absolute inset-0">
+        <div className="absolute w-1/2 h-1/2 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-transparent blur-3xl transform -translate-y-1/2 animate-gradient-slow" />
+        <div className="absolute w-1/2 h-1/2 right-0 bottom-0 bg-gradient-to-l from-blue-500/10 via-purple-500/10 to-transparent blur-3xl transform translate-y-1/2 animate-gradient-slow" />
+      </div>
+
+      {/* Mesh gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-gray-900/40 to-black/60" />
+    </div>
   );
-}
+};
+
+export default AnimatedBackground;

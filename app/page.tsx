@@ -73,65 +73,77 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-white mb-12 text-center">Comprehensive Security Services</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-gray-900 border-gray-800 hover:border-blue-500 transition-all duration-300">
+            <Card className="bg-gray-900/80 backdrop-blur-lg border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 group">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-blue-500" />
+                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                  <Shield className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <CardTitle className="text-white">Security Training</CardTitle>
+                <CardTitle className="text-white group-hover:text-blue-400 transition-colors">Security Training</CardTitle>
                 <CardDescription className="text-gray-400">Comprehensive courses for all skill levels</CardDescription>
               </CardHeader>
               <CardContent className="text-gray-300">
-                <p>
+                <p className="group-hover:text-gray-200 transition-colors">
                   Learn cybersecurity fundamentals, advanced techniques, and industry best practices from expert
                   instructors.
                 </p>
               </CardContent>
               <CardFooter>
-                <Link href="/training" className="text-blue-500 hover:text-blue-400 inline-flex items-center">
-                  Start Training <ArrowRight className="ml-2 w-4 h-4" />
+                <Link 
+                  href="/training" 
+                  className="text-blue-500 hover:text-blue-400 inline-flex items-center group/link"
+                >
+                  Start Training 
+                  <ArrowRight className="ml-2 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </CardFooter>
             </Card>
 
-            <Card className="bg-gray-900 border-gray-800 hover:border-blue-500 transition-all duration-300">
+            <Card className="bg-gray-900/80 backdrop-blur-lg border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 group">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
-                  <Bell className="w-6 h-6 text-blue-500" />
+                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                  <Bell className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <CardTitle className="text-white">Threat Intelligence</CardTitle>
+                <CardTitle className="text-white group-hover:text-blue-400 transition-colors">Threat Intelligence</CardTitle>
                 <CardDescription className="text-gray-400">Real-time monitoring and alerts</CardDescription>
               </CardHeader>
               <CardContent className="text-gray-300">
-                <p>
+                <p className="group-hover:text-gray-200 transition-colors">
                   Stay informed about the latest threats, vulnerabilities, and attack vectors with our real-time
                   intelligence feeds.
                 </p>
               </CardContent>
               <CardFooter>
-                <Link href="/intelligence" className="text-blue-500 hover:text-blue-400 inline-flex items-center">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                <Link 
+                  href="/intelligence" 
+                  className="text-blue-500 hover:text-blue-400 inline-flex items-center group/link"
+                >
+                  Learn More 
+                  <ArrowRight className="ml-2 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </CardFooter>
             </Card>
 
-            <Card className="bg-gray-900 border-gray-800 hover:border-blue-500 transition-all duration-300">
+            <Card className="bg-gray-900/80 backdrop-blur-lg border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 group">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
-                  <Lock className="w-6 h-6 text-blue-500" />
+                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                  <Lock className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <CardTitle className="text-white">Penetration Testing</CardTitle>
+                <CardTitle className="text-white group-hover:text-blue-400 transition-colors">Penetration Testing</CardTitle>
                 <CardDescription className="text-gray-400">Identify vulnerabilities before attackers</CardDescription>
               </CardHeader>
               <CardContent className="text-gray-300">
-                <p>
+                <p className="group-hover:text-gray-200 transition-colors">
                   Simulate cyber attacks to test your defense mechanisms and identify security weaknesses in your
                   systems.
                 </p>
               </CardContent>
               <CardFooter>
-                <Link href="/pentesting" className="text-blue-500 hover:text-blue-400 inline-flex items-center">
-                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                <Link 
+                  href="/pentesting" 
+                  className="text-blue-500 hover:text-blue-400 inline-flex items-center group/link"
+                >
+                  Learn More 
+                  <ArrowRight className="ml-2 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </CardFooter>
             </Card>
@@ -151,8 +163,8 @@ export default function Home() {
               </p>
               <Button className="bg-blue-600 hover:bg-blue-700 text-white">Access Dashboard</Button>
             </div>
-            <div className="lg:w-1/2 bg-black/60 p-6 rounded-lg border border-gray-800">
-              <div className="text-sm text-gray-400 mb-2">CURRENT THREAT LEVEL: MODERATE</div>
+            <div className="lg:w-1/2 bg-black/60 backdrop-blur-lg p-6 rounded-lg border border-gray-800 hover:border-blue-500 transition-all duration-300">
+              <div className="text-sm text-gray-400 mb-2 animate-pulse">CURRENT THREAT LEVEL: MODERATE</div>
               <TerminalDisplay
                 commandText={`$ nmap scan complete
 → 3 potential vulnerabilities detected
@@ -176,36 +188,44 @@ $_`}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="bg-gray-900 border-gray-800 hover:border-blue-500 transition-all duration-300">
+            <Card className="bg-gray-900/80 backdrop-blur-lg border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 group">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
-                  <Users className="w-6 h-6 text-blue-500" />
+                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                  <Users className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <CardTitle className="text-white">Community Forum</CardTitle>
+                <CardTitle className="text-white group-hover:text-blue-400 transition-colors">Community Forum</CardTitle>
               </CardHeader>
               <CardContent className="text-gray-300">
-                <p>Engage in discussions, ask questions, and share insights with fellow security professionals.</p>
+                <p className="group-hover:text-gray-200 transition-colors">Engage in discussions, ask questions, and share insights with fellow security professionals.</p>
               </CardContent>
               <CardFooter>
-                <Link href="/community/forum" className="text-blue-500 hover:text-blue-400 inline-flex items-center">
-                  Join Forum <ArrowRight className="ml-2 w-4 h-4" />
+                <Link 
+                  href="/community/forum" 
+                  className="text-blue-500 hover:text-blue-400 inline-flex items-center group/link"
+                >
+                  Join Forum 
+                  <ArrowRight className="ml-2 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </CardFooter>
             </Card>
 
-            <Card className="bg-gray-900 border-gray-800 hover:border-blue-500 transition-all duration-300">
+            <Card className="bg-gray-900/80 backdrop-blur-lg border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 group">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
-                  <Book className="w-6 h-6 text-blue-500" />
+                <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
+                  <Book className="w-6 h-6 text-blue-500 group-hover:scale-110 transition-transform" />
                 </div>
-                <CardTitle className="text-white">Learning Resources</CardTitle>
+                <CardTitle className="text-white group-hover:text-blue-400 transition-colors">Learning Resources</CardTitle>
               </CardHeader>
               <CardContent className="text-gray-300">
-                <p>Access our library of tutorials, guides, and documentation to enhance your security knowledge.</p>
+                <p className="group-hover:text-gray-200 transition-colors">Access our library of tutorials, guides, and documentation to enhance your security knowledge.</p>
               </CardContent>
               <CardFooter>
-                <Link href="/resources" className="text-blue-500 hover:text-blue-400 inline-flex items-center">
-                  Explore Resources <ArrowRight className="ml-2 w-4 h-4" />
+                <Link 
+                  href="/resources" 
+                  className="text-blue-500 hover:text-blue-400 inline-flex items-center group/link"
+                >
+                  Explore Resources 
+                  <ArrowRight className="ml-2 w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </CardFooter>
             </Card>

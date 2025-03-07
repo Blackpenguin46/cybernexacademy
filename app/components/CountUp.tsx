@@ -1,50 +1,80 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 interface CountUpProps {
   end: number;
   duration?: number;
   prefix?: string;
   suffix?: string;
+  separator?: string;
+  decimals?: number;
 }
 
-const CountUp: React.FC<CountUpProps> = ({ end, duration = 2, prefix = '', suffix = '' }) => {
+const easeOutQuad = (t: number): number => t * (2 - t);
+
+const CountUp: React.FC<CountUpProps> = ({
+  end,
+  duration = 2000,
+  prefix = '',
+  suffix = '',
+  separator = ',',
+  decimals = 0,
+}) => {
   const [count, setCount] = useState(0);
+  const countRef = useRef<number>(0);
+  const { ref, inView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
 
   useEffect(() => {
-    let startTime: number;
-    let animationFrame: number;
+    if (!inView) return;
 
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const progress = Math.min((currentTime - startTime) / (duration * 1000), 1);
-      
-      setCount(Math.floor(progress * end));
+    const startTime = Date.now();
+    const startValue = countRef.current;
+
+    const updateCount = () => {
+      const now = Date.now();
+      const progress = Math.min((now - startTime) / duration, 1);
+      const easeProgress = easeOutQuad(progress);
+      const currentCount = startValue + (end - startValue) * easeProgress;
+
+      countRef.current = currentCount;
+      setCount(currentCount);
 
       if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate);
+        requestAnimationFrame(updateCount);
       }
     };
 
-    animationFrame = requestAnimationFrame(animate);
+    requestAnimationFrame(updateCount);
+  }, [end, duration, inView]);
 
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
+  const formatNumber = (num: number): string => {
+    const fixed = num.toFixed(decimals);
+    const [whole, decimal] = fixed.split('.');
+    const parts = whole.split('').reverse();
+    const formatted = [];
+    
+    for (let i = 0; i < parts.length; i++) {
+      if (i > 0 && i % 3 === 0) {
+        formatted.push(separator);
       }
-    };
-  }, [end, duration]);
+      formatted.push(parts[i]);
+    }
+    
+    const result = formatted.reverse().join('');
+    return decimal ? `${result}.${decimal}` : result;
+  };
 
   return (
-    <motion.span
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {prefix}{count}{suffix}
-    </motion.span>
+    <span ref={ref} className="inline-block">
+      {prefix}
+      {formatNumber(count)}
+      {suffix}
+    </span>
   );
 };
 
