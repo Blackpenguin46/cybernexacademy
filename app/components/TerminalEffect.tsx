@@ -1,67 +1,55 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 interface TerminalEffectProps {
-  commands: string[]
-  typingSpeed?: number
-  initialDelay?: number
-  commandDelay?: number
+  text: string;
+  typingSpeed?: number;
+  className?: string;
+  cursorColor?: string;
 }
 
-const TerminalEffect = ({
-  commands,
+const TerminalEffect: React.FC<TerminalEffectProps> = ({
+  text,
   typingSpeed = 50,
-  initialDelay = 500,
-  commandDelay = 700,
-}: TerminalEffectProps) => {
-  const [displayedCommands, setDisplayedCommands] = useState<string[]>([])
-  const [currentCommandIndex, setCurrentCommandIndex] = useState(0)
-  const [currentText, setCurrentText] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
+  className = '',
+  cursorColor = '#3B82F6'
+}) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
 
   useEffect(() => {
-    if (currentCommandIndex >= commands.length) return
-
-    const startTyping = () => {
-      setIsTyping(true)
-      const command = commands[currentCommandIndex]
-      let charIndex = 0
-
-      const typeChar = () => {
-        if (charIndex < command.length) {
-          setCurrentText(command.substring(0, charIndex + 1))
-          charIndex++
-          setTimeout(typeChar, typingSpeed)
-        } else {
-          setIsTyping(false)
-          setDisplayedCommands([...displayedCommands, command])
-          setCurrentText("")
-          setTimeout(() => {
-            setCurrentCommandIndex(currentCommandIndex + 1)
-          }, commandDelay)
-        }
-      }
-
-      setTimeout(typeChar, initialDelay)
+    if (displayedText.length < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayedText(text.substring(0, displayedText.length + 1));
+      }, typingSpeed);
+      return () => clearTimeout(timer);
+    } else {
+      setIsTyping(false);
     }
-
-    if (!isTyping) {
-      startTyping()
-    }
-  }, [currentCommandIndex, isTyping, commands, displayedCommands, typingSpeed, initialDelay, commandDelay])
+  }, [displayedText, text, typingSpeed]);
 
   return (
-    <div className="font-mono text-sm bg-black p-4 rounded-md overflow-hidden">
-      {displayedCommands.map((cmd, index) => (
-        <div key={index} className="text-green-500 mb-1">
-          {cmd}
-        </div>
-      ))}
-      {currentText && <div className="text-green-500">{currentText}</div>}
-    </div>
-  )
-}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className={`font-mono relative ${className}`}
+    >
+      <span>{displayedText}</span>
+      {isTyping && (
+        <span
+          className="inline-block w-2 ml-1 animate-pulse"
+          style={{ 
+            backgroundColor: cursorColor,
+            height: '1.2em',
+            verticalAlign: 'middle'
+          }}
+        ></span>
+      )}
+    </motion.div>
+  );
+};
 
-export default TerminalEffect
+export default TerminalEffect;
 

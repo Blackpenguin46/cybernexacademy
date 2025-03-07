@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Shield, Book, Users, Bell, Lock, ArrowRight } from "lucide-react"
 import AnimatedBackground from "./components/AnimatedBackground"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import CountUp from "./components/CountUp"
 import TerminalEffect from "./components/TerminalEffect"
 
@@ -144,13 +144,11 @@ export default function Home() {
             <div className="lg:w-1/2 bg-black/60 p-6 rounded-lg border border-gray-800">
               <div className="text-sm text-gray-400 mb-2">CURRENT THREAT LEVEL: MODERATE</div>
               <TerminalEffect
-                commands={[
-                  "$ nmap scan complete",
-                  "→ 3 potential vulnerabilities detected",
-                  "$ initiating countermeasures",
-                  "→ security protocols activated",
-                  "$_",
-                ]}
+                text={`$ nmap scan complete
+→ 3 potential vulnerabilities detected
+$ initiating countermeasures
+→ security protocols activated
+$_`}
               />
             </div>
           </div>
