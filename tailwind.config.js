@@ -1,7 +1,5 @@
-import type { Config } from "tailwindcss"
-import { withUt } from "uploadthing/tw"
-
-const config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
 	darkMode: ["class"],
 	content: [
 	  "./pages/**/*.{ts,tsx}",
@@ -10,7 +8,6 @@ const config = {
 	  "./src/**/*.{ts,tsx}",
 	  "*.{js,ts,jsx,tsx,mdx}",
 	],
-	prefix: "",
 	theme: {
 	  container: {
 		center: true,
@@ -62,43 +59,33 @@ const config = {
 		},
 		keyframes: {
 		  "accordion-down": {
-			from: { height: "0" },
+			from: { height: 0 },
 			to: { height: "var(--radix-accordion-content-height)" },
 		  },
 		  "accordion-up": {
 			from: { height: "var(--radix-accordion-content-height)" },
-			to: { height: "0" },
+			to: { height: 0 },
 		  },
-		  'gradient-slow': {
-			'0%, 100%': { transform: 'translate(0, 0)' },
-			'50%': { transform: 'translate(25%, 25%)' },
+		  "fade-in": {
+			from: { opacity: 0 },
+			to: { opacity: 1 },
 		  },
-		  'pulse-fade': {
-			'0%, 100%': { opacity: '0.2' },
-			'50%': { opacity: '0.8' },
+		  "fade-out": {
+			from: { opacity: 1 },
+			to: { opacity: 0 },
 		  },
-		  'float': {
-			'0%, 100%': { transform: 'translateY(0)' },
-			'50%': { transform: 'translateY(-10px)' },
-		  },
-		  'shimmer': {
-			'0%': { backgroundPosition: '200% 0' },
-			'100%': { backgroundPosition: '-200% 0' },
-		  }
 		},
 		animation: {
 		  "accordion-down": "accordion-down 0.2s ease-out",
 		  "accordion-up": "accordion-up 0.2s ease-out",
-		  'gradient-slow': 'gradient-slow 15s ease-in-out infinite',
-		  'pulse-fade': 'pulse-fade 3s ease-in-out infinite',
-		  'float': 'float 6s ease-in-out infinite',
-		  'shimmer': 'shimmer 8s linear infinite'
+		  "fade-in": "fade-in 0.3s ease-in-out",
+		  "fade-out": "fade-out 0.3s ease-in-out",
 		},
 	  },
 	},
-	plugins: [require("tailwindcss-animate")],
-} satisfies Config
-
-export default withUt(config)
+	plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  }
+  
+  
   
   
