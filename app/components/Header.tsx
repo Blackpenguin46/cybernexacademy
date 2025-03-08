@@ -59,29 +59,101 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "community" && (
-                <ul className="absolute left-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-50 border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-50 border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
-                      href="/community/forum"
+                      href="/community/reddit"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Forum
+                      Reddit
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/community/events"
+                      href="/community/discord"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Events
+                      Discord
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/community/mentorship"
+                      href="/community/substack"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Mentorship
+                      Substack
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/linkedin"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      LinkedIn
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/skool"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Skool
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/instagram"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Instagram
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/twitter"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Twitter/X
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/youtube"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      YouTube
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/telegram"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Telegram
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/mastodon"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Mastodon
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/facebook"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Facebook Groups
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/community/forums"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Forums & Blogs
                     </Link>
                   </li>
                 </ul>
@@ -255,18 +327,63 @@ const Header = () => {
                 {activeDropdown === "community-mobile" && (
                   <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
                     <li>
-                      <Link href="/community/forum" className="block py-1 text-gray-400 hover:text-white">
-                        Forum
+                      <Link href="/community/reddit" className="block py-1 text-gray-400 hover:text-white">
+                        Reddit
                       </Link>
                     </li>
                     <li>
-                      <Link href="/community/events" className="block py-1 text-gray-400 hover:text-white">
-                        Events
+                      <Link href="/community/discord" className="block py-1 text-gray-400 hover:text-white">
+                        Discord
                       </Link>
                     </li>
                     <li>
-                      <Link href="/community/mentorship" className="block py-1 text-gray-400 hover:text-white">
-                        Mentorship
+                      <Link href="/community/substack" className="block py-1 text-gray-400 hover:text-white">
+                        Substack
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/linkedin" className="block py-1 text-gray-400 hover:text-white">
+                        LinkedIn
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/skool" className="block py-1 text-gray-400 hover:text-white">
+                        Skool
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/instagram" className="block py-1 text-gray-400 hover:text-white">
+                        Instagram
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/twitter" className="block py-1 text-gray-400 hover:text-white">
+                        Twitter/X
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/youtube" className="block py-1 text-gray-400 hover:text-white">
+                        YouTube
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/telegram" className="block py-1 text-gray-400 hover:text-white">
+                        Telegram
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/mastodon" className="block py-1 text-gray-400 hover:text-white">
+                        Mastodon
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/facebook" className="block py-1 text-gray-400 hover:text-white">
+                        Facebook Groups
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/forums" className="block py-1 text-gray-400 hover:text-white">
+                        Forums & Blogs
                       </Link>
                     </li>
                   </ul>
