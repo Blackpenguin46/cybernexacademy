@@ -10,56 +10,159 @@ import {
   Shield, Star, Clock, Users, Database, Server, Globe
 } from 'lucide-react';
 
-const academyResources = [
+// Academy sections with resources
+const academySections = [
+  {
+    title: 'Certifications & Training',
+    description: 'Prepare for industry-recognized cybersecurity certifications with curated study materials.',
+    resources: [
+      {
+        title: 'CompTIA Security+',
+        description: 'Essential certification for IT security professionals. Covers network security, compliance, and operations.',
+        link: '/academy/certifications/security-plus',
+        category: 'Entry Level',
+        icon: '/images/comptia-icon.png',
+        isExternal: false,
+      },
+      {
+        title: 'CEH (Certified Ethical Hacker)',
+        description: 'Learn ethical hacking methodologies and techniques for penetration testing.',
+        link: '/academy/certifications/ceh',
+        category: 'Intermediate',
+        icon: '/images/ceh-icon.png',
+        isExternal: false,
+      },
+      {
+        title: 'CISSP',
+        description: 'Advanced certification covering security and risk management principles.',
+        link: '/academy/certifications/cissp',
+        category: 'Advanced',
+        icon: '/images/cissp-icon.png',
+        isExternal: false,
+      },
+    ],
+  },
+  {
+    title: 'Hands-on Labs & Practice',
+    description: 'Gain practical experience with interactive cybersecurity labs and challenges.',
+    resources: [
+      {
+        title: 'TryHackMe',
+        description: 'Learn cybersecurity through hands-on labs and guided learning paths.',
+        link: 'https://tryhackme.com',
+        category: 'Practice Platform',
+        icon: '/images/thm-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'Hack The Box',
+        description: 'Challenge yourself with realistic penetration testing scenarios.',
+        link: 'https://hackthebox.com',
+        category: 'Practice Platform',
+        icon: '/images/htb-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'PortSwigger Web Security Academy',
+        description: 'Learn web security with interactive labs and detailed tutorials.',
+        link: 'https://portswigger.net/web-security',
+        category: 'Web Security',
+        icon: '/images/portswigger-icon.png',
+        isExternal: true,
+      },
+    ],
+  },
   {
     title: 'YouTube Learning Paths',
-    description: 'Curated collection of the best cybersecurity YouTube channels and playlists organized by topic.',
-    link: '/academy/youtube',
-    category: 'Video Learning',
-    icon: '/images/youtube-icon.png',
-    isExternal: false,
+    description: 'Curated YouTube channels and playlists for visual cybersecurity learning.',
+    resources: [
+      {
+        title: 'John Hammond',
+        description: 'Malware analysis, CTF walkthroughs, and cybersecurity tutorials.',
+        link: 'https://www.youtube.com/@_JohnHammond',
+        category: 'Tutorial Channel',
+        icon: '/images/youtube-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'David Bombal',
+        description: 'Networking, cybersecurity, and certification preparation content.',
+        link: 'https://www.youtube.com/@davidbombal',
+        category: 'Tutorial Channel',
+        icon: '/images/youtube-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'NetworkChuck',
+        description: 'Engaging tutorials on networking, Linux, and cybersecurity concepts.',
+        link: 'https://www.youtube.com/@NetworkChuck',
+        category: 'Tutorial Channel',
+        icon: '/images/youtube-icon.png',
+        isExternal: true,
+      },
+    ],
   },
   {
-    title: 'Hands-on Labs',
-    description: 'Practice your skills with interactive labs from TryHackMe, Hack The Box, and other platforms.',
-    link: '/academy/labs',
-    category: 'Practical Training',
-    icon: '/images/labs-icon.png',
-    isExternal: false,
-  },
-  {
-    title: 'Certification Guides',
-    description: 'Study materials and preparation guides for popular cybersecurity certifications.',
-    link: '/academy/certifications',
-    category: 'Professional Development',
-    icon: '/images/cert-icon.png',
-    isExternal: false,
-  },
-  {
-    title: 'Career Paths',
-    description: 'Structured learning paths for different cybersecurity career tracks and specializations.',
-    link: '/academy/careers',
-    category: 'Career Development',
-    icon: '/images/career-icon.png',
-    isExternal: false,
+    title: 'Career Development',
+    description: 'Resources for building your cybersecurity career and professional development.',
+    resources: [
+      {
+        title: 'Resume Builder',
+        description: 'Cybersecurity-focused resume templates and writing guides.',
+        link: '/academy/careers/resume',
+        category: 'Career Tools',
+        icon: '/images/resume-icon.png',
+        isExternal: false,
+      },
+      {
+        title: 'Interview Preparation',
+        description: 'Common interview questions and preparation strategies.',
+        link: '/academy/careers/interview',
+        category: 'Career Tools',
+        icon: '/images/interview-icon.png',
+        isExternal: false,
+      },
+      {
+        title: 'Career Paths Guide',
+        description: 'Explore different cybersecurity career paths and requirements.',
+        link: '/academy/careers/paths',
+        category: 'Career Planning',
+        icon: '/images/career-icon.png',
+        isExternal: false,
+      },
+    ],
   },
   {
     title: 'Student Resources',
-    description: 'Academic resources, internship opportunities, and guidance for college students.',
-    link: '/academy/students',
-    category: 'Academic',
-    icon: '/images/student-icon.png',
-    isExternal: false,
+    description: 'Academic resources and guidance for college students pursuing cybersecurity.',
+    resources: [
+      {
+        title: 'Academic Programs',
+        description: 'Guide to cybersecurity degree programs and academic paths.',
+        link: '/academy/students/programs',
+        category: 'Academic',
+        icon: '/images/academic-icon.png',
+        isExternal: false,
+      },
+      {
+        title: 'Internship Guide',
+        description: 'Find and apply for cybersecurity internships and co-op programs.',
+        link: '/academy/students/internships',
+        category: 'Career Development',
+        icon: '/images/internship-icon.png',
+        isExternal: false,
+      },
+      {
+        title: 'Student Organizations',
+        description: 'Connect with cybersecurity clubs and student organizations.',
+        link: '/academy/students/organizations',
+        category: 'Networking',
+        icon: '/images/org-icon.png',
+        isExternal: false,
+      },
+    ],
   },
-  {
-    title: 'Job Preparation',
-    description: 'Resume templates, interview preparation, and job search strategies for cybersecurity roles.',
-    link: '/academy/jobs',
-    category: 'Career Support',
-    icon: '/images/job-icon.png',
-    isExternal: false,
-  },
-]
+];
 
 const AcademyPage = () => {
   // Animation variants
@@ -97,52 +200,6 @@ const AcademyPage = () => {
       },
     },
   };
-
-  // Academy sections data
-  const academySections = [
-    {
-      title: 'Learning Paths',
-      description: 'Structured learning tracks for different career goals and skill levels',
-      icon: BookOpen,
-      href: '/academy/paths',
-      color: 'neon-blue',
-    },
-    {
-      title: 'YouTube Channels',
-      description: 'Curated list of the best cybersecurity YouTube channels and playlists',
-      icon: Youtube,
-      href: '/academy/youtube',
-      color: 'neon-red',
-    },
-    {
-      title: 'Certifications',
-      description: 'Preparation resources for popular cybersecurity certifications',
-      icon: Award,
-      href: '/academy/certifications',
-      color: 'neon-yellow',
-    },
-    {
-      title: 'Hands-on Labs',
-      description: 'Practice in real-world environments with guided challenges',
-      icon: Terminal,
-      href: '/academy/labs',
-      color: 'neon-green',
-    },
-    {
-      title: 'College Resources',
-      description: 'Academic materials, scholarships, and guidance for students',
-      icon: GraduationCap,
-      href: '/academy/college',
-      color: 'neon-purple',
-    },
-    {
-      title: 'Career Resources',
-      description: 'Resume templates, interview preparation, and job search resources',
-      icon: Briefcase,
-      href: '/academy/careers',
-      color: 'neon-pink',
-    },
-  ];
 
   // Featured learning paths
   const featuredLearningPaths = [
@@ -268,7 +325,7 @@ const AcademyPage = () => {
     <div className="min-h-screen bg-black">
       <SectionHeader
         title="Academy"
-        description="Access our curated collection of cybersecurity learning resources, certification guides, and career development materials."
+        description="Access curated cybersecurity learning resources, certification guides, hands-on labs, and career development materials."
         icon={
           <svg
             className="h-12 w-12 text-white"
@@ -287,14 +344,20 @@ const AcademyPage = () => {
       />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {academyResources.map((resource) => (
-            <ResourceCard
-              key={resource.title}
-              {...resource}
-            />
-          ))}
-        </div>
+        {academySections.map((section, index) => (
+          <div key={section.title} className="mb-16 last:mb-0">
+            <h2 className="text-2xl font-bold text-white mb-2">{section.title}</h2>
+            <p className="text-gray-400 mb-6">{section.description}</p>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {section.resources.map((resource) => (
+                <ResourceCard
+                  key={resource.title}
+                  {...resource}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -7,6 +7,106 @@ import { Newspaper, FileText, BarChart, Building2, ArrowRight, Clock, Eye, Badge
 import SectionHeader from '../components/SectionHeader'
 import ResourceCard from '../components/ResourceCard'
 
+// Insights sections with resources
+const insightSections = [
+  {
+    title: 'Cybersecurity News & Trends',
+    description: 'Stay updated with the latest cybersecurity news, breaches, and industry updates.',
+    resources: [
+      {
+        title: 'BleepingComputer',
+        description: 'Breaking news about cyber breaches, malware, and the latest security updates.',
+        link: 'https://www.bleepingcomputer.com',
+        category: 'News',
+        icon: '/images/bleeping-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'Dark Reading',
+        description: 'In-depth coverage of cyber risks, vulnerabilities, and industry insights.',
+        link: 'https://www.darkreading.com',
+        category: 'News',
+        icon: '/images/darkreading-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'Krebs on Security',
+        description: 'Investigative journalism covering cybercrime, breaches, and security trends.',
+        link: 'https://krebsonsecurity.com',
+        category: 'News',
+        icon: '/images/krebs-icon.png',
+        isExternal: true,
+      },
+    ],
+  },
+  {
+    title: 'Job Market & Industry Reports',
+    description: 'Explore cybersecurity job trends, salary data, and industry analysis.',
+    resources: [
+      {
+        title: 'CyberSeek',
+        description: 'Interactive tools and data for cybersecurity career planning and job market analysis.',
+        link: 'https://www.cyberseek.org',
+        category: 'Career Intel',
+        icon: '/images/cyberseek-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'ISC2 Workforce Study',
+        description: 'Comprehensive analysis of the global cybersecurity workforce and industry trends.',
+        link: 'https://www.isc2.org/Research',
+        category: 'Industry Research',
+        icon: '/images/isc2-icon.png',
+        isExternal: true,
+      },
+    ],
+  },
+  {
+    title: 'CVE & Vulnerability Feeds',
+    description: 'Track the latest vulnerabilities, exploits, and security advisories.',
+    resources: [
+      {
+        title: 'CVE Database',
+        description: 'Comprehensive database of publicly known cybersecurity vulnerabilities.',
+        link: 'https://cve.mitre.org',
+        category: 'Vulnerabilities',
+        icon: '/images/cve-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'Exploit Database',
+        description: 'Archive of public exploits and corresponding vulnerable software.',
+        link: 'https://www.exploit-db.com',
+        category: 'Exploits',
+        icon: '/images/exploitdb-icon.png',
+        isExternal: true,
+      },
+    ],
+  },
+  {
+    title: 'Incident Response & Threat Intelligence',
+    description: 'Access threat intelligence and incident response resources.',
+    resources: [
+      {
+        title: 'CISA Alerts',
+        description: 'Official cybersecurity alerts and technical guidance from CISA.',
+        link: 'https://www.cisa.gov/news-events/cybersecurity-advisories',
+        category: 'Government Alerts',
+        icon: '/images/cisa-icon.png',
+        isExternal: true,
+      },
+      {
+        title: 'Mandiant Threat Intel',
+        description: 'Research and analysis on APT groups and emerging cyber threats.',
+        link: 'https://www.mandiant.com/resources',
+        category: 'Threat Research',
+        icon: '/images/mandiant-icon.png',
+        isExternal: true,
+      },
+    ],
+  },
+];
+
 const InsightsPage = () => {
   // Animation variants
   const containerVariants = {
@@ -32,38 +132,6 @@ const InsightsPage = () => {
       }
     }
   };
-
-  // Insights sections data
-  const insightsSections = [
-    {
-      title: 'News & Updates',
-      description: 'The latest cybersecurity news, breaches, and industry updates',
-      icon: Newspaper,
-      href: '/insights/news',
-      color: 'neon-blue',
-    },
-    {
-      title: 'Blog Articles',
-      description: 'In-depth articles, tutorials, and analysis from security experts',
-      icon: FileText,
-      href: '/insights/blog',
-      color: 'neon-pink',
-    },
-    {
-      title: 'Industry Trends',
-      description: 'Data-driven insights on emerging trends in cybersecurity',
-      icon: BarChart,
-      href: '/insights/trends',
-      color: 'neon-green',
-    },
-    {
-      title: 'Job Market',
-      description: 'Analysis of the cybersecurity job market, salaries, and skills in demand',
-      icon: Building2,
-      href: '/insights/jobs',
-      color: 'neon-purple',
-    },
-  ];
 
   // Featured articles
   const featuredArticles = [
@@ -179,7 +247,7 @@ const InsightsPage = () => {
     <div className="min-h-screen bg-black">
       <SectionHeader
         title="Insights"
-        description="Stay informed with the latest cybersecurity news, trends, and industry analysis from trusted sources."
+        description="Stay informed with the latest cybersecurity news, trends, vulnerabilities, and industry analysis from trusted sources."
         icon={
           <svg
             className="h-12 w-12 text-white"
@@ -198,14 +266,20 @@ const InsightsPage = () => {
       />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {insightResources.map((resource) => (
-            <ResourceCard
-              key={resource.title}
-              {...resource}
-            />
-          ))}
-        </div>
+        {insightSections.map((section, index) => (
+          <div key={section.title} className="mb-16 last:mb-0">
+            <h2 className="text-2xl font-bold text-white mb-2">{section.title}</h2>
+            <p className="text-gray-400 mb-6">{section.description}</p>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {section.resources.map((resource) => (
+                <ResourceCard
+                  key={resource.title}
+                  {...resource}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
