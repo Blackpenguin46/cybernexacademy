@@ -49,47 +49,6 @@ const Header = () => {
             <li className="relative">
               <button
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
-                  activeDropdown === "academy" ? "text-blue-500" : ""
-                }`}
-                onClick={() => toggleDropdown("academy")}
-              >
-                Academy{" "}
-                <ChevronDown
-                  className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "academy" ? "rotate-180" : ""}`}
-                />
-              </button>
-              {activeDropdown === "academy" && (
-                <ul className="absolute left-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-50 border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
-                  <li>
-                    <Link
-                      href="/academy/courses"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Courses
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/labs"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Hands-On Labs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/certifications"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Certifications
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li className="relative">
-              <button
-                className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "community" ? "text-blue-500" : ""
                 }`}
                 onClick={() => toggleDropdown("community")}
@@ -141,29 +100,110 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "insights" && (
+                <ul className="absolute left-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-50 border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                  <li>
+                    <Link
+                      href="/insights/job-market"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Job Market
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/research-innovations"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Research & Innovations
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/emerging-trends"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Emerging Trends
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/breaches-threats"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Breaches & Threats
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/policy-regulations"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Cyber Policy & Regulations
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/threat-intelligence"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Threat Intelligence & APT Groups
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/tools-techniques"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Cybersecurity Tools & Techniques
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/insights/industry-specific"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Industry-Specific Cybersecurity
+                    </Link>
+                  </li>
+                </ul>
+              )}
+            </li>
+            <li className="relative">
+              <button
+                className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
+                  activeDropdown === "academy" ? "text-blue-500" : ""
+                }`}
+                onClick={() => toggleDropdown("academy")}
+              >
+                Academy{" "}
+                <ChevronDown
+                  className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "academy" ? "rotate-180" : ""}`}
+                />
+              </button>
+              {activeDropdown === "academy" && (
                 <ul className="absolute left-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-50 border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
-                      href="/insights/blog"
+                      href="/academy/courses"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Blog
+                      Courses
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/research"
+                      href="/academy/labs"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Research
+                      Hands-On Labs
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/reports"
+                      href="/academy/certifications"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Threat Reports
+                      Certifications
                     </Link>
                   </li>
                 </ul>
@@ -202,36 +242,6 @@ const Header = () => {
         <div className="md:hidden bg-black/95 backdrop-blur-md border-t border-gray-800 py-4 animate-in slide-in-from-top-5 duration-300">
           <div className="container mx-auto px-4">
             <ul className="space-y-4">
-              <li>
-                <button
-                  className="flex items-center justify-between w-full py-2 text-gray-300"
-                  onClick={() => toggleDropdown("academy-mobile")}
-                >
-                  <span>Academy</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transition-transform ${activeDropdown === "academy-mobile" ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {activeDropdown === "academy-mobile" && (
-                  <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
-                    <li>
-                      <Link href="/academy/courses" className="block py-1 text-gray-400 hover:text-white">
-                        Courses
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/labs" className="block py-1 text-gray-400 hover:text-white">
-                        Hands-On Labs
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/certifications" className="block py-1 text-gray-400 hover:text-white">
-                        Certifications
-                      </Link>
-                    </li>
-                  </ul>
-                )}
-              </li>
               <li>
                 <button
                   className="flex items-center justify-between w-full py-2 text-gray-300"
@@ -275,18 +285,73 @@ const Header = () => {
                 {activeDropdown === "insights-mobile" && (
                   <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
                     <li>
-                      <Link href="/insights/blog" className="block py-1 text-gray-400 hover:text-white">
-                        Blog
+                      <Link href="/insights/job-market" className="block py-1 text-gray-400 hover:text-white">
+                        Job Market
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/research" className="block py-1 text-gray-400 hover:text-white">
-                        Research
+                      <Link href="/insights/research-innovations" className="block py-1 text-gray-400 hover:text-white">
+                        Research & Innovations
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/reports" className="block py-1 text-gray-400 hover:text-white">
-                        Threat Reports
+                      <Link href="/insights/emerging-trends" className="block py-1 text-gray-400 hover:text-white">
+                        Emerging Trends
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/insights/breaches-threats" className="block py-1 text-gray-400 hover:text-white">
+                        Breaches & Threats
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/insights/policy-regulations" className="block py-1 text-gray-400 hover:text-white">
+                        Cyber Policy & Regulations
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/insights/threat-intelligence" className="block py-1 text-gray-400 hover:text-white">
+                        Threat Intelligence & APT Groups
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/insights/tools-techniques" className="block py-1 text-gray-400 hover:text-white">
+                        Cybersecurity Tools & Techniques
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/insights/industry-specific" className="block py-1 text-gray-400 hover:text-white">
+                        Industry-Specific Cybersecurity
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
+              <li>
+                <button
+                  className="flex items-center justify-between w-full py-2 text-gray-300"
+                  onClick={() => toggleDropdown("academy-mobile")}
+                >
+                  <span>Academy</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform ${activeDropdown === "academy-mobile" ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {activeDropdown === "academy-mobile" && (
+                  <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
+                    <li>
+                      <Link href="/academy/courses" className="block py-1 text-gray-400 hover:text-white">
+                        Courses
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/academy/labs" className="block py-1 text-gray-400 hover:text-white">
+                        Hands-On Labs
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/academy/certifications" className="block py-1 text-gray-400 hover:text-white">
+                        Certifications
                       </Link>
                     </li>
                   </ul>
