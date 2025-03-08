@@ -86,8 +86,8 @@ const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:block">
-          <ul className="flex space-x-8">
-            <li className="relative">
+          <ul className="flex items-center space-x-8">
+            <li className="relative group">
               <button
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "community" ? "text-blue-500" : ""
@@ -100,7 +100,7 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "community" && (
-                <ul className="absolute left-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[100] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-1 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
                       href="/community/reddit"
@@ -200,7 +200,7 @@ const Header = () => {
                 </ul>
               )}
             </li>
-            <li className="relative">
+            <li className="relative group">
               <button
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "insights" ? "text-blue-500" : ""
@@ -213,7 +213,7 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "insights" && (
-                <ul className="absolute left-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[100] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-1 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
                       href="/insights/job-market"
@@ -281,7 +281,7 @@ const Header = () => {
                 </ul>
               )}
             </li>
-            <li className="relative">
+            <li className="relative group">
               <button
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "academy" ? "text-blue-500" : ""
@@ -294,7 +294,7 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "academy" && (
-                <ul className="absolute left-0 mt-2 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[100] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-1 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
                       href="/academy/roadmaps"
@@ -402,8 +402,8 @@ const Header = () => {
                 </ul>
               )}
             </li>
-            <li>
-              <Link href="/about" className="text-gray-300 hover:text-blue-500">
+            <li className="flex items-center">
+              <Link href="/about" className="text-gray-300 hover:text-blue-500 py-2">
                 About
               </Link>
             </li>
