@@ -297,6 +297,9 @@ export async function signUp(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/verify-email`,
+      }
     })
 
     if (error) {
