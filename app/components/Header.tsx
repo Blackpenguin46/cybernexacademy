@@ -74,7 +74,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
         scrolled ? "bg-black/90 backdrop-blur-md py-3" : "bg-transparent py-5"
       }`}
     >
@@ -100,7 +100,7 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "community" && (
-                <ul className="absolute left-0 mt-1 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
                       href="/community/reddit"
@@ -213,7 +213,7 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "insights" && (
-                <ul className="absolute left-0 mt-1 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
                       href="/insights/job-market"
@@ -294,7 +294,7 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "academy" && (
-                <ul className="absolute left-0 mt-1 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
                       href="/academy/roadmaps"
@@ -436,7 +436,7 @@ const Header = () => {
                   />
                 </button>
                 {activeDropdown === "user" && (
-                  <ul className="absolute right-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[100] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                  <ul className="absolute right-0 mt-4 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                     <li>
                       <Link
                         href="/profile"
