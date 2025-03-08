@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Users, MessagesSquare, Globe, FileText, Instagram, ArrowRight, ExternalLink, Calendar, User } from 'lucide-react';
+import React from 'react'
+import SectionHeader from '../components/SectionHeader'
+import ResourceCard from '../components/ResourceCard'
 
 const CommunityPage = () => {
   // Animation variants
@@ -141,280 +144,81 @@ const CommunityPage = () => {
     },
   ];
 
+  const communityResources = [
+    {
+      title: 'CyberNex Discord',
+      description: 'Join our official Discord server to connect with fellow learners, share resources, and get help from the community.',
+      link: '#', // Replace with actual Discord invite link
+      category: 'Official Community',
+      icon: '/images/discord-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'CyberNex Instagram',
+      description: 'Follow us on Instagram for daily cybersecurity tips, news updates, and community highlights.',
+      link: '#', // Replace with actual Instagram link
+      category: 'Official Community',
+      icon: '/images/instagram-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'r/cybersecurity',
+      description: 'Join the largest cybersecurity community on Reddit for discussions, news, and career advice.',
+      link: 'https://reddit.com/r/cybersecurity',
+      category: 'Reddit',
+      icon: '/images/reddit-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'Hack The Box Discord',
+      description: 'Connect with security researchers and CTF enthusiasts in the Hack The Box community.',
+      link: 'https://discord.gg/hackthebox',
+      category: 'Partner Community',
+      icon: '/images/htb-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'TryHackMe Discord',
+      description: 'Join the TryHackMe community to discuss rooms, challenges, and learning paths.',
+      link: 'https://discord.gg/tryhackme',
+      category: 'Partner Community',
+      icon: '/images/thm-icon.png',
+      isExternal: true,
+    },
+  ]
+
   return (
-    <div className="space-y-20 mb-24">
-      {/* Hero Section */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-        className="relative overflow-hidden py-24"
-      >
-        {/* Background effects */}
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-neon-green/20 rounded-full filter blur-3xl opacity-50"></div>
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-neon-blue/20 rounded-full filter blur-3xl opacity-50"></div>
-        
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div variants={fadeInUpVariants}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-green via-neon-blue to-neon-purple tracking-tight">
-              CyberNex Community
-            </h1>
-          </motion.div>
-          
-          <motion.p variants={fadeInUpVariants} className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-            Connect with cybersecurity enthusiasts, professionals, and mentors 
-            to share knowledge, collaborate on projects, and grow together.
-          </motion.p>
-          
-          <motion.div variants={fadeInUpVariants} className="flex flex-wrap justify-center gap-4">
-            <a 
-              href="https://discord.gg/cybernex" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="cyber-btn bg-[#5865F2] hover:bg-[#5865F2]/90 text-white text-base py-3 px-6 rounded-md flex items-center justify-center"
-            >
-              Join Discord
-              <ExternalLink className="ml-2 w-4 h-4" />
-            </a>
-            <Link href="/community/events" className="cyber-btn-secondary text-base py-3 px-6 rounded-md flex items-center justify-center">
-              Upcoming Events
-              <Calendar className="ml-2 w-4 h-4" />
-            </Link>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Community Sections Grid */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="relative"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUpVariants} className="mb-12 text-center">
-            <h2 className="text-3xl font-display font-bold mb-4">Connect With Us</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Explore the different ways to engage with our community and find the perfect space for your interests.
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {communitySections.map((section, index) => (
-              <motion.div key={section.title} variants={fadeInUpVariants} className="h-full">
-                {section.isExternal ? (
-                  <a 
-                    href={section.href} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="cyber-card group h-full block hover:shadow-glow transition-all duration-300"
-                    style={{ 
-                      '--hover-shadow-color': typeof section.color === 'string' && section.color.startsWith('#') 
-                        ? section.color 
-                        : 'var(--color-neon-blue)' 
-                    } as React.CSSProperties}
-                  >
-                    <div className="flex flex-col h-full">
-                      <div 
-                        className={`w-14 h-14 rounded-lg flex items-center justify-center mb-5`}
-                        style={{ 
-                          backgroundColor: `${section.color}20`,
-                          color: section.color
-                        }}
-                      >
-                        <section.icon className="w-8 h-8" />
-                      </div>
-                      <h3 className={`text-xl font-semibold mb-3 group-hover:text-[${section.color}] transition-colors`}>
-                        {section.title}
-                      </h3>
-                      <p className="text-gray-400 mb-4">{section.description}</p>
-                      <div className="flex items-center text-gray-400 group-hover:text-[color:var(--hover-shadow-color)] transition-colors mt-auto">
-                        <span>Visit</span>
-                        <ExternalLink className="ml-2 w-4 h-4" />
-                      </div>
-                    </div>
-                  </a>
-                ) : (
-                  <Link 
-                    href={section.href} 
-                    className="cyber-card group h-full block hover:shadow-glow transition-all duration-300"
-                  >
-                    <div className={`w-14 h-14 rounded-lg bg-${section.color}/10 flex items-center justify-center text-${section.color} mb-5`}>
-                      <section.icon className="w-8 h-8" />
-                    </div>
-                    <h3 className={`text-xl font-semibold mb-3 group-hover:text-${section.color} transition-colors`}>
-                      {section.title}
-                    </h3>
-                    <p className="text-gray-400 mb-4">{section.description}</p>
-                    <div className="flex items-center text-gray-400 group-hover:text-neon-blue transition-colors mt-auto">
-                      <span>Explore</span>
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </Link>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Upcoming Events */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="border-t border-dark-border relative py-24"
-      >
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-blue/20 to-transparent"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUpVariants} className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-display font-bold mb-4">Upcoming Events</h2>
-              <p className="text-gray-300 max-w-2xl">
-                Join us for virtual workshops, competitions, and networking opportunities
-              </p>
-            </div>
-            <Link href="/community/events" className="text-neon-blue hover:text-neon-blue/80 flex items-center mt-6 md:mt-0 group transition-colors">
-              <span>View All Events</span>
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-          
-          <div className="space-y-4">
-            {upcomingEvents.map((event, index) => (
-              <motion.div 
-                key={event.title} 
-                variants={fadeInUpVariants}
-                className="cyber-card hover:shadow-glow transition-all duration-300"
-              >
-                <Link href={event.href} className="block p-6 group">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between">
-                    <div className="mb-4 md:mb-0">
-                      <div className="flex items-center mb-2">
-                        <span className="bg-neon-blue/10 text-neon-blue px-3 py-1 rounded-full text-xs mr-3">
-                          {event.type}
-                        </span>
-                        <span className="text-gray-400 text-sm">{event.date} • {event.time}</span>
-                      </div>
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-neon-blue transition-colors">{event.title}</h3>
-                      <div className="flex items-center text-sm">
-                        <span className="text-gray-400 mr-4">Host: {event.host}</span>
-                        <span className="text-gray-400">Location: {event.location}</span>
-                      </div>
-                    </div>
-                    <div className="self-start md:self-center">
-                      <button className="cyber-btn-secondary py-2 px-4 rounded-md text-sm">
-                        Register
-                      </button>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Community Leaders */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="border-t border-dark-border relative py-24"
-      >
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-green/20 to-transparent"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUpVariants} className="mb-12 text-center">
-            <h2 className="text-3xl font-display font-bold mb-4">Meet Our Community Leaders</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Our dedicated team of volunteers who help build and nurture the CyberNex community
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {communityLeaders.map((leader, index) => (
-              <motion.div 
-                key={leader.name} 
-                variants={fadeInUpVariants}
-                className="cyber-card hover:shadow-glow transition-all duration-300"
-              >
-                <Link href={leader.href} className="block p-6 text-center group">
-                  <div className="w-20 h-20 rounded-full bg-neon-blue/10 mx-auto mb-4">
-                    {/* Placeholder for profile image */}
-                    <div className="w-full h-full rounded-full flex items-center justify-center text-neon-blue">
-                      <User className="w-10 h-10" />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-semibold mb-1 group-hover:text-neon-blue transition-colors">
-                    {leader.name}
-                  </h3>
-                  <p className="text-neon-green text-sm mb-1">{leader.role}</p>
-                  <p className="text-gray-400 text-sm">{leader.specialty}</p>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Join the Community CTA */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="relative"
-      >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            variants={fadeInUpVariants}
-            className="cyber-card overflow-hidden relative"
+    <div className="min-h-screen bg-black">
+      <SectionHeader
+        title="Community"
+        description="Connect with fellow cybersecurity enthusiasts, share knowledge, and grow together in our vibrant community spaces."
+        icon={
+          <svg
+            className="h-12 w-12 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            {/* Background effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-neon-green/10 to-neon-blue/10 pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col md:flex-row items-center p-8 gap-8">
-              <div className="md:w-2/3">
-                <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">Ready to Join Our Community?</h2>
-                <p className="text-gray-300 mb-6">
-                  Connect with thousands of cybersecurity enthusiasts, share knowledge, 
-                  find mentors, and collaborate on exciting projects.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a 
-                    href="https://discord.gg/cybernex" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="cyber-btn bg-[#5865F2] hover:bg-[#5865F2]/90 text-white py-2.5 px-5 rounded-md inline-flex items-center"
-                  >
-                    Join Discord
-                    <ExternalLink className="ml-2 w-4 h-4" />
-                  </a>
-                  <a 
-                    href="https://instagram.com/cybernexacademy" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="cyber-btn bg-[#E1306C] hover:bg-[#E1306C]/90 text-white py-2.5 px-5 rounded-md inline-flex items-center"
-                  >
-                    Follow on Instagram
-                    <ExternalLink className="ml-2 w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-              <div className="md:w-1/3 flex justify-center md:justify-end">
-                <div className="w-28 h-28 rounded-full bg-neon-green/20 flex items-center justify-center">
-                  <Users className="w-16 h-16 text-neon-green" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
+        }
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {communityResources.map((resource) => (
+            <ResourceCard
+              key={resource.title}
+              {...resource}
+            />
+          ))}
         </div>
-      </motion.section>
+      </div>
     </div>
   );
 };

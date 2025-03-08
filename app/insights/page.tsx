@@ -1,8 +1,16 @@
 "use client";
 
+import React from 'react'
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Newspaper, FileText, BarChart, Building2, ArrowRight, Clock, Eye, Badge } from 'lucide-react';
+import SectionHeader from '../components/SectionHeader'
+import ResourceCard from '../components/ResourceCard'
+
+export const metadata = {
+  title: 'Insights | CyberNex Academy',
+  description: 'Stay updated with the latest cybersecurity news, trends, and industry insights.',
+}
 
 const InsightsPage = () => {
   // Animation variants
@@ -121,225 +129,89 @@ const InsightsPage = () => {
     },
   ];
 
+  const insightResources = [
+    {
+      title: 'Krebs on Security',
+      description: 'In-depth security news and investigation by Brian Krebs, focusing on cybercrime, privacy, and computer security.',
+      link: 'https://krebsonsecurity.com',
+      category: 'News & Analysis',
+      icon: '/images/krebs-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'The Hacker News',
+      description: 'Leading source of trusted news on cybersecurity, hacking, technology, and infosec.',
+      link: 'https://thehackernews.com',
+      category: 'News & Analysis',
+      icon: '/images/thn-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'Dark Reading',
+      description: 'Comprehensive source for cybersecurity news, connecting the IT security community.',
+      link: 'https://www.darkreading.com',
+      category: 'News & Analysis',
+      icon: '/images/darkreading-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'Cybersecurity Market Trends',
+      description: 'Latest market insights, job trends, and salary information in the cybersecurity industry.',
+      link: '/insights/market-trends',
+      category: 'Market Intelligence',
+      icon: '/images/market-icon.png',
+      isExternal: false,
+    },
+    {
+      title: 'Security Weekly',
+      description: 'Weekly podcasts and articles covering technical security topics and industry news.',
+      link: 'https://securityweekly.com',
+      category: 'Podcasts & Media',
+      icon: '/images/secweekly-icon.png',
+      isExternal: true,
+    },
+    {
+      title: 'SANS Internet Storm Center',
+      description: 'Daily security news and analysis from the SANS Technology Institute.',
+      link: 'https://isc.sans.edu',
+      category: 'Research & Analysis',
+      icon: '/images/sans-icon.png',
+      isExternal: true,
+    },
+  ]
+
   return (
-    <div className="space-y-20 mb-24">
-      {/* Hero Section */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-        className="relative overflow-hidden py-24"
-      >
-        {/* Background effects */}
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-neon-pink/20 rounded-full filter blur-3xl opacity-50"></div>
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-neon-blue/20 rounded-full filter blur-3xl opacity-50"></div>
-        
-        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div variants={fadeInUpVariants}>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-pink via-neon-purple to-neon-blue tracking-tight">
-              CyberNex Insights
-            </h1>
-          </motion.div>
-          
-          <motion.p variants={fadeInUpVariants} className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-            Stay informed with the latest cybersecurity news, trends, analysis, and expert perspectives.
-          </motion.p>
-          
-          <motion.div variants={fadeInUpVariants} className="flex flex-wrap justify-center gap-4">
-            <Link href="/insights/news" className="cyber-btn text-base py-3 px-6 rounded-md flex items-center justify-center">
-              Latest News
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Link>
-            <Link href="/insights/blog" className="cyber-btn-secondary text-base py-3 px-6 rounded-md flex items-center justify-center">
-              Read Articles
-              <FileText className="ml-2 w-4 h-4" />
-            </Link>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Insights Sections Grid */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="relative"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUpVariants} className="mb-12 text-center">
-            <h2 className="text-3xl font-display font-bold mb-4">Explore Insights</h2>
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Discover the different sections of our insights platform to keep you updated on all aspects of cybersecurity.
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {insightsSections.map((section, index) => (
-              <motion.div key={section.title} variants={fadeInUpVariants} className="h-full">
-                <Link href={section.href} className="cyber-card group h-full block hover:shadow-glow transition-all duration-300">
-                  <div className={`w-14 h-14 rounded-lg bg-${section.color}/10 flex items-center justify-center text-${section.color} mb-5`}>
-                    <section.icon className="w-8 h-8" />
-                  </div>
-                  <h3 className={`text-xl font-semibold mb-3 group-hover:text-${section.color} transition-colors`}>
-                    {section.title}
-                  </h3>
-                  <p className="text-gray-400 mb-4">{section.description}</p>
-                  <div className="flex items-center text-gray-400 group-hover:text-neon-blue transition-colors mt-auto">
-                    <span>Explore</span>
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Featured Articles */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="border-t border-dark-border relative py-24"
-      >
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-pink/20 to-transparent"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUpVariants} className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-display font-bold mb-4">Featured Articles</h2>
-              <p className="text-gray-300 max-w-2xl">
-                In-depth analysis and insights from cybersecurity experts
-              </p>
-            </div>
-            <Link href="/insights/blog" className="text-neon-pink hover:text-neon-pink/80 flex items-center mt-6 md:mt-0 group transition-colors">
-              <span>View All Articles</span>
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredArticles.map((article, index) => (
-              <motion.div key={article.title} variants={fadeInUpVariants}>
-                <Link href={article.href} className="cyber-card group block hover:shadow-glow transition-all duration-300">
-                  <div className="mb-4">
-                    <span className="inline-block bg-neon-pink/10 text-neon-pink px-3 py-1 rounded-full text-xs">
-                      {article.category}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3 group-hover:text-neon-pink transition-colors">{article.title}</h3>
-                  <p className="text-gray-400 mb-6">{article.description}</p>
-                  <div className="flex items-center text-sm text-gray-500 mb-4">
-                    <Clock className="w-4 h-4 mr-1" />
-                    <span className="mr-4">{article.readTime}</span>
-                    <Eye className="w-4 h-4 mr-1" />
-                    <span>{article.views} views</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-400 text-sm">{article.date}</span>
-                    <div className="flex items-center text-neon-pink/70 group-hover:text-neon-pink transition-colors">
-                      <span>Read Article</span>
-                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Latest News */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="border-t border-dark-border relative py-24"
-      >
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-neon-blue/20 to-transparent"></div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div variants={fadeInUpVariants} className="flex flex-col md:flex-row justify-between items-center mb-12">
-            <div>
-              <h2 className="text-3xl font-display font-bold mb-4">Latest News</h2>
-              <p className="text-gray-300 max-w-2xl">
-                Stay up-to-date with the latest cybersecurity events and updates
-              </p>
-            </div>
-            <Link href="/insights/news" className="text-neon-blue hover:text-neon-blue/80 flex items-center mt-6 md:mt-0 group transition-colors">
-              <span>More News</span>
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </motion.div>
-          
-          <div className="space-y-4">
-            {latestNews.map((news, index) => (
-              <motion.div 
-                key={news.title} 
-                variants={fadeInUpVariants}
-                className="cyber-card hover:shadow-glow transition-all duration-300"
-              >
-                <Link href={news.href} className="flex flex-col md:flex-row md:items-center justify-between p-4 group">
-                  <div className="mb-4 md:mb-0">
-                    <h3 className="text-lg font-semibold mb-2 group-hover:text-neon-blue transition-colors">{news.title}</h3>
-                    <div className="flex items-center text-sm">
-                      <span className="text-gray-400 mr-4">{news.date}</span>
-                      <Badge className="w-3 h-3 mr-1 text-neon-blue" />
-                      <span className="text-neon-blue">{news.source}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center self-end md:self-center text-neon-blue/70 group-hover:text-neon-blue transition-colors">
-                    <span>Read Full Story</span>
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* Newsletter Subscription */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.1 }}
-        variants={containerVariants}
-        className="relative"
-      >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            variants={fadeInUpVariants}
-            className="cyber-card overflow-hidden relative"
+    <div className="min-h-screen bg-black">
+      <SectionHeader
+        title="Insights"
+        description="Stay informed with the latest cybersecurity news, trends, and industry analysis from trusted sources."
+        icon={
+          <svg
+            className="h-12 w-12 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            {/* Background effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-neon-pink/10 to-neon-blue/10 pointer-events-none"></div>
-            
-            <div className="relative z-10 flex flex-col p-8 gap-8 text-center">
-              <div>
-                <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">Stay Updated</h2>
-                <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                  Subscribe to our newsletter to receive the latest cybersecurity news, insights, and exclusive content directly in your inbox.
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
-                  <input 
-                    type="email" 
-                    placeholder="Enter your email address"
-                    className="cyber-input py-3 px-4 w-full focus:ring-neon-pink focus:border-neon-pink"
-                  />
-                  <button className="cyber-btn bg-neon-pink hover:bg-neon-pink/90 text-white py-3 px-6 rounded-md">
-                    Subscribe
-                  </button>
-                </div>
-                <p className="text-gray-500 text-sm mt-4">We respect your privacy and will never share your information.</p>
-              </div>
-            </div>
-          </motion.div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            />
+          </svg>
+        }
+      />
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {insightResources.map((resource) => (
+            <ResourceCard
+              key={resource.title}
+              {...resource}
+            />
+          ))}
         </div>
-      </motion.section>
+      </div>
     </div>
   );
 };
