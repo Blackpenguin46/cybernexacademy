@@ -1,35 +1,61 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { signIn } from '../../../lib/supabase'
-import ErrorBoundary from '../../components/ErrorBoundary'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
+import { Shield } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import ErrorBoundary from '@/app/components/ErrorBoundary'
 
 export default function LoginPage() {
-  console.log('LoginPage component rendering')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
+  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callback') || '/dashboard'
+
+  useEffect(() => {
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const { data } = await supabase.auth.getSession()
+      if (data.session) {
+        router.push(callbackUrl)
+      }
+    }
+    checkAuth()
+  }, [callbackUrl, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError(null)
+    setSuccessMessage(null)
     setLoading(true)
 
     try {
-      const result = await signIn(email, password)
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
       
-      if (!result.success) {
-        setError(result.error || 'Failed to sign in')
+      if (error) {
+        setError(error.message || 'Failed to sign in')
         setLoading(false)
         return
       }
 
-      // Redirect to dashboard on successful login
-      router.push('/dashboard')
+      if (data.session) {
+        setSuccessMessage('Login successful! Redirecting...')
+        
+        // Redirect after successful login
+        setTimeout(() => {
+          router.push(callbackUrl)
+        }, 1000)
+      }
     } catch (err) {
       console.error('Login error:', err)
       setError('An unexpected error occurred')
@@ -39,16 +65,25 @@ export default function LoginPage() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-full max-w-md p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
+        <div className="w-full max-w-md p-8 space-y-8 bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white">Sign In</h1>
-            <p className="mt-2 text-gray-400">Welcome back to CyberNex Academy</p>
+            <Link href="/" className="inline-flex items-center justify-center mb-4">
+              <Shield className="w-10 h-10 text-blue-500" />
+            </Link>
+            <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
+            <p className="mt-2 text-gray-400">Sign in to your CyberNex Academy account</p>
           </div>
 
           {error && (
-            <div className="bg-red-900/50 border border-red-800 text-red-300 px-4 py-3 rounded relative" role="alert">
+            <div className="bg-red-900/50 border border-red-800 text-red-300 px-4 py-3 rounded-lg relative" role="alert">
               <span className="block sm:inline">{error}</span>
+            </div>
+          )}
+
+          {successMessage && (
+            <div className="bg-green-900/50 border border-green-800 text-green-300 px-4 py-3 rounded-lg relative" role="alert">
+              <span className="block sm:inline">{successMessage}</span>
             </div>
           )}
 
@@ -66,14 +101,21 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-                  placeholder="Enter your email"
+                  className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="your.email@example.com"
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                  Password
-                </label>
+                <div className="flex items-center justify-between">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                    Password
+                  </label>
+                  <div className="text-sm">
+                    <Link href="/auth/forgot-password" className="text-blue-400 hover:text-blue-300">
+                      Forgot your password?
+                    </Link>
+                  </div>
+                </div>
                 <input
                   id="password"
                   name="password"
@@ -82,8 +124,8 @@ export default function LoginPage() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-cyan-500 focus:border-cyan-500"
-                  placeholder="Enter your password"
+                  className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="••••••••"
                 />
               </div>
             </div>
@@ -94,38 +136,40 @@ export default function LoginPage() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-600 rounded bg-gray-700"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-700"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
                   Remember me
                 </label>
               </div>
-
-              <div className="text-sm">
-                <Link href="/auth/forgot-password" className="text-cyan-400 hover:text-cyan-300">
-                  Forgot your password?
-                </Link>
-              </div>
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
-              </button>
+              </Button>
             </div>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-gray-400">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/register" className="text-cyan-400 hover:text-cyan-300">
-                Sign up
+              <Link href="/auth/register" className="text-blue-400 hover:text-blue-300">
+                Create an account
               </Link>
             </p>
+          </div>
+          
+          <div className="pt-4 text-center">
+            <Link href="/" className="text-sm text-gray-500 hover:text-gray-400">
+              ← Back to homepage
+            </Link>
           </div>
         </div>
       </div>

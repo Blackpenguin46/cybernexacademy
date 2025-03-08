@@ -1,14 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import { Shield, ChevronDown, Menu, X } from "lucide-react"
+import { Shield, ChevronDown, Menu, X, User, LogOut } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { supabase } from "@/lib/supabase"
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,11 +26,49 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    // Check if user is authenticated
+    const checkUser = async () => {
+      try {
+        const { data } = await supabase.auth.getSession()
+        setUser(data.session?.user || null)
+        setLoading(false)
+        
+        // Setup auth state change listener
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            setUser(session?.user || null)
+          }
+        )
+        
+        return () => {
+          if (authListener && authListener.subscription) {
+            authListener.subscription.unsubscribe()
+          }
+        }
+      } catch (error) {
+        console.error('Auth check error:', error)
+        setLoading(false)
+      }
+    }
+
+    checkUser()
+  }, [])
+
   const toggleDropdown = (dropdown: string) => {
     if (activeDropdown === dropdown) {
       setActiveDropdown(null)
     } else {
       setActiveDropdown(dropdown)
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut()
+      setActiveDropdown(null)
+    } catch (error) {
+      console.error('Sign out error:', error)
     }
   }
 
@@ -40,7 +81,7 @@ const Header = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link href="/" className="flex items-center">
           <Shield className="w-8 h-8 mr-2 text-blue-500" />
-          <span className="text-xl font-bold text-white">CyberNex</span>
+          <span className="text-xl font-bold text-white">CyberNex Academy</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -370,17 +411,74 @@ const Header = () => {
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Link href="/dashboard" className="text-gray-300 hover:text-blue-500">
-            Dashboard
-          </Link>
-          <Link href="/login">
-            <Button variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-950">
-              Log In
-            </Button>
-          </Link>
-          <Link href="/signup">
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white">Sign Up</Button>
-          </Link>
+          {loading ? (
+            // Loading state
+            <div className="h-9 w-20 bg-gray-800 rounded animate-pulse"></div>
+          ) : user ? (
+            // Authenticated user
+            <>
+              <Link href="/dashboard" className="text-gray-300 hover:text-blue-500">
+                Dashboard
+              </Link>
+              <div className="relative">
+                <button
+                  className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
+                    activeDropdown === "user" ? "text-blue-500" : ""
+                  }`}
+                  onClick={() => toggleDropdown("user")}
+                >
+                  <User className="w-5 h-5 mr-1" />
+                  <span className="max-w-32 truncate">
+                    {user.email?.split('@')[0] || 'User'}
+                  </span>
+                  <ChevronDown
+                    className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "user" ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {activeDropdown === "user" && (
+                  <ul className="absolute right-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-50 border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                    <li>
+                      <Link
+                        href="/profile"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/dashboard"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handleSignOut}
+                        className="flex items-center w-full px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Sign Out
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </>
+          ) : (
+            // Not authenticated
+            <>
+              <Link href="/auth/login">
+                <Button variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-950">
+                  Log In
+                </Button>
+              </Link>
+              <Link href="/auth/register">
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white">Sign Up</Button>
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -610,22 +708,35 @@ const Header = () => {
                 </Link>
               </li>
               <li className="pt-4 border-t border-gray-800">
-                <Link href="/dashboard" className="block py-2 text-gray-300 hover:text-white">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="block py-2 text-gray-300 hover:text-white">
-                  Log In
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/signup"
-                  className="block py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-center text-white"
-                >
-                  Sign Up
-                </Link>
+                {user ? (
+                  <>
+                    <Link href="/dashboard" className="block py-2 text-gray-300 hover:text-white">
+                      Dashboard
+                    </Link>
+                    <Link href="/profile" className="block py-2 text-gray-300 hover:text-white">
+                      Profile
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center w-full py-2 text-gray-300 hover:text-white"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link href="/auth/login" className="block py-2 text-gray-300 hover:text-white">
+                      Log In
+                    </Link>
+                    <Link
+                      href="/auth/register"
+                      className="block py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-center text-white"
+                    >
+                      Sign Up
+                    </Link>
+                  </>
+                )}
               </li>
             </ul>
           </div>
