@@ -7,11 +7,6 @@ import { Newspaper, FileText, BarChart, Building2, ArrowRight, Clock, Eye, Badge
 import SectionHeader from '../components/SectionHeader'
 import ResourceCard from '../components/ResourceCard'
 
-export const metadata = {
-  title: 'Insights | CyberNex Academy',
-  description: 'Stay updated with the latest cybersecurity news, trends, and industry insights.',
-}
-
 const InsightsPage = () => {
   // Animation variants
   const containerVariants = {

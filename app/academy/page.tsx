@@ -10,11 +10,6 @@ import {
   Shield, Star, Clock, Users, Database, Server, Globe
 } from 'lucide-react';
 
-export const metadata = {
-  title: 'Academy | CyberNex Academy',
-  description: 'Access curated cybersecurity learning resources, certification guides, and career development materials.',
-}
-
 const academyResources = [
   {
     title: 'YouTube Learning Paths',
