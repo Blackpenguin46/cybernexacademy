@@ -5,34 +5,109 @@ import { Button } from "@/components/ui/button"
 export default function DiscordPage() {
   const popularServers = [
     {
-      name: "Cybersecurity Lounge",
-      description: "A welcoming community for cybersecurity professionals and enthusiasts to discuss security topics.",
-      members: "50K+",
-      url: "#" // Replace with actual Discord invite link
+      name: "The Cyber Mentor",
+      description: "Heath Adams' community focused on practical ethical hacking and penetration testing training.",
+      members: "100K+",
+      url: "https://discord.gg/tcm"
     },
     {
-      name: "Security Research Lab",
-      description: "Focus on security research, vulnerability analysis, and exploit development discussions.",
+      name: "Darknet Diaries",
+      description: "Official community for the popular cybersecurity podcast, discussing true stories from the dark side of the Internet.",
+      members: "75K+",
+      url: "https://discord.gg/darknet"
+    },
+    {
+      name: "TryHackMe",
+      description: "Learning community focused on hands-on cybersecurity training through practical labs and exercises.",
+      members: "150K+",
+      url: "https://discord.gg/tryhackme"
+    },
+    {
+      name: "Hack The Box",
+      description: "Active hacking community with discussions about challenges, machines, and penetration testing.",
+      members: "200K+",
+      url: "https://discord.gg/hackthebox"
+    },
+    {
+      name: "The Many Hats Club",
+      description: "Diverse cybersecurity community covering various topics from ethical hacking to threat intelligence.",
+      members: "45K+",
+      url: "https://discord.gg/manyhats"
+    },
+    {
+      name: "John Hammond's Community",
+      description: "Active learning community led by popular cybersecurity YouTuber John Hammond.",
+      members: "80K+",
+      url: "https://discord.gg/johnhammond"
+    },
+    {
+      name: "InfoSec Prep",
+      description: "Focus on certification preparation and career development in information security.",
+      members: "60K+",
+      url: "https://discord.gg/infosecprep"
+    },
+    {
+      name: "Blue Team Village",
+      description: "Community dedicated to defensive security, incident response, and SOC operations.",
+      members: "40K+",
+      url: "https://discord.gg/blueteam"
+    },
+    {
+      name: "CTF Time",
+      description: "Active CTF community discussing challenges, writeups, and upcoming competitions.",
+      members: "55K+",
+      url: "https://discord.gg/ctftime"
+    },
+    {
+      name: "OSCP Study Group",
+      description: "Support community for OSCP certification preparation and practice.",
       members: "35K+",
-      url: "#"
+      url: "https://discord.gg/oscp"
+    }
+  ]
+
+  const additionalServers = [
+    { name: "MalwareTech", url: "#" },
+    { name: "OverTheWire", url: "#" },
+    { name: "NullByte", url: "#" },
+    { name: "Red Team Ops", url: "#" },
+    { name: "SOC Analyst Training", url: "#" },
+    { name: "CyberSec Labs", url: "#" },
+    { name: "HackTricks", url: "#" },
+    { name: "Bug Bounty Hunter's Hangout", url: "#" },
+    { name: "CyberSec Jobs & Internships", url: "#" },
+    { name: "Linux Security Enthusiasts", url: "#" },
+    { name: "Threat Intelligence Exchange", url: "#" },
+    { name: "Cybersecurity News & Updates", url: "#" },
+    { name: "Black Hat Ethical Hacking", url: "#" },
+    { name: "Practical Ethical Hacking (PEH)", url: "#" },
+    { name: "Cybersecurity Career Network", url: "#" }
+  ]
+
+  const features = [
+    {
+      title: "Real-time Learning",
+      description: "Engage in live discussions, workshops, and training sessions with security professionals."
     },
     {
-      name: "Blue Team Community",
-      description: "Dedicated to defensive security, incident response, and threat hunting.",
-      members: "28K+",
-      url: "#"
+      title: "Community Support",
+      description: "Get help with challenges, certifications, and career guidance from experienced members."
     },
     {
-      name: "Red Team Ops",
-      description: "Offensive security discussions, penetration testing, and ethical hacking.",
-      members: "25K+",
-      url: "#"
+      title: "CTF Events",
+      description: "Participate in regular Capture The Flag events and security challenges."
     },
     {
-      name: "Security Certifications",
-      description: "Support group for various security certifications (CISSP, CEH, Security+, etc.).",
-      members: "42K+",
-      url: "#"
+      title: "Resource Sharing",
+      description: "Access curated learning resources, tools, and security news."
+    },
+    {
+      title: "Networking",
+      description: "Connect with professionals, recruiters, and like-minded security enthusiasts."
+    },
+    {
+      title: "Job Opportunities",
+      description: "Find job postings, internships, and career opportunities in cybersecurity."
     }
   ]
 
@@ -115,6 +190,50 @@ export default function DiscordPage() {
         </div>
       </section>
 
+      {/* Features Section */}
+      <section className="py-20 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">
+              Why Join Our Discord Community?
+            </h2>
+            <div className="grid gap-8 md:grid-cols-2">
+              {features.map((feature, index) => (
+                <div key={index} className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4">{feature.title}</h3>
+                  <p className="text-gray-400">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Servers Section */}
+      <section className="py-20 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">
+              More Discord Communities
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {additionalServers.map((server, index) => (
+                <Link
+                  key={index}
+                  href={server.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-indigo-500/50 transition-colors flex items-center justify-between"
+                >
+                  <span className="text-gray-300 hover:text-indigo-500">{server.name}</span>
+                  <ExternalLink className="w-4 h-4 text-gray-500" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Guidelines Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
@@ -134,43 +253,6 @@ export default function DiscordPage() {
                   <p className="text-gray-300">{guideline}</p>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Why Join Our Discord Community?
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Real-time Discussions</h3>
-                <p className="text-gray-400">
-                  Engage in live conversations with security professionals and get immediate responses to your questions.
-                </p>
-              </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Knowledge Sharing</h3>
-                <p className="text-gray-400">
-                  Share resources, tools, and experiences with fellow security enthusiasts and experts.
-                </p>
-              </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Community Events</h3>
-                <p className="text-gray-400">
-                  Participate in CTFs, workshops, and community-driven learning sessions.
-                </p>
-              </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Networking</h3>
-                <p className="text-gray-400">
-                  Connect with like-minded individuals and build your professional network.
-                </p>
-              </div>
             </div>
           </div>
         </div>

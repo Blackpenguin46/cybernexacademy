@@ -1,4 +1,4 @@
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare } from "lucide-react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -6,34 +6,82 @@ export default function RedditPage() {
   const popularSubreddits = [
     {
       name: "r/cybersecurity",
-      description: "A community for current or aspiring information security professionals.",
+      description: "The central hub for cybersecurity professionals, featuring discussions on latest threats, tools, and career advice.",
       members: "584K+",
       url: "https://www.reddit.com/r/cybersecurity/"
     },
     {
       name: "r/netsec",
-      description: "Technical news and discussion of network and information security.",
+      description: "Technical discussions about network and information security, with a focus on latest vulnerabilities and research.",
       members: "495K+",
       url: "https://www.reddit.com/r/netsec/"
     },
     {
       name: "r/hacking",
-      description: "Discussion of hacking and security topics in an educational context.",
+      description: "Educational discussions about hacking techniques, tools, and methodologies in an ethical context.",
       members: "2.1M+",
       url: "https://www.reddit.com/r/hacking/"
     },
     {
-      name: "r/privacy",
-      description: "Privacy-conscious discussions and news about protecting personal data.",
-      members: "1.3M+",
-      url: "https://www.reddit.com/r/privacy/"
-    },
-    {
       name: "r/AskNetsec",
-      description: "Q&A forum for network security and InfoSec questions.",
+      description: "Q&A forum for network security professionals and beginners seeking advice on InfoSec topics.",
       members: "198K+",
       url: "https://www.reddit.com/r/AskNetsec/"
+    },
+    {
+      name: "r/reverseengineering",
+      description: "Technical discussions about software reverse engineering and malware analysis.",
+      members: "190K+",
+      url: "https://www.reddit.com/r/reverseengineering/"
+    },
+    {
+      name: "r/networking",
+      description: "Enterprise networking discussions and professional network engineering topics.",
+      members: "680K+",
+      url: "https://www.reddit.com/r/networking/"
+    },
+    {
+      name: "r/linuxadmin",
+      description: "Linux system administration and security hardening discussions.",
+      members: "240K+",
+      url: "https://www.reddit.com/r/linuxadmin/"
+    },
+    {
+      name: "r/malware",
+      description: "Analysis and discussion of malware, threats, and defense strategies.",
+      members: "150K+",
+      url: "https://www.reddit.com/r/malware/"
+    },
+    {
+      name: "r/ethicalhacking",
+      description: "Discussions about ethical hacking methodologies and penetration testing.",
+      members: "180K+",
+      url: "https://www.reddit.com/r/ethicalhacking/"
+    },
+    {
+      name: "r/comptia",
+      description: "Community for CompTIA certification preparation and discussion.",
+      members: "220K+",
+      url: "https://www.reddit.com/r/comptia/"
     }
+  ]
+
+  const additionalSubreddits = [
+    { name: "r/cybersecurity101", url: "https://www.reddit.com/r/cybersecurity101/" },
+    { name: "r/sysadmin", url: "https://www.reddit.com/r/sysadmin/" },
+    { name: "r/blueteamsec", url: "https://www.reddit.com/r/blueteamsec/" },
+    { name: "r/infosecjobs", url: "https://www.reddit.com/r/infosecjobs/" },
+    { name: "r/bugbounty", url: "https://www.reddit.com/r/bugbounty/" },
+    { name: "r/lockpicking", url: "https://www.reddit.com/r/lockpicking/" },
+    { name: "r/pwned", url: "https://www.reddit.com/r/pwned/" },
+    { name: "r/CloudSecurity", url: "https://www.reddit.com/r/CloudSecurity/" },
+    { name: "r/IoTSecurity", url: "https://www.reddit.com/r/IoTSecurity/" },
+    { name: "r/SOCjobs", url: "https://www.reddit.com/r/SOCjobs/" },
+    { name: "r/redteamsec", url: "https://www.reddit.com/r/redteamsec/" },
+    { name: "r/securityCTF", url: "https://www.reddit.com/r/securityCTF/" },
+    { name: "r/ThreatIntelligence", url: "https://www.reddit.com/r/ThreatIntelligence/" },
+    { name: "r/BlueTeamJobs", url: "https://www.reddit.com/r/BlueTeamJobs/" },
+    { name: "r/CyberSecurityMemes", url: "https://www.reddit.com/r/CyberSecurityMemes/" }
   ]
 
   const guidelines = [
@@ -78,7 +126,7 @@ export default function RedditPage() {
       {/* Popular Subreddits Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Popular Cybersecurity Subreddits
             </h2>
@@ -115,10 +163,35 @@ export default function RedditPage() {
         </div>
       </section>
 
+      {/* Additional Subreddits Section */}
+      <section className="py-20 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">
+              More Cybersecurity Communities
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {additionalSubreddits.map((subreddit, index) => (
+                <Link
+                  key={index}
+                  href={subreddit.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-blue-500/50 transition-colors flex items-center justify-between"
+                >
+                  <span className="text-gray-300 hover:text-blue-500">{subreddit.name}</span>
+                  <ExternalLink className="w-4 h-4 text-gray-500" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Guidelines Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Community Guidelines
             </h2>
