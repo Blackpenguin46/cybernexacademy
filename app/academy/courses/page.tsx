@@ -1,155 +1,215 @@
-import { GraduationCap, ExternalLink, Clock, Tag, Star, Users, BarChart, Book } from "lucide-react"
+import { BookOpen, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Star, Clock } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function CoursesPage() {
   const featuredCourses = [
     {
-      title: "Cybersecurity Fundamentals",
-      level: "Beginner",
-      duration: "12 weeks",
-      rating: "4.8/5",
+      title: "Complete Cybersecurity Bootcamp",
+      level: "Beginner to Intermediate",
+      duration: "6 months",
+      rating: 4.8,
       students: "15,000+",
+      description: "Comprehensive cybersecurity training covering fundamentals to advanced topics",
       topics: [
+        "Security Fundamentals",
         "Network Security",
         "Web Security",
         "Cryptography",
-        "Security Operations"
+        "Incident Response",
+        "Ethical Hacking"
       ],
-      description: "Comprehensive introduction to core cybersecurity concepts and practices.",
-      features: [
-        "Hands-on Labs",
-        "Video Lectures",
-        "Practice Tests",
-        "Industry Projects"
+      includes: [
+        "80+ Hours of Video",
+        "300+ Practice Labs",
+        "Certificate of Completion",
+        "Career Support"
       ],
-      certification: "Certificate of Completion",
-      price: "Free"
+      price: "$999"
     },
     {
-      title: "Ethical Hacking Masterclass",
-      level: "Intermediate",
-      duration: "16 weeks",
-      rating: "4.9/5",
-      students: "12,000+",
-      topics: [
-        "Penetration Testing",
-        "Vulnerability Assessment",
-        "Exploit Development",
-        "Web App Security"
-      ],
-      description: "Learn advanced ethical hacking techniques and methodologies.",
-      features: [
-        "Virtual Lab Access",
-        "Real-world Scenarios",
-        "CTF Challenges",
-        "Professional Tools"
-      ],
-      certification: "Certified Ethical Hacker Prep",
-      price: "Premium"
-    },
-    {
-      title: "Cloud Security Engineering",
+      title: "Advanced Penetration Testing",
       level: "Advanced",
-      duration: "14 weeks",
-      rating: "4.7/5",
+      duration: "3 months",
+      rating: 4.9,
       students: "8,000+",
+      description: "Master advanced penetration testing techniques and methodologies",
       topics: [
-        "AWS Security",
-        "Azure Security",
-        "Cloud Architecture",
-        "DevSecOps"
+        "Advanced Exploitation",
+        "Web App Testing",
+        "Network Testing",
+        "Mobile Security",
+        "Cloud Security",
+        "Report Writing"
       ],
-      description: "Master cloud security engineering and architecture.",
-      features: [
-        "Cloud Labs",
-        "Architecture Reviews",
-        "Security Controls",
-        "Case Studies"
+      includes: [
+        "40+ Hours of Video",
+        "150+ Practice Labs",
+        "Certificate of Completion",
+        "Private Community"
       ],
-      certification: "Cloud Security Certification",
-      price: "Premium"
+      price: "$799"
+    },
+    {
+      title: "Security Operations & Incident Response",
+      level: "Intermediate",
+      duration: "4 months",
+      rating: 4.7,
+      students: "10,000+",
+      description: "Learn to detect, analyze, and respond to security incidents",
+      topics: [
+        "SIEM Implementation",
+        "Threat Detection",
+        "Incident Handling",
+        "Digital Forensics",
+        "Threat Hunting",
+        "SOC Operations"
+      ],
+      includes: [
+        "60+ Hours of Video",
+        "200+ Practice Labs",
+        "Certificate of Completion",
+        "Mentorship"
+      ],
+      price: "$899"
     }
   ]
 
-  const courseTracks = [
+  const courseCategories = [
     {
-      name: "Security Operations",
+      name: "Offensive Security",
+      icon: Target,
       courses: [
         {
-          title: "SOC Analyst Training",
-          level: "Beginner to Intermediate",
-          duration: "10 weeks"
+          title: "Web Application Hacking",
+          duration: "8 weeks",
+          level: "Intermediate",
+          price: "$499"
         },
         {
-          title: "Incident Response",
+          title: "Mobile Security Testing",
+          duration: "6 weeks",
           level: "Intermediate",
-          duration: "8 weeks"
+          price: "$449"
+        },
+        {
+          title: "Advanced Exploit Development",
+          duration: "12 weeks",
+          level: "Advanced",
+          price: "$899"
+        }
+      ]
+    },
+    {
+      name: "Defensive Security",
+      icon: Shield,
+      courses: [
+        {
+          title: "Security Operations Center",
+          duration: "10 weeks",
+          level: "Intermediate",
+          price: "$599"
+        },
+        {
+          title: "Malware Analysis",
+          duration: "8 weeks",
+          level: "Advanced",
+          price: "$699"
+        },
+        {
+          title: "Digital Forensics",
+          duration: "8 weeks",
+          level: "Intermediate",
+          price: "$549"
+        }
+      ]
+    },
+    {
+      name: "Cloud Security",
+      icon: Server,
+      courses: [
+        {
+          title: "AWS Security",
+          duration: "6 weeks",
+          level: "Intermediate",
+          price: "$449"
+        },
+        {
+          title: "Azure Security",
+          duration: "6 weeks",
+          level: "Intermediate",
+          price: "$449"
+        },
+        {
+          title: "Cloud Security Architecture",
+          duration: "10 weeks",
+          level: "Advanced",
+          price: "$799"
         }
       ]
     },
     {
       name: "Application Security",
+      icon: Code,
       courses: [
         {
           title: "Secure Coding Practices",
+          duration: "8 weeks",
           level: "Intermediate",
-          duration: "12 weeks"
+          price: "$499"
         },
         {
-          title: "Web App Security",
-          level: "Intermediate to Advanced",
-          duration: "14 weeks"
-        }
-      ]
-    },
-    {
-      name: "Infrastructure Security",
-      courses: [
-        {
-          title: "Network Defense",
-          level: "Intermediate",
-          duration: "10 weeks"
-        },
-        {
-          title: "Cloud Security",
+          title: "DevSecOps Implementation",
+          duration: "10 weeks",
           level: "Advanced",
-          duration: "12 weeks"
+          price: "$699"
+        },
+        {
+          title: "Container Security",
+          duration: "6 weeks",
+          level: "Intermediate",
+          price: "$449"
         }
       ]
     }
   ]
 
-  const certificationPaths = [
+  const certPrep = [
     {
-      certification: "CompTIA Security+",
-      level: "Foundation",
+      cert: "OSCP",
       duration: "12 weeks",
-      courses: [
-        "Security Fundamentals",
-        "Network Security",
-        "Cryptography Basics"
-      ]
+      description: "Comprehensive preparation for the OSCP certification exam",
+      includes: [
+        "Practice Labs",
+        "Mock Exams",
+        "Study Guide",
+        "Support"
+      ],
+      price: "$999"
     },
     {
-      certification: "CISSP",
-      level: "Advanced",
-      duration: "24 weeks",
-      courses: [
-        "Security Management",
-        "Asset Security",
-        "Security Architecture"
-      ]
-    },
-    {
-      certification: "OSCP",
-      level: "Expert",
+      cert: "CISSP",
       duration: "16 weeks",
-      courses: [
-        "Penetration Testing",
-        "Exploit Development",
-        "Advanced Security"
-      ]
+      description: "Complete preparation program for the CISSP certification",
+      includes: [
+        "Video Lectures",
+        "Practice Tests",
+        "Study Materials",
+        "Mentoring"
+      ],
+      price: "$1,299"
+    },
+    {
+      cert: "Security+",
+      duration: "8 weeks",
+      description: "Structured learning path for CompTIA Security+ certification",
+      includes: [
+        "Video Content",
+        "Practice Exams",
+        "Lab Access",
+        "Community"
+      ],
+      price: "$499"
     }
   ]
 
@@ -162,14 +222,14 @@ export default function CoursesPage() {
         <div className="container relative z-20">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <GraduationCap className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Academy Courses</span>
+              <BookOpen className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">Courses</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Master Cybersecurity
+              Expert-Led Cybersecurity Courses
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Comprehensive cybersecurity courses designed for all skill levels, from beginners to advanced practitioners.
+              Learn from industry experts through structured courses and hands-on labs.
             </p>
           </div>
         </div>
@@ -188,63 +248,55 @@ export default function CoursesPage() {
                   key={index}
                   className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
                 >
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-blue-500 text-sm font-medium">{course.level}</span>
-                        <span className="text-sm bg-blue-900/50 text-blue-300 px-2 py-1 rounded">
-                          {course.price}
-                        </span>
+                        <h3 className="text-xl font-semibold text-white">{course.title}</h3>
+                        <span className="text-blue-500 font-bold">{course.price}</span>
                       </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{course.title}</h3>
+                      <div className="flex items-center space-x-4 text-sm text-gray-400">
+                        <div className="flex items-center">
+                          <Star className="w-4 h-4 text-yellow-500 mr-1" />
+                          {course.rating}
+                        </div>
+                        <div>{course.students} students</div>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between text-sm mb-2">
+                        <div className="text-blue-500">{course.level}</div>
+                        <div className="flex items-center text-gray-400">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {course.duration}
+                        </div>
+                      </div>
                       <p className="text-gray-400 text-sm">{course.description}</p>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-sm text-gray-500">Duration</div>
-                        <div className="text-white">{course.duration}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-500">Students</div>
-                        <div className="text-white">{course.students}</div>
-                      </div>
-                    </div>
                     <div>
-                      <div className="text-sm text-gray-500 mb-2">Topics Covered</div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="text-sm text-gray-500 mb-2">What You'll Learn</div>
+                      <div className="grid grid-cols-2 gap-2">
                         {course.topics.map((topic, topicIndex) => (
-                          <span
-                            key={topicIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {topic}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Features</div>
-                      <div className="space-y-2">
-                        {course.features.map((feature, featureIndex) => (
                           <div
-                            key={featureIndex}
+                            key={topicIndex}
                             className="flex items-center text-gray-300 text-sm"
                           >
-                            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                            {feature}
+                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
+                            {topic}
                           </div>
                         ))}
                       </div>
                     </div>
-                    <div className="pt-4 border-t border-gray-800">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center text-yellow-500">
-                          <Star className="w-4 h-4 mr-1" />
-                          {course.rating}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {course.certification}
-                        </div>
+                    <div>
+                      <div className="text-sm text-gray-500 mb-2">Course Includes</div>
+                      <div className="flex flex-wrap gap-2">
+                        {course.includes.map((item, itemIndex) => (
+                          <span
+                            key={itemIndex}
+                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
+                          >
+                            {item}
+                          </span>
+                        ))}
                       </div>
                     </div>
                     <Button className="w-full bg-blue-600 hover:bg-blue-700">
@@ -259,35 +311,47 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* Course Tracks Section */}
+      {/* Course Categories Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Specialized Tracks
+              Course Categories
             </h2>
-            <div className="space-y-8">
-              {courseTracks.map((track, index) => (
+            <div className="grid gap-8 md:grid-cols-2">
+              {courseCategories.map((category, index) => (
                 <div
                   key={index}
                   className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
                 >
-                  <h3 className="text-xl font-semibold text-white mb-6">{track.name}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {track.courses.map((course, courseIndex) => (
-                      <div
-                        key={courseIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="mb-3">
-                          <div className="font-medium text-white mb-1">{course.title}</div>
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-blue-500">{course.level}</span>
-                            <span className="text-gray-400">{course.duration}</span>
-                          </div>
-                        </div>
+                  <div className="space-y-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="p-3 bg-blue-600/10 rounded-lg">
+                        <category.icon className="w-6 h-6 text-blue-500" />
                       </div>
-                    ))}
+                      <h3 className="text-xl font-semibold text-white">{category.name}</h3>
+                    </div>
+                    <div className="space-y-4">
+                      {category.courses.map((course, courseIndex) => (
+                        <div
+                          key={courseIndex}
+                          className="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg"
+                        >
+                          <div>
+                            <div className="font-medium text-white mb-1">{course.title}</div>
+                            <div className="flex items-center space-x-3 text-sm">
+                              <span className="text-gray-400">{course.duration}</span>
+                              <span className="text-blue-500">{course.level}</span>
+                            </div>
+                          </div>
+                          <div className="text-white font-bold">{course.price}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                      View All Courses
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -296,41 +360,47 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* Certification Paths Section */}
+      {/* Certification Prep Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Certification Paths
+              Certification Preparation
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
-              {certificationPaths.map((path, index) => (
+              {certPrep.map((program, index) => (
                 <div
                   key={index}
                   className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
                 >
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div>
-                      <div className="text-blue-500 text-sm font-medium mb-2">{path.level}</div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{path.certification}</h3>
-                      <div className="text-sm text-gray-400">Duration: {path.duration}</div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-xl font-semibold text-white">{program.cert}</h3>
+                        <span className="text-blue-500 font-bold">{program.price}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-400">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {program.duration}
+                      </div>
                     </div>
+                    <p className="text-gray-400 text-sm">{program.description}</p>
                     <div>
-                      <div className="text-sm text-gray-500 mb-2">Required Courses</div>
+                      <div className="text-sm text-gray-500 mb-2">Program Includes</div>
                       <div className="space-y-2">
-                        {path.courses.map((course, courseIndex) => (
+                        {program.includes.map((item, itemIndex) => (
                           <div
-                            key={courseIndex}
+                            key={itemIndex}
                             className="flex items-center text-gray-300 text-sm"
                           >
-                            <Book className="w-4 h-4 text-blue-500 mr-2" />
-                            {course}
+                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
+                            {item}
                           </div>
                         ))}
                       </div>
                     </div>
-                    <Button variant="outline" className="w-full border-blue-500 text-blue-500 hover:bg-blue-950">
-                      Learn More
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                      Start Preparation
                       <ExternalLink className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
@@ -346,10 +416,10 @@ export default function CoursesPage() {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-white mb-6">
-              Start Learning Today
+              Ready to Start Learning?
             </h2>
             <p className="text-xl text-gray-400 mb-8">
-              Join thousands of students and begin your cybersecurity journey.
+              Choose your course and begin your cybersecurity journey today.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700">

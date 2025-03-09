@@ -104,7 +104,7 @@ const Header = () => {
                   <li>
                     <Link
                       href="/community/reddit"
-                      className="block px-4 py-2.5 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
                       Reddit
                     </Link>
@@ -281,34 +281,10 @@ const Header = () => {
                 <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
                   <li>
                     <Link
-                      href="/academy/courses"
-                      className="block px-4 py-2.5 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Courses
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/roadmaps"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Learning Roadmaps & Career Paths
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/youtube"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      YouTube Creators & Video Courses
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
                       href="/academy/foundational"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Foundational Learning (Beginner)
+                      Foundational Learning
                     </Link>
                   </li>
                   <li>
@@ -329,66 +305,26 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      href="/academy/college"
+                      href="/academy/roadmaps"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      College Students
+                      Learning Roadmaps
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/academy/ctf"
+                      href="/academy/courses"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      CTFs & Hands-on Labs
+                      Courses
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/academy/scripting"
+                      href="/academy/research"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Scripting & Automation
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/certifications"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Certifications & Study Resources
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/tools"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Cybersecurity Tools & Platforms
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/platforms"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Learning Platforms & Free Resources
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/career"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Career Development & Job Prep
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/projects"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Cybersecurity Projects & Labs
+                      Research Projects
                     </Link>
                   </li>
                 </ul>
@@ -612,23 +548,8 @@ const Header = () => {
                 {activeDropdown === "academy-mobile" && (
                   <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
                     <li>
-                      <Link href="/academy/courses" className="block py-1 text-gray-400 hover:text-white">
-                        Courses
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/roadmaps" className="block py-1 text-gray-400 hover:text-white">
-                        Learning Roadmaps & Career Paths
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/youtube" className="block py-1 text-gray-400 hover:text-white">
-                        YouTube Creators & Video Courses
-                      </Link>
-                    </li>
-                    <li>
                       <Link href="/academy/foundational" className="block py-1 text-gray-400 hover:text-white">
-                        Foundational Learning (Beginner)
+                        Foundational Learning
                       </Link>
                     </li>
                     <li>
@@ -642,43 +563,18 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/academy/college" className="block py-1 text-gray-400 hover:text-white">
-                        College Students
+                      <Link href="/academy/roadmaps" className="block py-1 text-gray-400 hover:text-white">
+                        Learning Roadmaps
                       </Link>
                     </li>
                     <li>
-                      <Link href="/academy/ctf" className="block py-1 text-gray-400 hover:text-white">
-                        CTFs & Hands-on Labs
+                      <Link href="/academy/courses" className="block py-1 text-gray-400 hover:text-white">
+                        Courses
                       </Link>
                     </li>
                     <li>
-                      <Link href="/academy/scripting" className="block py-1 text-gray-400 hover:text-white">
-                        Scripting & Automation
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/certifications" className="block py-1 text-gray-400 hover:text-white">
-                        Certifications & Study Resources
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/tools" className="block py-1 text-gray-400 hover:text-white">
-                        Cybersecurity Tools & Platforms
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/platforms" className="block py-1 text-gray-400 hover:text-white">
-                        Learning Platforms & Free Resources
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/career" className="block py-1 text-gray-400 hover:text-white">
-                        Career Development & Job Prep
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/academy/projects" className="block py-1 text-gray-400 hover:text-white">
-                        Cybersecurity Projects & Labs
+                      <Link href="/academy/research" className="block py-1 text-gray-400 hover:text-white">
+                        Research Projects
                       </Link>
                     </li>
                   </ul>
