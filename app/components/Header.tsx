@@ -100,11 +100,11 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "community" && (
-                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
                   <li>
                     <Link
                       href="/community/reddit"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      className="block px-4 py-2.5 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
                       Reddit
                     </Link>
@@ -278,7 +278,15 @@ const Header = () => {
                 />
               </button>
               {activeDropdown === "academy" && (
-                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
+                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
+                  <li>
+                    <Link
+                      href="/academy/courses"
+                      className="block px-4 py-2.5 hover:bg-gray-800 text-gray-300 hover:text-white"
+                    >
+                      Courses
+                    </Link>
+                  </li>
                   <li>
                     <Link
                       href="/academy/roadmaps"
@@ -385,11 +393,6 @@ const Header = () => {
                   </li>
                 </ul>
               )}
-            </li>
-            <li className="flex items-center">
-              <Link href="/about" className="text-gray-300 hover:text-blue-500 py-2">
-                About
-              </Link>
             </li>
           </ul>
         </nav>
@@ -609,6 +612,11 @@ const Header = () => {
                 {activeDropdown === "academy-mobile" && (
                   <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
                     <li>
+                      <Link href="/academy/courses" className="block py-1 text-gray-400 hover:text-white">
+                        Courses
+                      </Link>
+                    </li>
+                    <li>
                       <Link href="/academy/roadmaps" className="block py-1 text-gray-400 hover:text-white">
                         Learning Roadmaps & Career Paths
                       </Link>
@@ -675,11 +683,6 @@ const Header = () => {
                     </li>
                   </ul>
                 )}
-              </li>
-              <li>
-                <Link href="/about" className="block py-2 text-gray-300 hover:text-white">
-                  About
-                </Link>
               </li>
               <li className="pt-4 border-t border-gray-800">
                 {user ? (
