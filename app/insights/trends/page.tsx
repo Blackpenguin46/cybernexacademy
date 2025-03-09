@@ -1,140 +1,193 @@
-import { TrendingUp, ExternalLink, Clock, Tag, Zap, Filter, LineChart, Shield } from "lucide-react"
+import { TrendingUp, ExternalLink, Clock, Tag, ChevronRight, ArrowUpRight, Globe, AlertTriangle, Shield } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export default function TrendsPage() {
   const emergingTrends = [
     {
-      title: "AI-Powered Security",
-      growth: "+85%",
-      timeframe: "Next 2 Years",
+      title: "Zero Trust Evolution",
+      category: "Security Architecture",
+      timeline: "Current - 2025",
       impact: "Transformative",
-      description: "Integration of artificial intelligence and machine learning in threat detection and response.",
-      applications: ["Automated Threat Detection", "Predictive Analytics", "Behavioral Analysis"]
-    },
-    {
-      title: "Zero Trust Architecture",
-      growth: "+65%",
-      timeframe: "Next 3 Years",
-      impact: "High",
-      description: "Shift towards zero trust security models across organizations of all sizes.",
-      applications: ["Identity Verification", "Micro-segmentation", "Continuous Monitoring"]
+      description: "Advanced implementation of zero trust principles with AI-driven continuous authentication.",
+      keyPoints: [
+        "AI-powered access decisions",
+        "Real-time risk assessment",
+        "Identity-centric security",
+        "Microsegmentation 2.0"
+      ],
+      adoption: "65% of enterprises by 2025"
     },
     {
       title: "Quantum-Safe Security",
-      growth: "+45%",
-      timeframe: "Next 5 Years",
-      impact: "Critical",
-      description: "Development of quantum-resistant cryptographic solutions.",
-      applications: ["Post-Quantum Cryptography", "Quantum Key Distribution", "Hybrid Solutions"]
+      category: "Cryptography",
+      timeline: "2024 - 2027",
+      impact: "Revolutionary",
+      description: "Preparation and transition to quantum-resistant cryptographic algorithms and protocols.",
+      keyPoints: [
+        "Post-quantum algorithms",
+        "Quantum key distribution",
+        "Hybrid cryptography",
+        "Infrastructure updates"
+      ],
+      adoption: "40% of organizations by 2026"
+    },
+    {
+      title: "AI Security Operations",
+      category: "Security Operations",
+      timeline: "Current - 2026",
+      impact: "Significant",
+      description: "Integration of advanced AI/ML capabilities in security operations and threat detection.",
+      keyPoints: [
+        "Automated threat response",
+        "Predictive analytics",
+        "Behavioral analysis",
+        "Smart SOAR integration"
+      ],
+      adoption: "75% of SOCs by 2025"
+    }
+  ]
+
+  const industryTrends = [
+    {
+      sector: "Financial Services",
+      trends: [
+        {
+          trend: "Decentralized Identity",
+          impact: "High",
+          timeline: "2024-2025",
+          description: "Blockchain-based identity verification and authentication systems"
+        },
+        {
+          trend: "Real-time Fraud Prevention",
+          impact: "Critical",
+          timeline: "Current",
+          description: "AI-powered transaction monitoring and fraud detection"
+        }
+      ]
+    },
+    {
+      sector: "Healthcare",
+      trends: [
+        {
+          trend: "IoMT Security",
+          impact: "Critical",
+          timeline: "2024-2026",
+          description: "Security for Internet of Medical Things devices and networks"
+        },
+        {
+          trend: "Privacy-Preserving Analytics",
+          impact: "High",
+          timeline: "Current",
+          description: "Secure analysis of patient data while maintaining privacy"
+        }
+      ]
+    },
+    {
+      sector: "Manufacturing",
+      trends: [
+        {
+          trend: "OT/IT Convergence",
+          impact: "Critical",
+          timeline: "2024-2025",
+          description: "Unified security for operational and information technology"
+        },
+        {
+          trend: "Digital Twin Security",
+          impact: "High",
+          timeline: "2024-2026",
+          description: "Security measures for digital twin implementations"
+        }
+      ]
     }
   ]
 
   const technologyTrends = [
     {
-      title: "Cloud-Native Security",
-      description: "Evolution of security practices for cloud-native applications and infrastructure.",
-      adoption: "78%",
-      maturity: "Growing",
-      impact: "High",
-      key_developments: [
-        "Container Security",
-        "Serverless Security",
-        "Cloud Security Posture Management"
+      name: "Extended Detection and Response (XDR)",
+      status: "Growing",
+      adoption: "55%",
+      growth: "+45%",
+      description: "Unified security incident detection and response across multiple security layers",
+      benefits: [
+        "Improved threat detection",
+        "Automated response",
+        "Reduced complexity",
+        "Better visibility"
       ]
     },
     {
-      title: "Extended Detection & Response (XDR)",
-      description: "Integration of multiple security products into unified threat detection and response.",
-      adoption: "65%",
-      maturity: "Emerging",
-      impact: "High",
-      key_developments: [
-        "Cross-Platform Integration",
-        "Automated Response",
-        "Advanced Analytics"
+      name: "Secure Access Service Edge (SASE)",
+      status: "Rapid Growth",
+      adoption: "48%",
+      growth: "+65%",
+      description: "Convergence of network security and WAN capabilities into a cloud-delivered service",
+      benefits: [
+        "Zero trust access",
+        "Simplified management",
+        "Reduced costs",
+        "Better performance"
       ]
     },
     {
-      title: "DevSecOps Evolution",
-      description: "Integration of security practices throughout the development lifecycle.",
+      name: "Cloud-Native Security",
+      status: "Mainstream",
       adoption: "72%",
-      maturity: "Maturing",
-      impact: "High",
-      key_developments: [
-        "Automated Security Testing",
-        "Infrastructure as Code Security",
-        "Supply Chain Security"
+      growth: "+38%",
+      description: "Security tools and practices designed specifically for cloud-native environments",
+      benefits: [
+        "DevSecOps integration",
+        "Container security",
+        "API protection",
+        "Serverless security"
       ]
-    },
-    {
-      title: "Privacy-Enhancing Technologies",
-      description: "Advanced technologies for protecting sensitive data while maintaining utility.",
-      adoption: "58%",
-      maturity: "Emerging",
-      impact: "High",
-      key_developments: [
-        "Homomorphic Encryption",
-        "Confidential Computing",
-        "Privacy-Preserving ML"
-      ]
-    }
-  ]
-
-  const industryShifts = [
-    {
-      title: "Remote Security Operations",
-      description: "Transformation of security operations for remote and hybrid work environments",
-      impact: "Major",
-      timeline: "Current",
-      stats: "75% of organizations adapting"
-    },
-    {
-      title: "Regulatory Compliance",
-      description: "Evolution of compliance requirements and privacy regulations",
-      impact: "Significant",
-      timeline: "Ongoing",
-      stats: "85% increase in requirements"
-    },
-    {
-      title: "Supply Chain Security",
-      description: "Enhanced focus on securing software and hardware supply chains",
-      impact: "Critical",
-      timeline: "Immediate",
-      stats: "60% increase in incidents"
-    },
-    {
-      title: "Security Automation",
-      description: "Increased adoption of automated security tools and processes",
-      impact: "Major",
-      timeline: "Next 2 Years",
-      stats: "90% planning implementation"
     }
   ]
 
   const futureOutlook = [
     {
-      year: "2024-2025",
+      year: "2024",
       predictions: [
-        "Widespread adoption of AI-driven security solutions",
-        "Increased focus on quantum-safe cryptography",
-        "Evolution of zero trust architectures"
+        {
+          title: "AI-First Security",
+          description: "AI becomes the primary driver of security operations and decision-making",
+          confidence: "High"
+        },
+        {
+          title: "Identity-Based Security",
+          description: "Shift from perimeter-based to identity-centric security models",
+          confidence: "Very High"
+        }
       ]
     },
     {
-      year: "2025-2026",
+      year: "2025",
       predictions: [
-        "Maturation of privacy-enhancing technologies",
-        "Integration of blockchain in security solutions",
-        "Advanced threat hunting capabilities"
+        {
+          title: "Quantum Security",
+          description: "First commercial quantum-safe security solutions become widely available",
+          confidence: "Medium"
+        },
+        {
+          title: "Autonomous Security",
+          description: "Self-healing and self-managing security systems become mainstream",
+          confidence: "High"
+        }
       ]
     },
     {
-      year: "2026-2027",
+      year: "2026",
       predictions: [
-        "Quantum-resistant encryption standards",
-        "Autonomous security operations",
-        "Decentralized identity management"
+        {
+          title: "Biometric Authentication",
+          description: "Advanced biometrics become the primary form of authentication",
+          confidence: "Medium"
+        },
+        {
+          title: "Edge Security",
+          description: "Security operations shift to the edge for real-time protection",
+          confidence: "High"
+        }
       ]
     }
   ]
@@ -152,10 +205,10 @@ export default function TrendsPage() {
               <span className="text-orange-500 font-medium">Emerging Trends</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Future of Cybersecurity
+              Cybersecurity Trends & Future Outlook
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Explore emerging trends, technologies, and future directions shaping the cybersecurity landscape.
+              Explore emerging trends, industry shifts, and future predictions in cybersecurity.
             </p>
           </div>
         </div>
@@ -166,7 +219,7 @@ export default function TrendsPage() {
         <div className="container">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Key Emerging Trends
+              Emerging Trends
             </h2>
             <div className="grid gap-8 md:grid-cols-3">
               {emergingTrends.map((trend, index) => (
@@ -174,30 +227,88 @@ export default function TrendsPage() {
                   key={index}
                   className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
                 >
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">{trend.title}</h3>
-                    <span className="text-orange-500 font-medium">{trend.growth}</span>
-                  </div>
-                  <p className="text-gray-400 mb-4">{trend.description}</p>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">Timeframe</span>
-                      <span className="text-white">{trend.timeframe}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">Impact</span>
-                      <span className="text-orange-500">{trend.impact}</span>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {trend.applications.map((app, appIndex) => (
-                        <span
-                          key={appIndex}
-                          className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                        >
-                          {app}
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-orange-500 text-sm">{trend.category}</span>
+                        <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
+                          {trend.impact}
                         </span>
-                      ))}
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{trend.title}</h3>
+                      <p className="text-gray-400 text-sm">{trend.description}</p>
                     </div>
+                    <div>
+                      <div className="text-sm text-gray-500 mb-2">Key Points</div>
+                      <div className="space-y-2">
+                        {trend.keyPoints.map((point, pointIndex) => (
+                          <div
+                            key={pointIndex}
+                            className="flex items-center text-gray-300 text-sm"
+                          >
+                            <ChevronRight className="w-4 h-4 text-orange-500 mr-2" />
+                            {point}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-gray-800">
+                      <div className="flex items-center justify-between text-sm">
+                        <div className="text-gray-500">
+                          <Clock className="w-4 h-4 inline mr-1" />
+                          {trend.timeline}
+                        </div>
+                        <div className="text-orange-500">
+                          {trend.adoption}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Industry Trends Section */}
+      <section className="py-20 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">
+              Industry-Specific Trends
+            </h2>
+            <div className="space-y-8">
+              {industryTrends.map((industry, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
+                >
+                  <h3 className="text-xl font-semibold text-white mb-6">{industry.sector}</h3>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {industry.trends.map((trend, trendIndex) => (
+                      <div
+                        key={trendIndex}
+                        className="bg-gray-800/50 rounded-lg p-4"
+                      >
+                        <div className="flex items-start justify-between mb-3">
+                          <div>
+                            <div className="font-medium text-white mb-1">{trend.trend}</div>
+                            <div className="text-sm text-gray-400">{trend.description}</div>
+                          </div>
+                          <span className={`px-2 py-1 rounded text-sm font-medium ${
+                            trend.impact === 'Critical' ? 'bg-red-500/10 text-red-500' :
+                            'bg-orange-500/10 text-orange-500'
+                          }`}>
+                            {trend.impact}
+                          </span>
+                        </div>
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Clock className="w-4 h-4 mr-1" />
+                          Timeline: {trend.timeline}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -213,68 +324,42 @@ export default function TrendsPage() {
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Technology Trends
             </h2>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-8 md:grid-cols-3">
               {technologyTrends.map((tech, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">{tech.title}</h3>
-                    <div className="flex items-center">
-                      <LineChart className="w-4 h-4 text-orange-500 mr-1" />
-                      <span className="text-orange-500 font-medium">{tech.adoption}</span>
-                    </div>
-                  </div>
-                  <p className="text-gray-400 mb-4">{tech.description}</p>
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="flex items-center">
-                      <span className="text-sm text-gray-500 mr-2">Maturity:</span>
-                      <span className="text-sm text-white">{tech.maturity}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <span className="text-sm text-gray-500 mr-2">Impact:</span>
-                      <span className="text-sm text-orange-500">{tech.impact}</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {tech.key_developments.map((dev, devIndex) => (
-                      <span
-                        key={devIndex}
-                        className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                      >
-                        {dev}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Industry Shifts Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Industry Shifts
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {industryShifts.map((shift, index) => (
                 <div
                   key={index}
                   className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-xl font-semibold text-white">{shift.title}</h3>
-                    <span className="text-orange-500 font-medium">{shift.impact}</span>
-                  </div>
-                  <p className="text-gray-400 mb-4">{shift.description}</p>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-500">{shift.timeline}</span>
-                    <span className="text-white">{shift.stats}</span>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-orange-500 text-sm">{tech.status}</span>
+                        <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
+                          Growth: {tech.growth}
+                        </span>
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">{tech.name}</h3>
+                      <p className="text-gray-400 text-sm">{tech.description}</p>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500 mb-2">Key Benefits</div>
+                      <div className="space-y-2">
+                        {tech.benefits.map((benefit, benefitIndex) => (
+                          <div
+                            key={benefitIndex}
+                            className="flex items-center text-gray-300 text-sm"
+                          >
+                            <Shield className="w-4 h-4 text-orange-500 mr-2" />
+                            {benefit}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="pt-4 border-t border-gray-800">
+                      <div className="text-sm text-orange-500">
+                        Current Adoption: {tech.adoption}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -286,28 +371,35 @@ export default function TrendsPage() {
       {/* Future Outlook Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Future Outlook
             </h2>
             <div className="space-y-8">
-              {futureOutlook.map((period, index) => (
+              {futureOutlook.map((year, index) => (
                 <div
                   key={index}
                   className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
                 >
-                  <h3 className="text-xl font-semibold text-white mb-4">{period.year}</h3>
-                  <ul className="space-y-3">
-                    {period.predictions.map((prediction, predIndex) => (
-                      <li
+                  <h3 className="text-xl font-semibold text-white mb-6">{year.year}</h3>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {year.predictions.map((prediction, predIndex) => (
+                      <div
                         key={predIndex}
-                        className="flex items-start"
+                        className="bg-gray-800/50 rounded-lg p-4"
                       >
-                        <Shield className="w-5 h-5 text-orange-500 mr-3 mt-0.5" />
-                        <span className="text-gray-400">{prediction}</span>
-                      </li>
+                        <div className="mb-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="font-medium text-white">{prediction.title}</h4>
+                            <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
+                              {prediction.confidence}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-400">{prediction.description}</p>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               ))}
             </div>
@@ -320,14 +412,14 @@ export default function TrendsPage() {
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-white mb-6">
-              Stay Ahead of the Curve
+              Stay Ahead of Trends
             </h2>
             <p className="text-xl text-gray-400 mb-8">
-              Keep up with the latest trends and prepare for the future of cybersecurity.
+              Get regular updates on emerging trends and future predictions in cybersecurity.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button size="lg" className="bg-orange-600 hover:bg-orange-700">
-                Download Trend Report
+                Subscribe to Updates
                 <ExternalLink className="w-4 h-4 ml-2" />
               </Button>
               <Link href="/insights">

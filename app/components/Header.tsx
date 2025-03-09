@@ -216,66 +216,50 @@ const Header = () => {
                 <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
                   <li>
                     <Link
-                      href="/insights/job-market"
+                      href="/insights/news"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Job Market
+                      News & Updates
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/research-innovations"
+                      href="/insights/research"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Research & Innovations
+                      Research Papers
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/emerging-trends"
+                      href="/insights/cases"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Emerging Trends
+                      Case Studies
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/breaches-threats"
+                      href="/insights/threats"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Breaches & Threats
+                      Threat Reports
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/policy-regulations"
+                      href="/insights/industry"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Cyber Policy & Regulations
+                      Industry Trends
                     </Link>
                   </li>
                   <li>
                     <Link
-                      href="/insights/threat-intelligence"
+                      href="/insights/practices"
                       className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                     >
-                      Threat Intelligence & APT Groups
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/tools-techniques"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Cybersecurity Tools & Techniques
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/industry-specific"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Industry-Specific Cybersecurity
+                      Best Practices
                     </Link>
                   </li>
                 </ul>
@@ -580,43 +564,33 @@ const Header = () => {
                 {activeDropdown === "insights-mobile" && (
                   <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
                     <li>
-                      <Link href="/insights/job-market" className="block py-1 text-gray-400 hover:text-white">
-                        Job Market
+                      <Link href="/insights/news" className="block py-1 text-gray-400 hover:text-white">
+                        News & Updates
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/research-innovations" className="block py-1 text-gray-400 hover:text-white">
-                        Research & Innovations
+                      <Link href="/insights/research" className="block py-1 text-gray-400 hover:text-white">
+                        Research Papers
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/emerging-trends" className="block py-1 text-gray-400 hover:text-white">
-                        Emerging Trends
+                      <Link href="/insights/cases" className="block py-1 text-gray-400 hover:text-white">
+                        Case Studies
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/breaches-threats" className="block py-1 text-gray-400 hover:text-white">
-                        Breaches & Threats
+                      <Link href="/insights/threats" className="block py-1 text-gray-400 hover:text-white">
+                        Threat Reports
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/policy-regulations" className="block py-1 text-gray-400 hover:text-white">
-                        Cyber Policy & Regulations
+                      <Link href="/insights/industry" className="block py-1 text-gray-400 hover:text-white">
+                        Industry Trends
                       </Link>
                     </li>
                     <li>
-                      <Link href="/insights/threat-intelligence" className="block py-1 text-gray-400 hover:text-white">
-                        Threat Intelligence & APT Groups
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/insights/tools-techniques" className="block py-1 text-gray-400 hover:text-white">
-                        Cybersecurity Tools & Techniques
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/insights/industry-specific" className="block py-1 text-gray-400 hover:text-white">
-                        Industry-Specific Cybersecurity
+                      <Link href="/insights/practices" className="block py-1 text-gray-400 hover:text-white">
+                        Best Practices
                       </Link>
                     </li>
                   </ul>
