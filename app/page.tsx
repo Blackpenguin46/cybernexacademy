@@ -12,11 +12,11 @@ export const revalidate = 0
 // This is now a Server Component
 export default function Home() {
   return (
-    <div className="bg-black relative">
+    <div className="bg-black">
       <AnimatedBackground />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative py-20 md:py-32 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20" />
           <div className="absolute inset-0 bg-black/80" />
@@ -57,7 +57,7 @@ export default function Home() {
       </section>
 
       {/* Navigation Grid Section */}
-      <section className="relative z-10 min-h-screen bg-gradient-to-b from-black via-blue-950/20 to-black py-20">
+      <section className="relative z-10 bg-gradient-to-b from-black via-blue-950/20 to-black py-20">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-5xl font-bold text-center mb-16 text-white">
             Your Journey Starts Here

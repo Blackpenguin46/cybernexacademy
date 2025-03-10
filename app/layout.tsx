@@ -51,9 +51,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} bg-black text-white antialiased`}>
+      <body className={`${inter.className} bg-black text-white antialiased min-h-screen flex flex-col`}>
         <Header />
-        <main className="flex-grow flex flex-col min-h-screen pt-32 md:pt-36">{children}</main>
+        <main className="flex-grow">{children}</main>
         <Footer />
         <Toaster />
       </body>
