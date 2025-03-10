@@ -23,7 +23,10 @@ export default function Navbar() {
       links: [
         { name: "Foundational", href: "/academy/foundational" },
         { name: "Projects & Labs", href: "/academy/labs" },
-        { name: "Career Roadmaps", href: "/academy/roadmaps" }
+        { name: "Career Roadmaps", href: "/academy/roadmaps" },
+        { name: "Research Papers", href: "/academy/research" },
+        { name: "Practice Challenges", href: "/academy/challenges" },
+        { name: "Code Examples", href: "/academy/code" }
       ]
     },
     {
@@ -32,9 +35,13 @@ export default function Navbar() {
       icon: User,
       description: "Connect with fellow cybersecurity enthusiasts, share knowledge, and participate in events. Build your network in the security community.",
       links: [
+        { name: "GitHub Repositories", href: "/community/github" },
+        { name: "Reddit", href: "/community/reddit" },
         { name: "Discord", href: "/community/discord" },
-        { name: "Events", href: "/community/events" },
-        { name: "GitHub", href: "/community/github" }
+        { name: "Substack", href: "/community/substack" },
+        { name: "LinkedIn", href: "/community/linkedin" },
+        { name: "Skool", href: "/community/skool" },
+        { name: "Forums & Blogs", href: "/community/forums" }
       ]
     },
     {
@@ -43,9 +50,12 @@ export default function Navbar() {
       icon: Zap,
       description: "Stay informed with the latest cybersecurity news, trends, and research. Get expert analysis on emerging threats and industry developments.",
       links: [
-        { name: "News", href: "/insights/news" },
-        { name: "Trends", href: "/insights/trends" },
-        { name: "Research", href: "/insights/research" }
+        { name: "News & Updates", href: "/insights/news" },
+        { name: "Research Papers", href: "/insights/research" },
+        { name: "Case Studies", href: "/insights/cases" },
+        { name: "Threat Reports", href: "/insights/threats" },
+        { name: "Industry Trends", href: "/insights/industry" },
+        { name: "Best Practices", href: "/insights/practices" }
       ]
     },
     {
@@ -56,7 +66,10 @@ export default function Navbar() {
       links: [
         { name: "Security Scanner", href: "/tools/scanner" },
         { name: "Password Checker", href: "/tools/password" },
-        { name: "Security Assessment", href: "/tools/assessment" }
+        { name: "Security Assessment", href: "/tools/assessment" },
+        { name: "Encryption Tools", href: "/tools/encryption" },
+        { name: "Network Analysis", href: "/tools/network" },
+        { name: "Vulnerability Scanner", href: "/tools/vulnerabilities" }
       ]
     }
   ];
