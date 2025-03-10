@@ -5,7 +5,6 @@ import { Microscope, Code, Network, Shield, Terminal, Server, Lock, ExternalLink
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '../../components/CategoryFilter'
-import SectionHeader from '../../components/SectionHeader'
 
 interface Resource {
   name: string
@@ -239,113 +238,140 @@ export default function ResearchPage() {
     }));
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <SectionHeader
-          title="Cybersecurity Research"
-          description="Explore academic papers, industry reports, and research tools in cybersecurity"
-          icon={<Microscope className="h-10 w-10 text-purple-500" />}
-        />
-
-        {/* Add Category Filter */}
-        <div className="mb-8">
-          <CategoryFilter 
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            accentColor="purple"
-          />
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-black/20 z-10"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
+        <div className="container relative z-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center p-2 bg-purple-600/10 rounded-xl mb-4">
+              <Microscope className="w-5 h-5 text-purple-500 mr-2" />
+              <span className="text-purple-500 font-medium">Academic Research</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              Cybersecurity Research
+            </h1>
+            <p className="text-xl text-gray-400 mb-8">
+              Explore academic papers, industry reports, and research tools in cybersecurity
+            </p>
+          </div>
         </div>
+      </section>
 
-        {filteredCategories.length > 0 ? (
-          filteredCategories.map((category, index) => (
-            <div key={index} className="mb-12">
-              <div className="flex items-center gap-2 mb-6">
-                <category.icon className="h-6 w-6 text-purple-500" />
-                <h2 className="text-2xl font-bold text-white">{category.title}</h2>
-              </div>
-              <div className="grid gap-6">
-                {category.resources.map((resource, resourceIndex) => (
-                  <div key={resourceIndex} className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-purple-500/50 transition-colors">
-                    <div className="flex flex-col md:flex-row md:items-start gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-sm font-medium px-2 py-1 rounded bg-purple-900/50 text-purple-400 border border-purple-800/50">
-                            {resource.type}
-                          </span>
-                          {hasFree(resource) && (
-                            <span className={`text-sm font-medium px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800/50' : 'bg-red-900/50 text-red-400 border border-red-800/50'}`}>
-                              {resource.free ? 'Free' : 'Paid'}
-                            </span>
-                          )}
-                          {resource.category && (
-                            <span className="text-sm font-medium px-2 py-1 rounded bg-blue-900/50 text-blue-400 border border-blue-800/50">
-                              {categories.find(cat => cat.id === resource.category)?.name || resource.category}
-                            </span>
-                          )}
-                        </div>
-                        <h3 className="text-xl font-semibold text-white mb-2">{resource.name}</h3>
-                        <p className="text-gray-400 mb-4">{resource.description}</p>
-                        {hasAuthor(resource) && (
-                          <div className="text-gray-500 mb-4">Author: {resource.author}</div>
-                        )}
-                      </div>
-                      <div className="flex-shrink-0">
-                        <Button asChild>
-                          <Link href={resource.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                            View Resource
-                            <ExternalLink className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </div>
-                    </div>
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="purple"
+      />
+      
+      {filteredCategories.length > 0 ? (
+        <section className="py-16">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              {filteredCategories.map((category, index) => (
+                <div key={index} className="mb-12">
+                  <div className="flex items-center gap-2 mb-6">
+                    <category.icon className="h-6 w-6 text-purple-500" />
+                    <h2 className="text-2xl font-bold text-white">{category.title}</h2>
                   </div>
-                ))}
+                  <div className="grid gap-6">
+                    {category.resources.map((resource, resourceIndex) => (
+                      <div key={resourceIndex} className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-purple-500/50 transition-colors">
+                        <div className="flex flex-col md:flex-row md:items-start gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-sm font-medium px-2 py-1 rounded bg-purple-900/50 text-purple-400 border border-purple-800/50">
+                                {resource.type}
+                              </span>
+                              {hasFree(resource) && (
+                                <span className={`text-sm font-medium px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800/50' : 'bg-red-900/50 text-red-400 border border-red-800/50'}`}>
+                                  {resource.free ? 'Free' : 'Paid'}
+                                </span>
+                              )}
+                              {resource.category && (
+                                <span className="text-sm font-medium px-2 py-1 rounded bg-blue-900/50 text-blue-400 border border-blue-800/50">
+                                  {categories.find(cat => cat.id === resource.category)?.name || resource.category}
+                                </span>
+                              )}
+                            </div>
+                            <h3 className="text-xl font-semibold text-white mb-2">{resource.name}</h3>
+                            <p className="text-gray-400 mb-4">{resource.description}</p>
+                            {hasAuthor(resource) && (
+                              <div className="text-gray-500 mb-4">Author: {resource.author}</div>
+                            )}
+                          </div>
+                          <div className="flex-shrink-0">
+                            <Button asChild>
+                              <Link href={resource.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                View Resource
+                                <ExternalLink className="h-4 w-4" />
+                              </Link>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="py-16">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-white mb-2">No research resources match your filter</h3>
+                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedCategory('all')}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" /> Clear filters
+                </Button>
               </div>
             </div>
-          ))
-        ) : (
-          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No research resources match your filter</h3>
-            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-            <Button 
-              variant="outline" 
-              onClick={() => setSelectedCategory('all')}
-              className="flex items-center gap-2"
-            >
-              <X className="h-4 w-4" /> Clear filters
-            </Button>
           </div>
-        )}
+        </section>
+      )}
 
-        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
-          <h2 className="text-2xl font-bold mb-4 text-white">Research Tips</h2>
-          <ul className="space-y-4">
-            <li className="flex gap-3">
-              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-purple-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Stay current with new publications</p>
-                <p className="text-gray-400">Subscribe to security journals and conference proceedings to keep up with the latest research.</p>
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-purple-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Apply research to practical scenarios</p>
-                <p className="text-gray-400">Look for ways to implement research findings in your security practices and tools.</p>
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-purple-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Contribute to open research</p>
-                <p className="text-gray-400">Consider sharing your own findings with the community through blogs or conference submissions.</p>
-              </div>
-            </li>
-          </ul>
+      {/* Research Tips Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6 text-white">Research Tips</h2>
+            <ul className="space-y-4">
+              <li className="flex gap-3">
+                <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-purple-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Stay current with new publications</p>
+                  <p className="text-gray-400">Subscribe to security journals and conference proceedings to keep up with the latest research.</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-purple-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Apply research to practical scenarios</p>
+                  <p className="text-gray-400">Look for ways to implement research findings in your security practices and tools.</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-purple-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Contribute to open research</p>
+                  <p className="text-gray-400">Consider sharing your own findings with the community through blogs or conference submissions.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 } 

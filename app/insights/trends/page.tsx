@@ -5,7 +5,6 @@ import { TrendingUp, ExternalLink, Clock, Tag, ChevronRight, ArrowUpRight, Globe
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
-import SectionHeader from '@/app/components/SectionHeader'
 
 // Define interface for Category
 interface Category {
@@ -236,197 +235,221 @@ export default function TrendsPage() {
                     filteredPredictions.length > 0;
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader
-          title="Cybersecurity Trends & Future Outlook"
-          description="Explore emerging trends, industry shifts, and future predictions in cybersecurity."
-          icon={<TrendingUp className="h-10 w-10 text-orange-500" />}
-        />
-
-        {/* Categories Filter */}
-        <div className="mb-8">
-          <CategoryFilter 
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            accentColor="orange"
-          />
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-orange-900/20 to-black/20 z-10"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
+        <div className="container relative z-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center p-2 bg-orange-600/10 rounded-xl mb-4">
+              <TrendingUp className="w-5 h-5 text-orange-500 mr-2" />
+              <span className="text-orange-500 font-medium">Emerging Trends</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              Cybersecurity Trends & Future Outlook
+            </h1>
+            <p className="text-xl text-gray-400 mb-8">
+              Explore emerging trends, industry shifts, and future predictions in cybersecurity.
+            </p>
+          </div>
         </div>
-        
-        {hasContent ? (
-          <>
-            {/* Emerging Trends Section */}
-            {filteredEmergingTrends.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                  <TrendingUp className="w-6 h-6 text-orange-500 mr-3" />
-                  Emerging Trends
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {filteredEmergingTrends.map((trend, index) => (
-                    <div
-                      key={index}
-                      className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                    >
-                      <div className="space-y-4">
-                        <div>
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-orange-500 text-sm">
-                              {categories.find(cat => cat.id === trend.category)?.name || trend.category}
-                            </span>
-                            <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
-                              {trend.impact}
-                            </span>
+      </section>
+
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="orange"
+      />
+      
+      {hasContent ? (
+        <section className="py-16">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              {/* Emerging Trends Section */}
+              {filteredEmergingTrends.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                    <TrendingUp className="w-6 h-6 text-orange-500 mr-3" />
+                    Emerging Trends
+                  </h2>
+                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    {filteredEmergingTrends.map((trend, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+                      >
+                        <div className="space-y-4">
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-orange-500 text-sm">
+                                {categories.find(cat => cat.id === trend.category)?.name || trend.category}
+                              </span>
+                              <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
+                                {trend.impact}
+                              </span>
+                            </div>
+                            <h3 className="text-xl font-semibold text-white mb-2">{trend.title}</h3>
+                            <p className="text-gray-400 text-sm">{trend.description}</p>
                           </div>
-                          <h3 className="text-xl font-semibold text-white mb-2">{trend.title}</h3>
-                          <p className="text-gray-400 text-sm">{trend.description}</p>
+                          <div>
+                            <div className="text-sm text-gray-500 mb-2">Key Points</div>
+                            <div className="space-y-2">
+                              {trend.keyPoints.map((point, pointIndex) => (
+                                <div
+                                  key={pointIndex}
+                                  className="flex items-center text-gray-300 text-sm"
+                                >
+                                  <ChevronRight className="w-4 h-4 text-orange-500 mr-2" />
+                                  {point}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between pt-4 text-sm">
+                            <div className="flex items-center text-gray-500">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {trend.timeline}
+                            </div>
+                            <div className="text-gray-500">
+                              {trend.adoption}
+                            </div>
+                          </div>
                         </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Industry Shifts Section */}
+              {filteredIndustryShifts.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                    <Globe className="w-6 h-6 text-orange-500 mr-3" />
+                    Industry Shifts
+                  </h2>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    {filteredIndustryShifts.map((shift, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+                      >
+                        <div className="flex items-center justify-between mb-4">
+                          <h3 className="text-xl font-semibold text-white">{shift.sector}</h3>
+                          <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
+                            {categories.find(cat => cat.id === shift.sector)?.name || shift.sector}
+                          </span>
+                        </div>
+                        <p className="text-gray-400 mb-4">{shift.trends.map(trend => trend.description).join(', ')}</p>
                         <div>
-                          <div className="text-sm text-gray-500 mb-2">Key Points</div>
-                          <div className="space-y-2">
-                            {trend.keyPoints.map((point, pointIndex) => (
-                              <div
-                                key={pointIndex}
-                                className="flex items-center text-gray-300 text-sm"
+                          <div className="text-sm text-gray-500 mb-2">Trends</div>
+                          <div className="flex flex-wrap gap-2">
+                            {shift.trends.map((trend, trendIndex) => (
+                              <span
+                                key={trendIndex}
+                                className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
                               >
-                                <ChevronRight className="w-4 h-4 text-orange-500 mr-2" />
-                                {point}
-                              </div>
+                                {trend.trend}
+                              </span>
                             ))}
                           </div>
                         </div>
-                        <div className="flex items-center justify-between pt-4 text-sm">
-                          <div className="flex items-center text-gray-500">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {trend.timeline}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Predictions Section */}
+              {filteredPredictions.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                    <AlertTriangle className="w-6 h-6 text-orange-500 mr-3" />
+                    Future Predictions
+                  </h2>
+                  <div className="space-y-6">
+                    {filteredPredictions.map((prediction, index) => (
+                      <div
+                        key={index}
+                        className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+                      >
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center">
+                            <span className="text-2xl font-bold text-orange-500 mr-3">{prediction.year}</span>
+                            <h3 className="text-xl font-semibold text-white">{prediction.predictions.map(p => p.title).join(', ')}</h3>
                           </div>
-                          <div className="text-gray-500">
-                            {trend.adoption}
-                          </div>
+                          <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
+                            {categories.find(cat => cat.id === prediction.year)?.name || prediction.year}
+                          </span>
+                        </div>
+                        <p className="text-gray-400 mb-4">{prediction.predictions.map(p => p.description).join(', ')}</p>
+                        <div className="flex items-center text-sm text-gray-500">
+                          <Tag className="w-4 h-4 mr-1" />
+                          <span>Confidence: {prediction.predictions.map(p => p.confidence).join(', ')}</span>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-            
-            {/* Industry Shifts Section */}
-            {filteredIndustryShifts.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                  <Globe className="w-6 h-6 text-orange-500 mr-3" />
-                  Industry Shifts
-                </h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {filteredIndustryShifts.map((shift, index) => (
-                    <div
-                      key={index}
-                      className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-xl font-semibold text-white">{shift.sector}</h3>
-                        <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
-                          {categories.find(cat => cat.id === shift.sector)?.name || shift.sector}
-                        </span>
-                      </div>
-                      <p className="text-gray-400 mb-4">{shift.trends.map(trend => trend.description).join(', ')}</p>
-                      <div>
-                        <div className="text-sm text-gray-500 mb-2">Trends</div>
-                        <div className="flex flex-wrap gap-2">
-                          {shift.trends.map((trend, trendIndex) => (
-                            <span
-                              key={trendIndex}
-                              className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                            >
-                              {trend.trend}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {/* Predictions Section */}
-            {filteredPredictions.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                  <AlertTriangle className="w-6 h-6 text-orange-500 mr-3" />
-                  Future Predictions
-                </h2>
-                <div className="space-y-6">
-                  {filteredPredictions.map((prediction, index) => (
-                    <div
-                      key={index}
-                      className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center">
-                          <span className="text-2xl font-bold text-orange-500 mr-3">{prediction.year}</span>
-                          <h3 className="text-xl font-semibold text-white">{prediction.predictions.map(p => p.title).join(', ')}</h3>
-                        </div>
-                        <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
-                          {categories.find(cat => cat.id === prediction.year)?.name || prediction.year}
-                        </span>
-                      </div>
-                      <p className="text-gray-400 mb-4">{prediction.predictions.map(p => p.description).join(', ')}</p>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Tag className="w-4 h-4 mr-1" />
-                        <span>Confidence: {prediction.predictions.map(p => p.confidence).join(', ')}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No trends match your filter</h3>
-            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-            <Button 
-              variant="outline" 
-              onClick={() => setSelectedCategory('all')}
-              className="flex items-center gap-2"
-            >
-              <X className="h-4 w-4" /> Clear filters
-            </Button>
+              )}
+            </div>
           </div>
-        )}
-        
-        {/* Resources Section */}
-        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
-          <h2 className="text-2xl font-bold mb-4 text-white">Stay Ahead of Trends</h2>
-          <ul className="space-y-4">
-            <li className="flex gap-3">
-              <Globe className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Follow industry research</p>
-                <p className="text-gray-400">Subscribe to reports from Gartner, Forrester, and other research organizations.</p>
+        </section>
+      ) : (
+        <section className="py-16">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-white mb-2">No trends match your filter</h3>
+                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedCategory('all')}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" /> Clear filters
+                </Button>
               </div>
-            </li>
-            <li className="flex gap-3">
-              <Shield className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Join security communities</p>
-                <p className="text-gray-400">Participate in forums and groups where professionals discuss emerging threats.</p>
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <TrendingUp className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Experiment with new technologies</p>
-                <p className="text-gray-400">Set up lab environments to test emerging security tools and techniques.</p>
-              </div>
-            </li>
-          </ul>
+            </div>
+          </div>
+        </section>
+      )}
+      
+      {/* Resources Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6 text-white">Stay Ahead of Trends</h2>
+            <ul className="space-y-4">
+              <li className="flex gap-3">
+                <Globe className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Follow industry research</p>
+                  <p className="text-gray-400">Subscribe to reports from Gartner, Forrester, and other research organizations.</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <Shield className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Join security communities</p>
+                  <p className="text-gray-400">Participate in forums and groups where professionals discuss emerging threats.</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <TrendingUp className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Experiment with new technologies</p>
+                  <p className="text-gray-400">Set up lab environments to test emerging security tools and techniques.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 } 

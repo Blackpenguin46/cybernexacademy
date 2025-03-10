@@ -21,7 +21,6 @@ import {
 } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
-import SectionHeader from '@/app/components/SectionHeader'
 
 // Define interface for Category
 interface Category {
@@ -244,145 +243,169 @@ export default function ForumsAndBlogsPage() {
   })).filter(category => category.items.length > 0);
   
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader
-          title="Forums & Blogs"
-          description="Connect with the cybersecurity community through forums and stay updated with the latest insights from security blogs"
-          icon={<MessageSquare className="h-10 w-10 text-blue-500" />}
-        />
-
-        {/* Categories Filter */}
-        <div className="mb-8">
-          <CategoryFilter 
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            accentColor="blue"
-          />
-        </div>
-        
-        {filteredItems.length > 0 ? (
-          <>
-            {/* Forums Section */}
-            {filteredForums.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                  <MessageSquare className="w-6 h-6 text-blue-500 mr-3" />
-                  Security Forums
-                </h2>
-                
-                {filteredForums.map((category, index) => (
-                  <div key={index} className="mb-8 last:mb-0">
-                    <h3 className="text-xl font-semibold text-white mb-2">{category.name}</h3>
-                    <p className="text-gray-400 mb-4">{category.description}</p>
-                    
-                    <div className="grid gap-6 md:grid-cols-2">
-                      {category.items.map((forum, forumIndex) => (
-                        <div 
-                          key={forumIndex} 
-                          className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                        >
-                          <div className="flex justify-between items-start mb-4">
-                            <h4 className="text-xl font-medium text-white">
-                              <Link href={forum.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
-                                {forum.name}
-                                <ExternalLink className="w-4 h-4 ml-2" />
-                              </Link>
-                            </h4>
-                            <span className="bg-blue-900/30 text-blue-400 text-xs px-2 py-1 rounded-full">
-                              {categories.find(cat => cat.id === forum.category)?.name || forum.category}
-                            </span>
-                          </div>
-                          
-                          <p className="text-gray-300 mb-4">{forum.description}</p>
-                          
-                          <div className="flex items-center text-gray-500 text-sm">
-                            <Users className="w-4 h-4 mr-1" />
-                            <span>{forum.members} members</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            {/* Blogs Section */}
-            {filteredBlogs.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                  <BookOpen className="w-6 h-6 text-blue-500 mr-3" />
-                  Security Blogs
-                </h2>
-                
-                {filteredBlogs.map((category, index) => (
-                  <div key={index} className="mb-8 last:mb-0">
-                    <h3 className="text-xl font-semibold text-white mb-2">{category.name}</h3>
-                    <p className="text-gray-400 mb-4">{category.description}</p>
-                    
-                    <div className="grid gap-6 md:grid-cols-2">
-                      {category.items.map((blog, blogIndex) => (
-                        <div 
-                          key={blogIndex} 
-                          className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                        >
-                          <div className="flex justify-between items-start mb-4">
-                            <h4 className="text-xl font-medium text-white">
-                              <Link href={blog.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
-                                {blog.name}
-                                <ExternalLink className="w-4 h-4 ml-2" />
-                              </Link>
-                            </h4>
-                            <span className="bg-blue-900/30 text-blue-400 text-xs px-2 py-1 rounded-full">
-                              {categories.find(cat => cat.id === blog.category)?.name || blog.category}
-                            </span>
-                          </div>
-                          
-                          <p className="text-gray-300 mb-4">{blog.description}</p>
-                          
-                          <div className="flex items-center text-gray-500 text-sm">
-                            <span>By {blog.author}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No resources match your filter</h3>
-            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-            <Button 
-              variant="outline" 
-              onClick={() => setSelectedCategory('all')}
-              className="flex items-center gap-2"
-            >
-              <X className="h-4 w-4" /> Clear filters
-            </Button>
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
+        <div className="container relative z-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
+              <MessageSquare className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">Forums & Blogs</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              Forums & Blogs
+            </h1>
+            <p className="text-xl text-gray-400 mb-8">
+              Connect with the cybersecurity community through forums and stay updated with the latest insights from security blogs
+            </p>
           </div>
-        )}
-        
-        {/* Guidelines Section */}
-        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
-          <h2 className="text-2xl font-bold mb-4 text-white">Forum Participation Guidelines</h2>
-          <ul className="space-y-4">
-            {forumGuidelines.map((guideline, index) => (
-              <li key={index} className="flex gap-3">
-                <ThumbsUp className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-                <div>
-                  <p className="text-gray-300">{guideline}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
-      </div>
+      </section>
+
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="blue"
+      />
+      
+      {filteredItems.length > 0 ? (
+        <section className="py-16">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              {/* Forums Section */}
+              {filteredForums.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                    <MessageSquare className="w-6 h-6 text-blue-500 mr-3" />
+                    Security Forums
+                  </h2>
+                  
+                  {filteredForums.map((category, index) => (
+                    <div key={index} className="mb-8 last:mb-0">
+                      <h3 className="text-xl font-semibold text-white mb-2">{category.name}</h3>
+                      <p className="text-gray-400 mb-4">{category.description}</p>
+                      
+                      <div className="grid gap-6 md:grid-cols-2">
+                        {category.items.map((forum, forumIndex) => (
+                          <div 
+                            key={forumIndex} 
+                            className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
+                          >
+                            <div className="flex justify-between items-start mb-4">
+                              <h4 className="text-xl font-medium text-white">
+                                <Link href={forum.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
+                                  {forum.name}
+                                  <ExternalLink className="w-4 h-4 ml-2" />
+                                </Link>
+                              </h4>
+                              <span className="bg-blue-900/30 text-blue-400 text-xs px-2 py-1 rounded-full">
+                                {categories.find(cat => cat.id === forum.category)?.name || forum.category}
+                              </span>
+                            </div>
+                            
+                            <p className="text-gray-300 mb-4">{forum.description}</p>
+                            
+                            <div className="flex items-center text-gray-500 text-sm">
+                              <Users className="w-4 h-4 mr-1" />
+                              <span>{forum.members} members</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {/* Blogs Section */}
+              {filteredBlogs.length > 0 && (
+                <div className="mb-12">
+                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                    <BookOpen className="w-6 h-6 text-blue-500 mr-3" />
+                    Security Blogs
+                  </h2>
+                  
+                  {filteredBlogs.map((category, index) => (
+                    <div key={index} className="mb-8 last:mb-0">
+                      <h3 className="text-xl font-semibold text-white mb-2">{category.name}</h3>
+                      <p className="text-gray-400 mb-4">{category.description}</p>
+                      
+                      <div className="grid gap-6 md:grid-cols-2">
+                        {category.items.map((blog, blogIndex) => (
+                          <div 
+                            key={blogIndex} 
+                            className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
+                          >
+                            <div className="flex justify-between items-start mb-4">
+                              <h4 className="text-xl font-medium text-white">
+                                <Link href={blog.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
+                                  {blog.name}
+                                  <ExternalLink className="w-4 h-4 ml-2" />
+                                </Link>
+                              </h4>
+                              <span className="bg-blue-900/30 text-blue-400 text-xs px-2 py-1 rounded-full">
+                                {categories.find(cat => cat.id === blog.category)?.name || blog.category}
+                              </span>
+                            </div>
+                            
+                            <p className="text-gray-300 mb-4">{blog.description}</p>
+                            
+                            <div className="flex items-center text-gray-500 text-sm">
+                              <span>By {blog.author}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="py-16">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-white mb-2">No resources match your filter</h3>
+                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedCategory('all')}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" /> Clear filters
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+      
+      {/* Guidelines Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6 text-white">Forum Participation Guidelines</h2>
+            <ul className="space-y-4">
+              {forumGuidelines.map((guideline, index) => (
+                <li key={index} className="flex gap-3">
+                  <ThumbsUp className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+                  <div>
+                    <p className="text-gray-300">{guideline}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
   )
 } 

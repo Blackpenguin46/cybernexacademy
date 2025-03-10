@@ -24,7 +24,6 @@ import {
 import { supabase } from '@/lib/supabase'
 import CategoryFilter from '@/app/components/CategoryFilter'
 import { Button } from "@/components/ui/button"
-import SectionHeader from '@/app/components/SectionHeader'
 
 interface GithubRepo {
   name: string
@@ -288,128 +287,154 @@ export default function GitHubPage() {
   })
   
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-6xl mx-auto">
-        <SectionHeader
-          title="GitHub Security Repositories"
-          description="Discover the best open source security tools, frameworks, and learning resources on GitHub"
-          icon={<Code className="h-10 w-10 text-blue-500" />}
-        />
-
-        {/* Categories Filter */}
-        <div className="mb-8">
-          <CategoryFilter 
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            accentColor="blue"
-          />
-        </div>
-        
-        {/* User Interests */}
-        {userInterests.length > 0 && (
-          <div className="mb-10 p-4 bg-blue-900/20 border border-blue-900/30 rounded-lg">
-            <h3 className="text-xl font-semibold text-white mb-2">Personalized Recommendations</h3>
-            <p className="text-gray-300">
-              We're highlighting repositories that match your interests in: {" "}
-              <span className="text-blue-400">
-                {userInterests.map(i => i.replace('_', ' ')).join(', ')}
-              </span>
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
+        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
+        <div className="container relative z-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
+              <Code className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">GitHub Community</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+              GitHub Security Repositories
+            </h1>
+            <p className="text-xl text-gray-400 mb-8">
+              Discover the best open source security tools, frameworks, and learning resources on GitHub
             </p>
           </div>
-        )}
-        
-        {/* Repositories */}
-        {sortedRepos.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2">
-            {sortedRepos.map((repo) => (
-              <div 
-                key={repo.fullName}
-                className={`border rounded-lg p-6 transition-all hover:border-blue-500/50 ${
-                  userInterests.includes(repo.category) 
-                    ? 'bg-blue-900/10 border-blue-900/30' 
-                    : 'bg-gray-900/50 border-gray-800'
-                }`}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-xl font-semibold text-white">
-                    <Link href={repo.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
-                      {repo.name}
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Link>
-                  </h3>
-                  <div className="flex items-center space-x-3 text-gray-400">
-                    <div className="flex items-center">
-                      <Star className="w-4 h-4 text-yellow-500 mr-1" />
-                      <span className="text-sm">{repo.stars.toLocaleString()}</span>
+        </div>
+      </section>
+
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="blue"
+      />
+      
+      {/* User Interests */}
+      {userInterests.length > 0 && (
+        <section className="py-8">
+          <div className="container">
+            <div className="max-w-6xl mx-auto">
+              <div className="p-4 bg-blue-900/20 border border-blue-900/30 rounded-lg">
+                <h3 className="text-xl font-semibold text-white mb-2">Personalized Recommendations</h3>
+                <p className="text-gray-300">
+                  We're highlighting repositories that match your interests in: {" "}
+                  <span className="text-blue-400">
+                    {userInterests.map(i => i.replace('_', ' ')).join(', ')}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+      
+      {/* Repositories */}
+      <section className="py-16">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            {sortedRepos.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                {sortedRepos.map((repo) => (
+                  <div 
+                    key={repo.fullName}
+                    className={`border rounded-lg p-6 transition-all hover:border-blue-500/50 ${
+                      userInterests.includes(repo.category) 
+                        ? 'bg-blue-900/10 border-blue-900/30' 
+                        : 'bg-gray-900/50 border-gray-800'
+                    }`}
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-xl font-semibold text-white">
+                        <Link href={repo.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
+                          {repo.name}
+                          <ExternalLink className="w-4 h-4 ml-2" />
+                        </Link>
+                      </h3>
+                      <div className="flex items-center space-x-3 text-gray-400">
+                        <div className="flex items-center">
+                          <Star className="w-4 h-4 text-yellow-500 mr-1" />
+                          <span className="text-sm">{repo.stars.toLocaleString()}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <GitFork className="w-4 h-4 mr-1" />
+                          <span className="text-sm">{repo.forks.toLocaleString()}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <GitFork className="w-4 h-4 mr-1" />
-                      <span className="text-sm">{repo.forks.toLocaleString()}</span>
+                    
+                    <p className="text-gray-300 mb-4">{repo.description}</p>
+                    
+                    <div className="flex flex-wrap items-center gap-2">
+                      {repo.language && (
+                        <span className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-full">
+                          {repo.language}
+                        </span>
+                      )}
+                      {repo.tags.map((tag, index) => (
+                        <span key={index} className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </div>
-                
-                <p className="text-gray-300 mb-4">{repo.description}</p>
-                
-                <div className="flex flex-wrap items-center gap-2">
-                  {repo.language && (
-                    <span className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-full">
-                      {repo.language}
-                    </span>
-                  )}
-                  {repo.tags.map((tag, index) => (
-                    <span key={index} className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                ))}
               </div>
-            ))}
+            ) : (
+              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-white mb-2">No repositories match your filter</h3>
+                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedCategory('all')}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" /> Clear filters
+                </Button>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No repositories match your filter</h3>
-            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-            <Button 
-              variant="outline" 
-              onClick={() => setSelectedCategory('All')}
-              className="flex items-center gap-2"
-            >
-              <X className="h-4 w-4" /> Clear filters
-            </Button>
-          </div>
-        )}
-        
-        {/* Guidelines Section */}
-        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
-          <h2 className="text-2xl font-bold mb-4 text-white">GitHub Security Tips</h2>
-          <ul className="space-y-4">
-            <li className="flex gap-3">
-              <Shield className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Check activity and maintenance</p>
-                <p className="text-gray-400">Look for repositories with recent commits and active maintenance.</p>
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <Star className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Review stars and forks</p>
-                <p className="text-gray-400">Higher numbers often indicate more reliable and well-tested tools.</p>
-              </div>
-            </li>
-            <li className="flex gap-3">
-              <Code className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-              <div>
-                <p className="text-white font-medium">Examine documentation</p>
-                <p className="text-gray-400">Good security tools have clear documentation and usage examples.</p>
-              </div>
-            </li>
-          </ul>
         </div>
-      </div>
+      </section>
+      
+      {/* Guidelines Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-2xl font-bold mb-6 text-white">GitHub Security Tips</h2>
+            <ul className="space-y-4">
+              <li className="flex gap-3">
+                <Shield className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Check activity and maintenance</p>
+                  <p className="text-gray-400">Look for repositories with recent commits and active maintenance.</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <Star className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Review stars and forks</p>
+                  <p className="text-gray-400">Higher numbers often indicate more reliable and well-tested tools.</p>
+                </div>
+              </li>
+              <li className="flex gap-3">
+                <Code className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+                <div>
+                  <p className="text-white font-medium">Examine documentation</p>
+                  <p className="text-gray-400">Good security tools have clear documentation and usage examples.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
   )
 } 
