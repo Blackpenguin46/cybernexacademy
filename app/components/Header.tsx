@@ -101,14 +101,6 @@ const Header = () => {
                   <ul className="w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
                     <li>
                       <Link
-                        href="/community/feedback"
-                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                      >
-                        Submit Feedback
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
                         href="/community/github"
                         className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                       >
@@ -415,11 +407,6 @@ const Header = () => {
                 </button>
                 {activeDropdown === "community-mobile" && (
                   <ul className="pl-4 mt-2 space-y-2 border-l border-gray-800">
-                    <li>
-                      <Link href="/community/feedback" className="block py-1 text-gray-400 hover:text-white">
-                        Submit Feedback
-                      </Link>
-                    </li>
                     <li>
                       <Link href="/community/github" className="block py-1 text-gray-400 hover:text-white">
                         GitHub Repositories

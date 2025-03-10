@@ -369,7 +369,7 @@ export default function DashboardPage() {
             )}
           </div>
 
-          {/* Feedback Section */}
+          {/* Feedback Section - Make it more prominent */}
           <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg border border-gray-800">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center">
@@ -378,11 +378,18 @@ export default function DashboardPage() {
               </div>
               <button
                 onClick={() => setShowFeedback(!showFeedback)}
-                className="text-blue-500 hover:text-blue-400 text-sm"
+                className="px-4 py-1.5 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-sm transition-colors"
               >
-                {showFeedback ? 'Close' : 'Submit Feedback'}
+                {showFeedback ? 'Close Form' : 'Submit Feedback'}
               </button>
             </div>
+            
+            {!showFeedback && (
+              <p className="text-gray-400 mb-4">
+                We value your input! Help us improve CyberNex by sharing your thoughts, suggesting new features, or reporting issues.
+              </p>
+            )}
+            
             {showFeedback && <FeedbackForm />}
           </div>
         </div>
