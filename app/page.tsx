@@ -70,7 +70,7 @@ export default function Home() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
               {/* Learning Paths */}
-              <Link href="/academy/paths" className="group">
+              <Link href="/academy/roadmaps" className="group">
                 <Card className="bg-gray-900/50 backdrop-blur-sm border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 h-full">
                   <CardHeader>
                     <div className="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
@@ -86,7 +86,7 @@ export default function Home() {
               </Link>
 
               {/* Practice Labs */}
-              <Link href="/academy/labs" className="group">
+              <Link href="/academy/foundational" className="group">
                 <Card className="bg-gray-900/50 backdrop-blur-sm border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 h-full">
                   <CardHeader>
                     <div className="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
@@ -118,7 +118,7 @@ export default function Home() {
               </Link>
 
               {/* Security Tools */}
-              <Link href="/tools" className="group">
+              <Link href="/academy/tools" className="group">
                 <Card className="bg-gray-900/50 backdrop-blur-sm border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 h-full">
                   <CardHeader>
                     <div className="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
@@ -150,7 +150,7 @@ export default function Home() {
               </Link>
 
               {/* Certifications */}
-              <Link href="/certifications" className="group">
+              <Link href="/academy/courses" className="group">
                 <Card className="bg-gray-900/50 backdrop-blur-sm border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 h-full">
                   <CardHeader>
                     <div className="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
