@@ -158,7 +158,7 @@ export default function Navbar() {
             </Link>
             
             {navSections.map((section) => (
-              <div key={section.title} className="relative">
+              <div key={section.title} className="relative group">
                 <div className="flex items-center">
                   <Link
                     href={`/${section.id}`}
@@ -177,9 +177,10 @@ export default function Navbar() {
                         ? 'text-neon-blue bg-neon-blue/5' 
                         : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
                     }`}
-                    onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
-                    onMouseEnter={() => setActiveDropdown(section.id)}
-                    onMouseLeave={() => setActiveDropdown(null)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveDropdown(activeDropdown === section.id ? null : section.id);
+                    }}
                   >
                     <motion.div 
                       animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
@@ -198,8 +199,6 @@ export default function Navbar() {
                       exit="hidden"
                       variants={dropdownVariants}
                       className="absolute z-10 left-0 mt-1 w-56 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
-                      onMouseEnter={() => setActiveDropdown(section.id)}
-                      onMouseLeave={() => setActiveDropdown(null)}
                     >
                       {/* Top accent line */}
                       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue/60 to-transparent"></div>
@@ -214,6 +213,7 @@ export default function Navbar() {
                                 ? 'text-neon-blue bg-neon-blue/5' 
                                 : 'text-gray-300'
                             } transition-colors duration-200`}
+                            onClick={() => setActiveDropdown(null)}
                           >
                             <span className="ml-2">{link.name}</span>
                           </Link>
