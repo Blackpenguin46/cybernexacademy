@@ -1,215 +1,241 @@
-import { BookOpen, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Star, Clock } from "lucide-react"
+import { GraduationCap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, BookOpen, Laptop } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+interface Resource {
+  name: string
+  description: string
+  url: string
+  type: string
+}
+
+interface ResourceWithFree extends Resource {
+  free: boolean
+}
+
+interface ResourceWithAuthor extends Resource {
+  author: string
+}
+
+interface ResourceCategory {
+  title: string
+  icon: any
+  resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
+}
+
+function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
+  return 'author' in resource;
+}
+
+function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithFree {
+  return 'free' in resource;
+}
+
 export default function CoursesPage() {
-  const featuredCourses = [
+  const resourceCategories: ResourceCategory[] = [
     {
-      title: "Complete Cybersecurity Bootcamp",
-      level: "Beginner to Intermediate",
-      duration: "6 months",
-      rating: 4.8,
-      students: "15,000+",
-      description: "Comprehensive cybersecurity training covering fundamentals to advanced topics",
-      topics: [
-        "Security Fundamentals",
-        "Network Security",
-        "Web Security",
-        "Cryptography",
-        "Incident Response",
-        "Ethical Hacking"
-      ],
-      includes: [
-        "80+ Hours of Video",
-        "300+ Practice Labs",
-        "Certificate of Completion",
-        "Career Support"
-      ],
-      price: "$999"
-    },
-    {
-      title: "Advanced Penetration Testing",
-      level: "Advanced",
-      duration: "3 months",
-      rating: 4.9,
-      students: "8,000+",
-      description: "Master advanced penetration testing techniques and methodologies",
-      topics: [
-        "Advanced Exploitation",
-        "Web App Testing",
-        "Network Testing",
-        "Mobile Security",
-        "Cloud Security",
-        "Report Writing"
-      ],
-      includes: [
-        "40+ Hours of Video",
-        "150+ Practice Labs",
-        "Certificate of Completion",
-        "Private Community"
-      ],
-      price: "$799"
-    },
-    {
-      title: "Security Operations & Incident Response",
-      level: "Intermediate",
-      duration: "4 months",
-      rating: 4.7,
-      students: "10,000+",
-      description: "Learn to detect, analyze, and respond to security incidents",
-      topics: [
-        "SIEM Implementation",
-        "Threat Detection",
-        "Incident Handling",
-        "Digital Forensics",
-        "Threat Hunting",
-        "SOC Operations"
-      ],
-      includes: [
-        "60+ Hours of Video",
-        "200+ Practice Labs",
-        "Certificate of Completion",
-        "Mentorship"
-      ],
-      price: "$899"
-    }
-  ]
-
-  const courseCategories = [
-    {
-      name: "Offensive Security",
-      icon: Target,
-      courses: [
+      title: "Web Security Courses",
+      icon: Lock,
+      resources: [
         {
-          title: "Web Application Hacking",
-          duration: "8 weeks",
-          level: "Intermediate",
-          price: "$499"
+          name: "Web Security Academy",
+          description: "Free, online web security training from PortSwigger",
+          url: "https://portswigger.net/web-security",
+          type: "Interactive Course",
+          free: true
         },
         {
-          title: "Mobile Security Testing",
-          duration: "6 weeks",
-          level: "Intermediate",
-          price: "$449"
+          name: "OWASP Top 10 Course",
+          description: "Learn about the most critical web security risks",
+          url: "https://owasp.org/www-project-top-ten",
+          type: "Self-paced Course",
+          free: true
         },
         {
-          title: "Advanced Exploit Development",
-          duration: "12 weeks",
-          level: "Advanced",
-          price: "$899"
+          name: "Advanced Web Attacks and Exploitation",
+          description: "Advanced web application security course by Offensive Security",
+          url: "https://www.offensive-security.com/awae-oswe",
+          type: "Certification Course",
+          free: false
+        },
+        {
+          name: "Web Application Penetration Testing",
+          description: "Comprehensive web pentesting course by eLearnSecurity",
+          url: "https://elearnsecurity.com/product/ewptx-certification",
+          type: "Certification Course",
+          free: false
         }
       ]
     },
     {
-      name: "Defensive Security",
-      icon: Shield,
-      courses: [
+      title: "Network Security Courses",
+      icon: Network,
+      resources: [
         {
-          title: "Security Operations Center",
-          duration: "10 weeks",
-          level: "Intermediate",
-          price: "$599"
+          name: "Practical Network Penetration Testing",
+          description: "Hands-on network security and pentesting course",
+          url: "https://www.offensive-security.com/pen300-osep",
+          type: "Advanced Course",
+          free: false
         },
         {
-          title: "Malware Analysis",
-          duration: "8 weeks",
-          level: "Advanced",
-          price: "$699"
+          name: "Network Defense Essentials",
+          description: "Learn network security fundamentals and defense strategies",
+          url: "https://www.sans.org/sec401",
+          type: "Professional Course",
+          free: false
         },
         {
-          title: "Digital Forensics",
-          duration: "8 weeks",
-          level: "Intermediate",
-          price: "$549"
+          name: "Wireshark University",
+          description: "Official Wireshark certification training",
+          url: "https://www.wireshark.org/training",
+          type: "Technical Course",
+          free: false
+        },
+        {
+          name: "Network Security 101",
+          description: "TryHackMe's network security fundamentals path",
+          url: "https://tryhackme.com/path/outline/network-fundamentals",
+          type: "Interactive Course",
+          free: false
         }
       ]
     },
     {
-      name: "Cloud Security",
-      icon: Server,
-      courses: [
-        {
-          title: "AWS Security",
-          duration: "6 weeks",
-          level: "Intermediate",
-          price: "$449"
-        },
-        {
-          title: "Azure Security",
-          duration: "6 weeks",
-          level: "Intermediate",
-          price: "$449"
-        },
-        {
-          title: "Cloud Security Architecture",
-          duration: "10 weeks",
-          level: "Advanced",
-          price: "$799"
-        }
-      ]
-    },
-    {
-      name: "Application Security",
+      title: "Malware Analysis & Reverse Engineering",
       icon: Code,
-      courses: [
+      resources: [
         {
-          title: "Secure Coding Practices",
-          duration: "8 weeks",
-          level: "Intermediate",
-          price: "$499"
+          name: "Practical Malware Analysis & Triage",
+          description: "SANS course on malware analysis fundamentals",
+          url: "https://www.sans.org/sec402",
+          type: "Professional Course",
+          free: false
         },
         {
-          title: "DevSecOps Implementation",
-          duration: "10 weeks",
-          level: "Advanced",
-          price: "$699"
+          name: "Reverse Engineering Malware",
+          description: "Advanced malware analysis and reverse engineering",
+          url: "https://www.sans.org/sec760",
+          type: "Advanced Course",
+          free: false
         },
         {
-          title: "Container Security",
-          duration: "6 weeks",
-          level: "Intermediate",
-          price: "$449"
+          name: "Binary Analysis Fundamentals",
+          description: "HackTheBox Academy's reverse engineering course",
+          url: "https://academy.hackthebox.com/course/preview/reverse-engineering",
+          type: "Interactive Course",
+          free: false
+        },
+        {
+          name: "Malware Analysis for Beginners",
+          description: "Learn malware analysis basics with practical labs",
+          url: "https://malwareunicorn.org/workshops/re101.html",
+          type: "Workshop",
+          free: true
         }
       ]
-    }
-  ]
-
-  const certPrep = [
-    {
-      cert: "OSCP",
-      duration: "12 weeks",
-      description: "Comprehensive preparation for the OSCP certification exam",
-      includes: [
-        "Practice Labs",
-        "Mock Exams",
-        "Study Guide",
-        "Support"
-      ],
-      price: "$999"
     },
     {
-      cert: "CISSP",
-      duration: "16 weeks",
-      description: "Complete preparation program for the CISSP certification",
-      includes: [
-        "Video Lectures",
-        "Practice Tests",
-        "Study Materials",
-        "Mentoring"
-      ],
-      price: "$1,299"
+      title: "Cloud Security Courses",
+      icon: Server,
+      resources: [
+        {
+          name: "AWS Security Specialty",
+          description: "Official AWS cloud security certification course",
+          url: "https://aws.amazon.com/certification/security-specialty",
+          type: "Certification Course",
+          free: false
+        },
+        {
+          name: "Azure Security Engineer",
+          description: "Microsoft's Azure security certification path",
+          url: "https://learn.microsoft.com/certifications/azure-security-engineer",
+          type: "Certification Course",
+          free: false
+        },
+        {
+          name: "Cloud Security Fundamentals",
+          description: "INE's cloud security basics course",
+          url: "https://ine.com/learning/paths/cloud-security",
+          type: "Video Course",
+          free: false
+        },
+        {
+          name: "Container Security Essentials",
+          description: "Learn container and Kubernetes security",
+          url: "https://www.practical-devsecops.com/container-security",
+          type: "Technical Course",
+          free: false
+        }
+      ]
     },
     {
-      cert: "Security+",
-      duration: "8 weeks",
-      description: "Structured learning path for CompTIA Security+ certification",
-      includes: [
-        "Video Content",
-        "Practice Exams",
-        "Lab Access",
-        "Community"
-      ],
-      price: "$499"
+      title: "Incident Response & Forensics",
+      icon: Flame,
+      resources: [
+        {
+          name: "Digital Forensics Essentials",
+          description: "SANS digital forensics and incident response course",
+          url: "https://www.sans.org/sec504",
+          type: "Professional Course",
+          free: false
+        },
+        {
+          name: "Memory Forensics with Volatility",
+          description: "Learn memory analysis techniques and tools",
+          url: "https://github.com/volatilityfoundation/volatility/wiki",
+          type: "Technical Guide",
+          free: true
+        },
+        {
+          name: "Advanced Incident Response",
+          description: "Enterprise incident response and threat hunting",
+          url: "https://www.sans.org/sec508",
+          type: "Advanced Course",
+          free: false
+        },
+        {
+          name: "Forensics Fundamentals",
+          description: "TryHackMe's digital forensics learning path",
+          url: "https://tryhackme.com/path/outline/forensics",
+          type: "Interactive Course",
+          free: false
+        }
+      ]
+    },
+    {
+      title: "Specialized Security Courses",
+      icon: Target,
+      resources: [
+        {
+          name: "Mobile Security Testing",
+          description: "Learn mobile application security testing",
+          url: "https://mobsf.github.io/docs",
+          type: "Technical Guide",
+          free: true
+        },
+        {
+          name: "IoT Security Fundamentals",
+          description: "Understanding IoT security challenges and testing",
+          url: "https://www.pentesteracademy.com/course?id=49",
+          type: "Video Course",
+          free: false
+        },
+        {
+          name: "Car Hacking Course",
+          description: "Automotive security testing and research",
+          url: "https://carhacking.tools",
+          type: "Specialized Course",
+          free: false
+        },
+        {
+          name: "Hardware Security",
+          description: "Introduction to hardware security and testing",
+          url: "https://www.riscure.com/academy",
+          type: "Technical Course",
+          free: false
+        }
+      ]
     }
   ]
 
@@ -222,217 +248,66 @@ export default function CoursesPage() {
         <div className="container relative z-20">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <BookOpen className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Courses</span>
+              <GraduationCap className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">Security Courses</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Expert-Led Cybersecurity Courses
+              Cybersecurity Training Courses
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Learn from industry experts through structured courses and hands-on labs.
+              Explore curated cybersecurity courses from leading platforms and training providers.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Featured Courses Section */}
+      {/* Resources Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Featured Courses
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {featuredCourses.map((course, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-semibold text-white">{course.title}</h3>
-                        <span className="text-blue-500 font-bold">{course.price}</span>
+            {resourceCategories.map((category, index) => (
+              <div key={index} className="mb-16 last:mb-0">
+                <div className="flex items-center mb-8">
+                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
+                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {category.resources.map((resource, resourceIndex) => (
+                    <a
+                      key={resourceIndex}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
+                          {resource.name}
+                        </h3>
+                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
+                          {resource.type}
+                        </span>
                       </div>
-                      <div className="flex items-center space-x-4 text-sm text-gray-400">
-                        <div className="flex items-center">
-                          <Star className="w-4 h-4 text-yellow-500 mr-1" />
-                          {course.rating}
+                      <p className="text-sm text-gray-400 mb-3">
+                        {resource.description}
+                      </p>
+                      {hasAuthor(resource) && (
+                        <div className="text-sm text-blue-500">
+                          By {resource.author}
                         </div>
-                        <div>{course.students} students</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between text-sm mb-2">
-                        <div className="text-blue-500">{course.level}</div>
-                        <div className="flex items-center text-gray-400">
-                          <Clock className="w-4 h-4 mr-1" />
-                          {course.duration}
-                        </div>
-                      </div>
-                      <p className="text-gray-400 text-sm">{course.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">What You'll Learn</div>
-                      <div className="grid grid-cols-2 gap-2">
-                        {course.topics.map((topic, topicIndex) => (
-                          <div
-                            key={topicIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
-                            {topic}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Course Includes</div>
-                      <div className="flex flex-wrap gap-2">
-                        {course.includes.map((item, itemIndex) => (
-                          <span
-                            key={itemIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {item}
+                      )}
+                      {hasFree(resource) && (
+                        <div className="mt-2">
+                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
+                            {resource.free ? 'Free' : 'Paid'}
                           </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Enroll Now
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Course Categories Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Course Categories
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              {courseCategories.map((category, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-blue-600/10 rounded-lg">
-                        <category.icon className="w-6 h-6 text-blue-500" />
-                      </div>
-                      <h3 className="text-xl font-semibold text-white">{category.name}</h3>
-                    </div>
-                    <div className="space-y-4">
-                      {category.courses.map((course, courseIndex) => (
-                        <div
-                          key={courseIndex}
-                          className="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg"
-                        >
-                          <div>
-                            <div className="font-medium text-white mb-1">{course.title}</div>
-                            <div className="flex items-center space-x-3 text-sm">
-                              <span className="text-gray-400">{course.duration}</span>
-                              <span className="text-blue-500">{course.level}</span>
-                            </div>
-                          </div>
-                          <div className="text-white font-bold">{course.price}</div>
                         </div>
-                      ))}
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      View All Courses
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
+                      )}
+                    </a>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certification Prep Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Certification Preparation
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {certPrep.map((program, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-semibold text-white">{program.cert}</h3>
-                        <span className="text-blue-500 font-bold">{program.price}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-400">
-                        <Clock className="w-4 h-4 mr-1" />
-                        {program.duration}
-                      </div>
-                    </div>
-                    <p className="text-gray-400 text-sm">{program.description}</p>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Program Includes</div>
-                      <div className="space-y-2">
-                        {program.includes.map((item, itemIndex) => (
-                          <div
-                            key={itemIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Start Preparation
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Ready to Start Learning?
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Choose your course and begin your cybersecurity journey today.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Browse All Courses
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Link href="/academy/roadmaps">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  View Learning Paths
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

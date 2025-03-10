@@ -1,196 +1,240 @@
-import { Microscope, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Compass, Users } from "lucide-react"
+import { Microscope, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, BookOpen, Laptop } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+interface Resource {
+  name: string
+  description: string
+  url: string
+  type: string
+}
+
+interface ResourceWithFree extends Resource {
+  free: boolean
+}
+
+interface ResourceWithAuthor extends Resource {
+  author: string
+}
+
+interface ResourceCategory {
+  title: string
+  icon: any
+  resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
+}
+
+function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
+  return 'author' in resource;
+}
+
+function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithFree {
+  return 'free' in resource;
+}
+
 export default function ResearchPage() {
-  const activeProjects = [
+  const resourceCategories: ResourceCategory[] = [
     {
-      title: "Zero-Day Vulnerability Research",
-      category: "Offensive Security",
+      title: "Academic Research Papers",
+      icon: BookOpen,
+      resources: [
+        {
+          name: "IEEE Security & Privacy",
+          description: "Leading academic journal for security research",
+          url: "https://www.computer.org/csdl/magazine/sp",
+          type: "Journal",
+          free: false
+        },
+        {
+          name: "USENIX Security Symposium",
+          description: "Premier venue for security research presentations",
+          url: "https://www.usenix.org/conference/usenixsecurity23",
+          type: "Conference",
+          free: true
+        },
+        {
+          name: "ACM CCS Proceedings",
+          description: "Conference on Computer and Communications Security",
+          url: "https://dl.acm.org/conference/ccs",
+          type: "Conference",
+          free: false
+        },
+        {
+          name: "arXiv Computer Security",
+          description: "Preprint repository for security research papers",
+          url: "https://arxiv.org/list/cs.CR/recent",
+          type: "Repository",
+          free: true
+        }
+      ]
+    },
+    {
+      title: "Vulnerability Research",
+      icon: Microscope,
+      resources: [
+        {
+          name: "Project Zero Blog",
+          description: "Google's security research team blog",
+          url: "https://googleprojectzero.blogspot.com",
+          type: "Research Blog",
+          free: true
+        },
+        {
+          name: "Exploit Database",
+          description: "Archive of public exploits and vulnerabilities",
+          url: "https://www.exploit-db.com",
+          type: "Database",
+          free: true
+        },
+        {
+          name: "Microsoft Security Research",
+          description: "Microsoft's security research and advisories",
+          url: "https://www.microsoft.com/security/blog/topic/research",
+          type: "Research Portal",
+          free: true
+        },
+        {
+          name: "NVD Database",
+          description: "National Vulnerability Database",
+          url: "https://nvd.nist.gov",
+          type: "Database",
+          free: true
+        }
+      ]
+    },
+    {
+      title: "Research Tools",
+      icon: Terminal,
+      resources: [
+        {
+          name: "Binary Ninja",
+          description: "Advanced reverse engineering platform",
+          url: "https://binary.ninja",
+          type: "Analysis Tool",
+          free: false
+        },
+        {
+          name: "Ghidra",
+          description: "Software reverse engineering framework by NSA",
+          url: "https://ghidra-sre.org",
+          type: "Analysis Tool",
+          free: true
+        },
+        {
+          name: "IDA Pro",
+          description: "Professional disassembler and debugger",
+          url: "https://hex-rays.com/ida-pro",
+          type: "Analysis Tool",
+          free: false
+        },
+        {
+          name: "Radare2",
+          description: "Open source reverse engineering framework",
+          url: "https://rada.re",
+          type: "Analysis Tool",
+          free: true
+        }
+      ]
+    },
+    {
+      title: "Threat Research",
       icon: Target,
-      status: "Active",
-      team: "5 Researchers",
-      duration: "6-12 months",
-      description: "Research into discovering and responsibly disclosing zero-day vulnerabilities in popular software and systems",
-      areas: [
-        "Binary Analysis",
-        "Fuzzing Techniques",
-        "Exploit Development",
-        "Vulnerability Assessment"
-      ],
-      requirements: [
-        "Advanced C/C++ Knowledge",
-        "Assembly Experience",
-        "Reverse Engineering Skills",
-        "Security Research Background"
+      resources: [
+        {
+          name: "MITRE ATT&CK",
+          description: "Knowledge base of adversary tactics and techniques",
+          url: "https://attack.mitre.org",
+          type: "Framework",
+          free: true
+        },
+        {
+          name: "VirusTotal Blog",
+          description: "Malware research and analysis blog",
+          url: "https://blog.virustotal.com",
+          type: "Research Blog",
+          free: true
+        },
+        {
+          name: "FireEye Threat Research",
+          description: "Advanced threat research and analysis",
+          url: "https://www.mandiant.com/resources/blog",
+          type: "Research Blog",
+          free: true
+        },
+        {
+          name: "Recorded Future Blog",
+          description: "Threat intelligence research and analysis",
+          url: "https://www.recordedfuture.com/blog",
+          type: "Research Blog",
+          free: true
+        }
       ]
     },
     {
-      title: "AI-Powered Threat Detection",
-      category: "Defensive Security",
+      title: "Research Communities",
       icon: Brain,
-      status: "Active",
-      team: "8 Researchers",
-      duration: "12-18 months",
-      description: "Development of machine learning models for advanced threat detection and anomaly identification",
-      areas: [
-        "Machine Learning",
-        "Behavioral Analysis",
-        "Pattern Recognition",
-        "Data Processing"
-      ],
-      requirements: [
-        "ML/AI Experience",
-        "Python Programming",
-        "Data Science Skills",
-        "Security Knowledge"
-      ]
-    },
-    {
-      title: "Quantum Cryptography",
-      category: "Cryptography",
-      icon: Lock,
-      status: "Active",
-      team: "6 Researchers",
-      duration: "24 months",
-      description: "Research into quantum-resistant cryptographic algorithms and post-quantum security",
-      areas: [
-        "Quantum Computing",
-        "Cryptographic Algorithms",
-        "Mathematical Analysis",
-        "Protocol Design"
-      ],
-      requirements: [
-        "Advanced Mathematics",
-        "Cryptography Knowledge",
-        "Quantum Computing Basics",
-        "Algorithm Design"
-      ]
-    }
-  ]
-
-  const researchAreas = [
-    {
-      name: "Malware Research",
-      description: "Analysis of emerging malware threats and development of detection techniques",
-      topics: [
+      resources: [
         {
-          title: "Advanced Persistent Threats",
-          focus: ["APT Analysis", "Attribution", "Campaign Tracking"]
+          name: "DEFCON Groups",
+          description: "Local security research and hacking communities",
+          url: "https://defcongroups.org",
+          type: "Community",
+          free: true
         },
         {
-          title: "Ransomware Evolution",
-          focus: ["Encryption Methods", "Distribution Channels", "Prevention"]
+          name: "Reddit /r/netsec",
+          description: "Network security news and discussion",
+          url: "https://reddit.com/r/netsec",
+          type: "Forum",
+          free: true
         },
         {
-          title: "Mobile Malware",
-          focus: ["Android Security", "iOS Threats", "App Analysis"]
+          name: "HackerOne Hacktivity",
+          description: "Public bug bounty reports and research",
+          url: "https://hackerone.com/hacktivity",
+          type: "Platform",
+          free: true
+        },
+        {
+          name: "Security Research Labs",
+          description: "Directory of academic security research labs",
+          url: "https://www.secureworldexpo.com/industry-news/top-cybersecurity-research-labs",
+          type: "Directory",
+          free: true
         }
       ]
     },
     {
-      name: "Cloud Security",
-      description: "Research into securing cloud infrastructure and services",
-      topics: [
+      title: "Emerging Technologies Research",
+      icon: Flame,
+      resources: [
         {
-          title: "Container Security",
-          focus: ["Runtime Security", "Image Analysis", "Orchestration"]
+          name: "Quantum Security Research",
+          description: "Post-quantum cryptography research",
+          url: "https://csrc.nist.gov/Projects/post-quantum-cryptography",
+          type: "Research Project",
+          free: true
         },
         {
-          title: "Serverless Security",
-          focus: ["Function Security", "Event Chains", "Access Control"]
+          name: "AI Security Research",
+          description: "Microsoft AI security research papers",
+          url: "https://www.microsoft.com/en-us/research/research-area/security-privacy-cryptography",
+          type: "Research Portal",
+          free: true
         },
         {
-          title: "Cloud Native Threats",
-          focus: ["Attack Vectors", "Defense Strategies", "Compliance"]
+          name: "Blockchain Security",
+          description: "Trail of Bits blockchain security research",
+          url: "https://blog.trailofbits.com/category/blockchain",
+          type: "Research Blog",
+          free: true
+        },
+        {
+          name: "IoT Security Research",
+          description: "Internet of Things security analysis",
+          url: "https://www.iotsecurityfoundation.org/tag/research",
+          type: "Research Portal",
+          free: true
         }
-      ]
-    },
-    {
-      name: "IoT Security",
-      description: "Investigation of security challenges in Internet of Things devices",
-      topics: [
-        {
-          title: "Firmware Security",
-          focus: ["Binary Analysis", "Vulnerability Research", "Updates"]
-        },
-        {
-          title: "Protocol Security",
-          focus: ["Communication", "Authentication", "Encryption"]
-        },
-        {
-          title: "Device Protection",
-          focus: ["Hardware Security", "Access Control", "Monitoring"]
-        }
-      ]
-    }
-  ]
-
-  const publications = [
-    {
-      title: "Advanced Persistent Threat Detection Using Machine Learning",
-      authors: "Research Team Alpha",
-      date: "2024",
-      type: "Technical Paper",
-      topics: ["Machine Learning", "APT Detection", "Network Security"],
-      impact: "High - Cited by 50+ papers"
-    },
-    {
-      title: "Zero-Day Vulnerability Discovery in Cloud Platforms",
-      authors: "Security Research Group",
-      date: "2024",
-      type: "Research Paper",
-      topics: ["Cloud Security", "Vulnerability Research", "Exploit Development"],
-      impact: "Medium - Implemented by major cloud providers"
-    },
-    {
-      title: "Quantum-Safe Cryptography Implementation Guide",
-      authors: "Cryptography Team",
-      date: "2023",
-      type: "White Paper",
-      topics: ["Quantum Computing", "Cryptography", "Security Protocols"],
-      impact: "High - Industry standard reference"
-    }
-  ]
-
-  const collaborations = [
-    {
-      partner: "Academic Institutions",
-      projects: [
-        "Advanced Cryptography Research",
-        "Security Education Programs",
-        "Student Research Opportunities"
-      ],
-      benefits: [
-        "Access to Research Facilities",
-        "Academic Publications",
-        "Knowledge Exchange"
-      ]
-    },
-    {
-      partner: "Industry Partners",
-      projects: [
-        "Threat Intelligence Sharing",
-        "Tool Development",
-        "Security Testing"
-      ],
-      benefits: [
-        "Real-world Applications",
-        "Industry Expertise",
-        "Resource Sharing"
-      ]
-    },
-    {
-      partner: "Research Labs",
-      projects: [
-        "Innovation Projects",
-        "Security Research",
-        "Technology Development"
-      ],
-      benefits: [
-        "Advanced Resources",
-        "Collaborative Research",
-        "Publication Opportunities"
       ]
     }
   ]
@@ -205,258 +249,65 @@ export default function ResearchPage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
               <Microscope className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Research Projects</span>
+              <span className="text-blue-500 font-medium">Security Research</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Research & Innovation
+              Cybersecurity Research Resources
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Join cutting-edge research projects and contribute to the future of cybersecurity.
+              Explore academic papers, research tools, and cutting-edge security research.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Active Projects Section */}
+      {/* Resources Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Active Research Projects
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {activeProjects.map((project, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-blue-600/10 rounded-lg">
-                        <project.icon className="w-6 h-6 text-blue-500" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                        <div className="text-blue-500 text-sm">{project.category}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center text-gray-400">
-                        <Users className="w-4 h-4 mr-1" />
-                        {project.team}
-                      </div>
-                      <span className="text-green-500">{project.status}</span>
-                    </div>
-                    <p className="text-gray-400 text-sm">{project.description}</p>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Research Areas</div>
-                      <div className="space-y-2">
-                        {project.areas.map((area, areaIndex) => (
-                          <div
-                            key={areaIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Flame className="w-4 h-4 text-blue-500 mr-2" />
-                            {area}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Requirements</div>
-                      <div className="flex flex-wrap gap-2">
-                        {project.requirements.map((req, reqIndex) => (
-                          <span
-                            key={reqIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {req}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Join Project
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
+            {resourceCategories.map((category, index) => (
+              <div key={index} className="mb-16 last:mb-0">
+                <div className="flex items-center mb-8">
+                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
+                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Research Areas Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Research Areas
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {researchAreas.map((area, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{area.name}</h3>
-                      <p className="text-gray-400 text-sm">{area.description}</p>
-                    </div>
-                    <div className="space-y-4">
-                      {area.topics.map((topic, topicIndex) => (
-                        <div key={topicIndex}>
-                          <div className="font-medium text-white mb-2">{topic.title}</div>
-                          <div className="grid grid-cols-2 gap-2">
-                            {topic.focus.map((item, itemIndex) => (
-                              <div
-                                key={itemIndex}
-                                className="flex items-center text-gray-300 text-sm"
-                              >
-                                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                                {item}
-                              </div>
-                            ))}
-                          </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {category.resources.map((resource, resourceIndex) => (
+                    <a
+                      key={resourceIndex}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
+                          {resource.name}
+                        </h3>
+                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
+                          {resource.type}
+                        </span>
+                      </div>
+                      <p className="text-sm text-gray-400 mb-3">
+                        {resource.description}
+                      </p>
+                      {hasAuthor(resource) && (
+                        <div className="text-sm text-blue-500">
+                          By {resource.author}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Publications Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Recent Publications
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {publications.map((pub, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{pub.title}</h3>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-400">{pub.authors}</span>
-                        <span className="text-blue-500">{pub.date}</span>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Research Topics</div>
-                      <div className="flex flex-wrap gap-2">
-                        {pub.topics.map((topic, topicIndex) => (
-                          <span
-                            key={topicIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {topic}
+                      )}
+                      {hasFree(resource) && (
+                        <div className="mt-2">
+                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
+                            {resource.free ? 'Free' : 'Paid'}
                           </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Publication Type</div>
-                      <div className="text-gray-300">{pub.type}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Impact</div>
-                      <div className="text-gray-300">{pub.impact}</div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Read Paper
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
+                        </div>
+                      )}
+                    </a>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Collaborations Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Research Collaborations
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {collaborations.map((collab, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <h3 className="text-xl font-semibold text-white">{collab.partner}</h3>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Active Projects</div>
-                      <div className="space-y-2">
-                        {collab.projects.map((project, projectIndex) => (
-                          <div
-                            key={projectIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
-                            {project}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Partnership Benefits</div>
-                      <div className="flex flex-wrap gap-2">
-                        {collab.benefits.map((benefit, benefitIndex) => (
-                          <span
-                            key={benefitIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {benefit}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Join Our Research Community
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Contribute to groundbreaking cybersecurity research and innovation.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Apply for Research Position
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Link href="/academy/advanced">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  View Advanced Courses
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

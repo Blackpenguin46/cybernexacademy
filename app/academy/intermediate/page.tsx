@@ -2,223 +2,220 @@ import { Layers, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, Ch
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+interface Resource {
+  name: string
+  description: string
+  url: string
+  type: string
+}
+
+interface ResourceWithFree extends Resource {
+  free: boolean
+}
+
+interface ResourceWithAuthor extends Resource {
+  author: string
+}
+
+interface ResourceCategory {
+  title: string
+  icon: any
+  resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
+}
+
+function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
+  return 'author' in resource;
+}
+
+function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithFree {
+  return 'free' in resource;
+}
+
 export default function IntermediatePage() {
-  const advancedTopics = [
+  const resourceCategories: ResourceCategory[] = [
     {
-      title: "Advanced Network Security",
-      icon: Network,
-      topics: [
-        "Network Protocol Analysis",
-        "IDS/IPS Implementation",
-        "VPN Technologies",
-        "Network Monitoring"
-      ],
-      duration: "4-5 weeks",
-      tools: [
-        "Wireshark",
-        "Snort",
-        "OpenVPN",
-        "Nagios"
-      ]
-    },
-    {
-      title: "Web Application Security",
+      title: "Web Security Tools & Platforms",
       icon: Lock,
-      topics: [
-        "OWASP Top 10",
-        "Web Vulnerabilities",
-        "Authentication Systems",
-        "API Security"
-      ],
-      duration: "5-6 weeks",
-      tools: [
-        "Burp Suite",
-        "OWASP ZAP",
-        "SQLMap",
-        "Postman"
+      resources: [
+        {
+          name: "Burp Suite Professional",
+          description: "Advanced web vulnerability scanner and testing toolkit",
+          url: "https://portswigger.net/burp/pro",
+          type: "Security Tool",
+          free: false
+        },
+        {
+          name: "OWASP ZAP",
+          description: "Integrated penetration testing tool for web applications",
+          url: "https://www.zaproxy.org",
+          type: "Security Tool",
+          free: true
+        },
+        {
+          name: "Web Security Academy",
+          description: "Advanced web security training from PortSwigger",
+          url: "https://portswigger.net/web-security",
+          type: "Training Platform",
+          free: true
+        },
+        {
+          name: "Hack The Box",
+          description: "Advanced penetration testing labs and challenges",
+          url: "https://www.hackthebox.com",
+          type: "Practice Platform",
+          free: false
+        }
       ]
     },
     {
-      title: "System Security",
-      icon: Server,
-      topics: [
-        "Advanced Windows Security",
-        "Linux Hardening",
-        "Access Controls",
-        "Security Policies"
-      ],
-      duration: "4-5 weeks",
-      tools: [
-        "Sysinternals",
-        "SELinux",
-        "AppArmor",
-        "Group Policy"
+      title: "Network Security Resources",
+      icon: Network,
+      resources: [
+        {
+          name: "Security Onion",
+          description: "Linux distribution for intrusion detection and network security monitoring",
+          url: "https://securityonionsolutions.com",
+          type: "Security Suite"
+        },
+        {
+          name: "Zeek (Bro)",
+          description: "Powerful network analysis framework",
+          url: "https://zeek.org",
+          type: "Network Monitor"
+        },
+        {
+          name: "Snort",
+          description: "Open-source intrusion prevention system",
+          url: "https://www.snort.org",
+          type: "IDS/IPS"
+        },
+        {
+          name: "Malcolm",
+          description: "Network traffic analysis tool suite",
+          url: "https://github.com/cisagov/Malcolm",
+          type: "Analysis Tool",
+          free: true
+        }
       ]
     },
     {
-      title: "Security Automation",
+      title: "Malware Analysis Tools",
       icon: Code,
-      topics: [
-        "Python for Security",
-        "Bash Scripting",
-        "PowerShell Security",
-        "Automation Tools"
-      ],
-      duration: "5-6 weeks",
-      tools: [
-        "Python Libraries",
-        "Ansible",
-        "PowerShell ISE",
-        "Git"
-      ]
-    }
-  ]
-
-  const handsonLabs = [
-    {
-      name: "Network Defense Lab",
-      description: "Practice defending networks against common attacks",
-      exercises: [
-        "Network Traffic Analysis",
-        "Firewall Configuration",
-        "IDS Setup & Tuning",
-        "Incident Response"
-      ],
-      duration: "2 weeks"
-    },
-    {
-      name: "Web Security Testing",
-      description: "Identify and exploit web application vulnerabilities",
-      exercises: [
-        "SQL Injection",
-        "XSS Prevention",
-        "CSRF Protection",
-        "Security Headers"
-      ],
-      duration: "3 weeks"
-    },
-    {
-      name: "System Hardening",
-      description: "Implement system security controls and hardening measures",
-      exercises: [
-        "OS Hardening",
-        "Service Hardening",
-        "Access Control",
-        "Audit Logging"
-      ],
-      duration: "2 weeks"
-    },
-    {
-      name: "Security Automation",
-      description: "Automate security tasks and incident response",
-      exercises: [
-        "Log Analysis Scripts",
-        "Automated Scanning",
-        "Response Playbooks",
-        "Report Generation"
-      ],
-      duration: "3 weeks"
-    }
-  ]
-
-  const specializations = [
-    {
-      track: "Offensive Security",
-      description: "Focus on penetration testing and vulnerability assessment",
-      skills: [
-        "Web App Testing",
-        "Network Pentesting",
-        "Exploit Development",
-        "Social Engineering"
-      ],
-      certifications: [
-        "OSCP",
-        "PenTest+",
-        "eWPT",
-        "GPEN"
+      resources: [
+        {
+          name: "REMnux",
+          description: "Linux toolkit for reverse-engineering and analyzing malware",
+          url: "https://remnux.org",
+          type: "Linux Distro",
+          free: true
+        },
+        {
+          name: "Cuckoo Sandbox",
+          description: "Automated malware analysis system",
+          url: "https://cuckoosandbox.org",
+          type: "Analysis Tool",
+          free: true
+        },
+        {
+          name: "YARA",
+          description: "Pattern matching swiss knife for malware researchers",
+          url: "https://virustotal.github.io/yara",
+          type: "Analysis Tool",
+          free: true
+        },
+        {
+          name: "Ghidra",
+          description: "Software reverse engineering framework",
+          url: "https://ghidra-sre.org",
+          type: "RE Tool",
+          free: true
+        }
       ]
     },
     {
-      track: "Defensive Security",
-      description: "Specialize in threat detection and incident response",
-      skills: [
-        "Security Monitoring",
-        "Incident Handling",
-        "Malware Analysis",
-        "Digital Forensics"
-      ],
-      certifications: [
-        "GCIH",
-        "GCIA",
-        "GCFE",
-        "CCSP"
+      title: "Digital Forensics Tools",
+      icon: Server,
+      resources: [
+        {
+          name: "Autopsy",
+          description: "Digital forensics platform",
+          url: "https://www.autopsy.com",
+          type: "Forensics Tool",
+          free: true
+        },
+        {
+          name: "Volatility",
+          description: "Advanced memory forensics framework",
+          url: "https://www.volatilityfoundation.org",
+          type: "Memory Analysis"
+        },
+        {
+          name: "The Sleuth Kit",
+          description: "Collection of command line tools for disk forensics",
+          url: "https://www.sleuthkit.org",
+          type: "Forensics Suite"
+        },
+        {
+          name: "SANS DFIR",
+          description: "Digital forensics and incident response resources",
+          url: "https://www.sans.org/dfir",
+          type: "Training",
+          free: false
+        }
       ]
     },
     {
-      track: "Cloud Security",
-      description: "Master securing cloud infrastructure and applications",
-      skills: [
-        "AWS Security",
-        "Azure Security",
-        "Cloud Architecture",
-        "DevSecOps"
-      ],
-      certifications: [
-        "AWS Security",
-        "Azure Security",
-        "CCSK",
-        "CCSP"
-      ]
-    }
-  ]
-
-  const projects = [
-    {
-      title: "Security Monitoring System",
-      description: "Build a complete security monitoring solution",
-      objectives: [
-        "Set up log collection",
-        "Configure alerts",
-        "Create dashboards",
-        "Implement response procedures"
-      ],
-      tools: [
-        "ELK Stack",
-        "Wazuh",
-        "Grafana",
-        "Alerting Tools"
+      title: "Security Books & Documentation",
+      icon: Terminal,
+      resources: [
+        {
+          name: "The Web Application Hacker's Handbook",
+          description: "Advanced web application security testing guide",
+          url: "https://www.amazon.com/Web-Application-Hackers-Handbook-Exploiting/dp/1118026470",
+          type: "Book",
+          author: "Dafydd Stuttard & Marcus Pinto"
+        },
+        {
+          name: "Practical Malware Analysis",
+          description: "The hands-on guide to dissecting malicious software",
+          url: "https://www.amazon.com/Practical-Malware-Analysis-Hands-Dissecting/dp/1593272901",
+          type: "Book",
+          author: "Michael Sikorski & Andrew Honig"
+        },
+        {
+          name: "Red Team Field Manual",
+          description: "Compact guide for security testing",
+          url: "https://www.amazon.com/Rtfm-Red-Team-Field-Manual/dp/1494295504",
+          type: "Book",
+          author: "Ben Clark"
+        }
       ]
     },
     {
-      title: "Web Application Firewall",
-      description: "Develop and deploy a custom WAF solution",
-      objectives: [
-        "Rule development",
-        "Traffic analysis",
-        "Attack detection",
-        "Performance optimization"
-      ],
-      tools: [
-        "ModSecurity",
-        "NGINX",
-        "Regular Expressions",
-        "Python"
-      ]
-    },
-    {
-      title: "Automated Pentesting Framework",
-      description: "Create an automated security testing framework",
-      objectives: [
-        "Scanner integration",
-        "Report generation",
-        "Vulnerability assessment",
-        "Remediation tracking"
-      ],
-      tools: [
-        "Python",
-        "Nmap",
-        "Metasploit",
-        "Git"
+      title: "Online Training Platforms",
+      icon: Target,
+      resources: [
+        {
+          name: "PentesterLab PRO",
+          description: "Hands-on web penetration testing exercises",
+          url: "https://pentesterlab.com",
+          type: "Training Platform",
+          free: false
+        },
+        {
+          name: "TCM Security",
+          description: "Practical cybersecurity courses",
+          url: "https://tcm-sec.com",
+          type: "Training Platform",
+          free: false
+        },
+        {
+          name: "INE Security",
+          description: "Advanced security training and labs",
+          url: "https://ine.com/learning/areas/security",
+          type: "Training Platform",
+          free: false
+        }
       ]
     }
   ]
@@ -233,251 +230,65 @@ export default function IntermediatePage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
               <Layers className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Intermediate Learning</span>
+              <span className="text-blue-500 font-medium">Intermediate Resources</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Advance Your Security Skills
+              Advanced Security Tools & Resources
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Take your cybersecurity knowledge to the next level with advanced topics and hands-on practice.
+              A curated collection of intermediate-level cybersecurity tools, platforms, and learning materials.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Advanced Topics Section */}
+      {/* Resources Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Advanced Topics
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              {advancedTopics.map((topic, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-blue-600/10 rounded-lg">
-                        <topic.icon className="w-6 h-6 text-blue-500" />
+            {resourceCategories.map((category, index) => (
+              <div key={index} className="mb-16 last:mb-0">
+                <div className="flex items-center mb-8">
+                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
+                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {category.resources.map((resource, resourceIndex) => (
+                    <a
+                      key={resourceIndex}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
+                          {resource.name}
+                        </h3>
+                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
+                          {resource.type}
+                        </span>
                       </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-white">{topic.title}</h3>
-                        <div className="text-blue-500 text-sm">Duration: {topic.duration}</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Key Topics</div>
-                      <div className="space-y-2">
-                        {topic.topics.map((item, itemIndex) => (
-                          <div
-                            key={itemIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Tools & Technologies</div>
-                      <div className="flex flex-wrap gap-2">
-                        {topic.tools.map((tool, toolIndex) => (
-                          <span
-                            key={toolIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {tool}
+                      <p className="text-sm text-gray-400 mb-3">
+                        {resource.description}
+                      </p>
+                      {hasAuthor(resource) && (
+                        <div className="text-sm text-blue-500">
+                          By {resource.author}
+                        </div>
+                      )}
+                      {hasFree(resource) && (
+                        <div className="mt-2">
+                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
+                            {resource.free ? 'Free' : 'Paid'}
                           </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                        </div>
+                      )}
+                    </a>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Hands-on Labs Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Hands-on Labs
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              {handsonLabs.map((lab, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-semibold text-white">{lab.name}</h3>
-                        <span className="text-blue-500 text-sm">{lab.duration}</span>
-                      </div>
-                      <p className="text-gray-400 text-sm">{lab.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Lab Exercises</div>
-                      <div className="space-y-2">
-                        {lab.exercises.map((exercise, exerciseIndex) => (
-                          <div
-                            key={exerciseIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Wrench className="w-4 h-4 text-blue-500 mr-2" />
-                            {exercise}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Specialization Tracks Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Specialization Tracks
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {specializations.map((spec, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{spec.track}</h3>
-                      <p className="text-gray-400 text-sm">{spec.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Key Skills</div>
-                      <div className="space-y-2">
-                        {spec.skills.map((skill, skillIndex) => (
-                          <div
-                            key={skillIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Target className="w-4 h-4 text-blue-500 mr-2" />
-                            {skill}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Recommended Certifications</div>
-                      <div className="flex flex-wrap gap-2">
-                        {spec.certifications.map((cert, certIndex) => (
-                          <span
-                            key={certIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {cert}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Hands-on Projects
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {projects.map((project, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
-                      <p className="text-gray-400 text-sm">{project.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Project Objectives</div>
-                      <div className="space-y-2">
-                        {project.objectives.map((objective, objectiveIndex) => (
-                          <div
-                            key={objectiveIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
-                            {objective}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Tools Used</div>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tools.map((tool, toolIndex) => (
-                          <span
-                            key={toolIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {tool}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Start Project
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Ready to Level Up?
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Choose your specialization and start building advanced cybersecurity skills.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Start Learning
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Link href="/academy/advanced">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  Explore Advanced Track
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

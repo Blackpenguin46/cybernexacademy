@@ -2,233 +2,218 @@ import { Zap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, Check
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
+interface Resource {
+  name: string
+  description: string
+  url: string
+  type: string
+}
+
+interface ResourceWithFree extends Resource {
+  free: boolean
+}
+
+interface ResourceWithAuthor extends Resource {
+  author: string
+}
+
+interface ResourceCategory {
+  title: string
+  icon: any
+  resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
+}
+
+function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
+  return 'author' in resource;
+}
+
+function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithFree {
+  return 'free' in resource;
+}
+
 export default function AdvancedPage() {
-  const expertTopics = [
+  const resourceCategories: ResourceCategory[] = [
     {
-      title: "Advanced Exploit Development",
+      title: "Exploit Development Tools",
       icon: Code,
-      topics: [
-        "Binary Exploitation",
-        "Shellcode Development",
-        "Kernel Exploitation",
-        "Zero-Day Research"
-      ],
-      duration: "6-8 weeks",
-      tools: [
-        "IDA Pro",
-        "GDB/WinDbg",
-        "Immunity Debugger",
-        "Ghidra"
+      resources: [
+        {
+          name: "IDA Pro",
+          description: "Advanced multi-processor disassembler and debugger",
+          url: "https://hex-rays.com/ida-pro",
+          type: "Reverse Engineering",
+          free: false
+        },
+        {
+          name: "Binary Ninja",
+          description: "Reverse engineering platform",
+          url: "https://binary.ninja",
+          type: "Reverse Engineering",
+          free: false
+        },
+        {
+          name: "WinDbg Preview",
+          description: "Windows debugger for kernel and user mode",
+          url: "https://apps.microsoft.com/store/detail/windbg-preview/9PGJGD53TN86",
+          type: "Debugger",
+          free: true
+        },
+        {
+          name: "Frida",
+          description: "Dynamic instrumentation toolkit",
+          url: "https://frida.re",
+          type: "Instrumentation",
+          free: true
+        }
       ]
     },
     {
       title: "Advanced Malware Analysis",
       icon: Brain,
-      topics: [
-        "Advanced Static Analysis",
-        "Dynamic Analysis",
-        "Memory Forensics",
-        "Anti-Analysis Techniques"
-      ],
-      duration: "8-10 weeks",
-      tools: [
-        "x64dbg",
-        "Volatility",
-        "REMnux",
-        "Cuckoo Sandbox"
+      resources: [
+        {
+          name: "FireEye FLARE VM",
+          description: "Windows-based security distribution for malware analysis",
+          url: "https://github.com/mandiant/flare-vm",
+          type: "Analysis Suite",
+          free: true
+        },
+        {
+          name: "Ghidra",
+          description: "Software reverse engineering framework by NSA",
+          url: "https://ghidra-sre.org",
+          type: "Reverse Engineering",
+          free: true
+        },
+        {
+          name: "x64dbg",
+          description: "Open-source x64/x32 debugger for Windows",
+          url: "https://x64dbg.com",
+          type: "Debugger",
+          free: true
+        },
+        {
+          name: "Cutter",
+          description: "Free and open-source reverse engineering platform",
+          url: "https://cutter.re",
+          type: "Reverse Engineering",
+          free: true
+        }
       ]
     },
     {
       title: "Red Team Operations",
       icon: Target,
-      topics: [
-        "Advanced Persistence",
-        "Evasion Techniques",
-        "Command & Control",
-        "Infrastructure Design"
-      ],
-      duration: "10-12 weeks",
-      tools: [
-        "Cobalt Strike",
-        "Empire",
-        "Covenant",
-        "Custom C2"
-      ]
-    },
-    {
-      title: "Cloud Security Architecture",
-      icon: Server,
-      topics: [
-        "Zero Trust Architecture",
-        "Cloud Native Security",
-        "Container Security",
-        "Serverless Security"
-      ],
-      duration: "8-10 weeks",
-      tools: [
-        "AWS GuardDuty",
-        "Azure Sentinel",
-        "Kubernetes",
-        "Terraform"
-      ]
-    }
-  ]
-
-  const researchProjects = [
-    {
-      title: "Vulnerability Research",
-      description: "Conduct original security research and discover new vulnerabilities",
-      areas: [
-        "Protocol Analysis",
-        "Source Code Auditing",
-        "Fuzzing Techniques",
-        "Exploit Development"
-      ],
-      deliverables: [
-        "Research Paper",
-        "Proof of Concept",
-        "Security Advisory",
-        "Mitigation Strategy"
-      ]
-    },
-    {
-      title: "Advanced Defense Systems",
-      description: "Design and implement cutting-edge defense mechanisms",
-      areas: [
-        "AI-based Detection",
-        "Behavioral Analysis",
-        "Deception Technology",
-        "Zero Trust Implementation"
-      ],
-      deliverables: [
-        "System Architecture",
-        "Implementation Guide",
-        "Performance Analysis",
-        "Deployment Strategy"
-      ]
-    },
-    {
-      title: "Threat Intelligence",
-      description: "Develop advanced threat intelligence capabilities",
-      areas: [
-        "Threat Hunting",
-        "APT Analysis",
-        "Intelligence Gathering",
-        "Attribution Techniques"
-      ],
-      deliverables: [
-        "Intelligence Reports",
-        "IOC Database",
-        "Attribution Framework",
-        "Hunting Playbooks"
-      ]
-    }
-  ]
-
-  const specializedTracks = [
-    {
-      name: "Advanced Red Team Operations",
-      description: "Master advanced adversary simulation and red team methodologies",
-      modules: [
+      resources: [
         {
-          title: "Advanced Persistence",
-          topics: ["Rootkit Development", "Firmware Implants", "Custom Backdoors"]
+          name: "Cobalt Strike",
+          description: "Advanced adversary simulation platform",
+          url: "https://www.cobaltstrike.com",
+          type: "C2 Framework",
+          free: false
         },
         {
-          title: "Evasion Techniques",
-          topics: ["AV/EDR Evasion", "AMSI Bypass", "Process Injection"]
+          name: "Covenant",
+          description: ".NET command and control framework",
+          url: "https://github.com/cobbr/Covenant",
+          type: "C2 Framework",
+          free: true
         },
         {
-          title: "Infrastructure Design",
-          topics: ["C2 Architecture", "Domain Fronting", "Traffic Obfuscation"]
+          name: "Havoc C2",
+          description: "Modern and malleable post-exploitation command and control framework",
+          url: "https://github.com/HavocFramework/Havoc",
+          type: "C2 Framework",
+          free: true
+        },
+        {
+          name: "Sliver",
+          description: "Cross-platform adversary emulation/red team framework",
+          url: "https://github.com/BishopFox/sliver",
+          type: "C2 Framework",
+          free: true
         }
       ]
     },
     {
-      name: "Advanced Threat Detection",
-      description: "Develop expertise in advanced threat detection and response",
-      modules: [
+      title: "Advanced Research Materials",
+      icon: Terminal,
+      resources: [
         {
-          title: "Advanced Analytics",
-          topics: ["Machine Learning", "Behavioral Analysis", "Anomaly Detection"]
+          name: "Windows Internals",
+          description: "Deep dive into Windows architecture and internals",
+          url: "https://www.amazon.com/Windows-Internals-Part-architecture-management/dp/0735684189",
+          type: "Book",
+          author: "Pavel Yosifovich, Alex Ionescu"
         },
         {
-          title: "Threat Hunting",
-          topics: ["Hunt Team Operations", "TTP Analysis", "Threat Intelligence"]
+          name: "The Shellcoder's Handbook",
+          description: "Guide to discovering and exploiting security holes",
+          url: "https://www.amazon.com/Shellcoders-Handbook-Discovering-Exploiting-Security/dp/047008023X",
+          type: "Book",
+          author: "Chris Anley et al."
         },
         {
-          title: "Incident Response",
-          topics: ["Advanced Forensics", "Memory Analysis", "Timeline Analysis"]
+          name: "A Guide to Kernel Exploitation",
+          description: "Attacking the core",
+          url: "https://www.amazon.com/Guide-Kernel-Exploitation-Attacking-Core/dp/1597494860",
+          type: "Book",
+          author: "Enrico Perla, Massimiliano Oldani"
         }
       ]
     },
     {
-      name: "Security Research & Development",
-      description: "Focus on security research and tool development",
-      modules: [
+      title: "Advanced Security Research",
+      icon: Flame,
+      resources: [
         {
-          title: "Research Methodology",
-          topics: ["Vulnerability Research", "Exploit Development", "Tool Creation"]
+          name: "Project Zero Blog",
+          description: "Google's security research blog",
+          url: "https://googleprojectzero.blogspot.com",
+          type: "Research Blog",
+          free: true
         },
         {
-          title: "Advanced Programming",
-          topics: ["Low-level Programming", "Reverse Engineering", "Automation"]
+          name: "Microsoft Security Research",
+          description: "Microsoft's security research and advisories",
+          url: "https://www.microsoft.com/security/blog/topic/research",
+          type: "Research Portal",
+          free: true
         },
         {
-          title: "Documentation",
-          topics: ["Technical Writing", "Research Papers", "Presentations"]
+          name: "Phrack Magazine",
+          description: "Underground computer security publication",
+          url: "http://www.phrack.org",
+          type: "Publication",
+          free: true
         }
       ]
-    }
-  ]
-
-  const certifications = [
-    {
-      name: "OSEE",
-      description: "Offensive Security Exploitation Expert",
-      topics: [
-        "Advanced Windows Exploitation",
-        "Kernel Exploitation",
-        "Browser Exploitation",
-        "Custom Exploit Development"
-      ],
-      prerequisites: [
-        "OSCP Required",
-        "Strong Programming Skills",
-        "x86/x64 Assembly",
-        "Windows Internals"
-      ]
     },
     {
-      name: "GXPN",
-      description: "GIAC Exploit Researcher and Advanced Penetration Tester",
-      topics: [
-        "Advanced Penetration Testing",
-        "Exploit Writing",
-        "Advanced Web Attacks",
-        "ROP Chain Development"
-      ],
-      prerequisites: [
-        "GPEN Recommended",
-        "C/C++ Programming",
-        "Networking Knowledge",
-        "Security Fundamentals"
-      ]
-    },
-    {
-      name: "CREST CCSAS",
-      description: "CREST Certified Security Architecture & Senior Security Architect",
-      topics: [
-        "Enterprise Architecture",
-        "Security Design",
-        "Risk Assessment",
-        "Compliance Frameworks"
-      ],
-      prerequisites: [
-        "CISSP Recommended",
-        "Architecture Experience",
-        "Security Experience",
-        "Technical Leadership"
+      title: "Advanced Training & Certifications",
+      icon: Shield,
+      resources: [
+        {
+          name: "Offensive Security OSEE",
+          description: "Advanced Windows exploitation course",
+          url: "https://www.offensive-security.com/awe-osee",
+          type: "Certification",
+          free: false
+        },
+        {
+          name: "SANS SEC760",
+          description: "Advanced exploit development for penetration testers",
+          url: "https://www.sans.org/cyber-security-courses/advanced-exploit-development-penetration-testers",
+          type: "Training",
+          free: false
+        },
+        {
+          name: "Corelan Advanced Training",
+          description: "Advanced exploit development training",
+          url: "https://www.corelan-training.com",
+          type: "Training",
+          free: false
+        }
       ]
     }
   ]
@@ -243,256 +228,65 @@ export default function AdvancedPage() {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
               <Zap className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Advanced Learning</span>
+              <span className="text-blue-500 font-medium">Advanced Resources</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Master Advanced Security Skills
+              Expert-Level Security Resources
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Develop expert-level cybersecurity skills through advanced research, specialized training, and hands-on projects.
+              A curated collection of advanced cybersecurity tools, research materials, and specialized resources.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Expert Topics Section */}
+      {/* Resources Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Expert Topics
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              {expertTopics.map((topic, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 bg-blue-600/10 rounded-lg">
-                        <topic.icon className="w-6 h-6 text-blue-500" />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-white">{topic.title}</h3>
-                        <div className="text-blue-500 text-sm">Duration: {topic.duration}</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Advanced Topics</div>
-                      <div className="space-y-2">
-                        {topic.topics.map((item, itemIndex) => (
-                          <div
-                            key={itemIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Flame className="w-4 h-4 text-blue-500 mr-2" />
-                            {item}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Professional Tools</div>
-                      <div className="flex flex-wrap gap-2">
-                        {topic.tools.map((tool, toolIndex) => (
-                          <span
-                            key={toolIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {tool}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+            {resourceCategories.map((category, index) => (
+              <div key={index} className="mb-16 last:mb-0">
+                <div className="flex items-center mb-8">
+                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
+                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Research Projects Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Research Projects
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {researchProjects.map((project, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{project.title}</h3>
-                      <p className="text-gray-400 text-sm">{project.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Research Areas</div>
-                      <div className="space-y-2">
-                        {project.areas.map((area, areaIndex) => (
-                          <div
-                            key={areaIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Target className="w-4 h-4 text-blue-500 mr-2" />
-                            {area}
-                          </div>
-                        ))}
+                <div className="grid gap-6 md:grid-cols-2">
+                  {category.resources.map((resource, resourceIndex) => (
+                    <a
+                      key={resourceIndex}
+                      href={resource.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
+                          {resource.name}
+                        </h3>
+                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
+                          {resource.type}
+                        </span>
                       </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Deliverables</div>
-                      <div className="flex flex-wrap gap-2">
-                        {project.deliverables.map((deliverable, deliverableIndex) => (
-                          <span
-                            key={deliverableIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {deliverable}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Start Research
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Specialized Tracks Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Specialized Tracks
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {specializedTracks.map((track, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{track.name}</h3>
-                      <p className="text-gray-400 text-sm">{track.description}</p>
-                    </div>
-                    <div className="space-y-4">
-                      {track.modules.map((module, moduleIndex) => (
-                        <div key={moduleIndex}>
-                          <div className="font-medium text-white mb-2">{module.title}</div>
-                          <div className="space-y-2">
-                            {module.topics.map((topic, topicIndex) => (
-                              <div
-                                key={topicIndex}
-                                className="flex items-center text-gray-300 text-sm"
-                              >
-                                <CheckCircle2 className="w-4 h-4 text-blue-500 mr-2" />
-                                {topic}
-                              </div>
-                            ))}
-                          </div>
+                      <p className="text-sm text-gray-400 mb-3">
+                        {resource.description}
+                      </p>
+                      {hasAuthor(resource) && (
+                        <div className="text-sm text-blue-500">
+                          By {resource.author}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Expert Certifications Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Expert Certifications
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {certifications.map((cert, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{cert.name}</h3>
-                      <p className="text-gray-400 text-sm">{cert.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Key Topics</div>
-                      <div className="space-y-2">
-                        {cert.topics.map((topic, topicIndex) => (
-                          <div
-                            key={topicIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Flame className="w-4 h-4 text-blue-500 mr-2" />
-                            {topic}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Prerequisites</div>
-                      <div className="flex flex-wrap gap-2">
-                        {cert.prerequisites.map((prereq, prereqIndex) => (
-                          <span
-                            key={prereqIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {prereq}
+                      )}
+                      {hasFree(resource) && (
+                        <div className="mt-2">
+                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
+                            {resource.free ? 'Free' : 'Paid'}
                           </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Learn More
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
+                        </div>
+                      )}
+                    </a>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Ready for Expert-Level Training?
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Take your cybersecurity expertise to the highest level with advanced research and specialized training.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Start Advanced Track
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Link href="/academy/research">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  View Research Projects
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
