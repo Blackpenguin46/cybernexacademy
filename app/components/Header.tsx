@@ -55,14 +55,6 @@ const Header = () => {
     checkUser()
   }, [])
 
-  const toggleDropdown = (dropdown: string) => {
-    if (activeDropdown === dropdown) {
-      setActiveDropdown(null)
-    } else {
-      setActiveDropdown(dropdown)
-    }
-  }
-
   const handleSignOut = async () => {
     try {
       await supabase.auth.signOut()
@@ -92,243 +84,216 @@ const Header = () => {
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "community" ? "text-blue-500" : ""
                 }`}
-                onClick={() => toggleDropdown("community")}
+                onMouseEnter={() => setActiveDropdown("community")}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
                 Community{" "}
                 <ChevronDown
                   className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "community" ? "rotate-180" : ""}`}
                 />
               </button>
-              {activeDropdown === "community" && (
-                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
-                  <li>
-                    <Link
-                      href="/community/reddit"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Reddit
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/discord"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Discord
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/substack"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Substack
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/linkedin"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      LinkedIn
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/skool"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Skool
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/instagram"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Instagram
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/twitter"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Twitter/X
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/youtube"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      YouTube
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/telegram"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Telegram
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/mastodon"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Mastodon
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/facebook"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Facebook Groups
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/community/forums"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Forums & Blogs
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              <div
+                className="absolute left-0 mt-2"
+                onMouseEnter={() => setActiveDropdown("community")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                {activeDropdown === "community" && (
+                  <ul className="w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
+                    <li>
+                      <Link
+                        href="/community/reddit"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Reddit
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/community/discord"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Discord
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/community/substack"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Substack
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/community/linkedin"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        LinkedIn
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/community/skool"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Skool
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/community/forums"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Forums & Blogs
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </li>
             <li className="relative group">
               <button
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "insights" ? "text-blue-500" : ""
                 }`}
-                onClick={() => toggleDropdown("insights")}
+                onMouseEnter={() => setActiveDropdown("insights")}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
                 Insights{" "}
                 <ChevronDown
                   className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "insights" ? "rotate-180" : ""}`}
                 />
               </button>
-              {activeDropdown === "insights" && (
-                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
-                  <li>
-                    <Link
-                      href="/insights/news"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      News & Updates
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/research"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Research Papers
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/cases"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Case Studies
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/threats"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Threat Reports
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/industry"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Industry Trends
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/insights/practices"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Best Practices
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              <div
+                className="absolute left-0 mt-2"
+                onMouseEnter={() => setActiveDropdown("insights")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                {activeDropdown === "insights" && (
+                  <ul className="w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
+                    <li>
+                      <Link
+                        href="/insights/news"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        News & Updates
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/insights/research"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Research Papers
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/insights/cases"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Case Studies
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/insights/threats"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Threat Reports
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/insights/industry"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Industry Trends
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/insights/practices"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Best Practices
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </li>
             <li className="relative group">
               <button
                 className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                   activeDropdown === "academy" ? "text-blue-500" : ""
                 }`}
-                onClick={() => toggleDropdown("academy")}
+                onMouseEnter={() => setActiveDropdown("academy")}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
                 Academy{" "}
                 <ChevronDown
                   className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "academy" ? "rotate-180" : ""}`}
                 />
               </button>
-              {activeDropdown === "academy" && (
-                <ul className="absolute left-0 mt-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
-                  <li>
-                    <Link
-                      href="/academy/foundational"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Foundational Learning
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/intermediate"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Intermediate Learning
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/advanced"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Advanced Learning
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/roadmaps"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Learning Roadmaps
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/courses"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Courses
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/academy/research"
-                      className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                    >
-                      Research Projects
-                    </Link>
-                  </li>
-                </ul>
-              )}
+              <div
+                className="absolute left-0 mt-2"
+                onMouseEnter={() => setActiveDropdown("academy")}
+                onMouseLeave={() => setActiveDropdown(null)}
+              >
+                {activeDropdown === "academy" && (
+                  <ul className="w-72 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
+                    <li>
+                      <Link
+                        href="/academy/foundational"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Foundational Learning
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/academy/intermediate"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Intermediate Learning
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/academy/advanced"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Advanced Learning
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/academy/roadmaps"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Learning Roadmaps
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/academy/courses"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Courses
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/academy/research"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        Research Projects
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </li>
           </ul>
         </nav>
@@ -348,7 +313,8 @@ const Header = () => {
                   className={`flex items-center text-gray-300 hover:text-blue-500 py-2 ${
                     activeDropdown === "user" ? "text-blue-500" : ""
                   }`}
-                  onClick={() => toggleDropdown("user")}
+                  onMouseEnter={() => setActiveDropdown("user")}
+                  onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <User className="w-5 h-5 mr-1" />
                   <span className="max-w-32 truncate">
@@ -358,35 +324,41 @@ const Header = () => {
                     className={`ml-1 w-4 h-4 transition-transform ${activeDropdown === "user" ? "rotate-180" : ""}`}
                   />
                 </button>
-                {activeDropdown === "user" && (
-                  <ul className="absolute right-0 mt-4 w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300">
-                    <li>
-                      <Link
-                        href="/profile"
-                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href="/dashboard"
-                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                      >
-                        Dashboard
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleSignOut}
-                        className="flex items-center w-full px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
-                      >
-                        <LogOut className="w-4 h-4 mr-2" />
-                        Sign Out
-                      </button>
-                    </li>
-                  </ul>
-                )}
+                <div
+                  className="absolute right-0 mt-2"
+                  onMouseEnter={() => setActiveDropdown("user")}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  {activeDropdown === "user" && (
+                    <ul className="w-56 bg-gray-900/95 backdrop-blur-md rounded-md shadow-lg z-[200] border border-gray-800 animate-in fade-in slide-in-from-top-5 duration-300 py-2">
+                      <li>
+                        <Link
+                          href="/profile"
+                          className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/dashboard"
+                          className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                      <li>
+                        <button
+                          onClick={handleSignOut}
+                          className="flex items-center w-full px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                        >
+                          <LogOut className="w-4 h-4 mr-2" />
+                          Sign Out
+                        </button>
+                      </li>
+                    </ul>
+                  )}
+                </div>
               </div>
             </>
           ) : (
@@ -418,7 +390,7 @@ const Header = () => {
               <li>
                 <button
                   className="flex items-center justify-between w-full py-2 text-gray-300"
-                  onClick={() => toggleDropdown("community-mobile")}
+                  onClick={() => setActiveDropdown(activeDropdown === "community-mobile" ? null : "community-mobile")}
                 >
                   <span>Community</span>
                   <ChevronDown
@@ -453,36 +425,6 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link href="/community/instagram" className="block py-1 text-gray-400 hover:text-white">
-                        Instagram
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/community/twitter" className="block py-1 text-gray-400 hover:text-white">
-                        Twitter/X
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/community/youtube" className="block py-1 text-gray-400 hover:text-white">
-                        YouTube
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/community/telegram" className="block py-1 text-gray-400 hover:text-white">
-                        Telegram
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/community/mastodon" className="block py-1 text-gray-400 hover:text-white">
-                        Mastodon
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/community/facebook" className="block py-1 text-gray-400 hover:text-white">
-                        Facebook Groups
-                      </Link>
-                    </li>
-                    <li>
                       <Link href="/community/forums" className="block py-1 text-gray-400 hover:text-white">
                         Forums & Blogs
                       </Link>
@@ -493,7 +435,7 @@ const Header = () => {
               <li>
                 <button
                   className="flex items-center justify-between w-full py-2 text-gray-300"
-                  onClick={() => toggleDropdown("insights-mobile")}
+                  onClick={() => setActiveDropdown(activeDropdown === "insights-mobile" ? null : "insights-mobile")}
                 >
                   <span>Insights</span>
                   <ChevronDown
@@ -538,7 +480,7 @@ const Header = () => {
               <li>
                 <button
                   className="flex items-center justify-between w-full py-2 text-gray-300"
-                  onClick={() => toggleDropdown("academy-mobile")}
+                  onClick={() => setActiveDropdown(activeDropdown === "academy-mobile" ? null : "academy-mobile")}
                 >
                   <span>Academy</span>
                   <ChevronDown
@@ -578,37 +520,6 @@ const Header = () => {
                       </Link>
                     </li>
                   </ul>
-                )}
-              </li>
-              <li className="pt-4 border-t border-gray-800">
-                {user ? (
-                  <>
-                    <Link href="/dashboard" className="block py-2 text-gray-300 hover:text-white">
-                      Dashboard
-                    </Link>
-                    <Link href="/profile" className="block py-2 text-gray-300 hover:text-white">
-                      Profile
-                    </Link>
-                    <button
-                      onClick={handleSignOut}
-                      className="flex items-center w-full py-2 text-gray-300 hover:text-white"
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Sign Out
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/auth/login" className="block py-2 text-gray-300 hover:text-white">
-                      Log In
-                    </Link>
-                    <Link
-                      href="/auth/register"
-                      className="block py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-center text-white"
-                    >
-                      Sign Up
-                    </Link>
-                  </>
                 )}
               </li>
             </ul>
