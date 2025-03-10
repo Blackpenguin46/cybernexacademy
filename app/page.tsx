@@ -15,27 +15,44 @@ export default function Home() {
     <div className="bg-black relative">
       <AnimatedBackground />
 
-      {/* Hero Section - Full Height */}
-      <section className="relative z-10 min-h-screen flex items-center justify-center">
-        <div className="container mx-auto px-4">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20" />
+          <div className="absolute inset-0 bg-black/80" />
+        </div>
+        <div className="container relative z-10 px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-7xl font-bold mb-6 text-white glow-text tracking-tight">
-              Secure Your Digital Future with <span className="text-blue-500">CyberNex</span>
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              CyberNex Academy
             </h1>
-            <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-              Create a free account to access training materials, join our security community, and stay updated with the
-              latest threats and defenses.
+            <p className="text-xl md:text-2xl text-gray-300 mb-4">
+              Your journey into cybersecurity starts here
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <HeroButton />
-              <Button size="lg" variant="outline" className="border-blue-500 text-blue-500 hover:bg-blue-950">
-                Explore Academy <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+            <p className="text-lg md:text-xl text-blue-400 font-medium italic mb-8">
+              "Knowledge Is Security, Security Is Power"
+            </p>
+            <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+              Comprehensive cybersecurity education platform offering structured learning paths, 
+              hands-on labs, and community resources for beginners to advanced practitioners.
+            </p>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link 
+                href="/academy/roadmaps" 
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+              >
+                Explore Learning Paths
+              </Link>
+              <Link 
+                href="/auth/signup" 
+                className="px-6 py-3 bg-transparent hover:bg-gray-800 text-white border border-gray-700 hover:border-gray-600 rounded-lg font-medium transition-colors"
+              >
+                Create Account
+              </Link>
             </div>
           </div>
-        </div>
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-8 h-8 text-blue-500" />
         </div>
       </section>
 
@@ -142,49 +159,6 @@ export default function Home() {
               </Card>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Live Security Dashboard Preview */}
-      <section className="relative z-10 min-h-screen bg-gradient-to-b from-black via-blue-950/20 to-black flex items-center py-20">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            <div className="lg:w-1/2">
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Security Dashboard</h2>
-              <p className="text-xl text-gray-300 mb-8">
-                Monitor your security posture in real-time with our comprehensive dashboard. Track threats,
-                vulnerabilities, and security events all in one place.
-              </p>
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
-                Access Dashboard <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-            <div className="lg:w-1/2 bg-black/60 backdrop-blur-lg p-8 rounded-lg border border-gray-800 hover:border-blue-500 transition-all duration-300">
-              <div className="text-sm text-gray-400 mb-2 animate-pulse">CURRENT THREAT LEVEL: MODERATE</div>
-              <TerminalDisplay
-                commandText={`$ nmap scan complete
-→ 3 potential vulnerabilities detected
-$ initiating countermeasures
-→ security protocols activated
-$_`}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative z-10 min-h-[50vh] bg-gradient-to-b from-black to-blue-950/30 flex items-center py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Ready to Begin Your Cybersecurity Journey?
-          </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Create your free account today and start your path toward becoming a cybersecurity expert.
-          </p>
-          <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white text-lg">
-            Get Started Now <ArrowRight className="ml-2 h-6 w-6" />
-          </Button>
         </div>
       </section>
     </div>

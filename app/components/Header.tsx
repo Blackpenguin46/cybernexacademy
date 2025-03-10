@@ -71,10 +71,15 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link href="/" className="flex items-center">
-          <Shield className="w-8 h-8 mr-2 text-blue-500" />
-          <span className="text-xl font-bold text-white">CyberNex Academy</span>
-        </Link>
+        <div className="flex items-center">
+          <Link href="/" className="flex items-center">
+            <Shield className="h-8 w-8 text-blue-500 mr-2" />
+            <div>
+              <span className="text-xl font-bold text-white">CyberNex Academy</span>
+              <p className="text-xs text-blue-400 italic hidden md:block">Knowledge Is Security, Security Is Power</p>
+            </div>
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:block">

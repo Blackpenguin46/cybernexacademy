@@ -1,262 +1,209 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Award, Users, Briefcase, MessageCircle, Shield } from 'lucide-react';
+import React from 'react'
+import Link from 'next/link'
+import { Shield, Users, BookOpen, Award, Zap, Globe, Target } from 'lucide-react'
 
-const AboutPage = () => {
-  const team = [
+export default function AboutPage() {
+  // Team members data
+  const teamMembers = [
     {
-      name: 'Alex Johnson',
-      role: 'Founder & CEO',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80',
-      bio: 'Cybersecurity expert with 15+ years of experience in the industry.',
-      linkedin: 'https://linkedin.com/in/alexjohnson',
+      name: "Dr. Sarah Johnson",
+      role: "Founder & CEO",
+      bio: "Former CISO with 15+ years of experience in cybersecurity. PhD in Computer Science with a focus on security systems.",
+      image: "/images/team/sarah.jpg"
     },
     {
-      name: 'Sarah Chen',
-      role: 'Chief Learning Officer',
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80',
-      bio: 'Former CISO turned educator with a passion for making security accessible.',
-      linkedin: 'https://linkedin.com/in/sarahchen',
+      name: "Michael Chen",
+      role: "Chief Learning Officer",
+      bio: "Security researcher and educator with experience at leading tech companies. Specializes in making complex security concepts accessible.",
+      image: "/images/team/michael.jpg"
     },
     {
-      name: 'Michael Rodriguez',
-      role: 'Head of Content',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80',
-      bio: 'Award-winning content creator specializing in cybersecurity education.',
-      linkedin: 'https://linkedin.com/in/michaelrodriguez',
+      name: "David Rodriguez",
+      role: "Head of Content",
+      bio: "Cybersecurity author and former penetration tester. Passionate about creating engaging educational content.",
+      image: "/images/team/david.jpg"
     },
     {
-      name: 'Emily Zhang',
-      role: 'Technical Director',
-      image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80',
-      bio: 'Ethical hacker and security researcher with a background in computer science.',
-      linkedin: 'https://linkedin.com/in/emilyzhang',
-    },
-  ];
-
-  const milestones = [
+      name: "Emma Williams",
+      role: "Community Director",
+      bio: "Community builder with a background in cybersecurity training and mentorship programs. Focused on creating inclusive learning environments.",
+      image: "/images/team/emma.jpg"
+    }
+  ]
+  
+  // Core values
+  const coreValues = [
     {
-      year: '2018',
-      title: 'Founded',
-      description: 'CyberNex Academy was founded with a mission to democratize cybersecurity education.',
-    },
-    {
-      year: '2019',
-      title: 'First 1,000 Students',
-      description: 'Reached our first major milestone of 1,000 active students.',
+      icon: Shield,
+      title: "Integrity",
+      description: "We uphold the highest ethical standards in all our educational content and business practices."
     },
     {
-      year: '2020',
-      title: 'Expanded Course Offerings',
-      description: 'Launched our comprehensive learning paths and certification programs.',
+      icon: Users,
+      title: "Community",
+      description: "We foster an inclusive, supportive community where everyone can learn and grow together."
     },
     {
-      year: '2021',
-      title: 'Industry Partnerships',
-      description: 'Formed partnerships with leading cybersecurity companies.',
+      icon: BookOpen,
+      title: "Excellence",
+      description: "We are committed to providing the highest quality cybersecurity education and resources."
     },
     {
-      year: '2022',
-      title: 'Global Expansion',
-      description: 'Expanded our reach to serve students in over 100 countries.',
+      icon: Zap,
+      title: "Innovation",
+      description: "We continuously evolve our platform and content to reflect the rapidly changing security landscape."
     },
     {
-      year: '2023',
-      title: 'Community Growth',
-      description: 'Surpassed 50,000 community members and launched mentorship program.',
+      icon: Globe,
+      title: "Accessibility",
+      description: "We make cybersecurity education accessible to learners of all backgrounds and experience levels."
     },
-  ];
-
+    {
+      icon: Target,
+      title: "Impact",
+      description: "We measure our success by the positive impact we have on our students' careers and the security community."
+    }
+  ]
+  
   return (
-    <div className="min-h-screen bg-gray-900 py-12">
-      <div className="container mx-auto px-4">
-        {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            About CyberNex Academy
-          </h1>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
-            We&apos;re on a mission to make cybersecurity education accessible, practical, and engaging for everyone.
-          </p>
-        </motion.div>
-
-        {/* Mission and Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="bg-gray-800 rounded-lg p-8 border border-gray-700"
-          >
-            <div className="flex items-center mb-4">
-              <Shield className="w-8 h-8 text-blue-500 mr-3" />
-              <h2 className="text-2xl font-bold text-white">Our Mission</h2>
-            </div>
-            <p className="text-gray-400">
-              To empower individuals and organizations with the knowledge and skills needed to navigate the complex world of cybersecurity, fostering a safer digital environment for all.
-            </p>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="bg-gray-800 rounded-lg p-8 border border-gray-700"
-          >
-            <div className="flex items-center mb-4">
-              <Users className="w-8 h-8 text-blue-500 mr-3" />
-              <h2 className="text-2xl font-bold text-white">Our Vision</h2>
-            </div>
-            <p className="text-gray-400">
-              To become the leading global platform for cybersecurity education, creating a community of skilled professionals who can address the evolving security challenges of tomorrow.
-            </p>
-          </motion.div>
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20" />
+          <div className="absolute inset-0 bg-black/80" />
         </div>
-
-        {/* Our Values */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: Shield,
-                title: 'Excellence',
-                description: 'We strive for excellence in all our educational content and experiences.',
-              },
-              {
-                icon: Users,
-                title: 'Inclusivity',
-                description: 'We believe cybersecurity education should be accessible to everyone.',
-              },
-              {
-                icon: Award,
-                title: 'Innovation',
-                description: 'We continuously innovate our teaching methods and course materials.',
-              },
-            ].map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-gray-800 rounded-lg p-6 border border-gray-700"
-              >
-                <value.icon className="w-10 h-10 text-blue-500 mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">{value.title}</h3>
-                <p className="text-gray-400">{value.description}</p>
-              </motion.div>
+        <div className="container relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">About CyberNex Academy</h1>
+            <p className="text-xl text-gray-300 mb-6">
+              Empowering the next generation of cybersecurity professionals
+            </p>
+            <p className="text-blue-400 font-medium italic mb-8">
+              "Knowledge Is Security, Security Is Power"
+            </p>
+          </div>
+        </div>
+      </section>
+      
+      {/* Mission & Vision Section */}
+      <section className="py-16">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+                <h2 className="text-2xl font-bold text-white mb-4">Our Mission</h2>
+                <p className="text-gray-300 mb-4">
+                  CyberNex Academy exists to democratize cybersecurity education, making it accessible, engaging, and effective for learners at all levels.
+                </p>
+                <p className="text-gray-300">
+                  We are committed to bridging the cybersecurity skills gap by providing high-quality, practical training that prepares individuals for real-world challenges in the digital security landscape.
+                </p>
+              </div>
+              
+              <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+                <h2 className="text-2xl font-bold text-white mb-4">Our Vision</h2>
+                <p className="text-gray-300 mb-4">
+                  We envision a world where organizations and individuals are empowered to protect themselves in the digital realm through knowledge and skills.
+                </p>
+                <p className="text-gray-300">
+                  CyberNex Academy aims to be the premier platform for cybersecurity education, fostering a global community of skilled professionals who contribute to a more secure digital future.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Our Story Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Story</h2>
+            <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+              <p className="text-gray-300 mb-4">
+                CyberNex Academy was founded in 2020 by Dr. Sarah Johnson, a former Chief Information Security Officer with a passion for education. After years of witnessing the growing cybersecurity skills gap and the challenges organizations face in finding qualified security professionals, Sarah decided to create a solution.
+              </p>
+              <p className="text-gray-300 mb-4">
+                What began as a small collection of online courses quickly evolved into a comprehensive learning platform. By bringing together industry experts, innovative teaching methodologies, and a focus on practical, hands-on learning, CyberNex Academy has grown into a trusted resource for cybersecurity education.
+              </p>
+              <p className="text-gray-300">
+                Today, CyberNex Academy serves learners in over 150 countries, from complete beginners to seasoned professionals looking to expand their skills. Our community-centered approach, rigorous curriculum, and commitment to staying at the cutting edge of cybersecurity have made us a leader in the field of security education.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* Core Values Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">Our Core Values</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {coreValues.map((value, index) => (
+              <div key={index} className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg border border-gray-800">
+                <div className="flex items-center mb-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-3">
+                    <value.icon className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white">{value.title}</h3>
+                </div>
+                <p className="text-gray-300">{value.description}</p>
+              </div>
             ))}
           </div>
-        </motion.div>
-
-        {/* Our Team */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-gray-800 rounded-lg overflow-hidden border border-gray-700"
-              >
-                <div className="relative h-64 w-full">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
+        </div>
+      </section>
+      
+      {/* Team Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <h2 className="text-3xl font-bold text-white mb-12 text-center">Our Leadership Team</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamMembers.map((member, index) => (
+              <div key={index} className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800 overflow-hidden">
+                <div className="aspect-square bg-gray-800 flex items-center justify-center">
+                  {/* Placeholder for team member image */}
+                  <Users className="w-16 h-16 text-gray-600" />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-white mb-1">{member.name}</h3>
                   <p className="text-blue-400 text-sm mb-3">{member.role}</p>
-                  <p className="text-gray-400 text-sm mb-4">{member.bio}</p>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-400 hover:text-blue-300 text-sm inline-flex items-center"
-                  >
-                    Connect on LinkedIn
-                  </a>
+                  <p className="text-gray-300 text-sm">{member.bio}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
-
-        {/* Our History */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-16"
-        >
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Journey</h2>
-          <div className="relative border-l border-blue-500 ml-4 md:ml-8 pl-6 space-y-10">
-            {milestones.map((milestone, index) => (
-              <motion.div
-                key={milestone.year}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="relative"
-              >
-                <div className="absolute -left-10 w-4 h-4 rounded-full bg-blue-500" />
-                <div className="font-bold text-blue-400 mb-1">{milestone.year}</div>
-                <div className="text-xl font-semibold text-white mb-2">{milestone.title}</div>
-                <p className="text-gray-400">{milestone.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-        >
-          <div className="bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Ready to Join Our Mission?
-            </h2>
-            <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Begin your cybersecurity journey today and become part of our growing community of security professionals.
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-white mb-6">Join Our Community</h2>
+            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+              Become part of the CyberNex Academy community and start your journey toward cybersecurity mastery today.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
-                href="/learning" 
-                className="px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-all"
+                href="/auth/signup" 
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
               >
-                Explore Courses
+                Create Free Account
               </Link>
               <Link 
                 href="/contact" 
-                className="px-6 py-3 border border-white text-white rounded-lg hover:bg-white/10 transition-all"
+                className="px-6 py-3 bg-transparent hover:bg-gray-800 text-white border border-gray-700 hover:border-gray-600 rounded-lg font-medium transition-colors"
               >
                 Contact Us
               </Link>
             </div>
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </section>
     </div>
-  );
-};
-
-export default AboutPage; 
+  )
+} 

@@ -1,4 +1,4 @@
-import { GraduationCap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, BookOpen, Laptop } from "lucide-react"
+import { GraduationCap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, BookOpen, Laptop, Youtube } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
@@ -33,6 +33,20 @@ function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): re
 
 export default function CoursesPage() {
   const resourceCategories: ResourceCategory[] = [
+    {
+      title: "Beginner Cybersecurity Courses",
+      icon: Shield,
+      resources: [
+        {
+          name: "Complete Ethical Hacking Bootcamp 2023: Zero to Mastery",
+          description: "Comprehensive beginner-friendly ethical hacking course covering cybersecurity fundamentals, penetration testing, and security tools",
+          url: "https://www.youtube.com/watch?v=htez3rhhPO8",
+          type: "Video Course",
+          free: true,
+          author: "Zero To Mastery"
+        }
+      ]
+    },
     {
       title: "Web Security Courses",
       icon: Lock,
