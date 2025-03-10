@@ -21,32 +21,19 @@ const Footer = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Resources</h3>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="/about" className="text-gray-400 hover:text-blue-500 transition-colors">
-                    About Us
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/contact" className="text-gray-400 hover:text-blue-500 transition-colors">
-                    Contact
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/privacy" className="text-gray-400 hover:text-blue-500 transition-colors">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="text-gray-400 hover:text-blue-500 transition-colors">
-                    Terms of Service
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          <div className="flex flex-wrap justify-center gap-6">
+            <Link href="/about" className="text-gray-400 hover:text-blue-500 transition-colors">
+              About Us
+            </Link>
+            <Link href="/contact" className="text-gray-400 hover:text-blue-500 transition-colors">
+              Contact
+            </Link>
+            <Link href="/privacy" className="text-gray-400 hover:text-blue-500 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-gray-400 hover:text-blue-500 transition-colors">
+              Terms of Service
+            </Link>
           </div>
         </div>
 
