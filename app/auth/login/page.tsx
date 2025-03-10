@@ -7,6 +7,7 @@ import { supabase, signIn } from '@/lib/supabase'
 import { Shield, Mail, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import ErrorBoundary from '@/app/components/ErrorBoundary'
+import CyberBackground from '@/app/components/CyberBackground'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -72,8 +73,10 @@ export default function LoginPage() {
   
   return (
     <ErrorBoundary>
-      <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
-        <div className="max-w-md w-full space-y-8">
+      <div className="min-h-screen flex items-center justify-center px-4 relative">
+        <CyberBackground />
+        
+        <div className="max-w-md w-full space-y-8 relative z-10">
           <div className="flex flex-col items-center">
             <Shield className="w-12 h-12 text-blue-500 mb-4" />
             <h2 className="text-3xl font-bold text-white text-center">
@@ -84,7 +87,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+          <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800 shadow-xl">
             {successMessage && (
               <div className="mb-4 p-3 bg-green-900/50 border border-green-800 rounded text-green-400 text-sm">
                 {successMessage}
