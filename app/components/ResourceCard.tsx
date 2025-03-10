@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Star } from 'lucide-react'
 
 interface ResourceCardProps {
   title: string
@@ -9,6 +10,8 @@ interface ResourceCardProps {
   icon?: string
   category?: string
   isExternal?: boolean
+  isHighlighted?: boolean
+  accentColor?: string
 }
 
 const ResourceCard: React.FC<ResourceCardProps> = ({
@@ -18,6 +21,8 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
   icon,
   category,
   isExternal = false,
+  isHighlighted = false,
+  accentColor,
 }) => {
   const CardWrapper = ({ children }: { children: React.ReactNode }) => {
     if (isExternal) {
@@ -37,7 +42,7 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
 
   return (
     <CardWrapper>
-      <div className="relative h-full overflow-hidden rounded-lg border border-gray-800 bg-black p-6 transition-all duration-300 hover:border-gray-700 hover:bg-gray-900/50">
+      <div className={`relative h-full overflow-hidden rounded-lg border ${isHighlighted ? 'border-yellow-500 shadow-lg shadow-yellow-500/20' : 'border-gray-800'} bg-black p-6 transition-all duration-300 hover:border-gray-700 hover:bg-gray-900/50`}>
         <div className="flex items-center gap-4">
           {icon && (
             <div className="relative h-12 w-12 overflow-hidden rounded-full">
@@ -49,31 +54,19 @@ const ResourceCard: React.FC<ResourceCardProps> = ({
               />
             </div>
           )}
-          <div className="flex-1">
-            <h3 className="font-semibold text-white group-hover:text-gray-300">
+          <div>
+            <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors flex items-center">
               {title}
+              {isHighlighted && <Star className="ml-2 h-4 w-4 text-yellow-500" fill="currentColor" />}
             </h3>
             {category && (
-              <p className="text-sm text-gray-400">{category}</p>
+              <div className={`text-sm ${accentColor ? `text-${accentColor}-400` : 'text-blue-400'}`}>
+                {category}
+              </div>
             )}
           </div>
-          {isExternal && (
-            <svg
-              className="h-5 w-5 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-              />
-            </svg>
-          )}
         </div>
-        <p className="mt-4 text-sm text-gray-400">{description}</p>
+        <p className="mt-4 text-gray-400">{description}</p>
       </div>
     </CardWrapper>
   )

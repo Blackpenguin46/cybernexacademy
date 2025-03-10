@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from 'react';
-import { Route, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Map, Filter, X } from "lucide-react"
+import { Route, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Map, Filter, X, Globe, Lightbulb } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '../../components/CategoryFilter'
+import SectionHeader from '../../components/SectionHeader'
 
 interface Resource {
   name: string
@@ -54,7 +55,8 @@ export default function RoadmapsPage() {
     { id: 'security-engineering', name: 'Security Engineering', icon: Shield },
     { id: 'cloud-security', name: 'Cloud Security', icon: Server },
     { id: 'application-security', name: 'Application Security', icon: Code },
-    { id: 'governance', name: 'Governance & Risk', icon: CheckCircle2 }
+    { id: 'governance', name: 'Governance & Risk', icon: CheckCircle2 },
+    { id: 'general', name: 'General Learning', icon: Lightbulb }
   ];
 
   const resourceCategories: ResourceCategory[] = [
@@ -93,6 +95,14 @@ export default function RoadmapsPage() {
           type: "Career Guide",
           free: true,
           category: "cloud-security"
+        },
+        {
+          name: "roadmap.sh",
+          description: "Community-driven roadmaps, articles and resources for developers including cybersecurity paths",
+          url: "https://roadmap.sh/cyber-security",
+          type: "Interactive Guide",
+          free: true,
+          category: "general"
         }
       ]
     },
@@ -239,8 +249,30 @@ export default function RoadmapsPage() {
     }
   ]
 
+  // Add a new section for Learning Platforms
+  const updatedResourceCategories = [
+    ...resourceCategories,
+    {
+      title: "Learning Platforms",
+      icon: Globe,
+      resources: [
+        {
+          name: "Learn Anything",
+          description: "Search-engine and community-curated knowledge graphs for learning any topic including cybersecurity",
+          url: "https://learn-anything.xyz/",
+          type: "Learning Platform",
+          free: true,
+          category: "general"
+        }
+      ]
+    }
+  ];
+
+  // Update resourceCategories to use the new array with added section
+  const allResourceCategories = updatedResourceCategories;
+
   // Flatten all resources into a single array
-  const allResources = resourceCategories.flatMap(category => 
+  const allResources = allResourceCategories.flatMap(category => 
     category.resources.map(resource => ({
       ...resource,
       sectionTitle: category.title
@@ -265,7 +297,7 @@ export default function RoadmapsPage() {
   }, {});
 
   // Create filtered sections that match the original structure
-  const filteredCategories = resourceCategories
+  const filteredCategories = allResourceCategories
     .filter(section => filteredResourcesBySection[section.title]?.length > 0)
     .map(section => ({
       ...section,
@@ -275,15 +307,11 @@ export default function RoadmapsPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-4 flex items-center gap-2">
-            <Map className="h-8 w-8 text-blue-500" />
-            Cybersecurity Career Roadmaps
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Structured learning paths to guide your cybersecurity career journey
-          </p>
-        </div>
+        <SectionHeader
+          title="Cybersecurity Career Roadmaps"
+          description="Structured learning paths to guide your cybersecurity career journey"
+          icon={<Map className="h-10 w-10 text-blue-500" />}
+        />
 
         {/* Add Category Filter */}
         <div className="mb-8">

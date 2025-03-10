@@ -17,10 +17,14 @@ import {
   Monitor,
   AlertTriangle,
   BookOpen,
-  ThumbsUp
+  ThumbsUp,
+  X,
+  Lock
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import CategoryFilter from '@/app/components/CategoryFilter'
+import { Button } from "@/components/ui/button"
+import SectionHeader from '@/app/components/SectionHeader'
 
 interface GithubRepo {
   name: string
@@ -49,7 +53,7 @@ export default function GitHubPage() {
           .eq('user_id', user.id)
           .single()
         
-        if (data?.interests) {
+        if (data && data.interests) {
           setUserInterests(data.interests)
         }
       }
@@ -57,7 +61,7 @@ export default function GitHubPage() {
     
     fetchUserData()
   }, [])
-
+  
   // Categories for filtering
   const categories = [
     { id: 'All', name: 'All Repositories', icon: Code },
@@ -65,10 +69,9 @@ export default function GitHubPage() {
     { id: 'network_security', name: 'Network Security', icon: Server },
     { id: 'malware_analysis', name: 'Malware Analysis', icon: AlertTriangle },
     { id: 'pentesting', name: 'Penetration Testing', icon: Terminal },
-    { id: 'defensive', name: 'Defensive Tools', icon: Shield },
-    { id: 'cloud_security', name: 'Cloud Security', icon: Database },
-    { id: 'monitoring', name: 'Monitoring', icon: Monitor },
-    { id: 'learning', name: 'Learning Resources', icon: BookOpen },
+    { id: 'defensive_security', name: 'Defensive Security', icon: Shield },
+    { id: 'cryptography', name: 'Cryptography', icon: Lock },
+    { id: 'osint', name: 'OSINT', icon: Search },
   ]
   
   // Featured repositories organized by category
@@ -178,7 +181,7 @@ export default function GitHubPage() {
       stars: 6800,
       forks: 1200,
       language: "C",
-      category: "defensive",
+      category: "defensive_security",
       tags: ["siem", "edr", "monitoring"]
     },
     {
@@ -189,7 +192,7 @@ export default function GitHubPage() {
       stars: 6300,
       forks: 1700,
       language: "Python",
-      category: "defensive",
+      category: "defensive_security",
       tags: ["siem", "detection-rules", "blue-team"]
     },
     
@@ -202,7 +205,7 @@ export default function GitHubPage() {
       stars: 7800,
       forks: 1100,
       language: "Python",
-      category: "cloud_security",
+      category: "cryptography",
       tags: ["aws", "azure", "gcp", "compliance"]
     },
     {
@@ -213,7 +216,7 @@ export default function GitHubPage() {
       stars: 3800,
       forks: 740,
       language: "Python",
-      category: "cloud_security",
+      category: "cryptography",
       tags: ["aws", "azure", "gcp", "auditing"]
     },
     
@@ -226,7 +229,7 @@ export default function GitHubPage() {
       stars: 20300,
       forks: 3300,
       language: "C++",
-      category: "monitoring",
+      category: "osint",
       tags: ["monitoring", "analytics", "endpoint-security"]
     },
     {
@@ -237,7 +240,7 @@ export default function GitHubPage() {
       stars: 57100,
       forks: 11300,
       language: "TypeScript",
-      category: "monitoring",
+      category: "osint",
       tags: ["dashboard", "monitoring", "visualization"]
     },
     
@@ -266,73 +269,58 @@ export default function GitHubPage() {
     }
   ]
   
-  // Filter repositories based on category only (removed search term filtering)
-  const filteredRepos = featuredRepositories.filter(repo => {
-    const matchesCategory = selectedCategory === 'All' || repo.category === selectedCategory
-    return matchesCategory
-  })
+  // Filter repositories based on selected category
+  const filteredRepos = selectedCategory === 'All'
+    ? featuredRepositories
+    : featuredRepositories.filter(repo => repo.category === selectedCategory)
   
-  // Sort repositories to prioritize those matching user interests
+  // Sort repositories - prioritize those matching user interests
   const sortedRepos = [...filteredRepos].sort((a, b) => {
+    // First sort by whether they match user interests
     const aMatchesInterests = userInterests.includes(a.category)
     const bMatchesInterests = userInterests.includes(b.category)
     
     if (aMatchesInterests && !bMatchesInterests) return -1
     if (!aMatchesInterests && bMatchesInterests) return 1
-    return b.stars - a.stars // If both match or don't match, sort by stars
+    
+    // Then sort by stars
+    return b.stars - a.stars
   })
   
-  // Guidelines for contributing to open source
-  const guidelines = [
-    "Read the project's contribution guidelines before submitting Pull Requests",
-    "Start with good first issues or help wanted tags for your first contribution",
-    "Document your code and explain the problem you're solving",
-    "Write tests for your code whenever possible",
-    "Be respectful and constructive in your communication",
-    "Give back to the community by helping others with issues",
-  ]
-  
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section - Removed search bar */}
-      <section className="relative py-24 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20" />
-          <div className="absolute inset-0 bg-black/80" />
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          title="GitHub Security Repositories"
+          description="Discover the best open source security tools, frameworks, and learning resources on GitHub"
+          icon={<Code className="h-10 w-10 text-blue-500" />}
+        />
+
+        {/* Categories Filter */}
+        <div className="mb-8">
+          <CategoryFilter 
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            accentColor="blue"
+          />
         </div>
-        <div className="container relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">GitHub Security Repositories</h1>
-            <p className="text-xl text-gray-300 mb-12">
-              Discover the best open source security tools, frameworks, and learning resources on GitHub
+        
+        {/* User Interests */}
+        {userInterests.length > 0 && (
+          <div className="mb-10 p-4 bg-blue-900/20 border border-blue-900/30 rounded-lg">
+            <h3 className="text-xl font-semibold text-white mb-2">Personalized Recommendations</h3>
+            <p className="text-gray-300">
+              We're highlighting repositories that match your interests in: {" "}
+              <span className="text-blue-400">
+                {userInterests.map(i => i.replace('_', ' ')).join(', ')}
+              </span>
             </p>
           </div>
-        </div>
-      </section>
-      
-      {/* Categories Filter - Using the new component */}
-      <CategoryFilter 
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        accentColor="blue"
-      />
-      
-      {/* Repositories */}
-      <section className="py-16">
-        <div className="container">
-          {userInterests.length > 0 && (
-            <div className="mb-10 p-4 bg-blue-900/20 border border-blue-900/30 rounded-lg">
-              <h3 className="text-xl font-semibold text-white mb-2">Personalized Recommendations</h3>
-              <p className="text-gray-300">
-                We're highlighting repositories that match your interests in: {" "}
-                <span className="text-blue-400">
-                  {userInterests.map(i => i.replace('_', ' ')).join(', ')}
-                </span>
-              </p>
-            </div>
-          )}
-          
+        )}
+        
+        {/* Repositories */}
+        {sortedRepos.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2">
             {sortedRepos.map((repo) => (
               <div 
@@ -379,66 +367,49 @@ export default function GitHubPage() {
               </div>
             ))}
           </div>
-          
-          {sortedRepos.length === 0 && (
-            <div className="text-center py-20 border border-gray-800 rounded-lg">
-              <p className="text-gray-400 mb-2">No repositories found matching your criteria</p>
-              <button 
-                onClick={() => { setSelectedCategory('All') }}
-                className="text-blue-500 hover:text-blue-400"
-              >
-                Clear filters
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
-      
-      {/* Guidelines Section */}
-      <section className="py-16 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-10 text-center">
-              Contributing to Open Source
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {guidelines.map((guideline, index) => (
-                <div
-                  key={index}
-                  className="flex items-start space-x-4 bg-gray-900/50 border border-gray-800 rounded-lg p-4"
-                >
-                  <div className="flex-shrink-0">
-                    <ThumbsUp className="w-5 h-5 text-blue-500" />
-                  </div>
-                  <p className="text-gray-300">{guideline}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="py-16 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">Ready to Contribute?</h2>
-            <p className="text-gray-300 mb-10 max-w-2xl mx-auto">
-              Join the cybersecurity community on GitHub and help make the internet a safer place. 
-              Share your knowledge, fix bugs, or build new tools to help defenders and researchers.
-            </p>
-            <Link 
-              href="https://github.com/topics/security" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
+        ) : (
+          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No repositories match your filter</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedCategory('All')}
+              className="flex items-center gap-2"
             >
-              Explore GitHub Security Topics
-              <ExternalLink className="w-5 h-5 ml-2" />
-            </Link>
+              <X className="h-4 w-4" /> Clear filters
+            </Button>
           </div>
+        )}
+        
+        {/* Guidelines Section */}
+        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-4 text-white">GitHub Security Tips</h2>
+          <ul className="space-y-4">
+            <li className="flex gap-3">
+              <Shield className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Check activity and maintenance</p>
+                <p className="text-gray-400">Look for repositories with recent commits and active maintenance.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Star className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Review stars and forks</p>
+                <p className="text-gray-400">Higher numbers often indicate more reliable and well-tested tools.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Code className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Examine documentation</p>
+                <p className="text-gray-400">Good security tools have clear documentation and usage examples.</p>
+              </div>
+            </li>
+          </ul>
         </div>
-      </section>
+      </div>
     </div>
   )
 } 

@@ -1,12 +1,49 @@
-import { Wrench, ExternalLink, Clock, Tag, Shield, Filter, Download, Terminal, Code, Zap } from "lucide-react"
+"use client";
+
+import { useState } from 'react';
+import { Wrench, ExternalLink, Clock, Tag, Shield, Filter, Download, Terminal, Code, Zap, X, Server, Cloud, Lock, Database, Globe, Search, FileText, Star } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '../../components/CategoryFilter'
+import SectionHeader from '../../components/SectionHeader'
+
+// Define interface for Category
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+}
+
+// Define interface for Tool
+interface Tool {
+  name: string;
+  category: string;
+  type: string;
+  rating: string;
+  description: string;
+  features: string[];
+  useCase: string;
+  documentation: string;
+}
 
 export default function ToolsPage() {
-  const featuredTools = [
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // Define categories for filtering
+  const categories: Category[] = [
+    { id: 'all', name: 'All Tools', icon: Wrench },
+    { id: 'network', name: 'Network Security', icon: Server },
+    { id: 'application', name: 'Application Security', icon: Code },
+    { id: 'cloud', name: 'Cloud Security', icon: Cloud },
+    { id: 'forensics', name: 'Digital Forensics', icon: Search },
+    { id: 'pentesting', name: 'Penetration Testing', icon: Terminal },
+    { id: 'threat', name: 'Threat Intelligence', icon: Shield }
+  ];
+
+  const featuredTools: Tool[] = [
     {
       name: "Network Guardian Pro",
-      category: "Network Security",
+      category: "network",
       type: "Enterprise",
       rating: "4.8/5",
       description: "Advanced network monitoring and intrusion detection system.",
@@ -20,7 +57,7 @@ export default function ToolsPage() {
     },
     {
       name: "SecureCode Analyzer",
-      category: "Application Security",
+      category: "application",
       type: "Developer Tool",
       rating: "4.7/5",
       description: "Static and dynamic code analysis for security vulnerabilities.",
@@ -34,7 +71,7 @@ export default function ToolsPage() {
     },
     {
       name: "Cloud Shield",
-      category: "Cloud Security",
+      category: "cloud",
       type: "Cloud Native",
       rating: "4.9/5",
       description: "Comprehensive cloud infrastructure security platform.",
@@ -48,413 +85,392 @@ export default function ToolsPage() {
     }
   ]
 
-  const securityTechniques = [
+  const allTools: Tool[] = [
+    // Network Security Tools
     {
-      category: "Threat Detection",
-      techniques: [
-        {
-          name: "Behavioral Analysis",
-          effectiveness: "High",
-          complexity: "Medium",
-          description: "Detecting threats through anomaly detection and user behavior analytics.",
-          implementation: [
-            "User activity monitoring",
-            "Baseline establishment",
-            "Anomaly detection"
-          ]
-        },
-        {
-          name: "Signature Detection",
-          effectiveness: "Medium",
-          complexity: "Low",
-          description: "Identifying known threats through signature matching.",
-          implementation: [
-            "Pattern matching",
-            "Hash comparison",
-            "Rule-based detection"
-          ]
-        }
-      ]
+      name: "Wireshark",
+      category: "network",
+      type: "Open Source",
+      rating: "4.9/5",
+      description: "Network protocol analyzer for packet capture and analysis.",
+      features: [
+        "Deep packet inspection",
+        "Live capture and offline analysis",
+        "Rich VoIP analysis"
+      ],
+      useCase: "Network troubleshooting and security analysis",
+      documentation: "https://www.wireshark.org/docs/"
     },
     {
-      category: "Access Control",
-      techniques: [
-        {
-          name: "Zero Trust Security",
-          effectiveness: "Very High",
-          complexity: "High",
-          description: "Implementing zero trust architecture principles.",
-          implementation: [
-            "Identity verification",
-            "Micro-segmentation",
-            "Least privilege access"
-          ]
-        },
-        {
-          name: "MFA Implementation",
-          effectiveness: "High",
-          complexity: "Medium",
-          description: "Multi-factor authentication deployment strategies.",
-          implementation: [
-            "Token-based auth",
-            "Biometric verification",
-            "Risk-based authentication"
-          ]
-        }
-      ]
+      name: "Snort",
+      category: "network",
+      type: "Open Source",
+      rating: "4.7/5",
+      description: "Network intrusion prevention and detection system.",
+      features: [
+        "Real-time traffic analysis",
+        "Protocol analysis",
+        "Content searching/matching"
+      ],
+      useCase: "Network intrusion detection",
+      documentation: "https://www.snort.org/documents"
+    },
+    {
+      name: "Zeek (formerly Bro)",
+      category: "network",
+      type: "Open Source",
+      rating: "4.6/5",
+      description: "Network security monitor focusing on semantic analysis.",
+      features: [
+        "Protocol analysis",
+        "File extraction",
+        "Customizable policy scripts"
+      ],
+      useCase: "Network monitoring and threat detection",
+      documentation: "https://docs.zeek.org/"
+    },
+    
+    // Application Security Tools
+    {
+      name: "OWASP ZAP",
+      category: "application",
+      type: "Open Source",
+      rating: "4.8/5",
+      description: "Web application security scanner for finding vulnerabilities.",
+      features: [
+        "Automated scanner",
+        "Intercepting proxy",
+        "Active and passive scanning"
+      ],
+      useCase: "Web application security testing",
+      documentation: "https://www.zaproxy.org/docs/"
+    },
+    {
+      name: "SonarQube",
+      category: "application",
+      type: "Open Source/Commercial",
+      rating: "4.7/5",
+      description: "Continuous code quality and security review platform.",
+      features: [
+        "Code quality analysis",
+        "Security vulnerability detection",
+        "CI/CD integration"
+      ],
+      useCase: "Secure code development",
+      documentation: "https://docs.sonarqube.org/"
+    },
+    {
+      name: "Burp Suite",
+      category: "application",
+      type: "Commercial/Free",
+      rating: "4.9/5",
+      description: "Integrated platform for web application security testing.",
+      features: [
+        "Intercepting proxy",
+        "Scanner",
+        "Intruder for automated attacks"
+      ],
+      useCase: "Web application penetration testing",
+      documentation: "https://portswigger.net/burp/documentation"
+    },
+    
+    // Cloud Security Tools
+    {
+      name: "AWS Security Hub",
+      category: "cloud",
+      type: "Commercial",
+      rating: "4.6/5",
+      description: "Centralized view of security alerts and compliance status in AWS.",
+      features: [
+        "Automated compliance checks",
+        "Integrated security findings",
+        "Multi-account support"
+      ],
+      useCase: "AWS security management",
+      documentation: "https://docs.aws.amazon.com/securityhub/"
+    },
+    {
+      name: "Prisma Cloud",
+      category: "cloud",
+      type: "Commercial",
+      rating: "4.8/5",
+      description: "Cloud native security platform for protecting cloud infrastructure.",
+      features: [
+        "Cloud security posture management",
+        "Container security",
+        "Serverless security"
+      ],
+      useCase: "Multi-cloud security management",
+      documentation: "https://docs.paloaltonetworks.com/prisma/prisma-cloud"
+    },
+    {
+      name: "Terraform",
+      category: "cloud",
+      type: "Open Source",
+      rating: "4.7/5",
+      description: "Infrastructure as code tool for secure cloud provisioning.",
+      features: [
+        "Infrastructure as code",
+        "Multi-cloud support",
+        "Version control integration"
+      ],
+      useCase: "Secure cloud infrastructure deployment",
+      documentation: "https://www.terraform.io/docs"
+    },
+    
+    // Digital Forensics Tools
+    {
+      name: "Autopsy",
+      category: "forensics",
+      type: "Open Source",
+      rating: "4.6/5",
+      description: "Digital forensics platform for disk image analysis.",
+      features: [
+        "Timeline analysis",
+        "Keyword search",
+        "File recovery"
+      ],
+      useCase: "Digital forensic investigations",
+      documentation: "https://www.autopsy.com/documentation/"
+    },
+    {
+      name: "Volatility",
+      category: "forensics",
+      type: "Open Source",
+      rating: "4.7/5",
+      description: "Memory forensics framework for incident response.",
+      features: [
+        "Memory analysis",
+        "Malware detection",
+        "Process examination"
+      ],
+      useCase: "Memory forensics and incident response",
+      documentation: "https://github.com/volatilityfoundation/volatility/wiki"
+    },
+    {
+      name: "The Sleuth Kit",
+      category: "forensics",
+      type: "Open Source",
+      rating: "4.5/5",
+      description: "Collection of command line tools for file system analysis.",
+      features: [
+        "File system analysis",
+        "Data recovery",
+        "Timeline creation"
+      ],
+      useCase: "Digital forensic investigations",
+      documentation: "https://www.sleuthkit.org/sleuthkit/docs.php"
+    },
+    
+    // Penetration Testing Tools
+    {
+      name: "Metasploit Framework",
+      category: "pentesting",
+      type: "Open Source/Commercial",
+      rating: "4.9/5",
+      description: "Penetration testing framework for vulnerability exploitation.",
+      features: [
+        "Exploit development",
+        "Vulnerability verification",
+        "Post-exploitation capabilities"
+      ],
+      useCase: "Penetration testing and vulnerability assessment",
+      documentation: "https://docs.metasploit.com/"
+    },
+    {
+      name: "Kali Linux",
+      category: "pentesting",
+      type: "Open Source",
+      rating: "4.9/5",
+      description: "Security-focused Linux distribution with penetration testing tools.",
+      features: [
+        "Pre-installed security tools",
+        "Regular updates",
+        "Forensics mode"
+      ],
+      useCase: "Penetration testing and security auditing",
+      documentation: "https://www.kali.org/docs/"
+    },
+    {
+      name: "Nmap",
+      category: "pentesting",
+      type: "Open Source",
+      rating: "4.8/5",
+      description: "Network discovery and security auditing tool.",
+      features: [
+        "Port scanning",
+        "OS detection",
+        "Service/version detection"
+      ],
+      useCase: "Network exploration and security auditing",
+      documentation: "https://nmap.org/docs.html"
+    },
+    
+    // Threat Intelligence Tools
+    {
+      name: "MISP",
+      category: "threat",
+      type: "Open Source",
+      rating: "4.7/5",
+      description: "Threat intelligence platform for sharing and correlating IOCs.",
+      features: [
+        "Indicator sharing",
+        "Automatic correlation",
+        "Export capabilities"
+      ],
+      useCase: "Threat intelligence sharing and analysis",
+      documentation: "https://www.misp-project.org/documentation/"
+    },
+    {
+      name: "TheHive",
+      category: "threat",
+      type: "Open Source",
+      rating: "4.6/5",
+      description: "Scalable security incident response platform.",
+      features: [
+        "Case management",
+        "Observable analysis",
+        "Integration with MISP"
+      ],
+      useCase: "Security incident response",
+      documentation: "https://github.com/TheHive-Project/TheHiveDocs"
+    },
+    {
+      name: "OpenCTI",
+      category: "threat",
+      type: "Open Source",
+      rating: "4.5/5",
+      description: "Open Cyber Threat Intelligence Platform.",
+      features: [
+        "Knowledge management",
+        "Observable enrichment",
+        "Visualization capabilities"
+      ],
+      useCase: "Threat intelligence analysis and sharing",
+      documentation: "https://docs.opencti.io/"
     }
-  ]
+  ];
 
-  const methodologies = [
-    {
-      name: "Security Testing",
-      frameworks: [
-        {
-          title: "OWASP Testing Guide",
-          focus: "Web Application Security",
-          steps: [
-            "Information Gathering",
-            "Configuration Testing",
-            "Authentication Testing",
-            "Authorization Testing"
-          ]
-        },
-        {
-          title: "Infrastructure Testing",
-          focus: "Network Security",
-          steps: [
-            "Network Mapping",
-            "Vulnerability Assessment",
-            "Penetration Testing",
-            "Security Audit"
-          ]
-        }
-      ]
-    },
-    {
-      name: "Incident Response",
-      frameworks: [
-        {
-          title: "NIST Incident Response",
-          focus: "Systematic Response",
-          steps: [
-            "Preparation",
-            "Detection & Analysis",
-            "Containment",
-            "Recovery"
-          ]
-        },
-        {
-          title: "SANS Incident Handling",
-          focus: "Practical Response",
-          steps: [
-            "Identification",
-            "Containment",
-            "Eradication",
-            "Recovery"
-          ]
-        }
-      ]
-    }
-  ]
-
-  const bestPractices = [
-    {
-      category: "Development Security",
-      practices: [
-        {
-          name: "Secure Coding",
-          description: "Implementation of secure coding standards and practices",
-          guidelines: [
-            "Input validation",
-            "Output encoding",
-            "Authentication controls",
-            "Error handling"
-          ]
-        },
-        {
-          name: "Code Review",
-          description: "Security-focused code review process",
-          guidelines: [
-            "Automated scanning",
-            "Manual review",
-            "Peer review",
-            "Security testing"
-          ]
-        }
-      ]
-    },
-    {
-      category: "Operational Security",
-      practices: [
-        {
-          name: "Configuration Management",
-          description: "Secure system configuration and maintenance",
-          guidelines: [
-            "Baseline configuration",
-            "Change management",
-            "Patch management",
-            "Hardening"
-          ]
-        },
-        {
-          name: "Monitoring",
-          description: "Continuous security monitoring practices",
-          guidelines: [
-            "Log management",
-            "Alert configuration",
-            "Incident detection",
-            "Response procedures"
-          ]
-        }
-      ]
-    }
-  ]
+  // Combine featured tools and all tools
+  const combinedTools = [...featuredTools, ...allTools];
+  
+  // Remove duplicates (in case a featured tool is also in allTools)
+  const uniqueTools = Array.from(new Map(combinedTools.map(tool => [tool.name, tool])).values());
+  
+  // Filter tools based on selected category
+  const filteredTools = selectedCategory === 'all' 
+    ? uniqueTools 
+    : uniqueTools.filter(tool => tool.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-yellow-600/10 rounded-xl mb-4">
-              <Wrench className="w-5 h-5 text-yellow-500 mr-2" />
-              <span className="text-yellow-500 font-medium">Tools & Techniques</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Tools & Methodologies
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Explore essential security tools, techniques, and best practices for protecting your systems.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          title="Cybersecurity Tools"
+          description="Discover and compare the best security tools for your specific needs"
+          icon={<Wrench className="h-10 w-10 text-cyan-500" />}
+        />
 
-      {/* Featured Tools Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Featured Security Tools
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {featuredTools.map((tool, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-yellow-500/50 transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-yellow-500 text-sm font-medium">{tool.category}</span>
-                    <span className="text-gray-500 text-sm">{tool.type}</span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{tool.name}</h3>
-                  <p className="text-gray-400 mb-4">{tool.description}</p>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">Rating</span>
-                      <span className="text-white">{tool.rating}</span>
+        {/* Add Category Filter */}
+        <div className="mb-8">
+          <CategoryFilter 
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            accentColor="cyan"
+          />
+        </div>
+
+        {filteredTools.length > 0 ? (
+          <div className="space-y-12">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredTools.map((tool, index) => (
+                <div key={index} className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-cyan-500/50 transition-colors">
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xl font-bold text-white">{tool.name}</h3>
+                      <span className="text-xs bg-cyan-900/50 text-cyan-400 px-2 py-1 rounded border border-cyan-800/50">
+                        {categories.find(cat => cat.id === tool.category)?.name || tool.category}
+                      </span>
                     </div>
-                    <div>
+                    <div className="flex items-center text-gray-400 text-sm mb-4">
+                      <Tag className="w-4 h-4 mr-1 text-cyan-500" />
+                      <span>{tool.type}</span>
+                      <span className="mx-2">•</span>
+                      <span className="flex items-center">
+                        <Star className="w-4 h-4 mr-1 text-yellow-500" />
+                        {tool.rating}
+                      </span>
+                    </div>
+                    <p className="text-gray-400 mb-4">{tool.description}</p>
+                    <div className="mb-4">
                       <div className="text-sm text-gray-500 mb-2">Key Features</div>
-                      <div className="flex flex-wrap gap-2">
+                      <ul className="space-y-1">
                         {tool.features.map((feature, featureIndex) => (
-                          <span
-                            key={featureIndex}
-                            className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                          >
-                            {feature}
-                          </span>
+                          <li key={featureIndex} className="flex items-start">
+                            <div className="w-1.5 h-1.5 bg-cyan-500 rounded-full mt-1.5 mr-2"></div>
+                            <span className="text-sm text-gray-300">{feature}</span>
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </div>
-                    <div className="pt-4">
-                      <Link
-                        href={tool.documentation}
-                        className="text-yellow-500 hover:text-yellow-400 transition-colors inline-flex items-center text-sm"
-                      >
-                        View Documentation
-                        <ExternalLink className="w-4 h-4 ml-1" />
+                    <div className="mb-4">
+                      <div className="text-sm text-gray-500 mb-1">Use Case</div>
+                      <div className="text-sm text-gray-300">{tool.useCase}</div>
+                    </div>
+                    <Button asChild variant="outline" className="w-full">
+                      <Link href={tool.documentation} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center">
+                        <FileText className="w-4 h-4 mr-2" />
+                        Documentation
                       </Link>
-                    </div>
+                    </Button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Security Techniques Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Security Techniques
-            </h2>
-            <div className="space-y-8">
-              {securityTechniques.map((category, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-6">{category.category}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {category.techniques.map((technique, techIndex) => (
-                      <div
-                        key={techIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <div className="font-medium text-white mb-1">{technique.name}</div>
-                            <div className="text-sm text-gray-400">{technique.description}</div>
-                          </div>
-                          <div className="flex flex-col items-end">
-                            <span className="text-yellow-500 text-sm">{technique.effectiveness}</span>
-                            <span className="text-gray-500 text-sm">Complexity: {technique.complexity}</span>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          {technique.implementation.map((step, stepIndex) => (
-                            <div
-                              key={stepIndex}
-                              className="flex items-center text-gray-300 text-sm"
-                            >
-                              <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full mr-2"></div>
-                              {step}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+        ) : (
+          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No tools match your filter</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedCategory('all')}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear filters
+            </Button>
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* Methodologies Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Security Methodologies
-            </h2>
-            <div className="space-y-8">
-              {methodologies.map((methodology, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-6">{methodology.name}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {methodology.frameworks.map((framework, frameworkIndex) => (
-                      <div
-                        key={frameworkIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="mb-4">
-                          <div className="font-medium text-white mb-1">{framework.title}</div>
-                          <div className="text-sm text-gray-400">Focus: {framework.focus}</div>
-                        </div>
-                        <div className="space-y-2">
-                          {framework.steps.map((step, stepIndex) => (
-                            <div
-                              key={stepIndex}
-                              className="flex items-center text-gray-300 text-sm"
-                            >
-                              <div className="w-5 h-5 flex items-center justify-center bg-gray-700 rounded-full mr-2 text-xs">
-                                {stepIndex + 1}
-                              </div>
-                              {step}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-4 text-white">Choosing the Right Tools</h2>
+          <ul className="space-y-4">
+            <li className="flex gap-3">
+              <Shield className="h-6 w-6 flex-shrink-0 text-cyan-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Assess your specific needs</p>
+                <p className="text-gray-400">Consider your organization's size, industry, and specific security requirements.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Code className="h-6 w-6 flex-shrink-0 text-cyan-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Evaluate open source alternatives</p>
+                <p className="text-gray-400">Many open source tools offer comparable features to commercial solutions.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Terminal className="h-6 w-6 flex-shrink-0 text-cyan-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Consider integration capabilities</p>
+                <p className="text-gray-400">Choose tools that integrate well with your existing security infrastructure.</p>
+              </div>
+            </li>
+          </ul>
         </div>
-      </section>
-
-      {/* Best Practices Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Security Best Practices
-            </h2>
-            <div className="space-y-8">
-              {bestPractices.map((category, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-6">{category.category}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {category.practices.map((practice, practiceIndex) => (
-                      <div
-                        key={practiceIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="mb-4">
-                          <div className="font-medium text-white mb-1">{practice.name}</div>
-                          <div className="text-sm text-gray-400">{practice.description}</div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2">
-                          {practice.guidelines.map((guideline, guidelineIndex) => (
-                            <div
-                              key={guidelineIndex}
-                              className="flex items-center text-gray-300 text-sm"
-                            >
-                              <Shield className="w-4 h-4 text-yellow-500 mr-2" />
-                              {guideline}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Start Implementing
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Get access to detailed guides and documentation for security tools and techniques.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-yellow-600 hover:bg-yellow-700">
-                Access Resources
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Link href="/insights">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  Explore More Insights
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   )
 } 

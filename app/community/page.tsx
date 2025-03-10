@@ -3,9 +3,25 @@
 import React from 'react'
 import SectionHeader from '../components/SectionHeader'
 import ResourceCard from '../components/ResourceCard'
+import { Star } from 'lucide-react'
 
 // Community platform sections
 const communityPlatforms = [
+  {
+    title: 'Developer News & Community',
+    description: 'Stay updated with the latest in cybersecurity, programming, and tech news.',
+    resources: [
+      {
+        title: 'daily.dev',
+        description: 'All-in-one developer news platform with personalized feed for cybersecurity and tech updates.',
+        link: 'https://daily.dev/',
+        category: 'News Platform',
+        icon: '/images/dailydev-icon.svg',
+        isExternal: true,
+        isHighlighted: true,
+      },
+    ],
+  },
   {
     title: 'Discord Communities',
     description: 'Real-time chat and discussions with cybersecurity professionals and enthusiasts.',
@@ -130,7 +146,12 @@ export default function CommunityPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {communityPlatforms.map((platform, index) => (
           <div key={platform.title} className="mb-16 last:mb-0">
-            <h2 className="text-2xl font-bold text-white mb-2">{platform.title}</h2>
+            <h2 className="text-2xl font-bold text-white mb-2 flex items-center">
+              {platform.title}
+              {platform.title === 'Developer News & Community' && (
+                <Star className="ml-2 h-5 w-5 text-yellow-500" fill="currentColor" />
+              )}
+            </h2>
             <p className="text-gray-400 mb-6">{platform.description}</p>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {platform.resources.map((resource) => (
