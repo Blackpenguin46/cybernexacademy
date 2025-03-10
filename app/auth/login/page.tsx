@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase, signIn } from '@/lib/supabase'
-import { Shield } from 'lucide-react'
+import { Shield, User, Mail, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import ErrorBoundary from '@/app/components/ErrorBoundary'
 
@@ -203,11 +203,12 @@ export default function LoginPage() {
             )}
             
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Sign up fields */}
+              {/* Sign up fields - Only shown in signup mode */}
               {mode === 'signup' && (
                 <>
                   <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-200">
+                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-200 flex items-center">
+                      <User className="w-4 h-4 mr-2" />
                       Full Name
                     </label>
                     <input
@@ -218,11 +219,13 @@ export default function LoginPage() {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      placeholder="John Doe"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-200">
+                    <label htmlFor="username" className="block text-sm font-medium text-gray-200 flex items-center">
+                      <User className="w-4 h-4 mr-2" />
                       Username
                     </label>
                     <input
@@ -233,14 +236,19 @@ export default function LoginPage() {
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                      placeholder="johndoe"
                     />
+                    <p className="mt-1 text-xs text-gray-500">
+                      This will be your unique identifier on the platform
+                    </p>
                   </div>
                 </>
               )}
               
               {/* Common fields */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-200">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-200 flex items-center">
+                  <Mail className="w-4 h-4 mr-2" />
                   Email
                 </label>
                 <input
@@ -252,11 +260,13 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                  placeholder="your.email@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-200">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-200 flex items-center">
+                  <Lock className="w-4 h-4 mr-2" />
                   Password
                 </label>
                 <input
@@ -268,13 +278,20 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                  placeholder={mode === 'signin' ? "Your password" : "Min. 8 characters"}
                 />
+                {mode === 'signup' && (
+                  <p className="mt-1 text-xs text-gray-500">
+                    Must be at least 8 characters long
+                  </p>
+                )}
               </div>
               
               {/* Confirm password field for signup */}
               {mode === 'signup' && (
                 <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 flex items-center">
+                    <Lock className="w-4 h-4 mr-2" />
                     Confirm Password
                   </label>
                   <input
@@ -286,6 +303,7 @@ export default function LoginPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Re-enter your password"
                   />
                 </div>
               )}
@@ -305,7 +323,7 @@ export default function LoginPage() {
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
                 disabled={loading}
               >
-                {loading ? 'Processing...' : mode === 'signin' ? 'Sign In' : 'Sign Up'}
+                {loading ? 'Processing...' : mode === 'signin' ? 'Sign In' : 'Create Account'}
               </Button>
             </form>
 
@@ -324,6 +342,7 @@ export default function LoginPage() {
                   <p className="text-sm text-gray-400">
                     Don't have an account?{' '}
                     <button 
+                      type="button"
                       onClick={() => switchMode('signup')} 
                       className="text-blue-500 hover:text-blue-400"
                     >
@@ -334,6 +353,7 @@ export default function LoginPage() {
                   <p className="text-sm text-gray-400">
                     Already have an account?{' '}
                     <button 
+                      type="button"
                       onClick={() => switchMode('signin')} 
                       className="text-blue-500 hover:text-blue-400"
                     >
