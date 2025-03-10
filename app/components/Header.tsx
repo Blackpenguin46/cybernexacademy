@@ -382,7 +382,7 @@ const Header = () => {
                   Log In
                 </Button>
               </Link>
-              <Link href="/auth/register">
+              <Link href="/auth/signup">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white">Sign Up</Button>
               </Link>
             </>
