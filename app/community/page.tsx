@@ -1,123 +1,66 @@
 "use client";
 
 import React from 'react'
+import Link from 'next/link'
+import { Users, MessageSquare, Github, Twitter, Linkedin, Globe, ExternalLink } from 'lucide-react'
+import { Button } from "@/components/ui/button"
 import SectionHeader from '../components/SectionHeader'
-import ResourceCard from '../components/ResourceCard'
-import { Star } from 'lucide-react'
 
-// Community platform sections
 const communityPlatforms = [
   {
-    title: 'Developer News & Community',
-    description: 'Stay updated with the latest in cybersecurity, programming, and tech news.',
-    resources: [
-      {
-        title: 'daily.dev',
-        description: 'All-in-one developer news platform with personalized feed for cybersecurity and tech updates.',
-        link: 'https://daily.dev/',
-        category: 'News Platform',
-        icon: '/images/dailydev-icon.svg',
-        isExternal: true,
-        isHighlighted: true,
-      },
-    ],
+    title: "Forums & Blogs",
+    description: "Join discussions and share knowledge with the cybersecurity community",
+    icon: MessageSquare,
+    link: "/community/forums",
+    color: "from-blue-500/20 to-blue-600/5",
+    borderColor: "border-blue-500/30",
+    hoverColor: "group-hover:border-blue-500/60"
   },
   {
-    title: 'Discord Communities',
-    description: 'Real-time chat and discussions with cybersecurity professionals and enthusiasts.',
-    resources: [
-      {
-        title: 'The CyberSec Hub',
-        description: 'Beginner-friendly community with dedicated resources and mentorship programs.',
-        link: '#', // Replace with actual Discord invite
-        category: 'Discord',
-        icon: '/images/discord-icon.png',
-        isExternal: true,
-      },
-      {
-        title: 'Blue Team Village',
-        description: 'Focus on defensive security, SOC skills, and blue team operations.',
-        link: '#', // Replace with actual Discord invite
-        category: 'Discord',
-        icon: '/images/discord-icon.png',
-        isExternal: true,
-      },
-      {
-        title: 'Red Teaming',
-        description: 'Community dedicated to penetration testing and ethical hacking practices.',
-        link: '#', // Replace with actual Discord invite
-        category: 'Discord',
-        icon: '/images/discord-icon.png',
-        isExternal: true,
-      },
-    ],
+    title: "GitHub Projects",
+    description: "Explore and contribute to open-source security tools and projects",
+    icon: Github,
+    link: "/community/github",
+    color: "from-purple-500/20 to-purple-600/5",
+    borderColor: "border-purple-500/30",
+    hoverColor: "group-hover:border-purple-500/60"
   },
   {
-    title: 'Skool Communities',
-    description: 'Structured learning and networking platforms for cybersecurity enthusiasts.',
-    resources: [
-      {
-        title: 'CyberSkool Academy',
-        description: 'Comprehensive cybersecurity courses with dedicated mentorship programs.',
-        link: '#', // Replace with actual Skool link
-        category: 'Skool',
-        icon: '/images/skool-icon.png',
-        isExternal: true,
-      },
-      {
-        title: 'Ethical Hacking Club',
-        description: 'Weekly challenges and discussions for aspiring ethical hackers.',
-        link: '#', // Replace with actual Skool link
-        category: 'Skool',
-        icon: '/images/skool-icon.png',
-        isExternal: true,
-      },
-    ],
+    title: "Twitter Feed",
+    description: "Stay updated with real-time security news and discussions",
+    icon: Twitter,
+    link: "/community/twitter",
+    color: "from-sky-500/20 to-sky-600/5",
+    borderColor: "border-sky-500/30",
+    hoverColor: "group-hover:border-sky-500/60"
   },
   {
-    title: 'Reddit Communities',
-    description: 'Discussion forums and Q&A platforms for cybersecurity topics.',
-    resources: [
-      {
-        title: 'r/cybersecurity',
-        description: 'General discussions, career advice, and industry news in cybersecurity.',
-        link: 'https://reddit.com/r/cybersecurity',
-        category: 'Reddit',
-        icon: '/images/reddit-icon.png',
-        isExternal: true,
-      },
-      {
-        title: 'r/netsec',
-        description: 'Technical discussions about network security news and trends.',
-        link: 'https://reddit.com/r/netsec',
-        category: 'Reddit',
-        icon: '/images/reddit-icon.png',
-        isExternal: true,
-      },
-    ],
+    title: "LinkedIn Network",
+    description: "Connect with cybersecurity professionals and organizations",
+    icon: Linkedin,
+    link: "/community/linkedin",
+    color: "from-blue-600/20 to-blue-700/5",
+    borderColor: "border-blue-600/30",
+    hoverColor: "group-hover:border-blue-600/60"
   },
   {
-    title: 'LinkedIn Groups',
-    description: 'Professional networking and job insights in cybersecurity.',
-    resources: [
-      {
-        title: 'Cybersecurity Professionals',
-        description: 'Industry discussions, job postings, and professional networking.',
-        link: 'https://www.linkedin.com/groups/cybersecurity-professionals',
-        category: 'LinkedIn',
-        icon: '/images/linkedin-icon.png',
-        isExternal: true,
-      },
-      {
-        title: 'Cyber Threat Intelligence',
-        description: 'Focus on threat research, analysis, and mitigation strategies.',
-        link: 'https://www.linkedin.com/groups/cyber-threat-intelligence',
-        category: 'LinkedIn',
-        icon: '/images/linkedin-icon.png',
-        isExternal: true,
-      },
-    ],
+    title: "Discord Servers",
+    description: "Join real-time chat communities for learning and collaboration",
+    icon: MessageSquare,
+    link: "/community/discord",
+    color: "from-indigo-500/20 to-indigo-600/5",
+    borderColor: "border-indigo-500/30",
+    hoverColor: "group-hover:border-indigo-500/60"
   },
+  {
+    title: "Reddit Communities",
+    description: "Explore popular cybersecurity subreddits and discussions",
+    icon: Globe,
+    link: "/community/reddit",
+    color: "from-orange-500/20 to-orange-600/5",
+    borderColor: "border-orange-500/30",
+    hoverColor: "group-hover:border-orange-500/60"
+  }
 ];
 
 export default function CommunityPage() {
@@ -125,45 +68,62 @@ export default function CommunityPage() {
     <div className="min-h-screen bg-black">
       <SectionHeader
         title="Community"
-        description="Connect with cybersecurity communities across various platforms. Join discussions, share knowledge, and grow together."
-        icon={
-          <svg
-            className="h-12 w-12 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-            />
-          </svg>
-        }
+        description="Connect with cybersecurity professionals, join discussions, and collaborate with peers across various platforms."
+        icon={<Users className="h-12 w-12 text-white" />}
       />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {communityPlatforms.map((platform, index) => (
-          <div key={platform.title} className="mb-16 last:mb-0">
-            <h2 className="text-2xl font-bold text-white mb-2 flex items-center">
-              {platform.title}
-              {platform.title === 'Developer News & Community' && (
-                <Star className="ml-2 h-5 w-5 text-yellow-500" fill="currentColor" />
-              )}
-            </h2>
-            <p className="text-gray-400 mb-6">{platform.description}</p>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {platform.resources.map((resource) => (
-                <ResourceCard
-                  key={resource.title}
-                  {...resource}
-                />
+
+      {/* Community Platforms Grid */}
+      <section className="py-20">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {communityPlatforms.map((platform, index) => (
+                <Link key={index} href={platform.link} className="group">
+                  <div className={`h-full p-6 rounded-lg border ${platform.borderColor} ${platform.hoverColor} transition-colors bg-gradient-to-b ${platform.color}`}>
+                    <div className="flex items-center mb-4">
+                      <div className="w-12 h-12 rounded-lg bg-gray-900/50 flex items-center justify-center">
+                        <platform.icon className="w-6 h-6 text-gray-300" />
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                      {platform.title}
+                    </h3>
+                    <p className="text-gray-400">
+                      {platform.description}
+                    </p>
+                  </div>
+                </Link>
               ))}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
+
+      {/* Community Guidelines */}
+      <section className="py-20 border-t border-gray-800">
+        <div className="container">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-white mb-6">Community Guidelines</h2>
+            <p className="text-xl text-gray-400 mb-8">
+              Our community thrives on mutual respect, knowledge sharing, and collaborative learning.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild>
+                <Link href="/community/guidelines" className="flex items-center gap-2">
+                  View Guidelines
+                  <ExternalLink className="w-4 h-4" />
+                </Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link href="/community/code-of-conduct" className="flex items-center gap-2">
+                  Code of Conduct
+                  <ExternalLink className="w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 } 

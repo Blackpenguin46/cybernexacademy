@@ -19,10 +19,10 @@ export default function Navbar() {
       title: "Academy",
       icon: Terminal,
       links: [
-        { name: "Courses", href: "/academy" },
-        { name: "Learning Paths", href: "/academy/paths" },
-        { name: "Resources", href: "/learning/courses" },
-        { name: "Certifications", href: "/academy/certifications" }
+        { name: "Overview", href: "/academy" },
+        { name: "Foundational", href: "/academy/foundational" },
+        { name: "Projects & Labs", href: "/academy/labs" },
+        { name: "Career Roadmaps", href: "/academy/roadmaps" }
       ]
     },
     {
@@ -30,10 +30,10 @@ export default function Navbar() {
       title: "Community",
       icon: User,
       links: [
-        { name: "Forums", href: "/community" },
-        { name: "Creators", href: "/community/creators" },
+        { name: "Overview", href: "/community" },
+        { name: "Discord", href: "/community/discord" },
         { name: "Events", href: "/community/events" },
-        { name: "Discord", href: "/community/discord" }
+        { name: "GitHub", href: "/community/github" }
       ]
     },
     {
@@ -41,10 +41,10 @@ export default function Navbar() {
       title: "Insights",
       icon: Zap,
       links: [
-        { name: "News", href: "/insights" },
-        { name: "Articles", href: "/insights/articles" },
-        { name: "Research", href: "/insights/research" },
-        { name: "Threat Intelligence", href: "/insights/threats" }
+        { name: "Overview", href: "/insights" },
+        { name: "News", href: "/insights/news" },
+        { name: "Trends", href: "/insights/trends" },
+        { name: "Research", href: "/insights/research" }
       ]
     },
     {
@@ -52,9 +52,9 @@ export default function Navbar() {
       title: "Tools",
       icon: Database,
       links: [
+        { name: "Overview", href: "/tools" },
         { name: "Security Scanner", href: "/tools/scanner" },
         { name: "Password Checker", href: "/tools/password" },
-        { name: "Encryption Tools", href: "/tools/encryption" },
         { name: "Security Assessment", href: "/tools/assessment" }
       ]
     }
