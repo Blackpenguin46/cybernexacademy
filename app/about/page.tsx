@@ -8,28 +8,10 @@ export default function AboutPage() {
   // Team members data
   const teamMembers = [
     {
-      name: "Dr. Sarah Johnson",
+      name: "Sam Oakes",
       role: "Founder & CEO",
-      bio: "Former CISO with 15+ years of experience in cybersecurity. PhD in Computer Science with a focus on security systems.",
-      image: "/images/team/sarah.jpg"
-    },
-    {
-      name: "Michael Chen",
-      role: "Chief Learning Officer",
-      bio: "Security researcher and educator with experience at leading tech companies. Specializes in making complex security concepts accessible.",
-      image: "/images/team/michael.jpg"
-    },
-    {
-      name: "David Rodriguez",
-      role: "Head of Content",
-      bio: "Cybersecurity author and former penetration tester. Passionate about creating engaging educational content.",
-      image: "/images/team/david.jpg"
-    },
-    {
-      name: "Emma Williams",
-      role: "Community Director",
-      bio: "Community builder with a background in cybersecurity training and mentorship programs. Focused on creating inclusive learning environments.",
-      image: "/images/team/emma.jpg"
+      bio: "Cybersecurity enthusiast and educator. Founded Cybernex Academy in 2024 to help others navigate the cybersecurity field more efficiently.",
+      image: "/images/team/sam.jpg"
     }
   ]
   
@@ -77,12 +59,12 @@ export default function AboutPage() {
         </div>
         <div className="container relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">About CyberNex Academy</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">About Cybernex Academy</h1>
             <p className="text-xl text-gray-300 mb-6">
-              Empowering the next generation of cybersecurity professionals
+              Accelerating your journey in cybersecurity education
             </p>
             <p className="text-blue-400 font-medium italic mb-8">
-              "Knowledge Is Security, Security Is Power"
+              "Bridging the cybersecurity skills gap through accessible resources"
             </p>
           </div>
         </div>
@@ -96,20 +78,20 @@ export default function AboutPage() {
               <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
                 <h2 className="text-2xl font-bold text-white mb-4">Our Mission</h2>
                 <p className="text-gray-300 mb-4">
-                  CyberNex Academy exists to democratize cybersecurity education, making it accessible, engaging, and effective for learners at all levels.
+                  Cybernex Academy exists to streamline the cybersecurity learning journey by providing a centralized repository of high-quality resources for learners at all levels.
                 </p>
                 <p className="text-gray-300">
-                  We are committed to bridging the cybersecurity skills gap by providing high-quality, practical training that prepares individuals for real-world challenges in the digital security landscape.
+                  We are committed to bridging the cybersecurity skills gap by helping students and professionals find the right resources quickly, saving them valuable time in their educational journey.
                 </p>
               </div>
               
               <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
                 <h2 className="text-2xl font-bold text-white mb-4">Our Vision</h2>
                 <p className="text-gray-300 mb-4">
-                  We envision a world where organizations and individuals are empowered to protect themselves in the digital realm through knowledge and skills.
+                  We envision a world where anyone interested in cybersecurity can quickly find the resources they need to excel, without wasting years searching for the right materials.
                 </p>
                 <p className="text-gray-300">
-                  CyberNex Academy aims to be the premier platform for cybersecurity education, fostering a global community of skilled professionals who contribute to a more secure digital future.
+                  Cybernex Academy aims to be the premier platform for cybersecurity resource curation, fostering a community of learners who can accelerate their growth in the field and contribute to a more secure digital future.
                 </p>
               </div>
             </div>
@@ -124,13 +106,13 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Story</h2>
             <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
               <p className="text-gray-300 mb-4">
-                CyberNex Academy was founded in 2020 by Dr. Sarah Johnson, a former Chief Information Security Officer with a passion for education. After years of witnessing the growing cybersecurity skills gap and the challenges organizations face in finding qualified security professionals, Sarah decided to create a solution.
+                Cybernex Academy was founded in 2024 by Sam Oakes. As a college student navigating the field of cybersecurity, Sam spent a great deal of time trying to find the resources necessary to excel in the field.
               </p>
               <p className="text-gray-300 mb-4">
-                What began as a small collection of online courses quickly evolved into a comprehensive learning platform. By bringing together industry experts, innovative teaching methodologies, and a focus on practical, hands-on learning, CyberNex Academy has grown into a trusted resource for cybersecurity education.
+                By the time he was a junior, he had built up a good set of resources and was starting to excel in cybersecurity. He felt that he had wasted two years though finding all the right places to help him learn and wished there was a resource that could provide everything necessary to get started or continue learning cybersecurity.
               </p>
-              <p className="text-gray-300">
-                Today, CyberNex Academy serves learners in over 150 countries, from complete beginners to seasoned professionals looking to expand their skills. Our community-centered approach, rigorous curriculum, and commitment to staying at the cutting edge of cybersecurity have made us a leader in the field of security education.
+              <p className="text-gray-300 mb-4">
+                That's where the idea for Cybernex Academy began. With a passion to educate and help others, Sam developed a repository of resources for people interested in cybersecurity to get started faster and help close the skills gap in the field of cybersecurity.
               </p>
             </div>
           </div>
@@ -185,7 +167,7 @@ export default function AboutPage() {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold text-white mb-6">Join Our Community</h2>
             <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-              Become part of the CyberNex Academy community and start your journey toward cybersecurity mastery today.
+              Access our curated cybersecurity resources and accelerate your learning journey with Cybernex Academy today.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link 
