@@ -16,20 +16,6 @@ export default function Navbar() {
   // Navigation sections with cybersecurity icons
   const navSections = [
     {
-      id: "academy",
-      title: "Academy",
-      icon: Terminal,
-      description: "Learn cybersecurity through structured courses, hands-on labs, and guided career paths. Perfect for beginners and experienced professionals alike.",
-      links: [
-        { name: "Foundational", href: "/academy/foundational" },
-        { name: "Projects & Labs", href: "/academy/labs" },
-        { name: "Career Roadmaps", href: "/academy/roadmaps" },
-        { name: "Research Papers", href: "/academy/research" },
-        { name: "Practice Challenges", href: "/academy/challenges" },
-        { name: "Code Examples", href: "/academy/code" }
-      ]
-    },
-    {
       id: "community",
       title: "Community",
       icon: User,
@@ -41,7 +27,8 @@ export default function Navbar() {
         { name: "Substack", href: "/community/substack" },
         { name: "LinkedIn", href: "/community/linkedin" },
         { name: "Skool", href: "/community/skool" },
-        { name: "Forums & Blogs", href: "/community/forums" }
+        { name: "Forums & Blogs", href: "/community/forums" },
+        { name: "Events", href: "/community/events" }
       ]
     },
     {
@@ -55,7 +42,24 @@ export default function Navbar() {
         { name: "Case Studies", href: "/insights/cases" },
         { name: "Threat Reports", href: "/insights/threats" },
         { name: "Industry Trends", href: "/insights/industry" },
-        { name: "Best Practices", href: "/insights/practices" }
+        { name: "Best Practices", href: "/insights/practices" },
+        { name: "Articles", href: "/insights/articles" },
+        { name: "Threat Intelligence", href: "/insights/threats" }
+      ]
+    },
+    {
+      id: "academy",
+      title: "Academy",
+      icon: Terminal,
+      description: "Learn cybersecurity through structured courses, hands-on labs, and guided career paths. Perfect for beginners and experienced professionals alike.",
+      links: [
+        { name: "Courses", href: "/academy/courses" },
+        { name: "Learning Paths", href: "/academy/paths" },
+        { name: "Foundational", href: "/academy/foundational" },
+        { name: "Projects & Labs", href: "/academy/labs" },
+        { name: "Career Roadmaps", href: "/academy/roadmaps" },
+        { name: "Certifications", href: "/academy/certifications" },
+        { name: "Resources", href: "/academy/resources" }
       ]
     },
     {
