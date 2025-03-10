@@ -159,25 +159,36 @@ export default function Navbar() {
             
             {navSections.map((section) => (
               <div key={section.title} className="relative">
-                <button 
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
-                    (isActive(`/${section.id}`) || activeDropdown === section.id) 
-                      ? 'text-neon-blue bg-neon-blue/5' 
-                      : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                  }`}
-                  onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
-                  onMouseEnter={() => setActiveDropdown(section.id)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                >
-                  <section.icon className="w-4 h-4" />
-                  <span>{section.title}</span>
-                  <motion.div 
-                    animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+                <div className="flex items-center">
+                  <Link
+                    href={`/${section.id}`}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
+                      isActive(`/${section.id}`)
+                        ? 'text-neon-blue bg-neon-blue/5' 
+                        : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                    }`}
                   >
-                    <ChevronDown className="w-4 h-4" />
-                  </motion.div>
-                </button>
+                    <section.icon className="w-4 h-4" />
+                    <span>{section.title}</span>
+                  </Link>
+                  <button 
+                    className={`ml-1 p-1 rounded-md transition-all duration-300 ${
+                      activeDropdown === section.id 
+                        ? 'text-neon-blue bg-neon-blue/5' 
+                        : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                    }`}
+                    onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                    onMouseEnter={() => setActiveDropdown(section.id)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <motion.div 
+                      animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </motion.div>
+                  </button>
+                </div>
                 
                 <AnimatePresence>
                   {activeDropdown === section.id && (
