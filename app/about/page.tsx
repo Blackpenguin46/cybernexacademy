@@ -10,7 +10,7 @@ export default function AboutPage() {
     {
       name: "Sam Oakes",
       role: "Founder & CEO",
-      bio: "Cybersecurity enthusiast and educator. Founded Cybernex Academy in 2024 to help others navigate the cybersecurity field more efficiently.",
+      bio: "Cybersecurity enthusiast and educator with a passion for Governance, Risk, and Compliance (GRC). Conducted research on risk management in emerging technologies and presented on quantum computing business integration to a Fortune 500 company. Founded Cybernex Academy in 2024 to help others navigate the cybersecurity field more efficiently.",
       image: "/images/team/sam.jpg"
     }
   ]
