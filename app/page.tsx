@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Shield, Book, Users, Bell, Lock, ArrowRight, Rocket, Target, Brain, Code, ChevronDown } from "lucide-react"
 import AnimatedBackground from "./components/AnimatedBackground"
+import CyberBackground from "./components/CyberBackground"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
 import { TerminalDisplay, HeroButton, CTAButton, StatisticsCounter } from "./components/ClientComponents"
@@ -13,16 +14,20 @@ export const revalidate = 0
 export default function Home() {
   return (
     <div className="bg-black relative">
-      <AnimatedBackground />
+      {/* AnimatedBackground is now only used for sections below the hero */}
+      <div className="absolute inset-0 z-0">
+        <AnimatedBackground />
+      </div>
 
       {/* Content wrapper with higher z-index */}
       <div className="relative z-10">
-        {/* Hero Section */}
+        {/* Hero Section with CyberBackground */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+          {/* CyberBackground for the hero section */}
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20" />
-            <div className="absolute inset-0 bg-black/80" />
+            <CyberBackground />
           </div>
+          
           <div className="container relative z-10 px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
