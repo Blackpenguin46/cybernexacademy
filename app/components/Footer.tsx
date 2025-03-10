@@ -5,7 +5,7 @@ import { Shield, Github, Twitter, Linkedin } from "lucide-react"
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 border-t border-gray-800">
+    <footer className="bg-gray-900 border-t border-gray-800 relative z-10">
       <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           <div className="mb-6 md:mb-0">
