@@ -1,13 +1,51 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import SectionHeader from '../../components/SectionHeader'
 import ResourceCard from '../../components/ResourceCard'
-import { Youtube, Star, Users, Clock, PlayCircle, ExternalLink, Bookmark } from "lucide-react"
+import { Youtube, Star, Users, Clock, PlayCircle, ExternalLink, Bookmark, Filter, X, BookOpen, Code, Shield, Terminal, Server, Lock, Target } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '../../components/CategoryFilter'
 
-const youtubeResources = [
+// Define interface for Category
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+}
+
+// Define categories for filtering
+const categories: Category[] = [
+  { id: 'all', name: 'All', icon: Youtube },
+  { id: 'general-security', name: 'General Security', icon: Shield },
+  { id: 'networking', name: 'Networking & Security', icon: Server },
+  { id: 'certification', name: 'Certification Prep', icon: BookOpen },
+  { id: 'technical-analysis', name: 'Technical Analysis', icon: Code },
+  { id: 'penetration-testing', name: 'Penetration Testing', icon: Target },
+  { id: 'malware-analysis', name: 'Malware Analysis', icon: Lock },
+  { id: 'ethical-hacking', name: 'Ethical Hacking', icon: Terminal }
+];
+
+// Define interface for resource
+interface YouTubeResource {
+  title: string;
+  description: string;
+  link: string;
+  category: string;
+  icon: string;
+  isExternal: boolean;
+  sectionTitle?: string;
+}
+
+// Define interface for section
+interface ResourceSection {
+  title: string;
+  description: string;
+  resources: YouTubeResource[];
+}
+
+const youtubeResources: ResourceSection[] = [
   {
     title: 'Beginner-Friendly Channels',
     description: 'Start your cybersecurity journey with these educational channels.',
@@ -16,7 +54,7 @@ const youtubeResources = [
         title: 'NetworkChuck',
         description: 'Engaging tutorials on networking, Linux, and cybersecurity fundamentals.',
         link: 'https://www.youtube.com/@NetworkChuck',
-        category: 'General Security',
+        category: 'general-security',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -24,7 +62,7 @@ const youtubeResources = [
         title: 'David Bombal',
         description: 'Comprehensive tutorials on networking, security tools, and certification prep.',
         link: 'https://www.youtube.com/@davidbombal',
-        category: 'Networking & Security',
+        category: 'networking',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -32,7 +70,7 @@ const youtubeResources = [
         title: 'Professor Messer',
         description: 'Free certification training videos for CompTIA A+, Network+, and Security+.',
         link: 'https://www.youtube.com/@professormesser',
-        category: 'Certification Prep',
+        category: 'certification',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -46,7 +84,7 @@ const youtubeResources = [
         title: 'John Hammond',
         description: 'Malware analysis, CTF walkthroughs, and advanced security concepts.',
         link: 'https://www.youtube.com/@_JohnHammond',
-        category: 'Technical Analysis',
+        category: 'technical-analysis',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -54,7 +92,7 @@ const youtubeResources = [
         title: 'IppSec',
         description: 'Detailed walkthroughs of HackTheBox machines and penetration testing.',
         link: 'https://www.youtube.com/@ippsec',
-        category: 'Penetration Testing',
+        category: 'penetration-testing',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -62,7 +100,7 @@ const youtubeResources = [
         title: 'LiveOverflow',
         description: 'In-depth explanations of exploits, vulnerabilities, and security research.',
         link: 'https://www.youtube.com/@LiveOverflow',
-        category: 'Security Research',
+        category: 'ethical-hacking',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -76,7 +114,7 @@ const youtubeResources = [
         title: 'STÖK',
         description: 'Bug bounty hunting and web application security testing.',
         link: 'https://www.youtube.com/@STOKfredrik',
-        category: 'Bug Bounty',
+        category: 'ethical-hacking',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -84,7 +122,7 @@ const youtubeResources = [
         title: 'HackerSploit',
         description: 'Tutorials on penetration testing tools and methodologies.',
         link: 'https://www.youtube.com/@HackerSploit',
-        category: 'Penetration Testing',
+        category: 'penetration-testing',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -92,7 +130,7 @@ const youtubeResources = [
         title: 'Null Byte',
         description: 'Practical tutorials on ethical hacking and security tools.',
         link: 'https://www.youtube.com/@NullByte',
-        category: 'Ethical Hacking',
+        category: 'ethical-hacking',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -106,7 +144,7 @@ const youtubeResources = [
         title: 'Security Weekly',
         description: 'Weekly security news, interviews, and technical segments.',
         link: 'https://www.youtube.com/@SecurityWeekly',
-        category: 'News & Analysis',
+        category: 'general-security',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -114,7 +152,7 @@ const youtubeResources = [
         title: 'The Cyber Mentor',
         description: 'Career advice, penetration testing, and web security tutorials.',
         link: 'https://www.youtube.com/@TCMSecurityAcademy',
-        category: 'Training & Career',
+        category: 'certification',
         icon: '/images/youtube-icon.png',
         isExternal: true,
       },
@@ -123,6 +161,41 @@ const youtubeResources = [
 ];
 
 export default function YouTubePage() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // Flatten all resources into a single array
+  const allResources = youtubeResources.flatMap(category => 
+    category.resources.map(resource => ({
+      ...resource,
+      sectionTitle: category.title
+    }))
+  );
+
+  // Filter resources based on selected category
+  const filteredResources = selectedCategory === 'all' 
+    ? allResources 
+    : allResources.filter(resource => resource.category === selectedCategory);
+
+  // Group filtered resources by their original section titles
+  const filteredResourcesBySection = filteredResources.reduce<Record<string, YouTubeResource[]>>((acc, resource) => {
+    const { sectionTitle } = resource;
+    if (sectionTitle) {
+      if (!acc[sectionTitle]) {
+        acc[sectionTitle] = [];
+      }
+      acc[sectionTitle].push(resource);
+    }
+    return acc;
+  }, {});
+
+  // Create filtered sections that match the original structure
+  const filteredSections = youtubeResources
+    .filter(section => filteredResourcesBySection[section.title]?.length > 0)
+    .map(section => ({
+      ...section,
+      resources: filteredResourcesBySection[section.title] || []
+    }));
+
   const featuredCreators = [
     {
       name: "John Hammond",
@@ -286,232 +359,107 @@ export default function YouTubePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <Youtube className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Video Learning</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Learn from Top Cybersecurity Creators
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Access high-quality video courses and tutorials from industry-leading cybersecurity experts.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto">
+        <SectionHeader
+          title="Cybersecurity YouTube Channels"
+          description="Curated YouTube channels to enhance your cybersecurity knowledge and skills."
+          icon={<Youtube className="h-10 w-10 text-red-500" />}
+        />
 
-      {/* Featured Creators Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Featured Creators
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {featuredCreators.map((creator, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="space-y-6">
-                    <div className="flex items-center space-x-4">
-                      <div className="w-16 h-16 rounded-full bg-gray-800"></div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-white">{creator.name}</h3>
-                        <div className="text-blue-500">{creator.channel}</div>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-sm text-gray-500">Subscribers</div>
-                        <div className="text-white">{creator.subscribers}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-500">Rating</div>
-                        <div className="flex items-center text-yellow-500">
-                          <Star className="w-4 h-4 mr-1" />
-                          {creator.rating}
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-1">Focus Areas</div>
-                      <div className="text-gray-300">{creator.focus}</div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Top Playlists</div>
-                      <div className="space-y-2">
-                        {creator.topPlaylists.map((playlist, playlistIndex) => (
-                          <div
-                            key={playlistIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <PlayCircle className="w-4 h-4 text-blue-500 mr-2" />
-                            {playlist}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      View Channel
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Add Category Filter */}
+        <div className="mb-8">
+          <CategoryFilter 
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            accentColor="red"
+          />
         </div>
-      </section>
 
-      {/* Top Courses Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Top Video Courses
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {topCourses.map((course, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-blue-500 text-sm font-medium">{course.level}</span>
-                        <div className="flex items-center text-yellow-500">
-                          <Star className="w-4 h-4 mr-1" />
-                          {course.rating}
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{course.title}</h3>
-                      <div className="text-gray-400 text-sm">By {course.creator}</div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <div className="text-sm text-gray-500">Duration</div>
-                        <div className="text-white">{course.duration}</div>
-                      </div>
-                      <div>
-                        <div className="text-sm text-gray-500">Students</div>
-                        <div className="text-white">{course.students}</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Topics Covered</div>
-                      <div className="space-y-2">
-                        {course.topics.map((topic, topicIndex) => (
-                          <div
-                            key={topicIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                            {topic}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Features</div>
-                      <div className="flex flex-wrap gap-2">
-                        {course.features.map((feature, featureIndex) => (
-                          <span
-                            key={featureIndex}
-                            className="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded border border-blue-800"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                      Start Learning
-                      <ExternalLink className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
+        {filteredSections.length > 0 ? (
+          filteredSections.map((section, index) => (
+            <div key={index} className="mb-12">
+              <h2 className="text-2xl font-bold mb-2 text-white flex items-center gap-2">
+                {section.title}
+              </h2>
+              <p className="text-gray-400 mb-6">{section.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {section.resources.map((resource, idx) => (
+                  <ResourceCard
+                    key={idx}
+                    title={resource.title}
+                    description={resource.description}
+                    link={resource.link}
+                    icon={resource.icon}
+                    isExternal={resource.isExternal}
+                    category={resource.category}
+                  />
+                ))}
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No channels match your filter</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedCategory('all')}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear filters
+            </Button>
           </div>
-        </div>
-      </section>
+        )}
 
-      {/* Playlists Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Learning Playlists
-            </h2>
-            <div className="space-y-8">
-              {playlists.map((category, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-6">{category.category}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {category.series.map((series, seriesIndex) => (
-                      <div
-                        key={seriesIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="mb-3">
-                          <div className="font-medium text-white mb-1">{series.title}</div>
-                          <div className="text-sm text-gray-400">By {series.creator}</div>
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center text-blue-500">
-                            <PlayCircle className="w-4 h-4 mr-1" />
-                            {series.videos} videos
-                          </div>
-                          <div className="flex items-center text-gray-400">
-                            <Clock className="w-4 h-4 mr-1" />
-                            {series.duration}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-2">
+            <Star className="h-6 w-6 text-yellow-500" /> Pro Tips for Learning from YouTube
+          </h2>
+          <ul className="space-y-4">
+            <li className="flex gap-3">
+              <PlayCircle className="h-6 w-6 flex-shrink-0 text-red-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Create playlists by topic</p>
+                <p className="text-gray-400">Organize videos into playlists based on specific skills or concepts you want to learn.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Clock className="h-6 w-6 flex-shrink-0 text-red-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Use playback speed options</p>
+                <p className="text-gray-400">Speed up basic content or slow down complex explanations to match your learning pace.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Bookmark className="h-6 w-6 flex-shrink-0 text-red-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Take notes while watching</p>
+                <p className="text-gray-400">Active note-taking improves retention and creates a personal reference for future use.</p>
+              </div>
+            </li>
+          </ul>
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Start Learning Today
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Access thousands of hours of cybersecurity video content from expert creators.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Browse All Videos
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                Save for Later
-                <Bookmark className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
+        <div className="mt-12 text-center">
+          <h2 className="text-2xl font-bold mb-4 text-white">Ready to expand your knowledge?</h2>
+          <p className="text-gray-400 mb-6">Explore our curated courses and certification paths to take your skills to the next level.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button asChild>
+              <Link href="/academy/courses">
+                Explore Courses
+              </Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/academy/certifications">
+                View Certifications
+              </Link>
+            </Button>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   )
 } 

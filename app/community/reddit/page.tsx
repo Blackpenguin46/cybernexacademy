@@ -1,70 +1,102 @@
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark, Code, Target, Server, Lock, AlertTriangle, BookOpen, Briefcase } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 export default function RedditPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+
+  // Categories for filtering
+  const categories = [
+    { id: 'All', name: 'All Subreddits', icon: Users },
+    { id: 'general', name: 'General Security', icon: Shield },
+    { id: 'technical', name: 'Technical', icon: Code },
+    { id: 'pentesting', name: 'Penetration Testing', icon: Target },
+    { id: 'malware', name: 'Malware Analysis', icon: AlertTriangle },
+    { id: 'networking', name: 'Networking', icon: Server },
+    { id: 'career', name: 'Career & Certifications', icon: Briefcase },
+  ]
+
   const popularSubreddits = [
     {
       name: "r/cybersecurity",
       description: "The central hub for cybersecurity professionals, featuring discussions on latest threats, tools, and career advice.",
       members: "584K+",
-      url: "https://www.reddit.com/r/cybersecurity/"
+      url: "https://www.reddit.com/r/cybersecurity/",
+      categories: ["general", "career"]
     },
     {
       name: "r/netsec",
       description: "Technical discussions about network and information security, with a focus on latest vulnerabilities and research.",
       members: "495K+",
-      url: "https://www.reddit.com/r/netsec/"
+      url: "https://www.reddit.com/r/netsec/",
+      categories: ["technical", "networking"]
     },
     {
       name: "r/hacking",
       description: "Educational discussions about hacking techniques, tools, and methodologies in an ethical context.",
       members: "2.1M+",
-      url: "https://www.reddit.com/r/hacking/"
+      url: "https://www.reddit.com/r/hacking/",
+      categories: ["pentesting", "technical"]
     },
     {
       name: "r/AskNetsec",
       description: "Q&A forum for network security professionals and beginners seeking advice on InfoSec topics.",
       members: "198K+",
-      url: "https://www.reddit.com/r/AskNetsec/"
+      url: "https://www.reddit.com/r/AskNetsec/",
+      categories: ["general", "networking", "career"]
     },
     {
       name: "r/reverseengineering",
       description: "Technical discussions about software reverse engineering and malware analysis.",
       members: "190K+",
-      url: "https://www.reddit.com/r/reverseengineering/"
+      url: "https://www.reddit.com/r/reverseengineering/",
+      categories: ["technical", "malware"]
     },
     {
       name: "r/networking",
       description: "Enterprise networking discussions and professional network engineering topics.",
       members: "680K+",
-      url: "https://www.reddit.com/r/networking/"
+      url: "https://www.reddit.com/r/networking/",
+      categories: ["networking"]
     },
     {
       name: "r/linuxadmin",
       description: "Linux system administration and security hardening discussions.",
       members: "240K+",
-      url: "https://www.reddit.com/r/linuxadmin/"
+      url: "https://www.reddit.com/r/linuxadmin/",
+      categories: ["technical", "networking"]
     },
     {
       name: "r/malware",
       description: "Analysis and discussion of malware, threats, and defense strategies.",
       members: "150K+",
-      url: "https://www.reddit.com/r/malware/"
+      url: "https://www.reddit.com/r/malware/",
+      categories: ["malware", "technical"]
     },
     {
       name: "r/ethicalhacking",
       description: "Discussions about ethical hacking methodologies and penetration testing.",
       members: "180K+",
-      url: "https://www.reddit.com/r/ethicalhacking/"
+      url: "https://www.reddit.com/r/ethicalhacking/",
+      categories: ["pentesting", "technical"]
     },
     {
       name: "r/comptia",
       description: "Community for CompTIA certification preparation and discussion.",
       members: "220K+",
-      url: "https://www.reddit.com/r/comptia/"
+      url: "https://www.reddit.com/r/comptia/",
+      categories: ["career"]
     }
   ]
+
+  // Filter subreddits based on selected category
+  const filteredSubreddits = popularSubreddits.filter(subreddit => {
+    return selectedCategory === 'All' || subreddit.categories.includes(selectedCategory)
+  })
 
   const additionalSubreddits = [
     { name: "r/cybersecurity101", url: "https://www.reddit.com/r/cybersecurity101/" },
@@ -123,6 +155,14 @@ export default function RedditPage() {
         </div>
       </section>
 
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="blue"
+      />
+
       {/* Popular Subreddits Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
@@ -130,35 +170,54 @@ export default function RedditPage() {
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Popular Cybersecurity Subreddits
             </h2>
-            <div className="space-y-6">
-              {popularSubreddits.map((subreddit, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">
-                        <Link
-                          href={subreddit.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-blue-500 transition-colors inline-flex items-center"
-                        >
-                          {subreddit.name}
-                          <ExternalLink className="w-4 h-4 ml-2" />
-                        </Link>
-                      </h3>
-                      <p className="text-gray-400">{subreddit.description}</p>
-                    </div>
-                    <div className="flex items-center text-gray-400">
-                      <Users className="w-4 h-4 mr-2" />
-                      <span>{subreddit.members}</span>
+            {filteredSubreddits.length > 0 ? (
+              <div className="space-y-6">
+                {filteredSubreddits.map((subreddit, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                          <Link
+                            href={subreddit.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-blue-500 transition-colors inline-flex items-center"
+                          >
+                            {subreddit.name}
+                            <ExternalLink className="w-4 h-4 ml-2" />
+                          </Link>
+                        </h3>
+                        <p className="text-gray-400">{subreddit.description}</p>
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {subreddit.categories.map((category, i) => (
+                            <span key={i} className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full">
+                              {categories.find(c => c.id === category)?.name || category}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex items-center text-gray-400">
+                        <Users className="w-4 h-4 mr-2" />
+                        <span>{subreddit.members}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 border border-gray-800 rounded-lg">
+                <p className="text-gray-400 mb-2">No subreddits found matching your criteria</p>
+                <button 
+                  onClick={() => setSelectedCategory('All')}
+                  className="text-blue-500 hover:text-blue-400"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>

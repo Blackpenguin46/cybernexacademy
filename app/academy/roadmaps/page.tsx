@@ -1,12 +1,17 @@
-import { Route, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Map } from "lucide-react"
+"use client";
+
+import { useState } from 'react';
+import { Route, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Map, Filter, X } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '../../components/CategoryFilter'
 
 interface Resource {
   name: string
   description: string
   url: string
   type: string
+  category?: string
 }
 
 interface ResourceWithFree extends Resource {
@@ -23,6 +28,13 @@ interface ResourceCategory {
   resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
 }
 
+// Define interface for Category
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+}
+
 function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
   return 'author' in resource;
 }
@@ -32,6 +44,19 @@ function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): re
 }
 
 export default function RoadmapsPage() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // Define categories for filtering
+  const categories: Category[] = [
+    { id: 'all', name: 'All', icon: Map },
+    { id: 'penetration-testing', name: 'Penetration Testing', icon: Target },
+    { id: 'incident-response', name: 'Incident Response', icon: Flame },
+    { id: 'security-engineering', name: 'Security Engineering', icon: Shield },
+    { id: 'cloud-security', name: 'Cloud Security', icon: Server },
+    { id: 'application-security', name: 'Application Security', icon: Code },
+    { id: 'governance', name: 'Governance & Risk', icon: CheckCircle2 }
+  ];
+
   const resourceCategories: ResourceCategory[] = [
     {
       title: "Career Path Roadmaps",
@@ -42,28 +67,62 @@ export default function RoadmapsPage() {
           description: "Comprehensive guide to becoming a penetration tester",
           url: "https://www.hackthebox.com/blog/penetration-testing-career-path",
           type: "Career Guide",
-          free: true
+          free: true,
+          category: "penetration-testing"
         },
         {
           name: "Incident Response Path",
           description: "Career roadmap for incident response and digital forensics",
           url: "https://www.sans.org/cyber-security-career-roadmap",
           type: "Career Guide",
-          free: true
+          free: true,
+          category: "incident-response"
         },
         {
           name: "Security Engineering Path",
-          description: "Guide to becoming a security engineer",
-          url: "https://tldrsec.com/guides/seceng",
+          description: "Guide to becoming a security engineer with focus on infrastructure",
+          url: "https://tisiphone.net/2015/10/12/starting-an-infosec-career-the-megamix-chapters-1-3/",
           type: "Career Guide",
-          free: true
+          free: true,
+          category: "security-engineering"
         },
         {
-          name: "Application Security Path",
-          description: "Career path for application security professionals",
-          url: "https://portswigger.net/web-security/learning-path",
+          name: "Cloud Security Path",
+          description: "Roadmap for specializing in cloud security across major platforms",
+          url: "https://pauljerimy.com/security-certification-roadmap/",
           type: "Career Guide",
-          free: true
+          free: true,
+          category: "cloud-security"
+        }
+      ]
+    },
+    {
+      title: "Skill Development Roadmaps",
+      icon: Brain,
+      resources: [
+        {
+          name: "Web Application Security",
+          description: "Progressive learning path for web application security testing",
+          url: "https://github.com/OWASP/wstg",
+          type: "Skill Guide",
+          free: true,
+          category: "application-security"
+        },
+        {
+          name: "Network Security",
+          description: "Comprehensive roadmap for network security skills",
+          url: "https://www.cyberseek.org/pathway.html",
+          type: "Skill Guide",
+          free: true,
+          category: "security-engineering"
+        },
+        {
+          name: "Security Governance",
+          description: "Path to understanding security frameworks and compliance",
+          url: "https://www.nist.gov/cyberframework",
+          type: "Skill Guide",
+          free: true,
+          category: "governance"
         }
       ]
     },
@@ -180,78 +239,158 @@ export default function RoadmapsPage() {
     }
   ]
 
-  return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <Route className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Career Roadmaps</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Career Paths
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Explore comprehensive roadmaps and learning paths for various cybersecurity careers.
-            </p>
-          </div>
-        </div>
-      </section>
+  // Flatten all resources into a single array
+  const allResources = resourceCategories.flatMap(category => 
+    category.resources.map(resource => ({
+      ...resource,
+      sectionTitle: category.title
+    }))
+  );
 
-      {/* Resources Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            {resourceCategories.map((category, index) => (
-              <div key={index} className="mb-16 last:mb-0">
-                <div className="flex items-center mb-8">
-                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
-                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
-                </div>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {category.resources.map((resource, resourceIndex) => (
-                    <a
-                      key={resourceIndex}
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
-                          {resource.name}
-                        </h3>
-                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
-                          {resource.type}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-400 mb-3">
-                        {resource.description}
-                      </p>
-                      {hasAuthor(resource) && (
-                        <div className="text-sm text-blue-500">
-                          By {resource.author}
-                        </div>
-                      )}
-                      {hasFree(resource) && (
-                        <div className="mt-2">
-                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
-                            {resource.free ? 'Free' : 'Paid'}
-                          </span>
-                        </div>
-                      )}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+  // Filter resources based on selected category
+  const filteredResources = selectedCategory === 'all' 
+    ? allResources 
+    : allResources.filter(resource => resource.category === selectedCategory);
+
+  // Group filtered resources by their original section titles
+  const filteredResourcesBySection = filteredResources.reduce<Record<string, any[]>>((acc, resource) => {
+    const sectionTitle = (resource as any).sectionTitle;
+    if (sectionTitle) {
+      if (!acc[sectionTitle]) {
+        acc[sectionTitle] = [];
+      }
+      acc[sectionTitle].push(resource);
+    }
+    return acc;
+  }, {});
+
+  // Create filtered sections that match the original structure
+  const filteredCategories = resourceCategories
+    .filter(section => filteredResourcesBySection[section.title]?.length > 0)
+    .map(section => ({
+      ...section,
+      resources: filteredResourcesBySection[section.title] || []
+    }));
+
+  return (
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-4xl mx-auto">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-white mb-4 flex items-center gap-2">
+            <Map className="h-8 w-8 text-blue-500" />
+            Cybersecurity Career Roadmaps
+          </h1>
+          <p className="text-gray-400 text-lg">
+            Structured learning paths to guide your cybersecurity career journey
+          </p>
         </div>
-      </section>
+
+        {/* Add Category Filter */}
+        <div className="mb-8">
+          <CategoryFilter 
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            accentColor="blue"
+          />
+        </div>
+
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, index) => (
+            <div key={index} className="mb-12">
+              <div className="flex items-center gap-2 mb-6">
+                <category.icon className="h-6 w-6 text-blue-500" />
+                <h2 className="text-2xl font-bold text-white">{category.title}</h2>
+              </div>
+              <div className="grid gap-6">
+                {category.resources.map((resource, resourceIndex) => (
+                  <div key={resourceIndex} className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors">
+                    <div className="flex flex-col md:flex-row md:items-start gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-medium px-2 py-1 rounded bg-blue-900/50 text-blue-400 border border-blue-800/50">
+                            {resource.type}
+                          </span>
+                          {hasFree(resource) && resource.free && (
+                            <span className="text-sm font-medium px-2 py-1 rounded bg-green-900/50 text-green-400 border border-green-800/50">
+                              Free
+                            </span>
+                          )}
+                          {resource.category && (
+                            <span className="text-sm font-medium px-2 py-1 rounded bg-purple-900/50 text-purple-400 border border-purple-800/50">
+                              {categories.find(cat => cat.id === resource.category)?.name || resource.category}
+                            </span>
+                          )}
+                        </div>
+                        <h3 className="text-xl font-semibold text-white mb-2">{resource.name}</h3>
+                        <p className="text-gray-400 mb-4">{resource.description}</p>
+                        {hasAuthor(resource) && (
+                          <div className="text-gray-500 mb-4">Author: {resource.author}</div>
+                        )}
+                      </div>
+                      <div className="flex-shrink-0">
+                        <Button asChild>
+                          <Link href={resource.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                            View Resource
+                            <ExternalLink className="h-4 w-4" />
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No roadmaps match your filter</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedCategory('all')}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear filters
+            </Button>
+          </div>
+        )}
+
+        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-4 text-white">How to Use These Roadmaps</h2>
+          <ul className="space-y-4">
+            <li className="flex gap-3">
+              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Assess your current skills</p>
+                <p className="text-gray-400">Identify your starting point on the roadmap based on your existing knowledge.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Set clear goals</p>
+                <p className="text-gray-400">Determine which career path aligns with your interests and career objectives.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Create a learning plan</p>
+                <p className="text-gray-400">Break down the roadmap into manageable milestones with realistic timeframes.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <CheckCircle2 className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Track your progress</p>
+                <p className="text-gray-400">Regularly review your advancement and adjust your learning plan as needed.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  )
+  );
 } 
