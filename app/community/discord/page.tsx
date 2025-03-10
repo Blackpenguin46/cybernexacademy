@@ -1,70 +1,102 @@
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 export default function DiscordPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+
+  // Categories for filtering
+  const categories = [
+    { id: 'All', name: 'All Servers', icon: Users },
+    { id: 'learning', name: 'Learning', icon: BookOpen },
+    { id: 'ctf', name: 'CTF & Challenges', icon: Target },
+    { id: 'pentesting', name: 'Penetration Testing', icon: Code },
+    { id: 'blue_team', name: 'Blue Team', icon: Shield },
+    { id: 'career', name: 'Career & Certifications', icon: Briefcase },
+    { id: 'community', name: 'General Community', icon: MessageSquare },
+  ]
+
   const popularServers = [
     {
       name: "The Cyber Mentor",
       description: "Heath Adams' community focused on practical ethical hacking and penetration testing training.",
       members: "100K+",
-      url: "https://discord.gg/tcm"
+      url: "https://discord.gg/tcm",
+      categories: ["learning", "pentesting", "career"]
     },
     {
       name: "Darknet Diaries",
       description: "Official community for the popular cybersecurity podcast, discussing true stories from the dark side of the Internet.",
       members: "75K+",
-      url: "https://discord.gg/darknet"
+      url: "https://discord.gg/darknet",
+      categories: ["community"]
     },
     {
       name: "TryHackMe",
       description: "Learning community focused on hands-on cybersecurity training through practical labs and exercises.",
       members: "150K+",
-      url: "https://discord.gg/tryhackme"
+      url: "https://discord.gg/tryhackme",
+      categories: ["learning", "ctf", "pentesting"]
     },
     {
       name: "Hack The Box",
       description: "Active hacking community with discussions about challenges, machines, and penetration testing.",
       members: "200K+",
-      url: "https://discord.gg/hackthebox"
+      url: "https://discord.gg/hackthebox",
+      categories: ["ctf", "pentesting", "learning"]
     },
     {
       name: "The Many Hats Club",
       description: "Diverse cybersecurity community covering various topics from ethical hacking to threat intelligence.",
       members: "45K+",
-      url: "https://discord.gg/manyhats"
+      url: "https://discord.gg/manyhats",
+      categories: ["community", "pentesting", "blue_team"]
     },
     {
       name: "John Hammond's Community",
       description: "Active learning community led by popular cybersecurity YouTuber John Hammond.",
       members: "80K+",
-      url: "https://discord.gg/johnhammond"
+      url: "https://discord.gg/johnhammond",
+      categories: ["learning", "ctf", "pentesting"]
     },
     {
       name: "InfoSec Prep",
       description: "Focus on certification preparation and career development in information security.",
       members: "60K+",
-      url: "https://discord.gg/infosecprep"
+      url: "https://discord.gg/infosecprep",
+      categories: ["career", "learning"]
     },
     {
       name: "Blue Team Village",
       description: "Community dedicated to defensive security, incident response, and SOC operations.",
       members: "40K+",
-      url: "https://discord.gg/blueteam"
+      url: "https://discord.gg/blueteam",
+      categories: ["blue_team", "learning"]
     },
     {
       name: "CTF Time",
       description: "Active CTF community discussing challenges, writeups, and upcoming competitions.",
       members: "55K+",
-      url: "https://discord.gg/ctftime"
+      url: "https://discord.gg/ctftime",
+      categories: ["ctf"]
     },
     {
       name: "OSCP Study Group",
       description: "Support community for OSCP certification preparation and practice.",
       members: "35K+",
-      url: "https://discord.gg/oscp"
+      url: "https://discord.gg/oscp",
+      categories: ["career", "pentesting", "learning"]
     }
   ]
+
+  // Filter servers based on selected category
+  const filteredServers = popularServers.filter(server => {
+    return selectedCategory === 'All' || server.categories.includes(selectedCategory)
+  })
 
   const additionalServers = [
     { name: "MalwareTech", url: "#" },
@@ -150,6 +182,14 @@ export default function DiscordPage() {
         </div>
       </section>
 
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="indigo"
+      />
+
       {/* Popular Servers Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
@@ -157,35 +197,54 @@ export default function DiscordPage() {
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Popular Cybersecurity Servers
             </h2>
-            <div className="space-y-6">
-              {popularServers.map((server, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-indigo-500/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">
-                        <Link
-                          href={server.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-indigo-500 transition-colors inline-flex items-center"
-                        >
-                          {server.name}
-                          <ExternalLink className="w-4 h-4 ml-2" />
-                        </Link>
-                      </h3>
-                      <p className="text-gray-400">{server.description}</p>
-                    </div>
-                    <div className="flex items-center text-gray-400">
-                      <Users className="w-4 h-4 mr-2" />
-                      <span>{server.members}</span>
+            {filteredServers.length > 0 ? (
+              <div className="space-y-6">
+                {filteredServers.map((server, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-indigo-500/50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                          <Link
+                            href={server.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-indigo-500 transition-colors inline-flex items-center"
+                          >
+                            {server.name}
+                            <ExternalLink className="w-4 h-4 ml-2" />
+                          </Link>
+                        </h3>
+                        <p className="text-gray-400">{server.description}</p>
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {server.categories.map((category, i) => (
+                            <span key={i} className="bg-gray-800 text-indigo-400 text-xs px-2 py-1 rounded-full">
+                              {categories.find(c => c.id === category)?.name || category}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex items-center text-gray-400">
+                        <Users className="w-4 h-4 mr-2" />
+                        <span>{server.members}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 border border-gray-800 rounded-lg">
+                <p className="text-gray-400 mb-2">No servers found matching your criteria</p>
+                <button 
+                  onClick={() => setSelectedCategory('All')}
+                  className="text-indigo-500 hover:text-indigo-400"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>

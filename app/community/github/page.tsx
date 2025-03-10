@@ -20,6 +20,7 @@ import {
   ThumbsUp
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 interface GithubRepo {
   name: string
@@ -34,7 +35,6 @@ interface GithubRepo {
 }
 
 export default function GitHubPage() {
-  const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [userInterests, setUserInterests] = useState<string[]>([])
   
@@ -266,16 +266,10 @@ export default function GitHubPage() {
     }
   ]
   
-  // Filter repositories based on search term and category
+  // Filter repositories based on category only (removed search term filtering)
   const filteredRepos = featuredRepositories.filter(repo => {
-    const matchesSearch = 
-      repo.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      repo.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      repo.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-    
     const matchesCategory = selectedCategory === 'All' || repo.category === selectedCategory
-    
-    return matchesSearch && matchesCategory
+    return matchesCategory
   })
   
   // Sort repositories to prioritize those matching user interests
@@ -300,7 +294,7 @@ export default function GitHubPage() {
   
   return (
     <div className="min-h-screen bg-black">
-      {/* Hero Section */}
+      {/* Hero Section - Removed search bar */}
       <section className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/20" />
@@ -312,51 +306,17 @@ export default function GitHubPage() {
             <p className="text-xl text-gray-300 mb-12">
               Discover the best open source security tools, frameworks, and learning resources on GitHub
             </p>
-            
-            {/* Search Bar */}
-            <div className="relative max-w-2xl mx-auto">
-              <div className="flex overflow-hidden rounded-lg border border-gray-700 bg-gray-900/50 focus-within:border-blue-500">
-                <div className="flex items-center pl-4">
-                  <Search className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  className="w-full bg-transparent py-3 px-4 text-gray-200 outline-none"
-                  placeholder="Search repositories, tools or tags..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </div>
-            </div>
           </div>
         </div>
       </section>
       
-      {/* Categories Filter */}
-      <section className="py-10 border-b border-gray-800">
-        <div className="container">
-          <div className="flex items-center mb-6">
-            <Filter className="w-5 h-5 text-blue-500 mr-2" />
-            <h2 className="text-xl font-semibold text-white">Filter by Category</h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`flex items-center justify-center space-x-2 p-3 rounded-lg transition-colors ${
-                  selectedCategory === category.id
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-900/50 hover:bg-gray-800 text-gray-300'
-                }`}
-              >
-                <category.icon className="w-4 h-4" />
-                <span className="text-sm font-medium">{category.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Categories Filter - Using the new component */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="blue"
+      />
       
       {/* Repositories */}
       <section className="py-16">
@@ -422,9 +382,9 @@ export default function GitHubPage() {
           
           {sortedRepos.length === 0 && (
             <div className="text-center py-20 border border-gray-800 rounded-lg">
-              <p className="text-gray-400 mb-2">No repositories found matching your search criteria</p>
+              <p className="text-gray-400 mb-2">No repositories found matching your criteria</p>
               <button 
-                onClick={() => { setSearchTerm(''); setSelectedCategory('All') }}
+                onClick={() => { setSelectedCategory('All') }}
                 className="text-blue-500 hover:text-blue-400"
               >
                 Clear filters

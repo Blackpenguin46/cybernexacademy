@@ -1,46 +1,74 @@
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Twitter, Hash } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Twitter, Hash, AlertTriangle, BookOpen, Globe, Lock, Server, Database } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 export default function TwitterPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+
+  // Categories for filtering
+  const categories = [
+    { id: 'All', name: 'All Accounts', icon: Users },
+    { id: 'researcher', name: 'Researchers', icon: BookOpen },
+    { id: 'journalist', name: 'Journalists', icon: Globe },
+    { id: 'threat_intel', name: 'Threat Intel', icon: AlertTriangle },
+    { id: 'privacy', name: 'Privacy', icon: Lock },
+    { id: 'malware', name: 'Malware', icon: Server },
+    { id: 'industry', name: 'Industry News', icon: Database },
+  ]
+
   const popularAccounts = [
     {
       name: "@SwiftOnSecurity",
       description: "Expert commentary on cybersecurity, system administration, and tech culture.",
       followers: "400K+",
-      url: "https://twitter.com/SwiftOnSecurity"
+      url: "https://twitter.com/SwiftOnSecurity",
+      categories: ["researcher", "industry"]
     },
     {
       name: "@thegrugq",
       description: "Information security researcher sharing insights on cyber operations and security.",
       followers: "350K+",
-      url: "https://twitter.com/thegrugq"
+      url: "https://twitter.com/thegrugq",
+      categories: ["researcher", "threat_intel"]
     },
     {
       name: "@troyhunt",
       description: "Creator of Have I Been Pwned, sharing web security insights and breach notifications.",
       followers: "500K+",
-      url: "https://twitter.com/troyhunt"
+      url: "https://twitter.com/troyhunt",
+      categories: ["researcher", "privacy", "industry"]
     },
     {
       name: "@malwrhunterteam",
       description: "Real-time malware tracking and analysis from security researchers.",
       followers: "250K+",
-      url: "https://twitter.com/malwrhunterteam"
+      url: "https://twitter.com/malwrhunterteam",
+      categories: ["researcher", "malware", "threat_intel"]
     },
     {
       name: "@gcluley",
       description: "Cybersecurity veteran sharing news, analysis, and commentary on threats.",
       followers: "200K+",
-      url: "https://twitter.com/gcluley"
+      url: "https://twitter.com/gcluley",
+      categories: ["researcher", "industry", "malware"]
     },
     {
       name: "@kevincollier",
       description: "Cybersecurity and privacy journalist covering breaking news and investigations.",
       followers: "150K+",
-      url: "https://twitter.com/kevincollier"
+      url: "https://twitter.com/kevincollier",
+      categories: ["journalist", "privacy", "industry"]
     }
   ]
+
+  // Filter accounts based on selected category
+  const filteredAccounts = popularAccounts.filter(account => {
+    return selectedCategory === 'All' || account.categories.includes(selectedCategory)
+  })
 
   const features = [
     {
@@ -123,6 +151,14 @@ export default function TwitterPage() {
         </div>
       </section>
 
+      {/* Categories Filter */}
+      <CategoryFilter 
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="sky"
+      />
+
       {/* Popular Accounts Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
@@ -130,35 +166,54 @@ export default function TwitterPage() {
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Must-Follow Security Experts
             </h2>
-            <div className="space-y-6">
-              {popularAccounts.map((account, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-sky-500/50 transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">
-                        <Link
-                          href={account.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="hover:text-sky-500 transition-colors inline-flex items-center"
-                        >
-                          {account.name}
-                          <ExternalLink className="w-4 h-4 ml-2" />
-                        </Link>
-                      </h3>
-                      <p className="text-gray-400">{account.description}</p>
-                    </div>
-                    <div className="flex items-center text-gray-400">
-                      <Users className="w-4 h-4 mr-2" />
-                      <span>{account.followers}</span>
+            {filteredAccounts.length > 0 ? (
+              <div className="space-y-6">
+                {filteredAccounts.map((account, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-sky-500/50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">
+                          <Link
+                            href={account.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-sky-500 transition-colors inline-flex items-center"
+                          >
+                            {account.name}
+                            <ExternalLink className="w-4 h-4 ml-2" />
+                          </Link>
+                        </h3>
+                        <p className="text-gray-400">{account.description}</p>
+                        <div className="flex flex-wrap gap-2 mt-3">
+                          {account.categories.map((category, i) => (
+                            <span key={i} className="bg-gray-800 text-sky-400 text-xs px-2 py-1 rounded-full">
+                              {categories.find(c => c.id === category)?.name || category}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex items-center text-gray-400">
+                        <Users className="w-4 h-4 mr-2" />
+                        <span>{account.followers}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20 border border-gray-800 rounded-lg">
+                <p className="text-gray-400 mb-2">No accounts found matching your criteria</p>
+                <button 
+                  onClick={() => setSelectedCategory('All')}
+                  className="text-sky-500 hover:text-sky-400"
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
