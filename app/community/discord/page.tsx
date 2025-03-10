@@ -1,16 +1,24 @@
 "use client"
 
 import { useState } from "react"
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase } from "lucide-react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase, Filter, X } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
+import SectionHeader from '@/app/components/SectionHeader'
+
+// Define interface for Category
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+}
 
 export default function DiscordPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   // Categories for filtering
-  const categories = [
+  const categories: Category[] = [
     { id: 'All', name: 'All Servers', icon: Users },
     { id: 'learning', name: 'Learning', icon: BookOpen },
     { id: 'ctf', name: 'CTF & Challenges', icon: Target },
@@ -94,9 +102,9 @@ export default function DiscordPage() {
   ]
 
   // Filter servers based on selected category
-  const filteredServers = popularServers.filter(server => {
-    return selectedCategory === 'All' || server.categories.includes(selectedCategory)
-  })
+  const filteredServers = selectedCategory === 'All'
+    ? popularServers
+    : popularServers.filter(server => server.categories.includes(selectedCategory));
 
   const additionalServers = [
     { name: "MalwareTech", url: "#" },
@@ -155,195 +163,132 @@ export default function DiscordPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-indigo-600/10 rounded-xl mb-4">
-              <Shield className="w-5 h-5 text-indigo-500 mr-2" />
-              <span className="text-indigo-500 font-medium">Discord Community</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Join Our Cybersecurity Discord Servers
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Connect with cybersecurity professionals in real-time, participate in discussions, and learn from the community through Discord.
-            </p>
-            <Link href="https://discord.com" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700">
-                Join Discord
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
-          </div>
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          title="Join Our Cybersecurity Discord Servers"
+          description="Connect with cybersecurity professionals in real-time, participate in discussions, and learn from the community through Discord."
+          icon={<MessageSquare className="h-10 w-10 text-indigo-500" />}
+        />
+
+        {/* Categories Filter */}
+        <div className="mb-8">
+          <CategoryFilter 
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            accentColor="indigo"
+          />
         </div>
-      </section>
-
-      {/* Categories Filter */}
-      <CategoryFilter 
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        accentColor="indigo"
-      />
-
-      {/* Popular Servers Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
+        
+        {/* Popular Servers */}
+        {filteredServers.length > 0 ? (
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+              <Shield className="w-6 h-6 text-indigo-500 mr-3" />
               Popular Cybersecurity Servers
             </h2>
-            {filteredServers.length > 0 ? (
-              <div className="space-y-6">
-                {filteredServers.map((server, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-indigo-500/50 transition-colors"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="text-xl font-semibold text-white mb-2">
-                          <Link
-                            href={server.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-indigo-500 transition-colors inline-flex items-center"
-                          >
-                            {server.name}
-                            <ExternalLink className="w-4 h-4 ml-2" />
-                          </Link>
-                        </h3>
-                        <p className="text-gray-400">{server.description}</p>
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {server.categories.map((category, i) => (
-                            <span key={i} className="bg-gray-800 text-indigo-400 text-xs px-2 py-1 rounded-full">
-                              {categories.find(c => c.id === category)?.name || category}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center text-gray-400">
-                        <Users className="w-4 h-4 mr-2" />
-                        <span>{server.members}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-20 border border-gray-800 rounded-lg">
-                <p className="text-gray-400 mb-2">No servers found matching your criteria</p>
-                <button 
-                  onClick={() => setSelectedCategory('All')}
-                  className="text-indigo-500 hover:text-indigo-400"
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {filteredServers.map((server, index) => (
+                <div 
+                  key={index}
+                  className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-indigo-500/50 transition-colors"
                 >
-                  Clear filters
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Why Join Our Discord Community?
-            </h2>
-            <div className="grid gap-8 md:grid-cols-2">
-              {features.map((feature, index) => (
-                <div key={index} className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">{feature.title}</h3>
-                  <p className="text-gray-400">{feature.description}</p>
+                  <div className="flex justify-between items-start mb-4">
+                    <h3 className="text-xl font-semibold text-white">
+                      <Link href={server.url} target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors flex items-center">
+                        {server.name}
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </Link>
+                    </h3>
+                  </div>
+                  <p className="text-gray-300 mb-4">{server.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {server.categories.map((category, catIndex) => (
+                      <span 
+                        key={catIndex}
+                        className="bg-indigo-900/30 text-indigo-400 text-xs px-2 py-1 rounded-full"
+                      >
+                        {categories.find(cat => cat.id === category)?.name || category}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex items-center text-gray-500 text-sm">
+                    <Users className="w-4 h-4 mr-1" />
+                    <span>{server.members} members</span>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Additional Servers Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              More Discord Communities
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {additionalServers.map((server, index) => (
-                <Link
-                  key={index}
-                  href={server.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-indigo-500/50 transition-colors flex items-center justify-between"
-                >
-                  <span className="text-gray-300 hover:text-indigo-500">{server.name}</span>
-                  <ExternalLink className="w-4 h-4 text-gray-500" />
-                </Link>
-              ))}
-            </div>
+        ) : (
+          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No servers match your filter</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedCategory('All')}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear filters
+            </Button>
+          </div>
+        )}
+        
+        {/* Additional Servers Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+            <Users className="w-6 h-6 text-indigo-500 mr-3" />
+            More Servers to Explore
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {additionalServers.map((server, index) => (
+              <Link 
+                key={index}
+                href={server.url}
+                className="bg-gray-900 border border-gray-800 rounded-lg p-3 hover:border-indigo-500/50 hover:text-indigo-400 transition-colors text-gray-300 text-center"
+              >
+                {server.name}
+              </Link>
+            ))}
           </div>
         </div>
-      </section>
-
-      {/* Guidelines Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Server Guidelines
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {guidelines.map((guideline, index) => (
-                <div
-                  key={index}
-                  className="flex items-start space-x-4 bg-gray-900/50 border border-gray-800 rounded-lg p-4"
-                >
-                  <div className="flex-shrink-0">
-                    <ThumbsUp className="w-5 h-5 text-indigo-500" />
-                  </div>
+        
+        {/* Features Section */}
+        <div className="mb-12">
+          <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+            <Award className="w-6 h-6 text-indigo-500 mr-3" />
+            Discord Community Benefits
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                className="bg-gray-900 border border-gray-800 rounded-lg p-6"
+              >
+                <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
+                <p className="text-gray-400">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Guidelines Section */}
+        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-4 text-white">Community Guidelines</h2>
+          <ul className="space-y-4">
+            {guidelines.map((guideline, index) => (
+              <li key={index} className="flex gap-3">
+                <ThumbsUp className="h-6 w-6 flex-shrink-0 text-indigo-500 mt-1" />
+                <div>
                   <p className="text-gray-300">{guideline}</p>
                 </div>
-              ))}
-            </div>
-          </div>
+              </li>
+            ))}
+          </ul>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Ready to Join the Conversation?
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Join our Discord servers and become part of a thriving cybersecurity community.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="https://discord.com" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="bg-indigo-600 hover:bg-indigo-700">
-                  Join Our Servers
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-              <Link href="/community">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  Explore Other Communities
-                  <MessageSquare className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   )
 } 
