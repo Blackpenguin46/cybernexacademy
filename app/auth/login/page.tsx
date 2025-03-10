@@ -21,7 +21,7 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin')
+  const [isSignUp, setIsSignUp] = useState(false)
   
   useEffect(() => {
     const checkAuth = async () => {
@@ -40,7 +40,7 @@ export default function LoginPage() {
     setError('')
     
     try {
-      if (mode === "signin") {
+      if (!isSignUp) {
         // Sign in existing user
         const result = await signIn(email, password)
         
@@ -162,17 +162,13 @@ export default function LoginPage() {
     }
   }
   
-  // Reset form when switching modes
-  const switchMode = (newMode: 'signin' | 'signup') => {
-    setMode(newMode)
+  // Toggle between sign in and sign up
+  const toggleSignUp = () => {
+    setIsSignUp(!isSignUp)
     setError('')
     setSuccessMessage('')
-    
-    // Only reset fields when switching to signup
-    if (newMode === 'signup') {
-      setPassword('')
-      setConfirmPassword('')
-    }
+    setPassword('')
+    setConfirmPassword('')
   }
   
   return (
@@ -182,10 +178,10 @@ export default function LoginPage() {
           <div className="flex flex-col items-center">
             <Shield className="w-12 h-12 text-blue-500 mb-4" />
             <h2 className="text-3xl font-bold text-white text-center">
-              {mode === 'signin' ? 'Sign In' : 'Create Account'}
+              {isSignUp ? 'Create Account' : 'Sign In'}
             </h2>
             <p className="mt-2 text-center text-sm text-gray-400">
-              {mode === 'signin' ? 'Access your CyberNex account' : 'Join the CyberNex community'}
+              {isSignUp ? 'Join the CyberNex community' : 'Access your CyberNex account'}
             </p>
           </div>
 
@@ -204,7 +200,7 @@ export default function LoginPage() {
             
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Sign up fields - Only shown in signup mode */}
-              {mode === 'signup' && (
+              {isSignUp && (
                 <>
                   <div>
                     <label htmlFor="fullName" className="block text-sm font-medium text-gray-200 flex items-center">
@@ -273,14 +269,14 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete={mode === 'signin' ? "current-password" : "new-password"}
+                  autoComplete={isSignUp ? "new-password" : "current-password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder={mode === 'signin' ? "Your password" : "Min. 8 characters"}
+                  placeholder={isSignUp ? "Min. 8 characters" : "Your password"}
                 />
-                {mode === 'signup' && (
+                {isSignUp && (
                   <p className="mt-1 text-xs text-gray-500">
                     Must be at least 8 characters long
                   </p>
@@ -288,7 +284,7 @@ export default function LoginPage() {
               </div>
               
               {/* Confirm password field for signup */}
-              {mode === 'signup' && (
+              {isSignUp && (
                 <div>
                   <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 flex items-center">
                     <Lock className="w-4 h-4 mr-2" />
@@ -308,7 +304,7 @@ export default function LoginPage() {
                 </div>
               )}
 
-              {mode === 'signin' && (
+              {!isSignUp && (
                 <div className="flex items-center justify-end">
                   <div className="text-sm">
                     <Link href="/auth/forgot-password" className="text-blue-500 hover:text-blue-400">
@@ -323,7 +319,7 @@ export default function LoginPage() {
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
                 disabled={loading}
               >
-                {loading ? 'Processing...' : mode === 'signin' ? 'Sign In' : 'Create Account'}
+                {loading ? 'Processing...' : isSignUp ? 'Create Account' : 'Sign In'}
               </Button>
             </form>
 
@@ -338,12 +334,12 @@ export default function LoginPage() {
               </div>
 
               <div className="mt-6 text-center">
-                {mode === 'signin' ? (
+                {!isSignUp ? (
                   <p className="text-sm text-gray-400">
                     Don't have an account?{' '}
                     <button 
                       type="button"
-                      onClick={() => switchMode('signup')} 
+                      onClick={toggleSignUp} 
                       className="text-blue-500 hover:text-blue-400"
                     >
                       Sign up
@@ -354,7 +350,7 @@ export default function LoginPage() {
                     Already have an account?{' '}
                     <button 
                       type="button"
-                      onClick={() => switchMode('signin')} 
+                      onClick={toggleSignUp} 
                       className="text-blue-500 hover:text-blue-400"
                     >
                       Sign in
