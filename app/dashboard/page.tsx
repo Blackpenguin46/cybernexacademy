@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import FeedbackForm from "@/app/components/FeedbackForm";
-import { Newspaper, Calendar, BookOpen, MessageSquare, Lightbulb, ArrowRight } from "lucide-react";
+import { Newspaper, Calendar, BookOpen, MessageSquare, Lightbulb, ArrowRight, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 interface NewsArticle {
   id: string;
@@ -186,12 +187,28 @@ export default function DashboardPage() {
         <div className="md:col-span-2 space-y-6">
           {/* Welcome Section */}
           <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg border border-gray-800">
-            <h1 className="text-2xl font-bold text-white mb-2">
-              Welcome back, {user?.email?.split('@')[0]}
-            </h1>
-            <p className="text-gray-400">
-              Stay updated with the latest in cybersecurity. Your personalized dashboard shows content based on your interests.
-            </p>
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <h1 className="text-2xl font-bold text-white mb-2">
+                  Welcome back, {user?.email?.split('@')[0]}
+                </h1>
+                <p className="text-gray-400">
+                  Stay updated with the latest in cybersecurity. Your personalized dashboard shows content based on your interests.
+                </p>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="text-gray-400 hover:text-white border-gray-700 hover:border-gray-600"
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  router.push('/');
+                }}
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </Button>
+            </div>
             {!onboardingCompleted && (
               <div className="mt-4">
                 <Link 

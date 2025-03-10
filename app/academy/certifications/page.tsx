@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState } from 'react'
-import SectionHeader from '../../components/SectionHeader'
-import ResourceCard from '../../components/ResourceCard'
 import { Award, Shield, Server, Code, Database, Cloud, Filter, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '../../components/CategoryFilter'
@@ -146,48 +144,64 @@ export default function CertificationsPage() {
     }));
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <SectionHeader
-          title="Cybersecurity Certifications"
-          description="Explore industry-recognized certifications to validate your skills and advance your career."
-          icon={<Award className="h-10 w-10 text-yellow-500" />}
-        />
+    <div className="min-h-screen bg-black">
+      {/* Hero Section */}
+      <div className="relative">
+        <div className="h-[40vh] bg-gradient-to-b from-blue-500/20 via-blue-900/10 to-black"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Cybersecurity Certifications</h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              Explore industry-recognized certifications to validate your skills and advance your career in cybersecurity.
+            </p>
+          </div>
+        </div>
+      </div>
 
-        {/* Add Category Filter */}
-        <div className="mb-8">
+      <div className="container mx-auto px-4 py-12">
+        {/* Category Filter */}
+        <div className="mb-12">
           <CategoryFilter 
             categories={categories}
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
-            accentColor="yellow"
+            accentColor="blue"
           />
         </div>
 
         {filteredSections.length > 0 ? (
-          filteredSections.map((section, index) => (
-            <div key={index} className="mb-12">
-              <h2 className="text-2xl font-bold mb-2 text-white flex items-center gap-2">
-                {section.title}
-              </h2>
-              <p className="text-gray-400 mb-6">{section.description}</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {section.resources.map((resource, idx) => (
-                  <ResourceCard
-                    key={idx}
-                    title={resource.title}
-                    description={resource.description}
-                    link={resource.link}
-                    icon={resource.icon}
-                    isExternal={resource.isExternal}
-                    category={resource.category}
-                  />
-                ))}
+          <div className="space-y-16">
+            {filteredSections.map((section, index) => (
+              <div key={index}>
+                <h2 className="text-2xl font-bold mb-2 text-white flex items-center gap-2">
+                  {section.title}
+                </h2>
+                <p className="text-gray-400 mb-6">{section.description}</p>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {section.resources.map((resource, idx) => (
+                    <a
+                      key={idx}
+                      href={resource.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block p-6 bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800 hover:border-blue-500/50 transition-colors"
+                    >
+                      <h3 className="text-xl font-semibold text-white mb-2">{resource.title}</h3>
+                      <p className="text-gray-400 mb-4">{resource.description}</p>
+                      <div className="flex items-center text-sm text-blue-400">
+                        Learn More
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
-          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+          <div className="text-center py-12 bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800">
             <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
             <h3 className="text-xl font-medium text-white mb-2">No certifications match your filter</h3>
             <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
@@ -201,31 +215,32 @@ export default function CertificationsPage() {
           </div>
         )}
 
-        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
-          <h2 className="text-2xl font-bold mb-4 text-white">Certification Tips</h2>
-          <ul className="space-y-4">
-            <li className="flex gap-3">
-              <Shield className="h-6 w-6 flex-shrink-0 text-yellow-500 mt-1" />
+        {/* Certification Tips */}
+        <div className="mt-16 bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-6 text-white">Certification Tips</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="flex gap-4">
+              <Shield className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
               <div>
-                <p className="text-white font-medium">Start with foundational certifications</p>
+                <p className="text-white font-medium mb-2">Start with foundational certifications</p>
                 <p className="text-gray-400">Build a strong base with entry-level certifications before specializing.</p>
               </div>
-            </li>
-            <li className="flex gap-3">
-              <Server className="h-6 w-6 flex-shrink-0 text-yellow-500 mt-1" />
+            </div>
+            <div className="flex gap-4">
+              <Server className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
               <div>
-                <p className="text-white font-medium">Align certifications with career goals</p>
+                <p className="text-white font-medium mb-2">Align with career goals</p>
                 <p className="text-gray-400">Choose certifications that match your desired career path and interests.</p>
               </div>
-            </li>
-            <li className="flex gap-3">
-              <Code className="h-6 w-6 flex-shrink-0 text-yellow-500 mt-1" />
+            </div>
+            <div className="flex gap-4">
+              <Code className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
               <div>
-                <p className="text-white font-medium">Combine theory with practical experience</p>
+                <p className="text-white font-medium mb-2">Combine theory with practice</p>
                 <p className="text-gray-400">Supplement certification studies with hands-on labs and real-world projects.</p>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

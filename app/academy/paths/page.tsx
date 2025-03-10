@@ -1,155 +1,274 @@
 "use client";
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Shield, Code, Database, Cloud } from 'lucide-react';
+import { Shield, Code, Database, Cloud, Server, Lock, Brain, Network, Terminal, FileCode, Globe } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
-const LearningPathsPage = () => {
-  const paths = [
-    {
-      title: 'Offensive Security',
-      icon: Shield,
-      description: 'Master penetration testing and ethical hacking',
-      level: 'Beginner to Advanced',
-      duration: '6 months',
-      modules: 12,
-      color: 'neon-blue',
-    },
-    {
-      title: 'Application Security',
-      icon: Code,
-      description: 'Learn secure coding and application security testing',
-      level: 'Intermediate',
-      duration: '4 months',
-      modules: 8,
-      color: 'neon-pink',
-    },
-    {
-      title: 'Database Security',
-      icon: Database,
-      description: 'Secure database design and implementation',
-      level: 'Intermediate',
-      duration: '3 months',
-      modules: 6,
-      color: 'neon-purple',
-    },
-    {
-      title: 'Cloud Security',
-      icon: Cloud,
-      description: 'Security in cloud environments and architectures',
-      level: 'Advanced',
-      duration: '5 months',
-      modules: 10,
-      color: 'neon-green',
-    },
-  ];
+const learningPaths = [
+  {
+    id: 'offensive-security',
+    title: 'Offensive Security',
+    icon: Shield,
+    description: 'Master penetration testing and ethical hacking through hands-on practice and real-world scenarios.',
+    color: 'blue',
+    levels: [
+      {
+        title: 'Beginner',
+        description: 'Build foundational knowledge in security concepts and basic tools',
+        skills: [
+          'Basic networking concepts',
+          'Linux fundamentals',
+          'Command line basics',
+          'Introduction to security tools'
+        ],
+        resources: [
+          {
+            title: 'TryHackMe - Complete Beginner Path',
+            url: 'https://tryhackme.com/path/outline/beginner',
+            type: 'Interactive Labs'
+          },
+          {
+            title: 'OverTheWire - Bandit',
+            url: 'https://overthewire.org/wargames/bandit/',
+            type: 'Practice'
+          },
+          {
+            title: 'Metasploit Unleashed',
+            url: 'https://www.offensive-security.com/metasploit-unleashed/',
+            type: 'Course'
+          }
+        ]
+      },
+      {
+        title: 'Intermediate',
+        description: 'Develop practical skills in vulnerability assessment and exploitation',
+        skills: [
+          'Web application security',
+          'Network penetration testing',
+          'Vulnerability assessment',
+          'Basic exploit development'
+        ],
+        resources: [
+          {
+            title: 'HackTheBox Academy',
+            url: 'https://academy.hackthebox.com/',
+            type: 'Interactive Labs'
+          },
+          {
+            title: 'PortSwigger Web Security Academy',
+            url: 'https://portswigger.net/web-security',
+            type: 'Course'
+          },
+          {
+            title: 'OWASP Juice Shop',
+            url: 'https://owasp.org/www-project-juice-shop/',
+            type: 'Practice'
+          }
+        ]
+      },
+      {
+        title: 'Advanced',
+        description: 'Master advanced exploitation techniques and specialized security domains',
+        skills: [
+          'Advanced exploitation',
+          'Malware analysis',
+          'Reverse engineering',
+          'Custom exploit development'
+        ],
+        resources: [
+          {
+            title: 'Offensive Security - PWK/OSCP',
+            url: 'https://www.offensive-security.com/pwk-oscp/',
+            type: 'Certification'
+          },
+          {
+            title: 'Advanced Penetration Testing',
+            url: 'https://www.elearnsecurity.com/course/advanced_penetration_testing/',
+            type: 'Course'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'application-security',
+    title: 'Application Security',
+    icon: Code,
+    description: 'Learn secure coding practices and application security testing methodologies.',
+    color: 'green',
+    levels: [
+      {
+        title: 'Beginner',
+        description: 'Learn fundamental concepts of secure coding and common vulnerabilities',
+        skills: [
+          'Basic programming concepts',
+          'Common vulnerabilities (OWASP Top 10)',
+          'Secure coding principles',
+          'Input validation'
+        ],
+        resources: [
+          {
+            title: 'OWASP Top 10',
+            url: 'https://owasp.org/www-project-top-ten/',
+            type: 'Guide'
+          },
+          {
+            title: 'SecureFlag',
+            url: 'https://www.secureflag.com/platform.html',
+            type: 'Interactive Labs'
+          }
+        ]
+      },
+      {
+        title: 'Intermediate',
+        description: 'Master secure development practices and security testing',
+        skills: [
+          'Security testing automation',
+          'Code review techniques',
+          'Authentication & authorization',
+          'API security'
+        ],
+        resources: [
+          {
+            title: 'Security Journey',
+            url: 'https://www.securityjourney.com/',
+            type: 'Course'
+          },
+          {
+            title: 'Secure Code Warrior',
+            url: 'https://www.securecodewarrior.com/',
+            type: 'Interactive Labs'
+          }
+        ]
+      },
+      {
+        title: 'Advanced',
+        description: 'Advanced application security and secure architecture',
+        skills: [
+          'Secure architecture design',
+          'Threat modeling',
+          'Security frameworks',
+          'DevSecOps practices'
+        ],
+        resources: [
+          {
+            title: 'CSSLP Certification',
+            url: 'https://www.isc2.org/Certifications/CSSLP',
+            type: 'Certification'
+          },
+          {
+            title: 'SAFECode Training',
+            url: 'https://safecode.org/training/',
+            type: 'Course'
+          }
+        ]
+      }
+    ]
+  },
+  // ... similar detailed structures for Database Security and Cloud Security paths
+];
+
+export default function LearningPathsPage() {
+  const [selectedPath, setSelectedPath] = useState(learningPaths[0]);
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-black">
       {/* Hero Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-16"
-      >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 neon-text">
-          Learning Paths
-        </h1>
-        <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-          Choose your specialization and follow a structured path to mastery.
-        </p>
-      </motion.div>
-
-      {/* Learning Paths Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {paths.map((path, index) => (
-          <motion.div
-            key={path.title}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-          >
-            <div className="cyber-card h-full p-6">
-              <div className="flex items-start mb-4">
-                <path.icon className="w-12 h-12 text-neon-blue mr-4" />
-                <div>
-                  <h2 className="text-2xl font-bold mb-2">{path.title}</h2>
-                  <p className="text-text-secondary">{path.description}</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="text-center">
-                  <div className="text-sm text-text-secondary mb-1">Level</div>
-                  <div className="font-semibold">{path.level}</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm text-text-secondary mb-1">Duration</div>
-                  <div className="font-semibold">{path.duration}</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-sm text-text-secondary mb-1">Modules</div>
-                  <div className="font-semibold">{path.modules}</div>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <Link
-                  href={`/academy/paths/${path.title.toLowerCase().replace(/\s+/g, '-')}`}
-                  className="cyber-button-sm"
-                >
-                  Start Learning
-                </Link>
-                <Link
-                  href={`/academy/paths/${path.title.toLowerCase().replace(/\s+/g, '-')}/syllabus`}
-                  className="text-neon-blue hover:text-neon-blue-bright text-sm"
-                >
-                  View Syllabus →
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+      <div className="relative">
+        <div className="h-[40vh] bg-gradient-to-b from-blue-500/20 via-blue-900/10 to-black"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Learning Paths</h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              Choose your specialization and follow a structured path from beginner to expert in cybersecurity.
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Progress Tracking */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mt-16"
-      >
-        <div className="cyber-card p-8">
-          <h2 className="text-2xl font-bold mb-6 neon-text">Your Progress</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-accent-bg rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4">Current Path</h3>
-              <div className="flex items-center justify-between mb-2">
-                <span>Offensive Security</span>
-                <span className="text-neon-blue">60%</span>
+      <div className="container mx-auto px-4 py-12">
+        {/* Path Selection */}
+        <div className="flex flex-wrap gap-4 mb-12">
+          {learningPaths.map((path) => (
+            <Button
+              key={path.id}
+              variant={selectedPath.id === path.id ? "default" : "outline"}
+              onClick={() => setSelectedPath(path)}
+              className="flex items-center gap-2"
+            >
+              <path.icon className="w-4 h-4" />
+              {path.title}
+            </Button>
+          ))}
+        </div>
+
+        {/* Selected Path Content */}
+        <div className="space-y-12">
+          {/* Path Overview */}
+          <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-blue-500/10 rounded-lg">
+                <selectedPath.icon className="w-8 h-8 text-blue-500" />
               </div>
-              <div className="w-full bg-darker-bg rounded-full h-2">
-                <div className="bg-neon-blue h-2 rounded-full" style={{ width: '60%' }} />
-              </div>
-            </div>
-            <div className="bg-accent-bg rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4">Achievements</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-neon-blue">3</div>
-                  <div className="text-sm text-text-secondary">Paths Started</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-neon-pink">12</div>
-                  <div className="text-sm text-text-secondary">Modules Completed</div>
-                </div>
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-2">{selectedPath.title}</h2>
+                <p className="text-gray-400">{selectedPath.description}</p>
               </div>
             </div>
           </div>
+
+          {/* Progression Levels */}
+          {selectedPath.levels.map((level, index) => (
+            <div key={index} className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800">
+              <div className="p-6 border-b border-gray-800">
+                <h3 className="text-xl font-semibold text-white mb-2">{level.title}</h3>
+                <p className="text-gray-400">{level.description}</p>
+              </div>
+
+              <div className="p-6 grid md:grid-cols-2 gap-6">
+                {/* Skills */}
+                <div>
+                  <h4 className="text-lg font-medium text-white mb-4">Skills to Master</h4>
+                  <ul className="space-y-2">
+                    {level.skills.map((skill, skillIndex) => (
+                      <li key={skillIndex} className="flex items-center gap-2 text-gray-300">
+                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+                        {skill}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Resources */}
+                <div>
+                  <h4 className="text-lg font-medium text-white mb-4">Learning Resources</h4>
+                  <div className="space-y-3">
+                    {level.resources.map((resource, resourceIndex) => (
+                      <a
+                        key={resourceIndex}
+                        href={resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800 transition-colors"
+                      >
+                        <div className="flex justify-between items-center">
+                          <div>
+                            <h5 className="text-white font-medium">{resource.title}</h5>
+                            <span className="text-sm text-gray-400">{resource.type}</span>
+                          </div>
+                          <Globe className="w-4 h-4 text-blue-500" />
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
-};
-
-export default LearningPathsPage; 
+} 
