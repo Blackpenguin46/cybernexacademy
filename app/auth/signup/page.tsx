@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { Shield, User, Mail, Lock } from 'lucide-react'
+import { Shield, User, Mail, Lock, AtSign } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export default function SignupPage() {
@@ -122,7 +122,7 @@ export default function SignupPage() {
   }
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4 pt-32 pb-16">
       <div className="max-w-md w-full space-y-8">
         <div className="flex flex-col items-center">
           <Shield className="w-12 h-12 text-blue-500 mb-4" />
@@ -167,7 +167,7 @@ export default function SignupPage() {
             
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-200 flex items-center">
-                <User className="w-4 h-4 mr-2" />
+                <AtSign className="w-4 h-4 mr-2" />
                 Username
               </label>
               <input

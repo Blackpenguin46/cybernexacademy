@@ -35,8 +35,7 @@ export default function Home() {
                 "Knowledge Is Security, Security Is Power"
               </p>
               <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-                Comprehensive cybersecurity education platform offering structured learning paths, 
-                hands-on labs, and community resources for beginners to advanced practitioners.
+                Comprehensive cybersecurity hub featuring curated learning resources, hands-on labs, community forums, and an extensive repository of tools, courses, and research materials for all skill levels.
               </p>
               
               {/* CTA Buttons */}
