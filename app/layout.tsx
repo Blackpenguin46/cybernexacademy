@@ -2,7 +2,7 @@ import React from "react"
 import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import Header from "./components/Header"
+import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { Toaster } from "./components/ui/toast"
 
@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${inter.className} bg-black text-white antialiased min-h-screen flex flex-col`}>
-        <Header />
+        <Navbar />
         <main className="flex-grow relative">{children}</main>
         <div className="relative z-20">
           <Footer />
