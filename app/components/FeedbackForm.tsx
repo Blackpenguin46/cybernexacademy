@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
+import { Button } from "./ui/button"
+import { Textarea } from "./ui/textarea"
+import { Input } from "./ui/input"
 import { supabase } from "@/lib/supabase"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "./ui/use-toast"
 
 const FeedbackForm = () => {
   const [title, setTitle] = useState("")
