@@ -1,12 +1,37 @@
-import { TrendingUp, ExternalLink, Clock, Tag, ChevronRight, ArrowUpRight, Globe, AlertTriangle, Shield } from "lucide-react"
+"use client"
+
+import { useState } from 'react'
+import { TrendingUp, ExternalLink, Clock, Tag, ChevronRight, ArrowUpRight, Globe, AlertTriangle, Shield, Filter, X, Code, Server, Lock, Database, Zap, Cloud } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '@/app/components/CategoryFilter'
+import SectionHeader from '@/app/components/SectionHeader'
+
+// Define interface for Category
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ElementType;
+}
 
 export default function TrendsPage() {
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  // Categories for filtering
+  const categories: Category[] = [
+    { id: 'all', name: 'All Trends', icon: TrendingUp },
+    { id: 'architecture', name: 'Security Architecture', icon: Shield },
+    { id: 'cryptography', name: 'Cryptography', icon: Lock },
+    { id: 'operations', name: 'Security Operations', icon: Zap },
+    { id: 'cloud', name: 'Cloud Security', icon: Cloud },
+    { id: 'data', name: 'Data Protection', icon: Database },
+    { id: 'threat', name: 'Threat Landscape', icon: AlertTriangle }
+  ];
+
   const emergingTrends = [
     {
       title: "Zero Trust Evolution",
-      category: "Security Architecture",
+      category: "architecture",
       timeline: "Current - 2025",
       impact: "Transformative",
       description: "Advanced implementation of zero trust principles with AI-driven continuous authentication.",
@@ -20,7 +45,7 @@ export default function TrendsPage() {
     },
     {
       title: "Quantum-Safe Security",
-      category: "Cryptography",
+      category: "cryptography",
       timeline: "2024 - 2027",
       impact: "Revolutionary",
       description: "Preparation and transition to quantum-resistant cryptographic algorithms and protocols.",
@@ -34,7 +59,7 @@ export default function TrendsPage() {
     },
     {
       title: "AI Security Operations",
-      category: "Security Operations",
+      category: "operations",
       timeline: "Current - 2026",
       impact: "Significant",
       description: "Integration of advanced AI/ML capabilities in security operations and threat detection.",
@@ -192,246 +217,216 @@ export default function TrendsPage() {
     }
   ]
 
+  // Filter trends based on selected category
+  const filteredEmergingTrends = selectedCategory === 'all'
+    ? emergingTrends
+    : emergingTrends.filter(trend => trend.category === selectedCategory);
+
+  const filteredIndustryShifts = selectedCategory === 'all'
+    ? industryTrends
+    : industryTrends.filter(shift => shift.sector === selectedCategory);
+
+  const filteredPredictions = selectedCategory === 'all'
+    ? futureOutlook
+    : futureOutlook.filter(prediction => prediction.year === selectedCategory);
+
+  // Check if any content matches the filter
+  const hasContent = filteredEmergingTrends.length > 0 || 
+                    filteredIndustryShifts.length > 0 || 
+                    filteredPredictions.length > 0;
+
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-orange-600/10 rounded-xl mb-4">
-              <TrendingUp className="w-5 h-5 text-orange-500 mr-2" />
-              <span className="text-orange-500 font-medium">Emerging Trends</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Trends & Future Outlook
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Explore emerging trends, industry shifts, and future predictions in cybersecurity.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="container mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto">
+        <SectionHeader
+          title="Cybersecurity Trends & Future Outlook"
+          description="Explore emerging trends, industry shifts, and future predictions in cybersecurity."
+          icon={<TrendingUp className="h-10 w-10 text-orange-500" />}
+        />
 
-      {/* Emerging Trends Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Emerging Trends
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {emergingTrends.map((trend, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                >
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-orange-500 text-sm">{trend.category}</span>
-                        <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
-                          {trend.impact}
-                        </span>
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{trend.title}</h3>
-                      <p className="text-gray-400 text-sm">{trend.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Key Points</div>
-                      <div className="space-y-2">
-                        {trend.keyPoints.map((point, pointIndex) => (
-                          <div
-                            key={pointIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <ChevronRight className="w-4 h-4 text-orange-500 mr-2" />
-                            {point}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="pt-4 border-t border-gray-800">
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="text-gray-500">
-                          <Clock className="w-4 h-4 inline mr-1" />
-                          {trend.timeline}
-                        </div>
-                        <div className="text-orange-500">
-                          {trend.adoption}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Categories Filter */}
+        <div className="mb-8">
+          <CategoryFilter 
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            accentColor="orange"
+          />
         </div>
-      </section>
-
-      {/* Industry Trends Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Industry-Specific Trends
-            </h2>
-            <div className="space-y-8">
-              {industryTrends.map((industry, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-6">{industry.sector}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {industry.trends.map((trend, trendIndex) => (
-                      <div
-                        key={trendIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div>
-                            <div className="font-medium text-white mb-1">{trend.trend}</div>
-                            <div className="text-sm text-gray-400">{trend.description}</div>
-                          </div>
-                          <span className={`px-2 py-1 rounded text-sm font-medium ${
-                            trend.impact === 'Critical' ? 'bg-red-500/10 text-red-500' :
-                            'bg-orange-500/10 text-orange-500'
-                          }`}>
-                            {trend.impact}
-                          </span>
-                        </div>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <Clock className="w-4 h-4 mr-1" />
-                          Timeline: {trend.timeline}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Technology Trends Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Technology Trends
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {technologyTrends.map((tech, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-orange-500 text-sm">{tech.status}</span>
-                        <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
-                          Growth: {tech.growth}
-                        </span>
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{tech.name}</h3>
-                      <p className="text-gray-400 text-sm">{tech.description}</p>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Key Benefits</div>
-                      <div className="space-y-2">
-                        {tech.benefits.map((benefit, benefitIndex) => (
-                          <div
-                            key={benefitIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Shield className="w-4 h-4 text-orange-500 mr-2" />
-                            {benefit}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="pt-4 border-t border-gray-800">
-                      <div className="text-sm text-orange-500">
-                        Current Adoption: {tech.adoption}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Future Outlook Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Future Outlook
-            </h2>
-            <div className="space-y-8">
-              {futureOutlook.map((year, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6"
-                >
-                  <h3 className="text-xl font-semibold text-white mb-6">{year.year}</h3>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {year.predictions.map((prediction, predIndex) => (
-                      <div
-                        key={predIndex}
-                        className="bg-gray-800/50 rounded-lg p-4"
-                      >
-                        <div className="mb-3">
+        
+        {hasContent ? (
+          <>
+            {/* Emerging Trends Section */}
+            {filteredEmergingTrends.length > 0 && (
+              <div className="mb-12">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                  <TrendingUp className="w-6 h-6 text-orange-500 mr-3" />
+                  Emerging Trends
+                </h2>
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {filteredEmergingTrends.map((trend, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+                    >
+                      <div className="space-y-4">
+                        <div>
                           <div className="flex items-center justify-between mb-2">
-                            <h4 className="font-medium text-white">{prediction.title}</h4>
+                            <span className="text-orange-500 text-sm">
+                              {categories.find(cat => cat.id === trend.category)?.name || trend.category}
+                            </span>
                             <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
-                              {prediction.confidence}
+                              {trend.impact}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-400">{prediction.description}</p>
+                          <h3 className="text-xl font-semibold text-white mb-2">{trend.title}</h3>
+                          <p className="text-gray-400 text-sm">{trend.description}</p>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500 mb-2">Key Points</div>
+                          <div className="space-y-2">
+                            {trend.keyPoints.map((point, pointIndex) => (
+                              <div
+                                key={pointIndex}
+                                className="flex items-center text-gray-300 text-sm"
+                              >
+                                <ChevronRight className="w-4 h-4 text-orange-500 mr-2" />
+                                {point}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between pt-4 text-sm">
+                          <div className="flex items-center text-gray-500">
+                            <Clock className="w-4 h-4 mr-1" />
+                            {trend.timeline}
+                          </div>
+                          <div className="text-gray-500">
+                            {trend.adoption}
+                          </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            )}
+            
+            {/* Industry Shifts Section */}
+            {filteredIndustryShifts.length > 0 && (
+              <div className="mb-12">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                  <Globe className="w-6 h-6 text-orange-500 mr-3" />
+                  Industry Shifts
+                </h2>
+                <div className="grid gap-6 md:grid-cols-2">
+                  {filteredIndustryShifts.map((shift, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-xl font-semibold text-white">{shift.sector}</h3>
+                        <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
+                          {categories.find(cat => cat.id === shift.sector)?.name || shift.sector}
+                        </span>
+                      </div>
+                      <p className="text-gray-400 mb-4">{shift.trends.map(trend => trend.description).join(', ')}</p>
+                      <div>
+                        <div className="text-sm text-gray-500 mb-2">Trends</div>
+                        <div className="flex flex-wrap gap-2">
+                          {shift.trends.map((trend, trendIndex) => (
+                            <span
+                              key={trendIndex}
+                              className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
+                            >
+                              {trend.trend}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Predictions Section */}
+            {filteredPredictions.length > 0 && (
+              <div className="mb-12">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
+                  <AlertTriangle className="w-6 h-6 text-orange-500 mr-3" />
+                  Future Predictions
+                </h2>
+                <div className="space-y-6">
+                  {filteredPredictions.map((prediction, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-900 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+                    >
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center">
+                          <span className="text-2xl font-bold text-orange-500 mr-3">{prediction.year}</span>
+                          <h3 className="text-xl font-semibold text-white">{prediction.predictions.map(p => p.title).join(', ')}</h3>
+                        </div>
+                        <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
+                          {categories.find(cat => cat.id === prediction.year)?.name || prediction.year}
+                        </span>
+                      </div>
+                      <p className="text-gray-400 mb-4">{prediction.predictions.map(p => p.description).join(', ')}</p>
+                      <div className="flex items-center text-sm text-gray-500">
+                        <Tag className="w-4 h-4 mr-1" />
+                        <span>Confidence: {prediction.predictions.map(p => p.confidence).join(', ')}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No trends match your filter</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+            <Button 
+              variant="outline" 
+              onClick={() => setSelectedCategory('all')}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear filters
+            </Button>
           </div>
+        )}
+        
+        {/* Resources Section */}
+        <div className="mt-12 bg-gray-900 rounded-lg p-6 border border-gray-800">
+          <h2 className="text-2xl font-bold mb-4 text-white">Stay Ahead of Trends</h2>
+          <ul className="space-y-4">
+            <li className="flex gap-3">
+              <Globe className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Follow industry research</p>
+                <p className="text-gray-400">Subscribe to reports from Gartner, Forrester, and other research organizations.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <Shield className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Join security communities</p>
+                <p className="text-gray-400">Participate in forums and groups where professionals discuss emerging threats.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <TrendingUp className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
+              <div>
+                <p className="text-white font-medium">Experiment with new technologies</p>
+                <p className="text-gray-400">Set up lab environments to test emerging security tools and techniques.</p>
+              </div>
+            </li>
+          </ul>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">
-              Stay Ahead of Trends
-            </h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Get regular updates on emerging trends and future predictions in cybersecurity.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="bg-orange-600 hover:bg-orange-700">
-                Subscribe to Updates
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-              <Link href="/insights">
-                <Button size="lg" variant="outline" className="border-gray-700 hover:bg-gray-800">
-                  Explore More Insights
-                  <ExternalLink className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   )
 } 
