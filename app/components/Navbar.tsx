@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart } from 'lucide-react';
+import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus } from 'lucide-react';
+import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -12,6 +13,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [showDonateInfo, setShowDonateInfo] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   
   // Navigation sections with cybersecurity icons
   const navSections = [
@@ -76,6 +79,44 @@ export default function Navbar() {
     setMobileMenuOpen(false);
     setActiveDropdown(null);
   }, [pathname]);
+
+  // Check if user is authenticated
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setUser(data.session?.user || null);
+        setLoading(false);
+        
+        // Setup auth state change listener
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            setUser(session?.user || null);
+          }
+        );
+        
+        return () => {
+          if (authListener && authListener.subscription) {
+            authListener.subscription.unsubscribe();
+          }
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      setActiveDropdown(null);
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
 
   // Active link detection
   const isActive = (href: string) => {
@@ -281,27 +322,43 @@ export default function Navbar() {
               <Search className="w-5 h-5" />
             </button>
             
-            <Link href="/dashboard" 
-              className={`px-4 py-2 rounded-md transition-all duration-300 relative group overflow-hidden ${
-                isActive('/dashboard') 
-                  ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/30' 
-                  : 'text-gray-300 hover:text-neon-blue border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <Settings className="w-4 h-4" />
-                <span>Dashboard</span>
+            {/* Conditional navigation based on auth state */}
+            {loading ? (
+              <div className="w-20 h-10 bg-gray-800/50 animate-pulse rounded-md"></div>
+            ) : user ? (
+              <div className="flex items-center gap-3">
+                <Link href="/dashboard" 
+                  className="flex items-center gap-2 text-gray-300 hover:text-neon-blue px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5"
+                >
+                  <Settings className="w-4 h-4" />
+                  <span>Dashboard</span>
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center gap-2 text-gray-300 hover:text-neon-blue px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5"
+                >
+                  <LogIn className="w-4 h-4 rotate-180" />
+                  <span>Sign Out</span>
+                </button>
               </div>
-              <div className="absolute bottom-0 left-0 h-[1px] w-full bg-neon-blue/50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-            </Link>
-            
-            <Link 
-              href="/auth/login" 
-              className="flex items-center gap-2 text-black bg-neon-blue hover:bg-neon-blue/90 px-4 py-2 rounded-md transition-all duration-300 group"
-            >
-              <Lock className="w-4 h-4" />
-              <span>Access Portal</span>
-            </Link>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link 
+                  href="/auth/login" 
+                  className="flex items-center gap-2 text-gray-300 hover:text-neon-blue px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>Login</span>
+                </Link>
+                <Link 
+                  href="/auth/signup" 
+                  className="flex items-center gap-2 text-black bg-neon-blue hover:bg-neon-blue/90 px-4 py-2 rounded-md transition-all duration-300 group"
+                >
+                  <UserPlus className="w-4 h-4" />
+                  <span>Sign Up</span>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -362,6 +419,55 @@ export default function Navbar() {
                     </div>
                   </div>
                 ))}
+
+                {/* Update Mobile auth section based on auth state */}
+                <div className="pt-4 border-t border-neon-blue/20 space-y-3">
+                  {loading ? (
+                    <div className="w-full h-12 bg-gray-800/50 animate-pulse rounded-md"></div>
+                  ) : user ? (
+                    <>
+                      <Link 
+                        href="/dashboard" 
+                        className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Settings className="w-5 h-5 text-neon-blue" />
+                        <span className="text-gray-300">Dashboard</span>
+                      </Link>
+                      
+                      <button 
+                        onClick={() => {
+                          handleSignOut();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
+                      >
+                        <LogIn className="w-5 h-5 text-neon-blue rotate-180" />
+                        <span className="text-gray-300">Sign Out</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link 
+                        href="/auth/login" 
+                        className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <LogIn className="w-5 h-5 text-neon-blue" />
+                        <span className="text-gray-300">Login</span>
+                      </Link>
+                      
+                      <Link 
+                        href="/auth/signup" 
+                        className="flex items-center justify-center gap-2 bg-neon-blue text-black px-4 py-3 rounded-md w-full hover:bg-neon-blue/90 transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <UserPlus className="w-5 h-5" />
+                        <span>Sign Up</span>
+                      </Link>
+                    </>
+                  )}
+                </div>
 
                 {/* Add donation section to mobile menu */}
                 <div className="pt-4 border-t border-neon-blue/20">
