@@ -1,3 +1,5 @@
+"use client"
+
 import FeedbackForm from "@/app/components/FeedbackForm"
 
 export default function FeedbackPage() {
