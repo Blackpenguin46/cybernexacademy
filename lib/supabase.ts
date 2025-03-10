@@ -286,7 +286,7 @@ export async function signIn(email: string, password: string) {
 
     return { success: true, user: data.user }
   } catch (error) {
-    console.error('Sign in error:', error)
+    console.error('Error in signIn:', error)
     return { success: false, error: 'An unexpected error occurred' }
   }
 }
@@ -294,11 +294,15 @@ export async function signIn(email: string, password: string) {
 // Sign up with email and password
 export async function signUp(email: string, password: string) {
   try {
+    // Define the redirect URL explicitly
+    const redirectUrl = 'https://v0-cybernex-r5aktld1jft.vercel.app/auth/verify-email';
+    console.log('Using redirect URL in signUp function:', redirectUrl);
+    
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/verify-email`,
+        emailRedirectTo: redirectUrl,
       }
     })
 
@@ -319,15 +323,15 @@ export async function signUp(email: string, password: string) {
             created_at: new Date().toISOString()
           }
         ])
-
+        
       if (profileError) {
-        console.error('Error creating user profile:', profileError)
+        console.error('Error creating profile:', profileError)
       }
     }
 
     return { success: true, user: data.user }
   } catch (error) {
-    console.error('Sign up error:', error)
+    console.error('Error in signUp:', error)
     return { success: false, error: 'An unexpected error occurred' }
   }
 }

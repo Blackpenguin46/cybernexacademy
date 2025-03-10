@@ -169,7 +169,7 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-32 pb-16">
         <div className="animate-pulse space-y-4">
           <div className="h-8 bg-gray-800 rounded w-1/4"></div>
           <div className="h-32 bg-gray-800 rounded"></div>
@@ -180,7 +180,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 pt-32 pb-16">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Main Content Area */}
         <div className="md:col-span-2 space-y-6">
