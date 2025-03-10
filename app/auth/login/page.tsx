@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabase, signIn } from '@/lib/supabase'
 import { Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import ErrorBoundary from '@/app/components/ErrorBoundary'
@@ -37,28 +37,44 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-      
-      if (error) {
-        setError(error.message || 'Failed to sign in')
-        setLoading(false)
-        return
-      }
-
-      if (data.session) {
-        setSuccessMessage('Login successful! Redirecting...')
+      if (mode === "signin") {
+        // Sign in existing user
+        const result = await signIn(email, password)
         
-        // Redirect after successful login
-        setTimeout(() => {
-          router.push(callbackUrl)
-        }, 1000)
+        if (!result.success) {
+          setError(result.error || "Failed to sign in")
+          setLoading(false)
+          return
+        }
+        
+        // Check if user has completed onboarding
+        if (result.user) {
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("onboarding_completed")
+            .eq("user_id", result.user.id)
+            .single()
+          
+          if (profile && !profile.onboarding_completed) {
+            // Redirect to onboarding if not completed
+            router.push("/onboarding")
+            return
+          }
+        }
+        
+        // Otherwise redirect to dashboard
+        router.push("/dashboard")
+      } else {
+        // Sign up new user
+        // ... existing signup code
+
+        // After successful sign-up, redirect to verify email page
+        router.push("/auth/verify-email")
       }
-    } catch (err) {
-      console.error('Login error:', err)
-      setError('An unexpected error occurred')
+    } catch (error) {
+      console.error("Authentication error:", error)
+      setError("An unexpected error occurred")
+    } finally {
       setLoading(false)
     }
   }

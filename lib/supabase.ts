@@ -306,6 +306,25 @@ export async function signUp(email: string, password: string) {
       return { success: false, error: error.message }
     }
 
+    // Create a profile for the new user
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .insert([
+          { 
+            user_id: data.user.id,
+            email: data.user.email,
+            onboarding_completed: false,
+            interests: [],
+            created_at: new Date().toISOString()
+          }
+        ])
+
+      if (profileError) {
+        console.error('Error creating user profile:', profileError)
+      }
+    }
+
     return { success: true, user: data.user }
   } catch (error) {
     console.error('Sign up error:', error)
