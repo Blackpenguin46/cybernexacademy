@@ -48,8 +48,8 @@ export default function FoundationalPage() {
           name: "Hack The Box Academy",
           description: "Structured cybersecurity courses with hands-on labs",
           url: "https://academy.hackthebox.com",
-          type: "Learning Platform",
-          free: false
+          type: "Interactive Platform",
+          free: true
         },
         {
           name: "PortSwigger Web Security Academy",
@@ -63,6 +63,20 @@ export default function FoundationalPage() {
           description: "Online cybersecurity training platform with foundational courses",
           url: "https://www.cybrary.it",
           type: "Video Courses",
+          free: true
+        },
+        {
+          name: "daily.dev",
+          description: "Personalized developer news feed and knowledge-sharing platform. Stay updated with the latest in tech, including cybersecurity.",
+          url: "https://daily.dev",
+          type: "Learning Platform",
+          free: true
+        },
+        {
+          name: "Learn Anything",
+          description: "Open-source platform for knowledge discovery. Find curated learning paths and resources for various topics, including cybersecurity.",
+          url: "https://learn-anything.xyz",
+          type: "Learning Platform",
           free: true
         }
       ]

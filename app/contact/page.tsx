@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import { Mail, Phone, MapPin, MessageSquare, Send, Clock } from 'lucide-react'
+import { Mail, Send } from 'lucide-react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -43,54 +43,6 @@ export default function ContactPage() {
     }
   }
   
-  // Contact information
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: "Email Us",
-      details: "support@cybernex.academy",
-      description: "For general inquiries and support"
-    },
-    {
-      icon: Phone,
-      title: "Call Us",
-      details: "+1 (555) 123-4567",
-      description: "Monday to Friday, 9am to 5pm EST"
-    },
-    {
-      icon: MapPin,
-      title: "Visit Us",
-      details: "123 Security Street, Cyber City, CS 12345",
-      description: "Our headquarters location"
-    },
-    {
-      icon: Clock,
-      title: "Office Hours",
-      details: "Monday - Friday: 9:00 AM - 5:00 PM EST",
-      description: "We're closed on weekends and holidays"
-    }
-  ]
-  
-  // FAQ items
-  const faqItems = [
-    {
-      question: "How can I get help with my account?",
-      answer: "For account-related issues, please email support@cybernex.academy with your username and a description of the problem. Our team typically responds within 24 hours on business days."
-    },
-    {
-      question: "Do you offer enterprise training solutions?",
-      answer: "Yes, we provide customized cybersecurity training programs for organizations of all sizes. Please contact our enterprise team at enterprise@cybernex.academy for more information."
-    },
-    {
-      question: "How can I report a bug or technical issue?",
-      answer: "Technical issues can be reported through our support portal or by emailing bugs@cybernex.academy. Please include steps to reproduce the issue and any relevant screenshots."
-    },
-    {
-      question: "Are there opportunities to join your team?",
-      answer: "We're always looking for talented individuals passionate about cybersecurity education. Check our careers page for current openings or send your resume to careers@cybernex.academy."
-    }
-  ]
-  
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
@@ -105,38 +57,30 @@ export default function ContactPage() {
             <p className="text-xl text-gray-300 mb-6">
               We're here to help with any questions about our platform or services
             </p>
-            <p className="text-blue-400 font-medium italic mb-8">
-              "Knowledge Is Security, Security Is Power"
-            </p>
           </div>
         </div>
       </section>
       
-      {/* Contact Information */}
+      {/* Contact Information and Form Section */}
       <section className="py-16">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {contactInfo.map((item, index) => (
-              <div key={index} className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg border border-gray-800">
-                <div className="flex items-center mb-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-3">
-                    <item.icon className="w-5 h-5 text-blue-400" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-                </div>
-                <p className="text-blue-400 font-medium mb-2">{item.details}</p>
-                <p className="text-gray-400 text-sm">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      
-      {/* Contact Form Section */}
-      <section className="py-16 border-t border-gray-800">
         <div className="container">
           <div className="max-w-4xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Email Contact */}
+              <div>
+                <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+                  <div className="flex items-center mb-4">
+                    <div className="w-10 h-10 rounded-full bg-blue-900/50 flex items-center justify-center mr-3">
+                      <Mail className="w-5 h-5 text-blue-400" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white">Email Us</h3>
+                  </div>
+                  <p className="text-blue-400 font-medium mb-2">support@cybernex.academy</p>
+                  <p className="text-gray-400 text-sm">For general inquiries and support</p>
+                </div>
+              </div>
+              
+              {/* Contact Form */}
               <div>
                 <h2 className="text-3xl font-bold text-white mb-6">Send Us a Message</h2>
                 <p className="text-gray-300 mb-8">
@@ -255,39 +199,6 @@ export default function ContactPage() {
                     </button>
                   </form>
                 )}
-              </div>
-              
-              <div>
-                <h2 className="text-3xl font-bold text-white mb-6">Frequently Asked Questions</h2>
-                <div className="space-y-6">
-                  {faqItems.map((item, index) => (
-                    <div key={index} className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg border border-gray-800">
-                      <div className="flex items-start">
-                        <MessageSquare className="w-5 h-5 text-blue-400 mt-1 mr-3 flex-shrink-0" />
-                        <div>
-                          <h3 className="text-lg font-medium text-white mb-2">{item.question}</h3>
-                          <p className="text-gray-300 text-sm">{item.answer}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* Map Section */}
-      <section className="py-16 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Location</h2>
-            <div className="bg-gray-900/50 backdrop-blur-sm p-4 rounded-lg border border-gray-800">
-              {/* Placeholder for map - in a real implementation, you would embed a Google Map or similar */}
-              <div className="aspect-video bg-gray-800 rounded-lg flex items-center justify-center">
-                <MapPin className="w-12 h-12 text-gray-600" />
-                <span className="ml-2 text-gray-400">Map Placeholder</span>
               </div>
             </div>
           </div>

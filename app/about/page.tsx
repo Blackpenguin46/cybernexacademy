@@ -64,7 +64,7 @@ export default function AboutPage() {
               Accelerating your journey in cybersecurity education
             </p>
             <p className="text-blue-400 font-medium italic mb-8">
-              "Bridging the cybersecurity skills gap through accessible resources"
+              "Knowledge Is Security, Security Is Power"
             </p>
           </div>
         </div>
