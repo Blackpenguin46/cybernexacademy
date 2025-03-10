@@ -4,13 +4,14 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home } from 'lucide-react';
+import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [showDonateInfo, setShowDonateInfo] = useState(false);
   
   // Navigation sections with cybersecurity icons
   const navSections = [
@@ -18,8 +19,8 @@ export default function Navbar() {
       id: "academy",
       title: "Academy",
       icon: Terminal,
+      description: "Learn cybersecurity through structured courses, hands-on labs, and guided career paths. Perfect for beginners and experienced professionals alike.",
       links: [
-        { name: "Overview", href: "/academy" },
         { name: "Foundational", href: "/academy/foundational" },
         { name: "Projects & Labs", href: "/academy/labs" },
         { name: "Career Roadmaps", href: "/academy/roadmaps" }
@@ -29,8 +30,8 @@ export default function Navbar() {
       id: "community",
       title: "Community",
       icon: User,
+      description: "Connect with fellow cybersecurity enthusiasts, share knowledge, and participate in events. Build your network in the security community.",
       links: [
-        { name: "Overview", href: "/community" },
         { name: "Discord", href: "/community/discord" },
         { name: "Events", href: "/community/events" },
         { name: "GitHub", href: "/community/github" }
@@ -40,8 +41,8 @@ export default function Navbar() {
       id: "insights",
       title: "Insights",
       icon: Zap,
+      description: "Stay informed with the latest cybersecurity news, trends, and research. Get expert analysis on emerging threats and industry developments.",
       links: [
-        { name: "Overview", href: "/insights" },
         { name: "News", href: "/insights/news" },
         { name: "Trends", href: "/insights/trends" },
         { name: "Research", href: "/insights/research" }
@@ -51,8 +52,8 @@ export default function Navbar() {
       id: "tools",
       title: "Tools",
       icon: Database,
+      description: "Access powerful cybersecurity tools for testing, analysis, and assessment. Essential utilities for security professionals.",
       links: [
-        { name: "Overview", href: "/tools" },
         { name: "Security Scanner", href: "/tools/scanner" },
         { name: "Password Checker", href: "/tools/password" },
         { name: "Security Assessment", href: "/tools/assessment" }
@@ -86,14 +87,14 @@ export default function Navbar() {
   // Dropdown animation variants
   const dropdownVariants = {
     hidden: { 
-      opacity: 0, 
+      opacity: 0,
       y: -5,
       transition: {
         duration: 0.2
       }
     },
     visible: { 
-      opacity: 1, 
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.3,
@@ -145,7 +146,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop - Center section with nav sections */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-6">
             <Link href="/" className={`px-3 py-2 rounded-md transition-all duration-300 ${
               isActive('/') && pathname === '/' 
                 ? 'text-neon-blue bg-neon-blue/5' 
@@ -159,37 +160,23 @@ export default function Navbar() {
             
             {navSections.map((section) => (
               <div key={section.title} className="relative group">
-                <div className="flex items-center">
-                  <Link
-                    href={`/${section.id}`}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
-                      isActive(`/${section.id}`)
-                        ? 'text-neon-blue bg-neon-blue/5' 
-                        : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                    }`}
+                <button 
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
+                    activeDropdown === section.id 
+                      ? 'text-neon-blue bg-neon-blue/5' 
+                      : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
+                  }`}
+                  onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                >
+                  <section.icon className="w-4 h-4" />
+                  <span>{section.title}</span>
+                  <motion.div 
+                    animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <section.icon className="w-4 h-4" />
-                    <span>{section.title}</span>
-                  </Link>
-                  <button 
-                    className={`ml-1 p-1 rounded-md transition-all duration-300 ${
-                      activeDropdown === section.id 
-                        ? 'text-neon-blue bg-neon-blue/5' 
-                        : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-                    }`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveDropdown(activeDropdown === section.id ? null : section.id);
-                    }}
-                  >
-                    <motion.div 
-                      animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </motion.div>
-                  </button>
-                </div>
+                    <ChevronDown className="w-4 h-4" />
+                  </motion.div>
+                </button>
                 
                 <AnimatePresence>
                   {activeDropdown === section.id && (
@@ -198,26 +185,38 @@ export default function Navbar() {
                       animate="visible"
                       exit="hidden"
                       variants={dropdownVariants}
-                      className="absolute z-10 left-0 mt-1 w-56 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
+                      className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
+                      style={{ width: '600px' }}
                     >
-                      {/* Top accent line */}
-                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue/60 to-transparent"></div>
-                      
-                      <div className="py-2">
-                        {section.links.map((link) => (
-                          <Link 
-                            key={link.name}
-                            href={link.href} 
-                            className={`flex items-center px-4 py-2 hover:bg-neon-blue/10 ${
-                              isActive(link.href) 
-                                ? 'text-neon-blue bg-neon-blue/5' 
-                                : 'text-gray-300'
-                            } transition-colors duration-200`}
-                            onClick={() => setActiveDropdown(null)}
-                          >
-                            <span className="ml-2">{link.name}</span>
-                          </Link>
-                        ))}
+                      <div className="grid grid-cols-5 gap-4 p-6">
+                        {/* Section Overview */}
+                        <div className="col-span-2 border-r border-neon-blue/20 pr-6">
+                          <h3 className="text-lg font-semibold text-neon-blue mb-2 flex items-center gap-2">
+                            <section.icon className="w-5 h-5" />
+                            {section.title}
+                          </h3>
+                          <p className="text-gray-400 text-sm leading-relaxed">
+                            {section.description}
+                          </p>
+                        </div>
+                        
+                        {/* Links */}
+                        <div className="col-span-3 flex flex-wrap gap-2">
+                          {section.links.map((link) => (
+                            <Link 
+                              key={link.name}
+                              href={link.href} 
+                              className={`flex items-center px-4 py-2 rounded-md hover:bg-neon-blue/10 ${
+                                isActive(link.href) 
+                                  ? 'text-neon-blue bg-neon-blue/5' 
+                                  : 'text-gray-300'
+                              } transition-colors duration-200 w-full`}
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              <span>{link.name}</span>
+                            </Link>
+                          ))}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -228,6 +227,51 @@ export default function Navbar() {
 
           {/* Desktop - Right section with user actions */}
           <div className="hidden lg:flex items-center gap-3">
+            <div className="relative">
+              <button 
+                className="flex items-center gap-2 text-gray-300 hover:text-neon-blue px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5"
+                onMouseEnter={() => setShowDonateInfo(true)}
+                onMouseLeave={() => setShowDonateInfo(false)}
+              >
+                <Heart className="w-4 h-4" />
+                <span>Donate</span>
+              </button>
+
+              <AnimatePresence>
+                {showDonateInfo && (
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={dropdownVariants}
+                    className="absolute right-0 mt-2 w-80 p-4 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md shadow-xl shadow-neon-blue/10"
+                  >
+                    <h4 className="text-neon-blue font-semibold mb-2 flex items-center gap-2">
+                      <Heart className="w-4 h-4" />
+                      Support Our Mission
+                    </h4>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-3">
+                      While all our resources are freely available, your donations help us:
+                    </p>
+                    <ul className="text-gray-400 text-sm space-y-1 mb-3">
+                      <li>• Maintain and improve the platform</li>
+                      <li>• Create new educational content</li>
+                      <li>• Fund scholarships for cybersecurity students</li>
+                    </ul>
+                    <Link 
+                      href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black px-4 py-2 rounded-md transition-colors"
+                    >
+                      <Heart className="w-4 h-4" />
+                      <span>Support Us</span>
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <button className="text-gray-400 hover:text-neon-blue p-2 rounded-md transition-colors relative group">
               <div className="absolute inset-0 border border-neon-blue/0 group-hover:border-neon-blue/30 rounded-md transition-colors"></div>
               <Search className="w-5 h-5" />
@@ -315,25 +359,26 @@ export default function Navbar() {
                   </div>
                 ))}
 
-                {/* Mobile user actions */}
-                <div className="pt-4 border-t border-neon-blue/20 space-y-3">
-                  <Link 
-                    href="/dashboard" 
-                    className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Settings className="w-5 h-5 text-neon-blue" />
-                    <span className="text-gray-300">Dashboard</span>
-                  </Link>
-                  
-                  <Link 
-                    href="/auth/login" 
-                    className="flex items-center justify-center gap-2 bg-neon-blue text-black px-4 py-3 rounded-md w-full hover:bg-neon-blue/90 transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Lock className="w-5 h-5" />
-                    <span>Access Portal</span>
-                  </Link>
+                {/* Add donation section to mobile menu */}
+                <div className="pt-4 border-t border-neon-blue/20">
+                  <div className="px-4 py-3">
+                    <h4 className="text-neon-blue font-semibold mb-2 flex items-center gap-2">
+                      <Heart className="w-4 h-4" />
+                      Support Our Mission
+                    </h4>
+                    <p className="text-gray-400 text-sm leading-relaxed mb-3">
+                      Your donations help maintain the platform and fund cybersecurity education.
+                    </p>
+                    <Link 
+                      href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black px-4 py-2 rounded-md transition-colors"
+                    >
+                      <Heart className="w-4 h-4" />
+                      <span>Support Us</span>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </motion.div>
