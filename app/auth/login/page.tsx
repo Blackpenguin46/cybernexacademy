@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { supabase, signIn } from '@/lib/supabase'
-import { Shield, User, Mail, Lock } from 'lucide-react'
+import { Shield, Mail, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import ErrorBoundary from '@/app/components/ErrorBoundary'
 
@@ -15,13 +15,9 @@ export default function LoginPage() {
   
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [fullName, setFullName] = useState('')
-  const [username, setUsername] = useState('')
   const [error, setError] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
   const [loading, setLoading] = useState(false)
-  const [isSignUp, setIsSignUp] = useState(false)
   
   useEffect(() => {
     const checkAuth = async () => {
@@ -40,135 +36,38 @@ export default function LoginPage() {
     setError('')
     
     try {
-      if (!isSignUp) {
-        // Sign in existing user
-        const result = await signIn(email, password)
-        
-        if (!result.success) {
-          setError(result.error || "Failed to sign in")
-          setLoading(false)
-          return
-        }
-        
-        // Check if user has completed onboarding
-        if (result.user) {
-          const { data: profile } = await supabase
-            .from("profiles")
-            .select("onboarding_completed")
-            .eq("user_id", result.user.id)
-            .single()
-          
-          if (profile && !profile.onboarding_completed) {
-            // Redirect to onboarding if not completed
-            router.push("/onboarding")
-            return
-          }
-        }
-        
-        // Otherwise redirect to dashboard
-        router.push("/dashboard")
-      } else {
-        // Validate signup form
-        if (password !== confirmPassword) {
-          setError("Passwords do not match")
-          setLoading(false)
-          return
-        }
-        
-        if (password.length < 8) {
-          setError("Password must be at least 8 characters long")
-          setLoading(false)
-          return
-        }
-        
-        if (!fullName.trim()) {
-          setError("Full name is required")
-          setLoading(false)
-          return
-        }
-        
-        if (!username.trim()) {
-          setError("Username is required")
-          setLoading(false)
-          return
-        }
-        
-        // Check if username is already taken
-        const { data: existingUser, error: usernameError } = await supabase
-          .from('profiles')
-          .select('username')
-          .eq('username', username)
-          .single()
-          
-        if (existingUser) {
-          setError("Username is already taken")
-          setLoading(false)
-          return
-        }
-        
-        // Sign up new user
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/verify-email`,
-            data: {
-              full_name: fullName,
-              username: username
-            }
-          }
-        })
-        
-        if (error) {
-          setError(error.message || 'Failed to sign up')
-          setLoading(false)
-          return
-        }
-        
-        // Create profile with additional data
-        if (data.user) {
-          const { error: profileError } = await supabase
-            .from('profiles')
-            .insert([
-              { 
-                user_id: data.user.id,
-                email: email,
-                full_name: fullName,
-                username: username,
-                onboarding_completed: false,
-                interests: [],
-                created_at: new Date().toISOString()
-              }
-            ])
-            
-          if (profileError) {
-            console.error('Error creating profile:', profileError)
-            // Continue anyway as the user is created
-          }
-        }
-        
-        setSuccessMessage('Registration successful! Please check your email to verify your account.')
-        
-        // After successful sign-up, redirect to verify email page
-        setTimeout(() => {
-          router.push("/auth/verify-email")
-        }, 2000)
+      // Sign in existing user
+      const result = await signIn(email, password)
+      
+      if (!result.success) {
+        setError(result.error || "Failed to sign in")
+        setLoading(false)
+        return
       }
+      
+      // Check if user has completed onboarding
+      if (result.user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("onboarding_completed")
+          .eq("user_id", result.user.id)
+          .single()
+        
+        if (profile && !profile.onboarding_completed) {
+          // Redirect to onboarding if not completed
+          router.push("/onboarding")
+          return
+        }
+      }
+      
+      // Otherwise redirect to dashboard
+      router.push("/dashboard")
     } catch (error) {
       console.error("Authentication error:", error)
       setError("An unexpected error occurred")
     } finally {
       setLoading(false)
     }
-  }
-  
-  // Toggle between sign in and sign up
-  const toggleSignUp = () => {
-    setIsSignUp(!isSignUp)
-    setError('')
-    setSuccessMessage('')
-    setPassword('')
-    setConfirmPassword('')
   }
   
   return (
@@ -178,10 +77,10 @@ export default function LoginPage() {
           <div className="flex flex-col items-center">
             <Shield className="w-12 h-12 text-blue-500 mb-4" />
             <h2 className="text-3xl font-bold text-white text-center">
-              {isSignUp ? 'Create Account' : 'Sign In'}
+              Sign In
             </h2>
             <p className="mt-2 text-center text-sm text-gray-400">
-              {isSignUp ? 'Join the CyberNex community' : 'Access your CyberNex account'}
+              Access your CyberNex account
             </p>
           </div>
 
@@ -199,49 +98,6 @@ export default function LoginPage() {
             )}
             
             <form onSubmit={handleSubmit} className="space-y-4">
-              {/* Sign up fields - Only shown in signup mode */}
-              {isSignUp && (
-                <>
-                  <div>
-                    <label htmlFor="fullName" className="block text-sm font-medium text-gray-200 flex items-center">
-                      <User className="w-4 h-4 mr-2" />
-                      Full Name
-                    </label>
-                    <input
-                      id="fullName"
-                      name="fullName"
-                      type="text"
-                      required
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                      placeholder="John Doe"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-200 flex items-center">
-                      <User className="w-4 h-4 mr-2" />
-                      Username
-                    </label>
-                    <input
-                      id="username"
-                      name="username"
-                      type="text"
-                      required
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                      placeholder="johndoe"
-                    />
-                    <p className="mt-1 text-xs text-gray-500">
-                      This will be your unique identifier on the platform
-                    </p>
-                  </div>
-                </>
-              )}
-              
-              {/* Common fields */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-200 flex items-center">
                   <Mail className="w-4 h-4 mr-2" />
@@ -269,57 +125,29 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete={isSignUp ? "new-password" : "current-password"}
+                  autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder={isSignUp ? "Min. 8 characters" : "Your password"}
+                  placeholder="Your password"
                 />
-                {isSignUp && (
-                  <p className="mt-1 text-xs text-gray-500">
-                    Must be at least 8 characters long
-                  </p>
-                )}
               </div>
-              
-              {/* Confirm password field for signup */}
-              {isSignUp && (
-                <div>
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200 flex items-center">
-                    <Lock className="w-4 h-4 mr-2" />
-                    Confirm Password
-                  </label>
-                  <input
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type="password"
-                    autoComplete="new-password"
-                    required
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="Re-enter your password"
-                  />
-                </div>
-              )}
 
-              {!isSignUp && (
-                <div className="flex items-center justify-end">
-                  <div className="text-sm">
-                    <Link href="/auth/forgot-password" className="text-blue-500 hover:text-blue-400">
-                      Forgot your password?
-                    </Link>
-                  </div>
+              <div className="flex items-center justify-end">
+                <div className="text-sm">
+                  <Link href="/auth/forgot-password" className="text-blue-500 hover:text-blue-400">
+                    Forgot your password?
+                  </Link>
                 </div>
-              )}
+              </div>
 
               <Button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
                 disabled={loading}
               >
-                {loading ? 'Processing...' : isSignUp ? 'Create Account' : 'Sign In'}
+                {loading ? 'Processing...' : 'Sign In'}
               </Button>
             </form>
 
@@ -334,29 +162,15 @@ export default function LoginPage() {
               </div>
 
               <div className="mt-6 text-center">
-                {!isSignUp ? (
-                  <p className="text-sm text-gray-400">
-                    Don't have an account?{' '}
-                    <button 
-                      type="button"
-                      onClick={toggleSignUp} 
-                      className="text-blue-500 hover:text-blue-400"
-                    >
-                      Sign up
-                    </button>
-                  </p>
-                ) : (
-                  <p className="text-sm text-gray-400">
-                    Already have an account?{' '}
-                    <button 
-                      type="button"
-                      onClick={toggleSignUp} 
-                      className="text-blue-500 hover:text-blue-400"
-                    >
-                      Sign in
-                    </button>
-                  </p>
-                )}
+                <p className="text-sm text-gray-400">
+                  Don't have an account?{' '}
+                  <Link 
+                    href="/auth/signup"
+                    className="text-blue-500 hover:text-blue-400"
+                  >
+                    Sign up
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
