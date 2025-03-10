@@ -43,7 +43,6 @@ export default function Navbar() {
         { name: "Threat Reports", href: "/insights/threats" },
         { name: "Industry Trends", href: "/insights/industry" },
         { name: "Best Practices", href: "/insights/practices" },
-        { name: "Articles", href: "/insights/articles" },
         { name: "Threat Intelligence", href: "/insights/threats" }
       ]
     },
@@ -58,22 +57,7 @@ export default function Navbar() {
         { name: "Foundational", href: "/academy/foundational" },
         { name: "Projects & Labs", href: "/academy/labs" },
         { name: "Career Roadmaps", href: "/academy/roadmaps" },
-        { name: "Certifications", href: "/academy/certifications" },
-        { name: "Resources", href: "/academy/resources" }
-      ]
-    },
-    {
-      id: "tools",
-      title: "Tools",
-      icon: Database,
-      description: "Access powerful cybersecurity tools for testing, analysis, and assessment. Essential utilities for security professionals.",
-      links: [
-        { name: "Security Scanner", href: "/tools/scanner" },
-        { name: "Password Checker", href: "/tools/password" },
-        { name: "Security Assessment", href: "/tools/assessment" },
-        { name: "Encryption Tools", href: "/tools/encryption" },
-        { name: "Network Analysis", href: "/tools/network" },
-        { name: "Vulnerability Scanner", href: "/tools/vulnerabilities" }
+        { name: "Certifications", href: "/academy/certifications" }
       ]
     }
   ];
@@ -153,12 +137,9 @@ export default function Navbar() {
         <div className="px-4 lg:px-8 py-4 flex justify-between items-center">
           {/* Logo with cybersecurity styling */}
           <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 relative group">
-            <div className="p-2 rounded bg-neon-blue/10 border border-neon-blue/20 group-hover:border-neon-blue/40 transition-colors duration-300">
-              <Shield className="w-5 h-5 text-neon-blue" />
-            </div>
             <div className="flex flex-col">
-              <span className="text-neon-blue font-mono tracking-tight leading-none">CYBER</span>
-              <span className="text-neon-green font-mono tracking-tight leading-none">NEX</span>
+              <span className="text-neon-blue font-mono tracking-tight leading-none">CYBERNEX</span>
+              <span className="text-neon-green font-mono tracking-tight leading-none">ACADEMY</span>
             </div>
           </Link>
 
