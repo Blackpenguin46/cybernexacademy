@@ -8,6 +8,10 @@ import { Shield, User, Mail, Lock, AtSign } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import CyberBackground from '@/app/components/CyberBackground'
 
+// Supabase configuration with actual values
+const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM';
+
 export default function SignupPage() {
   const router = useRouter()
   
@@ -55,69 +59,93 @@ export default function SignupPage() {
       }
       
       // Check if username is already taken
-      const { data: existingUser, error: usernameError } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('username', username)
-        .single()
+      try {
+        const { data: existingUser, error: usernameError } = await supabase
+          .from('profiles')
+          .select('username')
+          .eq('username', username)
+          .single()
+          
+        if (usernameError && usernameError.code !== 'PGRST116') {
+          console.error('Error checking username:', usernameError)
+          setError("Error checking username availability. Please try again.")
+          setLoading(false)
+          return
+        }
         
-      if (existingUser) {
-        setError("Username is already taken")
-        setLoading(false)
-        return
+        if (existingUser) {
+          setError("Username is already taken")
+          setLoading(false)
+          return
+        }
+      } catch (usernameCheckError) {
+        console.error('Unexpected error checking username:', usernameCheckError)
+        // Continue with signup if we can't check username
       }
       
       // Sign up new user
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/verify-email`,
-          data: {
-            full_name: fullName,
-            username: username
+      try {
+        console.log('Attempting to sign up with:', { email, password })
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/verify-email`,
+            data: {
+              full_name: fullName,
+              username: username
+            }
+          }
+        })
+        
+        if (error) {
+          console.error('Signup error details:', error)
+          setError(error.message || 'Failed to sign up')
+          setLoading(false)
+          return
+        }
+        
+        // Create profile with additional data
+        if (data.user) {
+          try {
+            const { error: profileError } = await supabase
+              .from('profiles')
+              .insert([
+                { 
+                  user_id: data.user.id,
+                  email: email,
+                  full_name: fullName,
+                  username: username,
+                  onboarding_completed: false,
+                  interests: [],
+                  created_at: new Date().toISOString()
+                }
+              ])
+              
+            if (profileError) {
+              console.error('Error creating profile:', profileError)
+              // Continue anyway as the user is created
+            }
+          } catch (profileError) {
+            console.error('Unexpected error creating profile:', profileError)
+            // Continue anyway as the user is created
           }
         }
-      })
-      
-      if (error) {
-        setError(error.message || 'Failed to sign up')
+        
+        setSuccessMessage('Registration successful! Please check your email to verify your account.')
+        
+        // After successful sign-up, redirect to verify email page
+        setTimeout(() => {
+          router.push("/auth/verify-email")
+        }, 2000)
+      } catch (signupError) {
+        console.error('Unexpected signup error:', signupError)
+        setError('An unexpected error occurred during signup. Please try again later.')
         setLoading(false)
-        return
       }
-      
-      // Create profile with additional data
-      if (data.user) {
-        const { error: profileError } = await supabase
-          .from('profiles')
-          .insert([
-            { 
-              user_id: data.user.id,
-              email: email,
-              full_name: fullName,
-              username: username,
-              onboarding_completed: false,
-              interests: [],
-              created_at: new Date().toISOString()
-            }
-          ])
-          
-        if (profileError) {
-          console.error('Error creating profile:', profileError)
-          // Continue anyway as the user is created
-        }
-      }
-      
-      setSuccessMessage('Registration successful! Please check your email to verify your account.')
-      
-      // After successful sign-up, redirect to verify email page
-      setTimeout(() => {
-        router.push("/auth/verify-email")
-      }, 2000)
     } catch (error) {
       console.error("Authentication error:", error)
       setError("An unexpected error occurred")
-    } finally {
       setLoading(false)
     }
   }

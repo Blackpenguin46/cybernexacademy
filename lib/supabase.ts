@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
 
-// Check if Supabase URL and key are available
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'example-key';
+// Supabase configuration with actual values
+const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM';
 
 // Create a Supabase client
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
