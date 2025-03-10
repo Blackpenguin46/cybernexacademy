@@ -167,6 +167,8 @@ export default function Navbar() {
                       : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
                   }`}
                   onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                  onMouseEnter={() => setActiveDropdown(section.id)}
+                  onMouseLeave={() => setActiveDropdown(null)}
                 >
                   <section.icon className="w-4 h-4" />
                   <span>{section.title}</span>
@@ -186,11 +188,13 @@ export default function Navbar() {
                       exit="hidden"
                       variants={dropdownVariants}
                       className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
-                      style={{ width: '600px' }}
+                      style={{ width: '800px' }}
+                      onMouseEnter={() => setActiveDropdown(section.id)}
+                      onMouseLeave={() => setActiveDropdown(null)}
                     >
-                      <div className="grid grid-cols-5 gap-4 p-6">
+                      <div className="flex p-6">
                         {/* Section Overview */}
-                        <div className="col-span-2 border-r border-neon-blue/20 pr-6">
+                        <div className="w-1/3 border-r border-neon-blue/20 pr-6">
                           <h3 className="text-lg font-semibold text-neon-blue mb-2 flex items-center gap-2">
                             <section.icon className="w-5 h-5" />
                             {section.title}
@@ -201,21 +205,23 @@ export default function Navbar() {
                         </div>
                         
                         {/* Links */}
-                        <div className="col-span-3 flex flex-wrap gap-2">
-                          {section.links.map((link) => (
-                            <Link 
-                              key={link.name}
-                              href={link.href} 
-                              className={`flex items-center px-4 py-2 rounded-md hover:bg-neon-blue/10 ${
-                                isActive(link.href) 
-                                  ? 'text-neon-blue bg-neon-blue/5' 
-                                  : 'text-gray-300'
-                              } transition-colors duration-200 w-full`}
-                              onClick={() => setActiveDropdown(null)}
-                            >
-                              <span>{link.name}</span>
-                            </Link>
-                          ))}
+                        <div className="w-2/3 pl-6">
+                          <div className="grid grid-cols-2 gap-4">
+                            {section.links.map((link) => (
+                              <Link 
+                                key={link.name}
+                                href={link.href} 
+                                className={`flex items-center px-4 py-3 rounded-md hover:bg-neon-blue/10 ${
+                                  isActive(link.href) 
+                                    ? 'text-neon-blue bg-neon-blue/5 border border-neon-blue/30' 
+                                    : 'text-gray-300 border border-transparent hover:border-neon-blue/20'
+                                } transition-all duration-200`}
+                                onClick={() => setActiveDropdown(null)}
+                              >
+                                <span className="text-base">{link.name}</span>
+                              </Link>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </motion.div>
