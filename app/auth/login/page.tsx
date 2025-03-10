@@ -9,33 +9,33 @@ import { Button } from '@/components/ui/button'
 import ErrorBoundary from '@/app/components/ErrorBoundary'
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
-  const [successMessage, setSuccessMessage] = useState<string | null>(null)
   const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callback') || '/dashboard'
-
+  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+  
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin')
+  
   useEffect(() => {
-    // Check if user is already logged in
     const checkAuth = async () => {
-      const { data } = await supabase.auth.getSession()
-      if (data.session) {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
         router.push(callbackUrl)
       }
     }
+    
     checkAuth()
-  }, [callbackUrl, router])
-
+  }, [router, callbackUrl])
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError(null)
-    setSuccessMessage(null)
     setLoading(true)
-
+    setError('')
+    
     try {
       if (mode === "signin") {
         // Sign in existing user
@@ -66,10 +66,26 @@ export default function LoginPage() {
         router.push("/dashboard")
       } else {
         // Sign up new user
-        // ... existing signup code
-
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || window.location.origin}/auth/verify-email`,
+          }
+        })
+        
+        if (error) {
+          setError(error.message || 'Failed to sign up')
+          setLoading(false)
+          return
+        }
+        
+        setSuccessMessage('Registration successful! Please check your email to verify your account.')
+        
         // After successful sign-up, redirect to verify email page
-        router.push("/auth/verify-email")
+        setTimeout(() => {
+          router.push("/auth/verify-email")
+        }, 2000)
       }
     } catch (error) {
       console.error("Authentication error:", error)
@@ -78,36 +94,38 @@ export default function LoginPage() {
       setLoading(false)
     }
   }
-
+  
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
-        <div className="w-full max-w-md p-8 space-y-8 bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-gray-700">
-          <div className="text-center">
-            <Link href="/" className="inline-flex items-center justify-center mb-4">
-              <Shield className="w-10 h-10 text-blue-500" />
-            </Link>
-            <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
-            <p className="mt-2 text-gray-400">Sign in to your CyberNex Academy account</p>
+      <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
+        <div className="max-w-md w-full space-y-8">
+          <div className="flex flex-col items-center">
+            <Shield className="w-12 h-12 text-blue-500 mb-4" />
+            <h2 className="text-3xl font-bold text-white text-center">
+              {mode === 'signin' ? 'Sign In' : 'Create Account'}
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-400">
+              {mode === 'signin' ? 'Access your CyberNex account' : 'Join the CyberNex community'}
+            </p>
           </div>
 
-          {error && (
-            <div className="bg-red-900/50 border border-red-800 text-red-300 px-4 py-3 rounded-lg relative" role="alert">
-              <span className="block sm:inline">{error}</span>
-            </div>
-          )}
-
-          {successMessage && (
-            <div className="bg-green-900/50 border border-green-800 text-green-300 px-4 py-3 rounded-lg relative" role="alert">
-              <span className="block sm:inline">{successMessage}</span>
-            </div>
-          )}
-
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-4">
+          <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
+            {successMessage && (
+              <div className="mb-4 p-3 bg-green-900/50 border border-green-800 rounded text-green-400 text-sm">
+                {successMessage}
+              </div>
+            )}
+            
+            {error && (
+              <div className="mb-4 p-3 bg-red-900/50 border border-red-800 rounded text-red-400 text-sm">
+                {error}
+              </div>
+            )}
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
-                  Email address
+                <label htmlFor="email" className="block text-sm font-medium text-gray-200">
+                  Email
                 </label>
                 <input
                   id="email"
@@ -117,75 +135,79 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="your.email@example.com"
+                  className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
+
               <div>
-                <div className="flex items-center justify-between">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-300">
-                    Password
-                  </label>
-                  <div className="text-sm">
-                    <Link href="/auth/forgot-password" className="text-blue-400 hover:text-blue-300">
-                      Forgot your password?
-                    </Link>
-                  </div>
-                </div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-200">
+                  Password
+                </label>
                 <input
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete="current-password"
+                  autoComplete={mode === 'signin' ? "current-password" : "new-password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="••••••••"
+                  className="mt-1 block w-full rounded-md border border-gray-800 bg-gray-900 px-3 py-2 text-gray-200 focus:border-blue-500 focus:ring-blue-500"
                 />
               </div>
-            </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-700"
-                />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">
-                  Remember me
-                </label>
-              </div>
-            </div>
+              {mode === 'signin' && (
+                <div className="flex items-center justify-end">
+                  <div className="text-sm">
+                    <Link href="/auth/forgot-password" className="text-blue-500 hover:text-blue-400">
+                      Forgot your password?
+                    </Link>
+                  </div>
+                </div>
+              )}
 
-            <div>
               <Button
                 type="submit"
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                 disabled={loading}
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center"
               >
-                {loading ? 'Signing in...' : 'Sign in'}
+                {loading ? 'Processing...' : mode === 'signin' ? 'Sign In' : 'Sign Up'}
               </Button>
-            </div>
-          </form>
+            </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-gray-400">
-              Don&apos;t have an account?{' '}
-              <Link href="/auth/register" className="text-blue-400 hover:text-blue-300">
-                Create an account
-              </Link>
-            </p>
-          </div>
-          
-          <div className="pt-4 text-center">
-            <Link href="/" className="text-sm text-gray-500 hover:text-gray-400">
-              ← Back to homepage
-            </Link>
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-800"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-gray-900/50 text-gray-400">Or</span>
+                </div>
+              </div>
+
+              <div className="mt-6 text-center">
+                {mode === 'signin' ? (
+                  <p className="text-sm text-gray-400">
+                    Don't have an account?{' '}
+                    <button 
+                      onClick={() => setMode('signup')} 
+                      className="text-blue-500 hover:text-blue-400"
+                    >
+                      Sign up
+                    </button>
+                  </p>
+                ) : (
+                  <p className="text-sm text-gray-400">
+                    Already have an account?{' '}
+                    <button 
+                      onClick={() => setMode('signin')} 
+                      className="text-blue-500 hover:text-blue-400"
+                    >
+                      Sign in
+                    </button>
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

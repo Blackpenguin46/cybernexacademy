@@ -109,6 +109,14 @@ const Header = () => {
                     </li>
                     <li>
                       <Link
+                        href="/community/github"
+                        className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
+                      >
+                        GitHub Repositories
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
                         href="/community/reddit"
                         className="block px-4 py-2 hover:bg-gray-800 text-gray-300 hover:text-white"
                       >
@@ -410,6 +418,11 @@ const Header = () => {
                     <li>
                       <Link href="/community/feedback" className="block py-1 text-gray-400 hover:text-white">
                         Submit Feedback
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="/community/github" className="block py-1 text-gray-400 hover:text-white">
+                        GitHub Repositories
                       </Link>
                     </li>
                     <li>
