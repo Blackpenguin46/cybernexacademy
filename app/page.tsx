@@ -86,13 +86,13 @@ export default function Home() {
               </Link>
 
               {/* Practice Labs */}
-              <Link href="/academy/foundational" className="group">
+              <Link href="/academy/labs" className="group">
                 <Card className="bg-gray-900/50 backdrop-blur-sm border-gray-800 hover:border-blue-500 hover:scale-105 transition-all duration-300 h-full">
                   <CardHeader>
                     <div className="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4 group-hover:bg-blue-500/30 transition-colors">
                       <Code className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-transform" />
                     </div>
-                    <CardTitle className="text-2xl text-white group-hover:text-blue-400 transition-colors">Practice Labs</CardTitle>
+                    <CardTitle className="text-2xl text-white group-hover:text-blue-400 transition-colors">Projects & Labs</CardTitle>
                     <CardDescription className="text-gray-400">Real-world scenarios in safe environments</CardDescription>
                   </CardHeader>
                   <CardContent className="text-gray-300">
