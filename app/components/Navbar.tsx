@@ -315,10 +315,10 @@ export default function Navbar() {
                       href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black px-4 py-2 rounded-md transition-colors"
+                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
                     >
-                      <Heart className="w-4 h-4" />
-                      <span>Support Us</span>
+                      <Heart className="w-5 h-5" />
+                      <span>Donate Now</span>
                     </Link>
                   </motion.div>
                 )}
@@ -492,18 +492,16 @@ export default function Navbar() {
                       <li>• Create new educational content</li>
                       <li>• Fund scholarships for cybersecurity students</li>
                     </ul>
-                    <div className="flex flex-col space-y-2">
-                      <Link 
-                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black px-4 py-2 rounded-md transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <Heart className="w-4 h-4" />
-                        <span>Support Us</span>
-                      </Link>
-                    </div>
+                    <Link 
+                      href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Heart className="w-5 h-5" />
+                      <span>Donate Now</span>
+                    </Link>
                   </div>
                 </div>
               </div>
