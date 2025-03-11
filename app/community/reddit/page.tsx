@@ -51,45 +51,80 @@ export default function RedditPage() {
     },
     {
       name: "r/reverseengineering",
-      description: "Technical discussions about software reverse engineering and malware analysis.",
-      members: "190K+",
+      description: "Community focused on reverse engineering techniques and tools for software analysis.",
+      members: "150K+",
       url: "https://www.reddit.com/r/reverseengineering/",
       categories: ["technical", "malware"]
     },
     {
       name: "r/networking",
-      description: "Enterprise networking discussions and professional network engineering topics.",
-      members: "680K+",
+      description: "Industry professionals discussing enterprise networking, infrastructure, and troubleshooting.",
+      members: "300K+",
       url: "https://www.reddit.com/r/networking/",
       categories: ["networking"]
     },
     {
       name: "r/linuxadmin",
-      description: "Linux system administration and security hardening discussions.",
-      members: "240K+",
+      description: "Linux system administration discussions with security implementations and best practices.",
+      members: "180K+",
       url: "https://www.reddit.com/r/linuxadmin/",
       categories: ["technical", "networking"]
     },
     {
       name: "r/malware",
-      description: "Analysis and discussion of malware, threats, and defense strategies.",
-      members: "150K+",
+      description: "Analysis and discussion of malware, sharing techniques for detection and prevention.",
+      members: "130K+",
       url: "https://www.reddit.com/r/malware/",
-      categories: ["malware", "technical"]
+      categories: ["malware"]
     },
     {
       name: "r/ethicalhacking",
-      description: "Discussions about ethical hacking methodologies and penetration testing.",
-      members: "180K+",
+      description: "Legal and ethical hacking discussions, focusing on educational content and methodology.",
+      members: "120K+",
       url: "https://www.reddit.com/r/ethicalhacking/",
-      categories: ["pentesting", "technical"]
+      categories: ["pentesting"]
     },
     {
       name: "r/comptia",
-      description: "Community for CompTIA certification preparation and discussion.",
-      members: "220K+",
+      description: "CompTIA certification discussion forum for Security+, Network+, and other IT certifications.",
+      members: "170K+",
       url: "https://www.reddit.com/r/comptia/",
       categories: ["career"]
+    },
+    {
+      name: "r/cybersecurity101",
+      description: "Beginner-friendly community for foundational cybersecurity concepts and learning resources.",
+      members: "75K+",
+      url: "https://www.reddit.com/r/cybersecurity101/",
+      categories: ["general"]
+    },
+    {
+      name: "r/sysadmin",
+      description: "IT professionals discussing system administration, including security considerations.",
+      members: "700K+",
+      url: "https://www.reddit.com/r/sysadmin/",
+      categories: ["technical", "networking"]
+    },
+    {
+      name: "r/blueteamsec",
+      description: "Focused on defensive security operations, threat detection, and incident response.",
+      members: "50K+",
+      url: "https://www.reddit.com/r/blueteamsec/",
+      categories: ["general"]
+    },
+    {
+      name: "r/infosecjobs",
+      description: "Information security job postings and career advice for security professionals.",
+      members: "40K+",
+      url: "https://www.reddit.com/r/infosecjobs/",
+      categories: ["career"]
+    },
+    {
+      name: "r/bugbounty",
+      description: "Bug bounty hunters sharing experiences, methodologies, and program information.",
+      members: "85K+",
+      url: "https://www.reddit.com/r/bugbounty/",
+      categories: ["pentesting"]
     }
   ]
 
@@ -99,11 +134,6 @@ export default function RedditPage() {
   })
 
   const additionalSubreddits = [
-    { name: "r/cybersecurity101", url: "https://www.reddit.com/r/cybersecurity101/" },
-    { name: "r/sysadmin", url: "https://www.reddit.com/r/sysadmin/" },
-    { name: "r/blueteamsec", url: "https://www.reddit.com/r/blueteamsec/" },
-    { name: "r/infosecjobs", url: "https://www.reddit.com/r/infosecjobs/" },
-    { name: "r/bugbounty", url: "https://www.reddit.com/r/bugbounty/" },
     { name: "r/lockpicking", url: "https://www.reddit.com/r/lockpicking/" },
     { name: "r/pwned", url: "https://www.reddit.com/r/pwned/" },
     { name: "r/CloudSecurity", url: "https://www.reddit.com/r/CloudSecurity/" },
@@ -113,7 +143,28 @@ export default function RedditPage() {
     { name: "r/securityCTF", url: "https://www.reddit.com/r/securityCTF/" },
     { name: "r/ThreatIntelligence", url: "https://www.reddit.com/r/ThreatIntelligence/" },
     { name: "r/BlueTeamJobs", url: "https://www.reddit.com/r/BlueTeamJobs/" },
-    { name: "r/CyberSecurityMemes", url: "https://www.reddit.com/r/CyberSecurityMemes/" }
+    { name: "r/CyberSecurityMemes", url: "https://www.reddit.com/r/CyberSecurityMemes/" },
+    { name: "r/computerforensics", url: "https://www.reddit.com/r/computerforensics/" },
+    { name: "r/dfir", url: "https://www.reddit.com/r/dfir/" },
+    { name: "r/ComputerSecurity", url: "https://www.reddit.com/r/ComputerSecurity/" },
+    { name: "r/Crypto", url: "https://www.reddit.com/r/Crypto/" },
+    { name: "r/Cyber", url: "https://www.reddit.com/r/Cyber/" },
+    { name: "r/cyberlaws", url: "https://www.reddit.com/r/cyberlaws/" },
+    { name: "r/CyberSecurityJobs", url: "https://www.reddit.com/r/CyberSecurityJobs/" },
+    { name: "r/datarecovery", url: "https://www.reddit.com/r/datarecovery/" },
+    { name: "r/exploitdev", url: "https://www.reddit.com/r/exploitdev/" },
+    { name: "r/Hacking_Tutorials", url: "https://www.reddit.com/r/Hacking_Tutorials/" },
+    { name: "r/ISO27001", url: "https://www.reddit.com/r/ISO27001/" },
+    { name: "r/OSINT", url: "https://www.reddit.com/r/OSINT/" },
+    { name: "r/pentesting", url: "https://www.reddit.com/r/pentesting/" },
+    { name: "r/ReverseEngineering", url: "https://www.reddit.com/r/ReverseEngineering/" },
+    { name: "r/SocialEngineering", url: "https://www.reddit.com/r/SocialEngineering/" },
+    { name: "r/ThreatHunting", url: "https://www.reddit.com/r/ThreatHunting/" },
+    { name: "r/ZeroDay", url: "https://www.reddit.com/r/ZeroDay/" },
+    { name: "r/InfoSecNews", url: "https://www.reddit.com/r/InfoSecNews/" },
+    { name: "r/NetSecStudents", url: "https://www.reddit.com/r/NetSecStudents/" },
+    { name: "r/Privacy", url: "https://www.reddit.com/r/Privacy/" },
+    { name: "r/SecurityAnalysis", url: "https://www.reddit.com/r/SecurityAnalysis/" }
   ]
 
   const guidelines = [

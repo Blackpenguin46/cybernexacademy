@@ -32,14 +32,14 @@ export default function DiscordPage() {
       name: "The Cyber Mentor",
       description: "Heath Adams' community focused on practical ethical hacking and penetration testing training.",
       members: "100K+",
-      url: "https://discord.gg/tcm",
+      url: "https://discord.gg/thecybermentor",
       categories: ["learning", "pentesting", "career"]
     },
     {
       name: "Darknet Diaries",
       description: "Official community for the popular cybersecurity podcast, discussing true stories from the dark side of the Internet.",
       members: "75K+",
-      url: "https://discord.gg/darknet",
+      url: "https://discord.gg/darknetdiaries",
       categories: ["community"]
     },
     {
@@ -51,17 +51,24 @@ export default function DiscordPage() {
     },
     {
       name: "Hack The Box",
-      description: "Active hacking community with discussions about challenges, machines, and penetration testing.",
-      members: "200K+",
+      description: "Community for the popular Hack The Box platform for penetration testing and security challenges.",
+      members: "180K+",
       url: "https://discord.gg/hackthebox",
-      categories: ["ctf", "pentesting", "learning"]
+      categories: ["learning", "ctf", "pentesting"]
     },
     {
       name: "The Many Hats Club",
       description: "Diverse cybersecurity community covering various topics from ethical hacking to threat intelligence.",
       members: "45K+",
-      url: "https://discord.gg/manyhats",
+      url: "https://discord.gg/themanyhatsclub",
       categories: ["community", "pentesting", "blue_team"]
+    },
+    {
+      name: "Practical Ethical Hacking",
+      description: "Community dedicated to ethical hacking methodologies and practical security training.",
+      members: "70K+",
+      url: "https://discord.gg/ethicalhacking",
+      categories: ["learning", "pentesting"]
     },
     {
       name: "John Hammond's Community",
@@ -76,27 +83,6 @@ export default function DiscordPage() {
       members: "60K+",
       url: "https://discord.gg/infosecprep",
       categories: ["career", "learning"]
-    },
-    {
-      name: "Blue Team Village",
-      description: "Community dedicated to defensive security, incident response, and SOC operations.",
-      members: "40K+",
-      url: "https://discord.gg/blueteam",
-      categories: ["blue_team", "learning"]
-    },
-    {
-      name: "CTF Time",
-      description: "Active CTF community discussing challenges, writeups, and upcoming competitions.",
-      members: "55K+",
-      url: "https://discord.gg/ctftime",
-      categories: ["ctf"]
-    },
-    {
-      name: "OSCP Study Group",
-      description: "Support community for OSCP certification preparation and practice.",
-      members: "35K+",
-      url: "https://discord.gg/oscp",
-      categories: ["career", "pentesting", "learning"]
     }
   ]
 
@@ -106,21 +92,23 @@ export default function DiscordPage() {
     : popularServers.filter(server => server.categories.includes(selectedCategory));
 
   const additionalServers = [
-    { name: "MalwareTech", url: "#" },
-    { name: "OverTheWire", url: "#" },
-    { name: "NullByte", url: "#" },
-    { name: "Red Team Ops", url: "#" },
-    { name: "SOC Analyst Training", url: "#" },
-    { name: "CyberSec Labs", url: "#" },
-    { name: "HackTricks", url: "#" },
-    { name: "Bug Bounty Hunter's Hangout", url: "#" },
-    { name: "CyberSec Jobs & Internships", url: "#" },
-    { name: "Linux Security Enthusiasts", url: "#" },
-    { name: "Threat Intelligence Exchange", url: "#" },
-    { name: "Cybersecurity News & Updates", url: "#" },
-    { name: "Black Hat Ethical Hacking", url: "#" },
-    { name: "Practical Ethical Hacking (PEH)", url: "#" },
-    { name: "Cybersecurity Career Network", url: "#" }
+    { name: "Cybersecurity Career Network", url: "https://discord.gg/cybercareernetwork" },
+    { name: "Black Hat Ethical Hacking", url: "https://discord.gg/blackhat" },
+    { name: "Blue Team Village", url: "https://discord.gg/blueteamvillage" },
+    { name: "CTF Time", url: "https://discord.gg/ctftime" },
+    { name: "MalwareTech", url: "https://discord.gg/malwaretech" },
+    { name: "OSCP Study Group", url: "https://discord.gg/oscp" },
+    { name: "OverTheWire", url: "https://discord.gg/overthewire" },
+    { name: "NullByte", url: "https://discord.gg/nullbyte" },
+    { name: "Red Team Ops", url: "https://discord.gg/redteamops" },
+    { name: "SOC Analyst Training", url: "https://discord.gg/socanalyst" },
+    { name: "CyberSec Labs", url: "https://discord.gg/cyberseclabs" },
+    { name: "HackTricks", url: "https://discord.gg/hacktricks" },
+    { name: "Bug Bounty Hunter's Hangout", url: "https://discord.gg/bugbounty" },
+    { name: "CyberSec Jobs & Internships", url: "https://discord.gg/cyberjobs" },
+    { name: "Linux Security Enthusiasts", url: "https://discord.gg/linuxsecurity" },
+    { name: "Threat Intelligence Exchange", url: "https://discord.gg/threatintel" },
+    { name: "Cybersecurity News & Updates", url: "https://discord.gg/cybernews" }
   ]
 
   const features = [

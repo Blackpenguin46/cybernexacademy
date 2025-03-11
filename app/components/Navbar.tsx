@@ -314,7 +314,7 @@ export default function Navbar() {
                     </ul>
                     <div className="flex flex-col space-y-2">
                       <Link 
-                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
@@ -323,7 +323,7 @@ export default function Navbar() {
                         <span>Donate Now</span>
                       </Link>
                       <Link 
-                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center gap-2 bg-transparent border border-neon-blue text-neon-blue hover:bg-neon-blue/10 font-medium px-4 py-2 rounded-md transition-colors mt-2"
@@ -500,7 +500,7 @@ export default function Navbar() {
                     </ul>
                     <div className="flex flex-col space-y-2">
                       <Link 
-                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
@@ -510,7 +510,7 @@ export default function Navbar() {
                         <span>Donate Now</span>
                       </Link>
                       <Link 
-                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center gap-2 bg-transparent border border-neon-blue text-neon-blue hover:bg-neon-blue/10 font-medium px-4 py-2 rounded-md transition-colors"

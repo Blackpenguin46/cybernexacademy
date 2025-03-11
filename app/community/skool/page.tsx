@@ -5,40 +5,34 @@ import { Button } from "@/components/ui/button"
 export default function SkoolPage() {
   const popularCourses = [
     {
-      name: "Practical Ethical Hacking",
-      description: "Comprehensive ethical hacking course covering OSINT, scanning, enumeration, exploitation, and reporting.",
+      name: "Cybersecurity Fundamentals",
+      description: "Learn the core concepts and principles of cybersecurity for beginners.",
       students: "25K+",
-      url: "https://www.skool.com/peh"
+      url: "https://www.skool.com/cybersecurityfundamentals"
     },
     {
-      name: "Windows Privilege Escalation",
-      description: "Advanced techniques for escalating privileges in Windows environments, from enumeration to exploitation.",
-      students: "15K+",
-      url: "https://www.skool.com/winpriv"
-    },
-    {
-      name: "Linux Privilege Escalation",
-      description: "Master Linux privilege escalation techniques through hands-on labs and real-world scenarios.",
-      students: "18K+",
-      url: "https://www.skool.com/linpriv"
-    },
-    {
-      name: "External Pentest Playbook",
-      description: "Step-by-step methodology for conducting thorough external penetration tests.",
-      students: "12K+",
-      url: "https://www.skool.com/external"
-    },
-    {
-      name: "OSCP Preparation",
-      description: "Structured preparation course for the OSCP certification with practice labs and methodology.",
-      students: "20K+",
-      url: "https://www.skool.com/oscp"
-    },
-    {
-      name: "Web Application Exploitation",
-      description: "Deep dive into modern web application security testing and exploitation techniques.",
+      name: "Ethical Hacking Skool",
+      description: "Master ethical hacking techniques and methodologies through hands-on practice.",
       students: "22K+",
-      url: "https://www.skool.com/webapp"
+      url: "https://www.skool.com/ethicalhacking"
+    },
+    {
+      name: "Cyber Career Mastery",
+      description: "Navigate your cybersecurity career path with guidance from industry professionals.",
+      students: "18K+",
+      url: "https://www.skool.com/cybercareermastery"
+    },
+    {
+      name: "Advanced Penetration Testing",
+      description: "Advanced techniques for penetration testing and vulnerability assessment.",
+      students: "15K+",
+      url: "https://www.skool.com/advancedpentesting"
+    },
+    {
+      name: "Cloud Security Academy",
+      description: "Specialized training in securing cloud environments and services.",
+      students: "20K+",
+      url: "https://www.skool.com/cloudsecurityacademy"
     }
   ]
 
