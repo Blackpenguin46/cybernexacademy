@@ -177,9 +177,9 @@ export default function Navbar() {
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-80"></div>
       
       <div className="max-w-[1920px] mx-auto">
-        <div className="px-4 lg:px-8 py-4 flex justify-between items-center">
+        <div className="px-4 lg:px-8 py-4 flex justify-center items-center relative">
           {/* Logo with cybersecurity styling */}
-          <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 relative group" onClick={() => setActiveDropdown(null)}>
+          <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 absolute left-4 lg:left-8" onClick={() => setActiveDropdown(null)}>
             <div className="flex flex-col">
               <span className="text-neon-blue font-mono tracking-tight leading-none">CYBERNEX</span>
               <span className="text-neon-green font-mono tracking-tight leading-none">ACADEMY</span>
@@ -277,7 +277,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop - Right section with user actions */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3 absolute right-4 lg:right-8">
             <div className="relative">
               <button 
                 className="flex items-center gap-2 text-gray-300 hover:text-neon-blue px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5"
@@ -311,6 +311,12 @@ export default function Navbar() {
                       <li>• Create new educational content</li>
                       <li>• Fund scholarships for cybersecurity students</li>
                     </ul>
+                    <p className="text-gray-400 text-sm mb-3">
+                      Support us with a one-time donation at{' '}
+                      <a href="https://buy.stripe.com/fZeg051CQ9Dg84E7su" target="_blank" rel="noopener noreferrer" className="text-neon-blue hover:underline">
+                        our Stripe payment page
+                      </a>
+                    </p>
                     <Link 
                       href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
                       target="_blank"
@@ -492,6 +498,12 @@ export default function Navbar() {
                       <li>• Create new educational content</li>
                       <li>• Fund scholarships for cybersecurity students</li>
                     </ul>
+                    <p className="text-gray-400 text-sm mb-3">
+                      Support us with a one-time donation at{' '}
+                      <a href="https://buy.stripe.com/fZeg051CQ9Dg84E7su" target="_blank" rel="noopener noreferrer" className="text-neon-blue hover:underline">
+                        our Stripe payment page
+                      </a>
+                    </p>
                     <Link 
                       href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
                       target="_blank"
