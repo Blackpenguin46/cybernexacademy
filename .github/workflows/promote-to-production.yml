@@ -1,0 +1,57 @@
+name: Promote to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: 'Preview URL to promote to production'
+        required: true
+      version:
+        description: 'Version to deploy (e.g., v1.0.0)'
+        required: false
+        default: ''
+      deployment_notes:
+        description: 'Deployment notes'
+        required: false
+        default: ''
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: ${{ steps.promote.outputs.production-url }}
+    
+    steps:
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      
+      - name: Promote to Production
+        id: promote
+        run: |
+          PREVIEW_URL="${{ github.event.inputs.preview_url }}"
+          DEPLOY_ID=$(echo $PREVIEW_URL | awk -F'/' '{print $NF}')
+          
+          echo "Promoting deployment $DEPLOY_ID to production"
+          
+          PRODUCTION_URL=$(vercel promote --token=${{ secrets.VERCEL_TOKEN }} $DEPLOY_ID)
+          
+          echo "Production URL: $PRODUCTION_URL"
+          echo "production-url=$PRODUCTION_URL" >> $GITHUB_OUTPUT
+      
+      - name: Create Deployment Record
+        if: success() && github.event.inputs.version != ''
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          NOTES="${{ github.event.inputs.deployment_notes }}"
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          echo "Creating deployment record for version $VERSION"
+          echo "Timestamp: $TIMESTAMP"
+          echo "Deployment notes: $NOTES"
+          
+          # Here you could add code to store deployment records in a database or create a GitHub release 
