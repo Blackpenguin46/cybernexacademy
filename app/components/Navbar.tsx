@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus } from 'lucide-react';
+import { Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus } from 'lucide-react';
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
@@ -336,11 +336,6 @@ export default function Navbar() {
               </AnimatePresence>
             </div>
 
-            <button className="text-gray-400 hover:text-neon-blue p-2 rounded-md transition-colors relative group">
-              <div className="absolute inset-0 border border-neon-blue/0 group-hover:border-neon-blue/30 rounded-md transition-colors"></div>
-              <Search className="w-5 h-5" />
-            </button>
-            
             {/* Conditional navigation based on auth state */}
             {loading ? (
               <div className="w-20 h-10 bg-gray-800/50 animate-pulse rounded-md"></div>
@@ -371,9 +366,9 @@ export default function Navbar() {
                 </Link>
                 <Link 
                   href="/auth/signup" 
-                  className="flex items-center gap-2 text-black bg-gradient-to-r from-neon-blue to-neon-green hover:from-neon-green hover:to-neon-blue font-medium px-5 py-2.5 rounded-md transition-all duration-300 shadow-lg shadow-neon-blue/20"
+                  className="flex items-center gap-2 text-white font-medium px-4 py-2 rounded-md transition-all duration-300 border border-neon-blue hover:border-neon-blue hover:bg-neon-blue/10"
                 >
-                  <UserPlus className="w-4 h-4" />
+                  <UserPlus className="w-4 h-4 text-neon-blue" />
                   <span>Sign Up</span>
                 </Link>
               </div>
@@ -478,11 +473,11 @@ export default function Navbar() {
                       
                       <Link 
                         href="/auth/signup" 
-                        className="flex items-center justify-center gap-2 bg-gradient-to-r from-neon-blue to-neon-green text-black font-medium px-4 py-3 rounded-md w-full hover:from-neon-green hover:to-neon-blue transition-all duration-300 shadow-lg shadow-neon-blue/20"
+                        className="flex items-center justify-center gap-2 bg-black/50 border-2 border-neon-blue text-white font-medium px-4 py-3 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
-                        <UserPlus className="w-5 h-5" />
-                        <span>Sign Up Free</span>
+                        <UserPlus className="w-5 h-5 text-neon-blue" />
+                        <span>Sign Up</span>
                       </Link>
                     </>
                   )}
