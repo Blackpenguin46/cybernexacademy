@@ -296,6 +296,8 @@ export default function Navbar() {
                     exit="hidden"
                     variants={dropdownVariants}
                     className="absolute right-0 mt-2 w-80 p-4 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md shadow-xl shadow-neon-blue/10"
+                    onMouseEnter={() => setShowDonateInfo(true)}
+                    onMouseLeave={() => setShowDonateInfo(false)}
                   >
                     <h4 className="text-neon-blue font-semibold mb-2 flex items-center gap-2">
                       <Heart className="w-4 h-4" />
@@ -483,17 +485,25 @@ export default function Navbar() {
                       Support Our Mission
                     </h4>
                     <p className="text-gray-400 text-sm leading-relaxed mb-3">
-                      Your donations help maintain the platform and fund cybersecurity education.
+                      While all our resources are freely available, your donations help us:
                     </p>
-                    <Link 
-                      href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black px-4 py-2 rounded-md transition-colors"
-                    >
-                      <Heart className="w-4 h-4" />
-                      <span>Support Us</span>
-                    </Link>
+                    <ul className="text-gray-400 text-sm space-y-1 mb-3">
+                      <li>• Maintain and improve the platform</li>
+                      <li>• Create new educational content</li>
+                      <li>• Fund scholarships for cybersecurity students</li>
+                    </ul>
+                    <div className="flex flex-col space-y-2">
+                      <Link 
+                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black px-4 py-2 rounded-md transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Heart className="w-4 h-4" />
+                        <span>Support Us</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
