@@ -156,7 +156,7 @@ export default function SignupPage() {
   }
   
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative">
+    <div className="min-h-screen flex items-center justify-center px-4 pt-24 pb-12 relative">
       <CyberBackground />
       
       <div className="max-w-md w-full space-y-8 relative z-10">

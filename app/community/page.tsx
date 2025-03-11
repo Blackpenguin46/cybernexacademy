@@ -54,12 +54,81 @@ const communityPlatforms = [
   },
   {
     title: "Reddit Communities",
-    description: "Explore popular cybersecurity subreddits and discussions",
+    description: "Engage with cybersecurity enthusiasts on various subreddits",
     icon: Globe,
     link: "/community/reddit",
     color: "from-orange-500/20 to-orange-600/5",
     borderColor: "border-orange-500/30",
     hoverColor: "group-hover:border-orange-500/60"
+  },
+  {
+    title: "Cybersecurity Blogs",
+    description: "Read insights and articles from industry experts",
+    icon: ExternalLink,
+    link: "/community/blogs",
+    color: "from-green-500/20 to-green-600/5",
+    borderColor: "border-green-500/30",
+    hoverColor: "group-hover:border-green-500/60"
+  },
+  {
+    title: "Open Source Security Tools",
+    description: "Discover and contribute to open-source security projects",
+    icon: Github,
+    link: "/community/open-source",
+  },
+  {
+    title: "Security Influencers",
+    description: "Follow top cybersecurity influencers for insights and updates",
+    icon: Twitter,
+    link: "/community/influencers",
+    color: "from-sky-500/20 to-sky-600/5",
+    borderColor: "border-sky-500/30",
+    hoverColor: "group-hover:border-sky-500/60"
+  },
+  {
+    title: "Cybersecurity News",
+    description: "Stay informed with the latest cybersecurity news and trends",
+    icon: ExternalLink,
+    link: "/community/news",
+    color: "from-blue-500/20 to-blue-600/5",
+    borderColor: "border-blue-500/30",
+    hoverColor: "group-hover:border-blue-500/60"
+  },
+  {
+    title: "Professional Groups",
+    description: "Join LinkedIn groups focused on cybersecurity topics",
+    icon: Linkedin,
+    link: "/community/groups",
+    color: "from-blue-600/20 to-blue-700/5",
+    borderColor: "border-blue-600/30",
+    hoverColor: "group-hover:border-blue-600/60"
+  },
+  {
+    title: "Industry Leaders",
+    description: "Connect with industry leaders and expand your professional network",
+    icon: ExternalLink,
+    link: "/community/leaders",
+    color: "from-teal-500/20 to-teal-600/5",
+    borderColor: "border-teal-500/30",
+    hoverColor: "group-hover:border-teal-500/60"
+  },
+  {
+    title: "Cybersecurity Channels",
+    description: "Participate in discussions on dedicated cybersecurity channels",
+    icon: MessageSquare,
+    link: "/community/channels",
+    color: "from-indigo-500/20 to-indigo-600/5",
+    borderColor: "border-indigo-500/30",
+    hoverColor: "group-hover:border-indigo-500/60"
+  },
+  {
+    title: "Learning Communities",
+    description: "Join communities focused on learning and skill development",
+    icon: ExternalLink,
+    link: "/community/learning",
+    color: "from-yellow-500/20 to-yellow-600/5",
+    borderColor: "border-yellow-500/30",
+    hoverColor: "group-hover:border-yellow-500/60"
   }
 ];
 

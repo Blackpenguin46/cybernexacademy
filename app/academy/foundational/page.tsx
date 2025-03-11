@@ -60,10 +60,24 @@ export default function FoundationalPage() {
         },
         {
           name: "Cybrary",
-          description: "Online cybersecurity training platform with foundational courses",
+          description: "Free online cybersecurity courses and training",
           url: "https://www.cybrary.it",
-          type: "Video Courses",
+          type: "Online Course",
           free: true
+        },
+        {
+          name: "Coursera Cybersecurity",
+          description: "Cybersecurity courses from top universities and companies",
+          url: "https://www.coursera.org/browse/computer-science/cybersecurity",
+          type: "Online Course",
+          free: false
+        },
+        {
+          name: "Udemy Cybersecurity",
+          description: "Wide range of cybersecurity courses for all levels",
+          url: "https://www.udemy.com/topic/cyber-security/",
+          type: "Online Course",
+          free: false
         },
         {
           name: "daily.dev",

@@ -64,6 +64,27 @@ export default function AdvancedPage() {
           url: "https://frida.re",
           type: "Instrumentation",
           free: true
+        },
+        {
+          name: "Ghidra",
+          description: "Open-source software reverse engineering suite",
+          url: "https://ghidra-sre.org",
+          type: "Reverse Engineering",
+          free: true
+        },
+        {
+          name: "Radare2",
+          description: "Open-source software for reverse engineering and analyzing binaries",
+          url: "https://rada.re/n/radare2.html",
+          type: "Reverse Engineering",
+          free: true
+        },
+        {
+          name: "Immunity Debugger",
+          description: "Powerful debugger for analyzing malware and exploits",
+          url: "https://www.immunityinc.com/products/debugger/",
+          type: "Debugging Tool",
+          free: false
         }
       ]
     },

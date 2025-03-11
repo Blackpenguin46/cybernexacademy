@@ -64,6 +64,27 @@ export default function IntermediatePage() {
           url: "https://www.hackthebox.com",
           type: "Practice Platform",
           free: false
+        },
+        {
+          name: "Netsparker",
+          description: "Web application security scanner with automated vulnerability detection",
+          url: "https://www.netsparker.com",
+          type: "Security Tool",
+          free: false
+        },
+        {
+          name: "Acunetix",
+          description: "Comprehensive web vulnerability scanner for detecting security issues",
+          url: "https://www.acunetix.com",
+          type: "Security Tool",
+          free: false
+        },
+        {
+          name: "Qualys Web Application Scanning",
+          description: "Cloud-based web application scanner for identifying vulnerabilities",
+          url: "https://www.qualys.com/apps/web-app-scanning/",
+          type: "Security Tool",
+          free: false
         }
       ]
     },
