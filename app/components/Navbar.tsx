@@ -231,7 +231,8 @@ export default function Navbar() {
                       className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
                       style={{ 
                         width: '800px', 
-                        left: section.id === 'academy' ? 'auto' : '0',
+                        left: section.id === 'academy' ? 'auto' : 
+                             section.id === 'insights' ? '-150px' : '0',
                         right: section.id === 'academy' ? '0' : 'auto'
                       }}
                       onMouseEnter={() => setActiveDropdown(section.id)}
@@ -311,21 +312,25 @@ export default function Navbar() {
                       <li>• Create new educational content</li>
                       <li>• Fund scholarships for cybersecurity students</li>
                     </ul>
-                    <p className="text-gray-400 text-sm mb-3">
-                      Support us with a one-time donation at{' '}
-                      <a href="https://buy.stripe.com/fZeg051CQ9Dg84E7su" target="_blank" rel="noopener noreferrer" className="text-neon-blue hover:underline">
-                        our Stripe payment page
-                      </a>
-                    </p>
-                    <Link 
-                      href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
-                    >
-                      <Heart className="w-5 h-5" />
-                      <span>Donate Now</span>
-                    </Link>
+                    <div className="flex flex-col space-y-2">
+                      <Link 
+                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
+                      >
+                        <Heart className="w-5 h-5" />
+                        <span>Donate Now</span>
+                      </Link>
+                      <Link 
+                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-transparent border border-neon-blue text-neon-blue hover:bg-neon-blue/10 font-medium px-4 py-2 rounded-md transition-colors mt-2"
+                      >
+                        <span>Go to Payment Page</span>
+                      </Link>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -359,14 +364,14 @@ export default function Navbar() {
               <div className="flex items-center gap-3">
                 <Link 
                   href="/auth/login" 
-                  className="flex items-center gap-2 text-gray-300 hover:text-neon-blue px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-neon-blue/20 hover:bg-neon-blue/5"
+                  className="flex items-center gap-2 text-white font-medium px-4 py-2 rounded-md transition-all duration-300 border border-neon-blue hover:border-neon-blue hover:bg-neon-blue/10"
                 >
-                  <LogIn className="w-4 h-4" />
+                  <LogIn className="w-4 h-4 text-neon-blue" />
                   <span>Login</span>
                 </Link>
                 <Link 
                   href="/auth/signup" 
-                  className="flex items-center gap-2 text-black bg-neon-blue hover:bg-neon-blue/90 px-4 py-2 rounded-md transition-all duration-300 group"
+                  className="flex items-center gap-2 text-black bg-gradient-to-r from-neon-blue to-neon-green hover:from-neon-green hover:to-neon-blue font-medium px-5 py-2.5 rounded-md transition-all duration-300 shadow-lg shadow-neon-blue/20"
                 >
                   <UserPlus className="w-4 h-4" />
                   <span>Sign Up</span>
@@ -464,20 +469,20 @@ export default function Navbar() {
                     <>
                       <Link 
                         href="/auth/login" 
-                        className="flex items-center gap-2 px-4 py-3 bg-black/50 border border-neon-blue/20 rounded-md w-full hover:bg-neon-blue/10 transition-colors"
+                        className="flex items-center gap-2 px-4 py-3 bg-black/50 border-2 border-neon-blue rounded-md w-full hover:bg-neon-blue/10 transition-colors"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <LogIn className="w-5 h-5 text-neon-blue" />
-                        <span className="text-gray-300">Login</span>
+                        <span className="text-white font-medium">Login</span>
                       </Link>
                       
                       <Link 
                         href="/auth/signup" 
-                        className="flex items-center justify-center gap-2 bg-neon-blue text-black px-4 py-3 rounded-md w-full hover:bg-neon-blue/90 transition-colors"
+                        className="flex items-center justify-center gap-2 bg-gradient-to-r from-neon-blue to-neon-green text-black font-medium px-4 py-3 rounded-md w-full hover:from-neon-green hover:to-neon-blue transition-all duration-300 shadow-lg shadow-neon-blue/20"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <UserPlus className="w-5 h-5" />
-                        <span>Sign Up</span>
+                        <span>Sign Up Free</span>
                       </Link>
                     </>
                   )}
@@ -498,22 +503,27 @@ export default function Navbar() {
                       <li>• Create new educational content</li>
                       <li>• Fund scholarships for cybersecurity students</li>
                     </ul>
-                    <p className="text-gray-400 text-sm mb-3">
-                      Support us with a one-time donation at{' '}
-                      <a href="https://buy.stripe.com/fZeg051CQ9Dg84E7su" target="_blank" rel="noopener noreferrer" className="text-neon-blue hover:underline">
-                        our Stripe payment page
-                      </a>
-                    </p>
-                    <Link 
-                      href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <Heart className="w-5 h-5" />
-                      <span>Donate Now</span>
-                    </Link>
+                    <div className="flex flex-col space-y-2">
+                      <Link 
+                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-neon-blue hover:bg-neon-blue/90 text-black font-medium px-4 py-3 rounded-md transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Heart className="w-5 h-5" />
+                        <span>Donate Now</span>
+                      </Link>
+                      <Link 
+                        href="https://buy.stripe.com/fZeg051CQ9Dg84E7su"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 bg-transparent border border-neon-blue text-neon-blue hover:bg-neon-blue/10 font-medium px-4 py-2 rounded-md transition-colors"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <span>Go to Payment Page</span>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
