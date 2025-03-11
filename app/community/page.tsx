@@ -5,6 +5,85 @@ import Link from 'next/link'
 import { Users, MessageSquare, Github, Twitter, Linkedin, Globe, ExternalLink } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import SectionHeader from '../components/SectionHeader'
+import { Metadata } from 'next';
+import { createClient } from '@/lib/supabase/server';
+import { Badge } from '@/components/ui/badge';
+import { Check } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Cybernex Academy - Community',
+  description: 'Connect with cybersecurity professionals through our curated list of Discord servers, Reddit communities, and Skool forums.'
+};
+
+interface DiscordServer {
+  id: string;
+  name: string;
+  description: string;
+  invite_link: string;
+  member_count: number | null;
+  is_verified: boolean;
+}
+
+interface RedditCommunity {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  member_count: number | null;
+  is_verified: boolean;
+}
+
+interface SkoolCommunity {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  member_count: number | null;
+  is_verified: boolean;
+}
+
+async function getCommunityResources() {
+  const supabase = createClient();
+  
+  // Get Discord servers
+  const { data: discordServers, error: discordError } = await supabase
+    .from('discord_servers')
+    .select('*')
+    .eq('is_verified', true)
+    .order('name');
+    
+  if (discordError) {
+    console.error('Error fetching Discord servers:', discordError);
+  }
+  
+  // Get Reddit communities
+  const { data: redditCommunities, error: redditError } = await supabase
+    .from('reddit_communities')
+    .select('*')
+    .eq('is_verified', true)
+    .order('name');
+    
+  if (redditError) {
+    console.error('Error fetching Reddit communities:', redditError);
+  }
+  
+  // Get Skool communities
+  const { data: skoolCommunities, error: skoolError } = await supabase
+    .from('skool_communities')
+    .select('*')
+    .eq('is_verified', true)
+    .order('name');
+    
+  if (skoolError) {
+    console.error('Error fetching Skool communities:', skoolError);
+  }
+  
+  return {
+    discord: discordServers || [],
+    reddit: redditCommunities || [],
+    skool: skoolCommunities || []
+  };
+}
 
 const communityPlatforms = [
   {
@@ -132,7 +211,9 @@ const communityPlatforms = [
   }
 ];
 
-export default function CommunityPage() {
+export default async function CommunityPage() {
+  const resources = await getCommunityResources();
+  
   return (
     <div className="min-h-screen bg-black">
       <SectionHeader
@@ -165,6 +246,195 @@ export default function CommunityPage() {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Discord Servers Section */}
+      <section id="discord" className="py-16 px-4 bg-gray-950">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center mb-8">
+            <MessageSquare className="text-indigo-500 w-8 h-8 mr-3" />
+            <h2 className="text-3xl font-bold">Discord Servers</h2>
+          </div>
+          
+          {resources.discord.length === 0 ? (
+            <div className="bg-gray-900 rounded-lg p-8 text-center">
+              <MessageSquare className="w-12 h-12 text-gray-700 mx-auto mb-4" />
+              <h3 className="text-xl font-medium mb-2">No Discord Servers Yet</h3>
+              <p className="text-gray-500 mb-6">
+                We're currently curating a list of quality Discord servers for the cybersecurity community.
+              </p>
+              <Button asChild variant="outline">
+                <Link href="/community/submit">
+                  Suggest a Discord Server
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resources.discord.map(server => (
+                <div key={server.id} className="bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-indigo-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-medium">{server.name}</h3>
+                    {server.is_verified && (
+                      <Badge className="bg-green-700">
+                        <Check className="w-3 h-3 mr-1" />
+                        Verified
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  {server.member_count && (
+                    <p className="text-sm text-gray-400 mb-3">
+                      {server.member_count.toLocaleString()} members
+                    </p>
+                  )}
+                  
+                  <p className="text-gray-300 mb-4 line-clamp-3">
+                    {server.description}
+                  </p>
+                  
+                  <Button asChild className="w-full bg-indigo-600 hover:bg-indigo-700">
+                    <a 
+                      href={server.invite_link} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center"
+                    >
+                      Join Server
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+      
+      {/* Reddit Communities Section */}
+      <section id="reddit" className="py-16 px-4 bg-gray-900">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center mb-8">
+            <User className="text-orange-500 w-8 h-8 mr-3" />
+            <h2 className="text-3xl font-bold">Reddit Communities</h2>
+          </div>
+          
+          {resources.reddit.length === 0 ? (
+            <div className="bg-gray-800 rounded-lg p-8 text-center">
+              <User className="w-12 h-12 text-gray-700 mx-auto mb-4" />
+              <h3 className="text-xl font-medium mb-2">No Reddit Communities Yet</h3>
+              <p className="text-gray-500 mb-6">
+                We're currently curating a list of quality Reddit communities for cybersecurity professionals.
+              </p>
+              <Button asChild variant="outline">
+                <Link href="/community/submit">
+                  Suggest a Reddit Community
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resources.reddit.map(community => (
+                <div key={community.id} className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-orange-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-medium">{community.name}</h3>
+                    {community.is_verified && (
+                      <Badge className="bg-green-700">
+                        <Check className="w-3 h-3 mr-1" />
+                        Verified
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  {community.member_count && (
+                    <p className="text-sm text-gray-400 mb-3">
+                      {community.member_count.toLocaleString()} members
+                    </p>
+                  )}
+                  
+                  <p className="text-gray-300 mb-4 line-clamp-3">
+                    {community.description}
+                  </p>
+                  
+                  <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
+                    <a 
+                      href={community.url} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center"
+                    >
+                      View Subreddit
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+      
+      {/* Skool Communities Section */}
+      <section id="skool" className="py-16 px-4 bg-gray-950">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex items-center mb-8">
+            <Shield className="text-purple-500 w-8 h-8 mr-3" />
+            <h2 className="text-3xl font-bold">Skool Forums</h2>
+          </div>
+          
+          {resources.skool.length === 0 ? (
+            <div className="bg-gray-900 rounded-lg p-8 text-center">
+              <Shield className="w-12 h-12 text-gray-700 mx-auto mb-4" />
+              <h3 className="text-xl font-medium mb-2">No Skool Communities Yet</h3>
+              <p className="text-gray-500 mb-6">
+                We're currently curating a list of quality Skool forums for cybersecurity education and discussion.
+              </p>
+              <Button asChild variant="outline">
+                <Link href="/community/submit">
+                  Suggest a Skool Forum
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {resources.skool.map(community => (
+                <div key={community.id} className="bg-gray-900 rounded-lg p-6 border border-gray-800 hover:border-purple-500/30 transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-medium">{community.name}</h3>
+                    {community.is_verified && (
+                      <Badge className="bg-green-700">
+                        <Check className="w-3 h-3 mr-1" />
+                        Verified
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  {community.member_count && (
+                    <p className="text-sm text-gray-400 mb-3">
+                      {community.member_count.toLocaleString()} members
+                    </p>
+                  )}
+                  
+                  <p className="text-gray-300 mb-4 line-clamp-3">
+                    {community.description}
+                  </p>
+                  
+                  <Button asChild className="w-full bg-purple-600 hover:bg-purple-700">
+                    <a 
+                      href={community.url} 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center"
+                    >
+                      Join Forum
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

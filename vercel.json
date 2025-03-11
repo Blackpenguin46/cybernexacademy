@@ -9,6 +9,15 @@
     "deploymentEnabled": {
       "main": true
     }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/verify-links?key=${LINK_VERIFICATION_API_KEY}",
+      "schedule": "0 3 * * *"
+    }
+  ],
+  "env": {
+    "LINK_VERIFICATION_API_KEY": "@link_verification_api_key"
   }
 }
 
