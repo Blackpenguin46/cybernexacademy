@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { GraduationCap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, BookOpen, Laptop, Youtube } from "lucide-react"
+import { GraduationCap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, BookOpen, Laptop, Youtube, Layers } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
@@ -338,8 +338,8 @@ export default function CoursesPage() {
         <div className="container relative z-20">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <GraduationCap className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Security Courses</span>
+              <Layers className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">Intermediate Resources</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
               Cybersecurity Training Courses

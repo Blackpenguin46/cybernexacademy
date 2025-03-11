@@ -55,9 +55,11 @@ export default function Navbar() {
       icon: Terminal,
       description: "Learn cybersecurity through structured courses, hands-on labs, and guided career paths. Perfect for beginners and experienced professionals alike.",
       links: [
+        { name: "Foundational", href: "/academy/foundational" },
+        { name: "Intermediate", href: "/academy/intermediate" },
+        { name: "Advanced", href: "/academy/advanced" },
         { name: "Courses", href: "/academy/courses" },
         { name: "Learning Paths", href: "/academy/paths" },
-        { name: "Foundational", href: "/academy/foundational" },
         { name: "Projects & Labs", href: "/academy/labs" },
         { name: "Career Roadmaps", href: "/academy/roadmaps" },
         { name: "Certifications", href: "/academy/certifications" }
@@ -177,7 +179,7 @@ export default function Navbar() {
       <div className="max-w-[1920px] mx-auto">
         <div className="px-4 lg:px-8 py-4 flex justify-between items-center">
           {/* Logo with cybersecurity styling */}
-          <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 relative group">
+          <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 relative group" onClick={() => setActiveDropdown(null)}>
             <div className="flex flex-col">
               <span className="text-neon-blue font-mono tracking-tight leading-none">CYBERNEX</span>
               <span className="text-neon-green font-mono tracking-tight leading-none">ACADEMY</span>
@@ -187,10 +189,10 @@ export default function Navbar() {
           {/* Desktop - Center section with nav sections */}
           <div className="hidden lg:flex items-center space-x-6">
             <Link href="/" className={`px-3 py-2 rounded-md transition-all duration-300 ${
-              isActive('/') && pathname === '/' 
+              pathname === '/' 
                 ? 'text-neon-blue bg-neon-blue/5' 
                 : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5'
-            }`}>
+            }`} onClick={() => setActiveDropdown(null)}>
               <div className="flex items-center gap-2">
                 <Home className="w-4 h-4" />
                 <span>Home</span>
@@ -227,7 +229,11 @@ export default function Navbar() {
                       exit="hidden"
                       variants={dropdownVariants}
                       className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/20 rounded-md overflow-hidden shadow-xl shadow-neon-blue/10"
-                      style={{ width: '800px' }}
+                      style={{ 
+                        width: '800px', 
+                        left: section.id === 'academy' ? 'auto' : '0',
+                        right: section.id === 'academy' ? '0' : 'auto'
+                      }}
                       onMouseEnter={() => setActiveDropdown(section.id)}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
@@ -384,7 +390,7 @@ export default function Navbar() {
                 <Link
                   href="/"
                   className={`flex items-center gap-2 px-4 py-2 rounded-md ${
-                    isActive('/') && pathname === '/'
+                    pathname === '/'
                       ? 'text-neon-blue bg-neon-blue/10'
                       : 'text-gray-300'
                   }`}

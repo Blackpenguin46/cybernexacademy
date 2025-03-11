@@ -150,6 +150,10 @@ export default function CertificationsPage() {
         <div className="h-[40vh] bg-gradient-to-b from-blue-500/20 via-blue-900/10 to-black"></div>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
+            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
+              <Award className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">Professional Certifications</span>
+            </div>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Cybersecurity Certifications</h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto px-4">
               Explore industry-recognized certifications to validate your skills and advance your career in cybersecurity.

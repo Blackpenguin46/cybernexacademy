@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Shield, Code, Database, Cloud, Server, Lock, Brain, Network, Terminal, FileCode, Globe } from 'lucide-react';
+import { Shield, Code, Database, Cloud, Server, Lock, Brain, Network, Terminal, FileCode, Globe, Route } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const learningPaths = [
@@ -180,7 +180,11 @@ export default function LearningPathsPage() {
         <div className="h-[40vh] bg-gradient-to-b from-blue-500/20 via-blue-900/10 to-black"></div>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Learning Paths</h1>
+            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
+              <Route className="w-5 h-5 text-blue-500 mr-2" />
+              <span className="text-blue-500 font-medium">Learning Paths</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Cybersecurity Learning Paths</h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto px-4">
               Choose your specialization and follow a structured path from beginner to expert in cybersecurity.
             </p>
