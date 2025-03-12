@@ -88,7 +88,7 @@ export default function SignupPage() {
         console.log('Attempting to sign up with:', { email, password })
         
         // Define the redirect URL explicitly
-        const redirectUrl = 'https://v0-cybernex-r5aktld1jft.vercel.app/auth/verify-email';
+        const redirectUrl = `${window.location.origin}/auth/verify-email`;
         console.log('Using redirect URL in signUp function:', redirectUrl);
         
         const { data, error } = await supabase.auth.signUp({
