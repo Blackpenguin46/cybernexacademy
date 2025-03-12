@@ -151,24 +151,46 @@ export default function GitHubPage() {
     {
       name: "Metasploit Framework",
       fullName: "rapid7/metasploit-framework",
-      description: "Metasploit Framework is the most widely used penetration testing software worldwide",
+      description: "The world's most used penetration testing framework",
       url: "https://github.com/rapid7/metasploit-framework",
-      stars: 29400,
-      forks: 13100,
+      stars: 28900,
+      forks: 12500,
       language: "Ruby",
       category: "pentesting",
-      tags: ["exploitation", "pentesting", "red-team"]
+      tags: ["exploitation", "vulnerability", "penetration-testing"]
     },
     {
-      name: "Burp Suite Community Edition",
+      name: "Burp Suite Community",
       fullName: "PortSwigger/BurpSuiteCommunity",
       description: "Burp Suite Community Edition is a feature-limited set of manual tools for exploring web security",
       url: "https://github.com/PortSwigger/BurpSuiteCommunity",
-      stars: 2700,
-      forks: 290,
+      stars: 2200,
+      forks: 450,
       language: "Java",
       category: "pentesting",
-      tags: ["web-security", "proxy", "pentesting"]
+      tags: ["web-security", "proxy", "scanner"]
+    },
+    {
+      name: "PayloadsAllTheThings",
+      fullName: "swisskyrepo/PayloadsAllTheThings",
+      description: "A list of useful payloads and bypass for Web Application Security and Pentest/CTF",
+      url: "https://github.com/swisskyrepo/PayloadsAllTheThings",
+      stars: 49500,
+      forks: 12300,
+      language: "Python",
+      category: "pentesting",
+      tags: ["payloads", "web-security", "ctf"]
+    },
+    {
+      name: "OWASP Amass",
+      fullName: "owasp-amass/amass",
+      description: "In-depth attack surface mapping and asset discovery",
+      url: "https://github.com/owasp-amass/amass",
+      stars: 9200,
+      forks: 1500,
+      language: "Go",
+      category: "pentesting",
+      tags: ["reconnaissance", "attack-surface", "osint"]
     },
     
     // Defensive Tools
@@ -199,24 +221,24 @@ export default function GitHubPage() {
     {
       name: "Prowler",
       fullName: "prowler-cloud/prowler",
-      description: "Prowler is an Open Source security tool to perform AWS, GCP and Azure security best practices assessments, audits, incident response, compliance and more",
+      description: "Prowler is an Open Source Security tool to perform AWS, GCP and Azure security best practices assessments",
       url: "https://github.com/prowler-cloud/prowler",
-      stars: 7800,
-      forks: 1100,
+      stars: 8400,
+      forks: 1200,
       language: "Python",
-      category: "cryptography",
+      category: "cloud_security",
       tags: ["aws", "azure", "gcp", "compliance"]
     },
     {
       name: "ScoutSuite",
       fullName: "nccgroup/ScoutSuite",
-      description: "Multi-Cloud Security Auditing Tool",
+      description: "Multi-cloud security auditing tool",
       url: "https://github.com/nccgroup/ScoutSuite",
-      stars: 3800,
-      forks: 740,
+      stars: 4800,
+      forks: 780,
       language: "Python",
-      category: "cryptography",
-      tags: ["aws", "azure", "gcp", "auditing"]
+      category: "cloud_security",
+      tags: ["aws", "azure", "gcp", "security-assessment"]
     },
     
     // Monitoring
@@ -265,6 +287,30 @@ export default function GitHubPage() {
       language: "",
       category: "learning",
       tags: ["guide", "resources", "learning"]
+    },
+    
+    // Offensive Security Tools
+    {
+      name: "BloodHound",
+      fullName: "BloodHoundAD/BloodHound",
+      description: "Six Degrees of Domain Admin",
+      url: "https://github.com/BloodHoundAD/BloodHound",
+      stars: 8700,
+      forks: 1600,
+      language: "JavaScript",
+      category: "offensive_security",
+      tags: ["active-directory", "attack-path", "domain-admin"]
+    },
+    {
+      name: "CrackMapExec",
+      fullName: "byt3bl33d3r/CrackMapExec",
+      description: "A swiss army knife for pentesting networks",
+      url: "https://github.com/byt3bl33d3r/CrackMapExec",
+      stars: 6900,
+      forks: 1500,
+      language: "Python",
+      category: "offensive_security",
+      tags: ["windows", "active-directory", "lateral-movement"]
     }
   ]
   
