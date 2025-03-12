@@ -180,9 +180,14 @@ export default function Navbar() {
         <div className="px-4 lg:px-8 py-4 flex justify-center items-center relative">
           {/* Logo with cybersecurity styling */}
           <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 absolute left-4 lg:left-8" onClick={() => setActiveDropdown(null)}>
+            <div className="relative w-8 h-8 flex items-center justify-center">
+              <Shield className="w-8 h-8 text-neon-blue absolute" />
+              <div className="w-3 h-3 bg-neon-green absolute rounded-full blur-[2px] animate-pulse" />
+              <Terminal className="w-4 h-4 text-white absolute" />
+            </div>
             <div className="flex flex-col">
-              <span className="text-neon-blue font-mono tracking-tight leading-none">CYBERNEX</span>
-              <span className="text-neon-green font-mono tracking-tight leading-none">ACADEMY</span>
+              <span className="text-white text-lg font-extrabold tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-blue-400 drop-shadow-[0_0_2px_rgba(0,157,255,0.5)]">CYBERNEX</span>
+              <span className="text-neon-green text-sm font-bold tracking-wide leading-none drop-shadow-[0_0_2px_rgba(80,255,170,0.5)]">ACADEMY</span>
             </div>
           </Link>
 
