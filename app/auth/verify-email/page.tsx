@@ -81,7 +81,7 @@ export default function VerifyEmailPage() {
         type: 'signup',
         email: email,
         options: {
-          emailRedirectTo: 'https://v0-cybernex-r5aktld1jft.vercel.app/auth/verify-email'
+          emailRedirectTo: `${window.location.origin}/auth/verify-email`
         }
       })
       
@@ -119,10 +119,7 @@ export default function VerifyEmailPage() {
       setError(null)
       
       const { error } = await supabase.auth.updateUser({ 
-        email: newEmail,
-        options: {
-          emailRedirectTo: 'https://v0-cybernex-r5aktld1jft.vercel.app/auth/verify-email'
-        }
+        email: newEmail
       })
       
       if (error) {
