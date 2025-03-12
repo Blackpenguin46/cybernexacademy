@@ -12,6 +12,9 @@ on:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  LINK_VERIFICATION_API_KEY: ${{ secrets.LINK_VERIFICATION_API_KEY || 'placeholder_for_preview' }}
+  NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
 jobs:
   deploy-preview:
@@ -27,7 +30,12 @@ jobs:
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
         
       - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          vercel build \
+            --token=${{ secrets.VERCEL_TOKEN }} \
+            --env LINK_VERIFICATION_API_KEY=${{ env.LINK_VERIFICATION_API_KEY }} \
+            --env NEXT_PUBLIC_SUPABASE_URL=${{ env.NEXT_PUBLIC_SUPABASE_URL }} \
+            --env NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ env.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         
       - name: Deploy Preview
         id: deploy-preview
