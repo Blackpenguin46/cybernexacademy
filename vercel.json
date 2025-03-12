@@ -7,9 +7,15 @@
   "regions": ["iad1"],
   "git": {
     "deploymentEnabled": {
+<<<<<<< HEAD
       "main": true,
       "develop": false,
       "preview": true
+=======
+      "main": false,
+      "development": true,
+      "feature": true
+>>>>>>> 431a5b03c0fd71389de790b76ee03ec9d3e764fa
     }
   },
   "github": {
