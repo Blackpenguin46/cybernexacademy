@@ -4,24 +4,7 @@
   "devCommand": "next dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "outputDirectory": ".next",
-  "regions": ["iad1"],
-  "git": {
-    "deploymentEnabled": {
-      "main": false,
-      "development": true,
-      "feature": true
-    }
-  },
-  "crons": [
-    {
-      "path": "/api/cron/verify-links?key=${LINK_VERIFICATION_API_KEY}",
-      "schedule": "0 3 * * *"
-    }
-  ],
-  "env": {
-    "LINK_VERIFICATION_API_KEY": "@link_verification_api_key"
-  }
+  "outputDirectory": ".next"
 }
 
 
