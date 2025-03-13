@@ -211,7 +211,7 @@ const communityPlatforms = [
 
 export default async function CommunityPage() {
   const resources = await getCommunityResources();
-  
+
   return (
     <div className="min-h-screen bg-black">
       <SectionHeader
@@ -239,9 +239,9 @@ export default async function CommunityPage() {
                     <p className="text-gray-400">
                       {platform.description}
                     </p>
-                  </div>
-                </Link>
-              ))}
+                    </div>
+                  </Link>
+            ))}
             </div>
           </div>
         </div>
@@ -304,8 +304,8 @@ export default async function CommunityPage() {
                     </a>
                   </Button>
                 </div>
-              ))}
-            </div>
+            ))}
+          </div>
           )}
         </div>
       </section>
@@ -330,7 +330,7 @@ export default async function CommunityPage() {
                   Suggest a Reddit Community
                 </Link>
               </Button>
-            </div>
+          </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {resources.reddit.map(community => (
@@ -343,7 +343,7 @@ export default async function CommunityPage() {
                         Verified
                       </Badge>
                     )}
-                  </div>
+        </div>
                   
                   {community.member_count && (
                     <p className="text-sm text-gray-400 mb-3">
@@ -358,8 +358,8 @@ export default async function CommunityPage() {
                   <Button asChild className="w-full bg-orange-600 hover:bg-orange-700">
                     <a 
                       href={community.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    target="_blank" 
+                    rel="noopener noreferrer" 
                       className="flex items-center justify-center"
                     >
                       View Subreddit
@@ -421,19 +421,19 @@ export default async function CommunityPage() {
                   <Button asChild className="w-full bg-purple-600 hover:bg-purple-700">
                     <a 
                       href={community.url} 
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    target="_blank" 
+                    rel="noopener noreferrer" 
                       className="flex items-center justify-center"
-                    >
+                  >
                       Join Forum
                       <ExternalLink className="w-4 h-4 ml-2" />
-                    </a>
+                  </a>
                   </Button>
                 </div>
               ))}
-            </div>
+              </div>
           )}
-        </div>
+                </div>
       </section>
 
       {/* Community Guidelines */}
