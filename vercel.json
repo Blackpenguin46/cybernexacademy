@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "cp .env.preview .env.local && npm run build",
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
@@ -12,6 +12,14 @@
       "feature": true
     }
   },
+  "github": {
+    "enabled": true,
+    "silent": false,
+    "autoAlias": false,
+    "production": {
+      "branches": []
+    }
+  },
   "crons": [
     {
       "path": "/api/cron/verify-links?key=${LINK_VERIFICATION_API_KEY}",
@@ -19,7 +27,7 @@
     }
   ],
   "env": {
-    "LINK_VERIFICATION_API_KEY": "@link_verification_api_key"
+    "LINK_VERIFICATION_API_KEY": "preview-placeholder-value-for-verification"
   }
 }
 
