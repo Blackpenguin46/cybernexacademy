@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Users, MessageSquare, Github, Twitter, Linkedin, Globe, ExternalLink } from 'lucide-react'
+import { Users, MessageSquare, Github, Twitter, Linkedin, Globe, ExternalLink, User, Shield } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import SectionHeader from '../components/SectionHeader'
 import { Metadata } from 'next';
