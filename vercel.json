@@ -7,9 +7,17 @@
   "regions": ["iad1"],
   "git": {
     "deploymentEnabled": {
-      "main": false,
+      "main": true,
       "development": true,
       "feature": true
+    }
+  },
+  "github": {
+    "enabled": true,
+    "silent": false,
+    "autoAlias": false,
+    "production": {
+      "branches": []
     }
   },
   "crons": [
