@@ -1,32 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Check if we're running in preview mode
-const isPreviewEnvironment = 
-  process.env.NEXT_PUBLIC_LINK_VERIFICATION_API_KEY?.includes('placeholder') || 
-  process.env.NEXT_PUBLIC_LINK_VERIFICATION_API_KEY?.includes('preview');
-
-// Initialize Supabase with service role to bypass RLS
-// In preview environments, we use a mock client with limited functionality
-const supabase = isPreviewEnvironment 
-  ? createMockSupabaseClient()  // Use mock client in preview environments
-  : createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
-
-// Mock supabase client for preview environments
-function createMockSupabaseClient() {
-  return {
-    from: (table: string) => ({
-      select: () => Promise.resolve({ data: [], error: null }),
-      update: () => ({ eq: () => Promise.resolve({ error: null }) }),
-      insert: () => Promise.resolve({ error: null }),
-      delete: () => ({ eq: () => Promise.resolve({ error: null }) })
-    })
-  };
-}
-
 // Main link verification function
 export async function GET(request: NextRequest) {
   // Check for API key for security
@@ -42,7 +16,7 @@ export async function GET(request: NextRequest) {
   }
 
   // In preview environments, return mock data
-  if (isPreviewEnvironment) {
+  if (isPreviewPlaceholder) {
     return NextResponse.json({
       message: "Preview environment - returning mock data",
       discord: { total: 5, verified: 3 },
@@ -52,11 +26,17 @@ export async function GET(request: NextRequest) {
     });
   }
   
+  // Only initialize Supabase if we're not in a preview environment
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+  
   try {
     const results = {
-      discord: await verifyDiscordLinks(),
-      reddit: await verifyRedditLinks(),
-      skool: await verifySkoolLinks(),
+      discord: await verifyDiscordLinks(supabase),
+      reddit: await verifyRedditLinks(supabase),
+      skool: await verifySkoolLinks(supabase),
       timestamp: new Date().toISOString()
     };
     
@@ -81,7 +61,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Verify Discord server links
-async function verifyDiscordLinks() {
+async function verifyDiscordLinks(supabase: any) {
   // Get all Discord server links
   const { data: servers, error } = await supabase
     .from('discord_servers')
@@ -118,7 +98,7 @@ async function verifyDiscordLinks() {
 }
 
 // Verify Reddit community links
-async function verifyRedditLinks() {
+async function verifyRedditLinks(supabase: any) {
   // Get all Reddit community links
   const { data: communities, error } = await supabase
     .from('reddit_communities')
@@ -155,7 +135,7 @@ async function verifyRedditLinks() {
 }
 
 // Verify Skool community links
-async function verifySkoolLinks() {
+async function verifySkoolLinks(supabase: any) {
   // Get all Skool community links
   const { data: communities, error } = await supabase
     .from('skool_communities')
