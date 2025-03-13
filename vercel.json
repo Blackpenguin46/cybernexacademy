@@ -12,14 +12,6 @@
       "feature": true
     }
   },
-  "github": {
-    "enabled": true,
-    "silent": false,
-    "autoAlias": false,
-    "production": {
-      "branches": []
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/verify-links?key=${LINK_VERIFICATION_API_KEY}",

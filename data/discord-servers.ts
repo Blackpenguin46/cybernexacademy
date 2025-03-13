@@ -118,5 +118,83 @@ export const discordServers: DiscordServer[] = [
     members: "45K+",
     url: "https://discord.gg/bugbounty",
     categories: ["pentesting", "career"]
+  },
+  // Adding new Discord servers from shared resources
+  {
+    name: "Hak5",
+    description: "Community centered around Hak5 security tools and products with discussions on hardware hacking.",
+    members: "60K+",
+    url: "https://discord.gg/hak5",
+    categories: ["technical", "hardware", "learning"]
+  },
+  {
+    name: "Cyber Defenders",
+    description: "A supportive community for cyber defenders focused on blue team operations and defense strategies.",
+    members: "38K+",
+    url: "https://discord.gg/cyberdefenders",
+    categories: ["blue_team", "learning"]
+  },
+  {
+    name: "DFIR Community",
+    description: "Digital Forensics and Incident Response community sharing techniques and case studies.",
+    members: "33K+",
+    url: "https://discord.gg/dfir",
+    categories: ["blue_team", "technical", "forensics"]
+  },
+  {
+    name: "NullByte",
+    description: "Technical discussions on various security topics from the popular NullByte community.",
+    members: "42K+",
+    url: "https://discord.gg/nullbyte",
+    categories: ["technical", "learning", "pentesting"]
+  },
+  {
+    name: "SecOps Community",
+    description: "Security Operations-focused community discussing SOC practices, SIEM tools, and threat hunting.",
+    members: "28K+",
+    url: "https://discord.gg/secops",
+    categories: ["blue_team", "technical"]
+  },
+  {
+    name: "DevSecOps",
+    description: "Community bridging development, security, and operations with focus on secure CI/CD pipelines.",
+    members: "31K+",
+    url: "https://discord.gg/devsecops",
+    categories: ["technical", "career", "development"]
+  },
+  {
+    name: "CyberSecurity Career Hub",
+    description: "Space dedicated to cybersecurity job hunting, career transitions, and professional development.",
+    members: "52K+",
+    url: "https://discord.gg/cscareerhub",
+    categories: ["career"]
+  },
+  {
+    name: "Cloud Security Alliance",
+    description: "Community focused on cloud security best practices, tools, and certifications.",
+    members: "36K+",
+    url: "https://discord.gg/cloudsecurity",
+    categories: ["technical", "cloud", "learning"]
+  },
+  {
+    name: "Binary Adventures",
+    description: "Community focused on reverse engineering, malware analysis, and exploit development.",
+    members: "29K+",
+    url: "https://discord.gg/binaryadventures",
+    categories: ["technical", "malware", "learning"]
+  },
+  {
+    name: "Security Professionals",
+    description: "General cybersecurity professionals network for discussions across all disciplines.",
+    members: "65K+",
+    url: "https://discord.gg/securitypro",
+    categories: ["community", "career", "networking"]
+  },
+  {
+    name: "Cybersecurity Mentorship",
+    description: "Mentorship-focused community pairing experienced professionals with those starting their journey.",
+    members: "44K+",
+    url: "https://discord.gg/cybermentorship",
+    categories: ["career", "learning", "community"]
   }
 ]; 
