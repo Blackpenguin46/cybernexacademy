@@ -73,7 +73,7 @@ export default function DiscordResourcesPage() {
       toast({
         title: 'Error',
         description: 'Failed to load Discord servers',
-        variant: 'destructive'
+        type: 'error'
       });
     } finally {
       setLoading(false);
@@ -169,7 +169,7 @@ export default function DiscordResourcesPage() {
       toast({
         title: 'Error',
         description: 'Failed to save Discord server',
-        variant: 'destructive'
+        type: 'error'
       });
     }
   }
@@ -199,7 +199,7 @@ export default function DiscordResourcesPage() {
       toast({
         title: 'Error',
         description: 'Failed to delete Discord server',
-        variant: 'destructive'
+        type: 'error'
       });
     }
   }
@@ -237,14 +237,14 @@ export default function DiscordResourcesPage() {
         description: isValid 
           ? 'The Discord invite link is valid.' 
           : 'The Discord invite link could not be verified.',
-        variant: isValid ? 'default' : 'destructive'
+        type: isValid ? 'default' : 'error'
       });
     } catch (error) {
       console.error('Error verifying link:', error);
       toast({
         title: 'Error',
         description: 'Failed to verify Discord invite link',
-        variant: 'destructive'
+        type: 'error'
       });
     } finally {
       setVerifyingId(null);
