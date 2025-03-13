@@ -46,16 +46,17 @@ export default function LandingPage() {
 
         {/* Coming Soon Message */}
         <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-100">
-          Coming Soon
+          Your Ultimate Cybersecurity Resource Hub
         </h2>
         
         <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Your journey into cybersecurity excellence begins here. 
-          We&apos;re building something special to help you master cybersecurity skills.
+          CyberNex Academy is revolutionizing how you discover and access cybersecurity resources. 
+          We&apos;re building the most comprehensive platform to guide your cybersecurity journey, 
+          from beginner to expert.
         </p>
 
         {/* Email Signup Form */}
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8">
+        <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-12">
           <div className="flex gap-2">
             <input
               type="email"
@@ -74,7 +75,7 @@ export default function LandingPage() {
             </button>
           </div>
           {message && (
-            <p className={`text-sm mt-2 ${message.includes('error') ? 'text-red-500' : 'text-green-500'}`}>
+            <p className={`text-sm mt-2 ${message.includes('error') ? 'text-red-500' : 'text-green-500'} whitespace-pre-line`}>
               {message}
             </p>
           )}
@@ -86,20 +87,44 @@ export default function LandingPage() {
         {/* Features Preview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           <div className="p-6 rounded-lg bg-gray-800/50 border border-gray-800">
-            <h3 className="text-lg font-semibold mb-2 text-gray-100">Expert-Led Training</h3>
-            <p className="text-gray-400">Learn from industry professionals with real-world experience</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-100">Career Guidance</h3>
+            <p className="text-gray-400">Personalized roadmaps for various cybersecurity career paths, from SOC Analyst to Penetration Tester</p>
           </div>
           <div className="p-6 rounded-lg bg-gray-800/50 border border-gray-800">
-            <h3 className="text-lg font-semibold mb-2 text-gray-100">Hands-On Labs</h3>
-            <p className="text-gray-400">Practice in realistic environments with guided exercises</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-100">Curated Resources</h3>
+            <p className="text-gray-400">Hand-picked courses, training materials, and certification guides from trusted providers</p>
           </div>
           <div className="p-6 rounded-lg bg-gray-800/50 border border-gray-800">
-            <h3 className="text-lg font-semibold mb-2 text-gray-100">Community</h3>
-            <p className="text-gray-400">Connect with fellow cybersecurity enthusiasts</p>
+            <h3 className="text-lg font-semibold mb-2 text-gray-100">Smart Recommendations</h3>
+            <p className="text-gray-400">AI-powered suggestions for certifications and learning paths based on your goals</p>
           </div>
+        </div>
+
+        {/* Additional Features */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-6">
+          <div className="p-6 rounded-lg bg-gray-800/50 border border-gray-800">
+            <h3 className="text-lg font-semibold mb-2 text-gray-100">Community Reviews</h3>
+            <p className="text-gray-400">Real feedback from cybersecurity professionals on courses, certifications, and training programs</p>
+          </div>
+          <div className="p-6 rounded-lg bg-gray-800/50 border border-gray-800">
+            <h3 className="text-lg font-semibold mb-2 text-gray-100">Resource Comparison</h3>
+            <p className="text-gray-400">Compare different learning options, certifications, and career paths to make informed decisions</p>
+          </div>
+        </div>
+
+        {/* Value Proposition */}
+        <div className="mt-12 p-6 rounded-lg bg-blue-900/20 border border-blue-800 max-w-4xl mx-auto">
+          <h3 className="text-xl font-semibold mb-4 text-blue-400">Why Choose CyberNex Academy?</h3>
+          <ul className="text-gray-300 space-y-2 text-left">
+            <li>✓ Comprehensive database of cybersecurity courses, certifications, and training programs</li>
+            <li>✓ Personalized learning paths based on your experience level and career goals</li>
+            <li>✓ Expert insights and community feedback to help you make the best choices</li>
+            <li>✓ Regular updates on new resources and industry trends</li>
+          </ul>
         </div>
       </div>
     </main>
   );
 }
+
 
