@@ -85,7 +85,7 @@ export default function SubmitResourcePage() {
         toast({
           title: 'Missing required fields',
           description: 'Please fill out all required fields',
-          variant: 'destructive'
+          type: 'error'
         });
         return;
       }
@@ -107,8 +107,9 @@ export default function SubmitResourcePage() {
       if (error) throw error;
       
       toast({
-        title: 'Discord server submitted',
-        description: 'Thank you for your submission! It will be reviewed by our team.',
+        title: 'Success',
+        description: 'Discord server submitted successfully. It will be reviewed by our team.',
+        type: 'success'
       });
       
       // Reset form
@@ -120,14 +121,13 @@ export default function SubmitResourcePage() {
       });
       
     } catch (error) {
+      setSubmitting(false);
       console.error('Error submitting Discord server:', error);
       toast({
-        title: 'Submission failed',
+        title: 'Error',
         description: 'There was an error submitting your Discord server. Please try again.',
-        variant: 'destructive'
+        type: 'error'
       });
-    } finally {
-      setSubmitting(false);
     }
   };
   
@@ -156,7 +156,7 @@ export default function SubmitResourcePage() {
         toast({
           title: 'Missing required fields',
           description: 'Please fill out all required fields',
-          variant: 'destructive'
+          type: 'error'
         });
         return;
       }
@@ -178,8 +178,9 @@ export default function SubmitResourcePage() {
       if (error) throw error;
       
       toast({
-        title: 'Reddit community submitted',
-        description: 'Thank you for your submission! It will be reviewed by our team.',
+        title: 'Success',
+        description: 'Reddit community submitted successfully. It will be reviewed by our team.',
+        type: 'success'
       });
       
       // Reset form
@@ -191,14 +192,13 @@ export default function SubmitResourcePage() {
       });
       
     } catch (error) {
+      setSubmitting(false);
       console.error('Error submitting Reddit community:', error);
       toast({
-        title: 'Submission failed',
+        title: 'Error',
         description: 'There was an error submitting your Reddit community. Please try again.',
-        variant: 'destructive'
+        type: 'error'
       });
-    } finally {
-      setSubmitting(false);
     }
   };
   
@@ -227,7 +227,7 @@ export default function SubmitResourcePage() {
         toast({
           title: 'Missing required fields',
           description: 'Please fill out all required fields',
-          variant: 'destructive'
+          type: 'error'
         });
         return;
       }
@@ -249,8 +249,9 @@ export default function SubmitResourcePage() {
       if (error) throw error;
       
       toast({
-        title: 'Skool community submitted',
-        description: 'Thank you for your submission! It will be reviewed by our team.',
+        title: 'Success',
+        description: 'Skool community submitted successfully. It will be reviewed by our team.',
+        type: 'success'
       });
       
       // Reset form
@@ -262,14 +263,13 @@ export default function SubmitResourcePage() {
       });
       
     } catch (error) {
+      setSubmitting(false);
       console.error('Error submitting Skool community:', error);
       toast({
-        title: 'Submission failed',
+        title: 'Error',
         description: 'There was an error submitting your Skool community. Please try again.',
-        variant: 'destructive'
+        type: 'error'
       });
-    } finally {
-      setSubmitting(false);
     }
   };
   
