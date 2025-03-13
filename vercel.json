@@ -1,23 +1,16 @@
 {
   "version": 2,
-  "buildCommand": "cp .env.preview .env.local && npm run build",
-  "devCommand": "npm run dev",
+  "buildCommand": "next build",
+  "devCommand": "next dev",
   "installCommand": "npm install",
   "framework": "nextjs",
+  "outputDirectory": ".next",
   "regions": ["iad1"],
   "git": {
     "deploymentEnabled": {
-      "main": true,
+      "main": false,
       "development": true,
       "feature": true
-    }
-  },
-  "github": {
-    "enabled": true,
-    "silent": false,
-    "autoAlias": false,
-    "production": {
-      "branches": []
     }
   },
   "crons": [
@@ -27,7 +20,7 @@
     }
   ],
   "env": {
-    "LINK_VERIFICATION_API_KEY": "preview-placeholder-value-for-verification"
+    "LINK_VERIFICATION_API_KEY": "@link_verification_api_key"
   }
 }
 

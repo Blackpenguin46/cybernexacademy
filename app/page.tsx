@@ -1,20 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { toast } from '@/components/ui/use-toast';
-import Link from "next/link"
-import { Shield, Book, Users, Bell, Lock, ArrowRight, Rocket, Target, Brain, Code, ChevronDown } from "lucide-react"
-import AnimatedBackground from "./components/AnimatedBackground"
-import CyberBackground from "./components/CyberBackground"
-import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
-import { TerminalDisplay, HeroButton, CTAButton, StatisticsCounter } from "./components/ClientComponents"
 
-// Force dynamic rendering for this page
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
-
-// This is now a Server Component
 export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -113,6 +100,6 @@ export default function LandingPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }
 

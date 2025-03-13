@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,8 +11,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For the landing page, we'll just store emails in localStorage
-    // You can implement proper database storage later
+    // For now, just return success
+    // You can implement proper storage later
     return NextResponse.json(
       { message: 'Thank you for joining our waitlist!' },
       { status: 200 }
