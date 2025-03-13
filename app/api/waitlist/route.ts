@@ -5,10 +5,19 @@ import { createClient } from '@supabase/supabase-js';
 // Initialize Resend with your API key
 const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Instead of initializing at module level, we'll create the client when needed
+// to avoid build-time issues when environment variables aren't available yet
+function getSupabaseClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn('Supabase credentials not available');
+    return null;
+  }
+  
+  return createClient(supabaseUrl, supabaseKey);
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,28 +30,37 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Store email in Supabase
-    const { error: dbError } = await supabase
-      .from('waitlist')
-      .upsert({ 
-        email,
-        subscribed_at: new Date().toISOString(),
-        status: 'active'
-      }, { 
-        onConflict: 'email',
-        ignoreDuplicates: false 
-      });
+    // Get supabase client only when needed
+    const supabase = getSupabaseClient();
+    
+    // Store email in Supabase if client is available
+    if (supabase) {
+      try {
+        const { error: dbError } = await supabase
+          .from('waitlist')
+          .upsert({ 
+            email,
+            subscribed_at: new Date().toISOString(),
+            status: 'active'
+          }, { 
+            onConflict: 'email',
+            ignoreDuplicates: false 
+          });
 
-    if (dbError) {
-      console.error('Error storing email in waitlist:', dbError);
-      return NextResponse.json(
-        { error: 'Failed to join waitlist' },
-        { status: 500 }
-      );
+        if (dbError) {
+          console.error('Error storing email in waitlist:', dbError);
+          // Continue execution even if DB save fails - we'll still try to send the email
+        }
+      } catch (dbError) {
+        console.error('Failed to store email in database:', dbError);
+        // Continue with email sending even if database operation fails
+      }
+    } else {
+      console.warn('Skipping database storage - Supabase client not available');
     }
 
-    if (!process.env.RESEND_API_KEY) {
-      console.warn('RESEND_API_KEY is not set. Email will not be sent.');
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy_key' || process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
+      console.warn('RESEND_API_KEY is not properly set. Email will not be sent.');
       return NextResponse.json({
         message: 'Thank you for joining our waitlist! (Email delivery is currently disabled)'
       });

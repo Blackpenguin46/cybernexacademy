@@ -45,6 +45,20 @@ To send emails from cybernexacademy@proton.me through Resend:
 3. Configure the Resend sender policy to allow sending from your cybernexacademy@proton.me address
 4. In your Proton Mail account, enable integration with external services if required
 
+### 4. Vercel Deployment Setup
+
+When deploying to Vercel, you need to set up environment variables:
+
+1. Log in to your Vercel dashboard
+2. Select your project
+3. Go to Settings > Environment Variables
+4. Add the following variables:
+   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anonymous key 
+   - `RESEND_API_KEY`: Your Resend API key
+
+> **Important**: Make sure to add these environment variables to all environments you're using (Production, Preview, Development).
+
 ## Testing
 
 To test the waitlist system:
@@ -69,6 +83,14 @@ For sending bulk emails to your list, you can:
 2. Use Resend's API to send batch emails
 3. Set up a scheduled function to send newsletters or updates
 
+## Fallback Behavior
+
+The system has been designed with fallbacks:
+
+1. If Supabase credentials are missing, the system will still attempt to send welcome emails
+2. If the Resend API key is missing, the system will return a success message but won't send emails
+3. Database errors won't prevent emails from being sent
+
 ## Security Considerations
 
 - The Row Level Security (RLS) policies ensure that only authenticated admin users can view the waitlist entries
@@ -82,4 +104,10 @@ If emails are not being sent:
 1. Check that `RESEND_API_KEY` is correctly set in your environment
 2. Verify that the sender domain is properly configured in Resend
 3. Look for errors in your server logs
-4. Make sure your Supabase connection is working properly 
+4. Make sure your Supabase connection is working properly
+
+For deployment issues:
+
+1. Ensure all environment variables are properly set in the Vercel dashboard
+2. Check build logs for any specific error messages
+3. If you see "Error: supabaseUrl is required" in logs, it means the Supabase URL environment variable isn't available during build 
