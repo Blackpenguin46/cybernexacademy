@@ -1,11 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// Check if we're running in preview mode
+const isPreviewEnvironment = 
+  process.env.NEXT_PUBLIC_LINK_VERIFICATION_API_KEY?.includes('placeholder') || 
+  process.env.NEXT_PUBLIC_LINK_VERIFICATION_API_KEY?.includes('preview');
+
 // Initialize Supabase with service role to bypass RLS
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+// In preview environments, we use a mock client with limited functionality
+const supabase = isPreviewEnvironment 
+  ? createMockSupabaseClient()  // Use mock client in preview environments
+  : createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+// Mock supabase client for preview environments
+function createMockSupabaseClient() {
+  return {
+    from: (table: string) => ({
+      select: () => Promise.resolve({ data: [], error: null }),
+      update: () => ({ eq: () => Promise.resolve({ error: null }) }),
+      insert: () => Promise.resolve({ error: null }),
+      delete: () => ({ eq: () => Promise.resolve({ error: null }) })
+    })
+  };
+}
 
 // Main link verification function
 export async function GET(request: NextRequest) {
@@ -19,6 +39,17 @@ export async function GET(request: NextRequest) {
   
   if (!isPreviewPlaceholder && apiKey !== configuredApiKey) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // In preview environments, return mock data
+  if (isPreviewEnvironment) {
+    return NextResponse.json({
+      message: "Preview environment - returning mock data",
+      discord: { total: 5, verified: 3 },
+      reddit: { total: 8, verified: 6 },
+      skool: { total: 4, verified: 4 },
+      timestamp: new Date().toISOString()
+    });
   }
   
   try {
