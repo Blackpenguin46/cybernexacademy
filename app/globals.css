@@ -3,54 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --foreground: 255, 255, 255;
+  --background: 0, 0, 0;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgb(var(--background-end-rgb))
-  )
-  rgb(var(--background-start-rgb));
-}
-
-@layer base {
-  :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    background-color: black;
-    color: white;
-  }
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--background));
 }
 
 /* Glowing text effect */
@@ -76,77 +35,3 @@ body {
     background-position: 0% 50%;
   }
 }
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-.slide-in-from-top-5 {
-  transform: translateY(-5%);
-  animation: slideDown 0.3s ease-out forwards;
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-5%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.fade-in {
-  animation: fadeIn 0.3s ease-out forwards;
-}
-
-/* Cursor animation */
-.cursor-blink {
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  from,
-  to {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
-/* Cyber animations */
-@keyframes fall {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(1000%);
-    opacity: 0;
-  }
-}
-
-.animate-fall {
-  animation-name: fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
