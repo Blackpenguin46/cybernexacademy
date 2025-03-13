@@ -37,29 +37,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-gray-100 flex flex-col">
-      {/* Navigation Bar */}
-      <nav className="border-b border-gray-800 backdrop-blur-sm bg-black/30 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
-                CyberNex
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
-              <a href="#why-us" className="text-gray-300 hover:text-white transition-colors">Why Us</a>
-              <button 
-                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
-                onClick={() => document.querySelector('input[type="email"]')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Join Waitlist
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-      
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 md:py-32">
