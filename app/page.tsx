@@ -15,9 +15,10 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 // This is now a Server Component
-export default function HomePage() {
+export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,21 +35,13 @@ export default function HomePage() {
       const data = await response.json();
       
       if (response.ok) {
-        toast({
-          title: 'Success',
-          description: data.message,
-          type: 'success'
-        });
+        setMessage(data.message);
         setEmail('');
       } else {
         throw new Error(data.error);
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to join waitlist',
-        type: 'error'
-      });
+      setMessage(error instanceof Error ? error.message : 'Failed to join waitlist');
     } finally {
       setSubmitting(false);
     }
@@ -93,6 +86,11 @@ export default function HomePage() {
               {submitting ? 'Submitting...' : 'Notify Me'}
             </button>
           </div>
+          {message && (
+            <p className={`text-sm mt-2 ${message.includes('error') ? 'text-red-500' : 'text-green-500'}`}>
+              {message}
+            </p>
+          )}
           <p className="text-sm text-gray-500 mt-2">
             Be the first to know when we launch.
           </p>

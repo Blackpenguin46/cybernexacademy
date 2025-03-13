@@ -12,28 +12,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Initialize Supabase client
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
-
-    // Store email in waitlist table
-    const { error } = await supabase
-      .from('waitlist')
-      .insert([{ email }]);
-
-    if (error) {
-      // Handle unique constraint violation
-      if (error.code === '23505') {
-        return NextResponse.json(
-          { message: 'You\'re already on the waitlist!' },
-          { status: 200 }
-        );
-      }
-      throw error;
-    }
-
+    // For the landing page, we'll just store emails in localStorage
+    // You can implement proper database storage later
     return NextResponse.json(
       { message: 'Thank you for joining our waitlist!' },
       { status: 200 }
