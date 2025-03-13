@@ -51,7 +51,7 @@ export default function LandingPage() {
         
         <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
           Your journey into cybersecurity excellence begins here. 
-          We're building something special to help you master cybersecurity skills.
+          We&apos;re building something special to help you master cybersecurity skills.
         </p>
 
         {/* Email Signup Form */}
