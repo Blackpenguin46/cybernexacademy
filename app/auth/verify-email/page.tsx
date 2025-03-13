@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { supabase } from "@/lib/supabase"
-import { Shield } from "lucide-react"
+import { Users, MessageSquare, Github, Twitter, Linkedin, Globe, ExternalLink, User, Shield } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 
 export default function VerifyEmailPage() {
