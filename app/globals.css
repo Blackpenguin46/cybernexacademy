@@ -12,11 +12,6 @@ body {
   background-color: rgb(var(--background));
 }
 
-/* Glowing text effect */
-.glow-text {
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.7), 0 0 20px rgba(59, 130, 246, 0.5);
-}
-
 /* Animated gradient background */
 .animated-gradient {
   background: linear-gradient(-45deg, rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.5), rgba(59, 130, 246, 0.5));
