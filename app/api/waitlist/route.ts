@@ -2,10 +2,36 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Resend with your API key
-const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
+// More detailed environment variable logging
+console.log('API Environment Check:', {
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Set (starts with: ' + process.env.NEXT_PUBLIC_SUPABASE_URL.substring(0, 8) + '...)' : 'Missing',
+  supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? 'Set (length: ' + process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.length + ')' : 'Missing',
+  resendKey: process.env.RESEND_API_KEY ? 'Set (length: ' + process.env.RESEND_API_KEY.length + ')' : 'Missing'
+});
 
-// Function to create the Supabase client
+// Validate URL before creating clients
+const validateUrl = (url: string | undefined): boolean => {
+  if (!url) return false;
+  try {
+    new URL(url);
+    return true;
+  } catch (e) {
+    console.error('Invalid URL format:', url);
+    return false;
+  }
+};
+
+// Initialize Resend with your API key - with validation
+let resend: Resend;
+try {
+  resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
+  console.log('Resend client initialized successfully');
+} catch (error) {
+  console.error('Error initializing Resend client:', error);
+  resend = new Resend('dummy_key'); // Fallback to dummy key
+}
+
+// Function to create the Supabase client with validation
 function getSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -18,7 +44,20 @@ function getSupabaseClient() {
     return null;
   }
   
-  return createClient(supabaseUrl, supabaseKey);
+  // Validate the URL format
+  if (!validateUrl(supabaseUrl)) {
+    console.error('Supabase URL is invalid:', supabaseUrl);
+    return null;
+  }
+  
+  try {
+    const client = createClient(supabaseUrl, supabaseKey);
+    console.log('Supabase client created successfully');
+    return client;
+  } catch (error) {
+    console.error('Error creating Supabase client:', error);
+    return null;
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -30,7 +69,18 @@ export async function POST(request: NextRequest) {
       resendKey: !!process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_123456789'
     });
 
-    const { email } = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (parseError) {
+      console.error('Error parsing request JSON:', parseError);
+      return NextResponse.json(
+        { error: 'Invalid request format' },
+        { status: 400 }
+      );
+    }
+
+    const { email } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -136,8 +186,8 @@ export async function POST(request: NextRequest) {
     try {
       console.log('Attempting to send welcome email');
       // Send welcome email
-      await resend.emails.send({
-        from: 'CyberNex Academy <cybernexacademy@proton.me>',
+      const { data, error } = await resend.emails.send({
+        from: 'CyberNex Academy <onboarding@resend.dev>',
         to: email,
         subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
         html: `
@@ -165,7 +215,12 @@ export async function POST(request: NextRequest) {
           </div>
         `
       });
-      console.log('Welcome email sent successfully');
+      
+      if (error) {
+        console.error('Email sending error:', error);
+      } else {
+        console.log('Welcome email sent successfully', data);
+      }
     } catch (emailError: any) {
       console.error('Failed to send welcome email:', emailError);
       // We will still return success since the email is in the database
