@@ -2,7 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 // Initialize Resend with your API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+let resend: Resend;
+try {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY is not set');
+  }
+  if (!process.env.RESEND_API_KEY.startsWith('re_')) {
+    throw new Error('RESEND_API_KEY does not start with "re_"');
+  }
+  resend = new Resend(process.env.RESEND_API_KEY);
+  console.log('Resend client initialized successfully');
+} catch (error) {
+  console.error('Failed to initialize Resend client:', error);
+  resend = new Resend('dummy_key'); // Fallback to dummy key
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,6 +31,23 @@ export async function POST(request: NextRequest) {
     console.log('Testing email sending to:', email);
     console.log('Email type:', type);
 
+    // Verify we have proper configuration
+    if (!process.env.RESEND_API_KEY || 
+        process.env.RESEND_API_KEY === 'dummy_key' || 
+        process.env.RESEND_API_KEY === 'your_resend_api_key_here' ||
+        !process.env.RESEND_API_KEY.startsWith('re_')) {
+      console.warn('RESEND_API_KEY is not properly configured:', {
+        isSet: !!process.env.RESEND_API_KEY,
+        isDummy: process.env.RESEND_API_KEY === 'dummy_key',
+        isPlaceholder: process.env.RESEND_API_KEY === 'your_resend_api_key_here',
+        startsWithRe: process.env.RESEND_API_KEY?.startsWith('re_')
+      });
+      return NextResponse.json(
+        { error: 'Email service is not configured' },
+        { status: 503 }
+      );
+    }
+
     // Test email template
     const emailTemplate = `
       <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -32,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (type === 'broadcast') {
       // Test broadcast email (sending to multiple recipients)
       result = await resend.emails.send({
-        from: 'CyberNex Academy <onboarding@resend.dev>',
+        from: 'CyberNex Academy <cybernexacademy@proton.me>',
         to: [email, 'test2@example.com'], // You can add more recipients here
         subject: 'Test Broadcast Email',
         html: emailTemplate,
@@ -40,7 +70,7 @@ export async function POST(request: NextRequest) {
     } else {
       // Test single recipient email
       result = await resend.emails.send({
-        from: 'CyberNex Academy <onboarding@resend.dev>',
+        from: 'CyberNex Academy <cybernexacademy@proton.me>',
         to: email,
         subject: 'Test Single Email',
         html: emailTemplate,
