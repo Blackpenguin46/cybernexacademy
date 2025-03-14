@@ -178,18 +178,7 @@ export async function POST(request: NextRequest) {
       resendKey: !!process.env.RESEND_API_KEY 
     });
 
-    let body;
-    try {
-      body = await request.json();
-    } catch (parseError) {
-      console.error('Error parsing request JSON:', parseError);
-      return NextResponse.json(
-        { error: 'Invalid request format' },
-        { status: 400 }
-      );
-    }
-
-    const { email } = body;
+    const { email } = await request.json();
 
     if (!email) {
       return NextResponse.json(
@@ -232,28 +221,113 @@ export async function POST(request: NextRequest) {
       await resend.emails.send({
         from: 'CyberNex Academy <notifications@cybernex.academy>',
         to: email,
-        subject: 'Welcome to CyberNex Academy Waitlist!',
+        subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
         html: `
-          <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h1 style="color: #60ff96; margin-bottom: 24px;">Welcome to CyberNex Academy!</h1>
-            <p style="color: #333; line-height: 1.6; margin-bottom: 24px;">
-              Thank you for joining our waitlist! We're excited to have you on board.
-            </p>
-            <p style="color: #333; line-height: 1.6; margin-bottom: 24px;">
-              You'll be among the first to know when we launch, and you'll receive:
-            </p>
-            <ul style="color: #333; line-height: 1.6; margin-bottom: 24px;">
-              <li>Launch notifications</li>
-              <li>Weekly cybersecurity newsletters</li>
-              <li>Exclusive early access to new features</li>
-            </ul>
-            <p style="color: #333; line-height: 1.6; margin-bottom: 24px;">
-              Stay tuned for updates!
-            </p>
-            <p style="color: #666; font-size: 14px; margin-top: 32px;">
-              If you didn't sign up for this, you can safely ignore this email.
-            </p>
-          </div>
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Welcome to CyberNex Academy</title>
+            <style>
+              body {
+                font-family: system-ui, -apple-system, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+              }
+              .container {
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              }
+              .header {
+                background: linear-gradient(135deg, #60ff96 0%, #31d8d8 100%);
+                color: #000;
+                padding: 30px 20px;
+                text-align: center;
+                border-radius: 8px 8px 0 0;
+              }
+              .header h1 {
+                margin: 0;
+                font-size: 28px;
+                font-weight: 700;
+              }
+              .content {
+                padding: 30px 20px;
+              }
+              .feature-list {
+                background-color: #f8f9fa;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px 0;
+              }
+              .feature-list ul {
+                margin: 0;
+                padding-left: 20px;
+              }
+              .feature-list li {
+                margin-bottom: 10px;
+                color: #444;
+              }
+              .footer {
+                text-align: center;
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 1px solid #eee;
+                color: #666;
+                font-size: 14px;
+              }
+              .button {
+                display: inline-block;
+                padding: 12px 24px;
+                background-color: #60ff96;
+                color: #000;
+                text-decoration: none;
+                border-radius: 4px;
+                font-weight: 600;
+                margin: 20px 0;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Welcome to CyberNex Academy!</h1>
+              </div>
+              <div class="content">
+                <p>Thank you for joining our waitlist! We're excited to have you on board.</p>
+                
+                <p>You'll be among the first to know when we launch, and you'll receive:</p>
+                
+                <div class="feature-list">
+                  <ul>
+                    <li>🚀 Launch notifications</li>
+                    <li>📚 Weekly cybersecurity newsletters</li>
+                    <li>🎯 Exclusive early access to new features</li>
+                    <li>💡 Tips and insights from industry experts</li>
+                  </ul>
+                </div>
+
+                <p>We're working hard to bring you the most comprehensive cybersecurity resource platform. Stay tuned for updates!</p>
+                
+                <div style="text-align: center;">
+                  <a href="https://cybernex.academy" class="button">Visit CyberNex Academy</a>
+                </div>
+              </div>
+              
+              <div class="footer">
+                <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
+                <p>© 2025 CyberNex Academy. All rights reserved.</p>
+              </div>
+            </div>
+          </body>
+          </html>
         `,
       });
     } catch (emailError) {
