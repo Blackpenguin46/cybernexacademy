@@ -32,15 +32,28 @@ body {
     background-color: #111827;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
+}
 
-  /* Improved gradient text rendering */
-  .bg-clip-text {
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    padding: 0.05em 0; /* Add small vertical padding */
-    display: inline-block; /* Ensure the element bounds properly contain the text */
-  }
+/* Fix for gradient text rendering */
+.gradient-text {
+  background-image: linear-gradient(to right, #3B82F6, #8B5CF6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.4;
+  padding: 2px 0;
+  margin: 0 auto;
+  width: fit-content;
+  display: block;
+  position: relative;
+}
+
+/* Fix title height issues */
+.title-container {
+  margin: 0 auto;
+  padding: 1rem 0;
+  position: relative;
+  width: 100%;
 }
 
 @keyframes gradient-animation {

@@ -44,14 +44,16 @@ export default function LandingPage() {
           
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 overflow-visible">
             <div className="text-center max-w-3xl mx-auto pt-4 md:pt-0 pb-4">
-              {/* Logo */}
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 leading-relaxed overflow-visible">
-                CyberNex Academy
-              </h1>
-              
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-8 text-gray-100 leading-relaxed">
-                Your Ultimate Cybersecurity Resource Hub
-              </h2>
+              {/* Title container with improved styling */}
+              <div className="title-container">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text">
+                  CyberNex Academy
+                </h1>
+                
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-10 text-gray-100">
+                  Your Ultimate Cybersecurity Resource Hub
+                </h2>
+              </div>
               
               <p className="text-base md:text-lg lg:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
                 CyberNex Academy is revolutionizing how you discover and access cybersecurity resources. 
@@ -92,7 +94,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="pt-12 pb-12 bg-gray-900/50">
+        <section id="features" className="pt-16 pb-12 bg-gray-900/50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Key Resources</h2>
@@ -186,7 +188,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-8 md:mb-0">
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              <span className="text-2xl font-bold gradient-text">
                 CyberNex
               </span>
               <p className="text-gray-400 mt-2">Your cybersecurity journey starts here.</p>
