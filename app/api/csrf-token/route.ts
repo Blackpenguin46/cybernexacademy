@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { generateCsrfToken } from '../lib/csrf';
 import { handleRateLimit } from '../lib/rate-limit';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<Response> {
   try {
     // Apply rate limiting - 10 requests per minute per IP
     const rateLimitResult = await handleRateLimit(request, { limit: 10, windowMs: 60000 });
     if (!rateLimitResult.success) {
-      return rateLimitResult.response;
+      // Return the rate limit response if exceeded
+      return rateLimitResult.response as NextResponse;
     }
     
     // Get the action from query params

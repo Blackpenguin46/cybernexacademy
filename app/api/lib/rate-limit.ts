@@ -80,18 +80,19 @@ export async function rateLimit(
 // Clean up old IP records every hour
 setInterval(() => {
   const now = Date.now();
-  for (const [ip, record] of ipRequestCounts.entries()) {
+  // Use Array.from to convert Map entries to an array for iteration
+  Array.from(ipRequestCounts.entries()).forEach(([ip, record]) => {
     if (now > record.resetTime + 3600000) { // 1 hour after reset
       ipRequestCounts.delete(ip);
     }
-  }
+  });
 }, 3600000); // Run every hour
 
 // Helper function to handle rate limit responses
 export async function handleRateLimit(
   request: NextRequest,
   config: RateLimitConfig = { limit: 5, windowMs: 60000 }
-): Promise<{ response: NextResponse | null, success: boolean }> {
+): Promise<{ response: NextResponse; success: boolean }> {
   const result = await rateLimit(request, config);
   
   if (!result.success) {
@@ -110,5 +111,10 @@ export async function handleRateLimit(
     return { response, success: false };
   }
   
-  return { response: null, success: true };
+  // For successful cases, we still need to return a response object
+  // but it will not be used (the caller should check the success flag)
+  return { 
+    response: new NextResponse(),  // This is a dummy response that won't be used
+    success: true 
+  };
 }

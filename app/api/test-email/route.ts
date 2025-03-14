@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { handleRateLimit } from '../lib/rate-limit';
 
 // Initialize Resend with your API key
 let resend: Resend;
@@ -19,6 +20,13 @@ try {
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting - 3 requests per minute
+    const rateLimitResult = await handleRateLimit(request, { limit: 3, windowMs: 60000 });
+    if (!rateLimitResult.success) {
+      // Return the rate limit response if exceeded
+      return rateLimitResult.response;
+    }
+
     const { email, type = 'single' } = await request.json();
 
     if (!email) {

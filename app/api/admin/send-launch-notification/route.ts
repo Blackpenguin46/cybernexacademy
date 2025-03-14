@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
+import { handleRateLimit } from '../../lib/rate-limit';
 
 // Initialize Resend with your API key
 const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
@@ -10,8 +11,15 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<Response> {
   try {
+    // Apply strict rate limiting for admin endpoints - 3 requests per 5 minutes
+    const rateLimitResult = await handleRateLimit(request, { limit: 3, windowMs: 300000 });
+    if (!rateLimitResult.success) {
+      // Return the rate limit response if exceeded
+      return rateLimitResult.response;
+    }
+
     // Verify admin API key
     const authHeader = request.headers.get('authorization');
     if (authHeader !== `Bearer ${process.env.ADMIN_API_KEY}`) {

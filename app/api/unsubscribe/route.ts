@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { handleRateLimit } from '../lib/rate-limit';
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<Response> {
   try {
+    // Apply rate limiting - 5 requests per minute
+    const rateLimitResult = await handleRateLimit(request, { limit: 5, windowMs: 60000 });
+    if (!rateLimitResult.success) {
+      // Return the rate limit response if exceeded
+      return rateLimitResult.response;
+    }
+    
     // Get the email from the URL query parameter
     const { searchParams } = new URL(request.url);
     const email = searchParams.get('email');
