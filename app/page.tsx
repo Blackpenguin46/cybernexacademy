@@ -1,6 +1,65 @@
 "use client";
 
+import { useEffect, useRef, useState } from 'react';
+
 export default function LandingPage() {
+  // Reference to features section for smooth scrolling
+  const featuresRef = useRef<HTMLElement>(null);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+  
+  // Function to handle scroll to features section
+  const scrollToFeatures = () => {
+    featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  
+  // Hide arrow when user has scrolled down
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollArrow = document.querySelector('.scroll-arrow');
+      if (scrollArrow) {
+        if (window.scrollY > 200) {
+          scrollArrow.classList.add('opacity-0');
+        } else {
+          scrollArrow.classList.remove('opacity-0');
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to join waitlist');
+      }
+
+      setStatus('success');
+      setMessage('Successfully joined the waitlist! We\'ll keep you updated.');
+      setEmail('');
+    } catch (error) {
+      setStatus('error');
+      setMessage(error instanceof Error ? error.message : 'Failed to join waitlist');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black text-gray-100 flex flex-col">
       <main className="flex-grow">
@@ -30,6 +89,34 @@ export default function LandingPage() {
                 from beginner to expert.
               </p>
 
+              {/* Email Signup Form */}
+              <div className="max-w-md mx-auto mb-8">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                      className="flex-1 px-4 py-2 bg-[rgba(var(--dark-surface),0.7)] border border-[rgba(var(--primary),0.3)] rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-[rgb(var(--primary))] transition-colors"
+                    />
+                    <button
+                      type="submit"
+                      disabled={status === 'loading'}
+                      className="cyber-button disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
+                    </button>
+                  </div>
+                  {message && (
+                    <p className={`text-sm ${status === 'success' ? 'text-[rgb(var(--primary))]' : 'text-[rgb(var(--accent))]'}`}>
+                      {message}
+                    </p>
+                  )}
+                </form>
+              </div>
+
               {/* Coming Soon Message in a terminal box */}
               <div className="max-w-md mx-auto mb-8 terminal-box p-4">
                 <div className="flex items-center mb-2">
@@ -51,6 +138,14 @@ export default function LandingPage() {
             </div>
           </div>
           
+          {/* Scroll down arrow */}
+          <div className="scroll-arrow transition-opacity duration-500" onClick={scrollToFeatures}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="rgb(var(--primary))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14"></path>
+              <path d="M19 12l-7 7-7-7"></path>
+            </svg>
+          </div>
+          
           {/* Angled separator */}
           <div className="absolute bottom-0 left-0 w-full overflow-hidden">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" className="w-full h-12 md:h-16 text-[rgb(var(--dark-surface))] fill-current">
@@ -60,7 +155,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="pt-16 pb-12 bg-[rgb(var(--dark-surface))]">
+        <section ref={featuresRef} id="features" className="pt-16 pb-12 bg-[rgb(var(--dark-surface))]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 neon-text cyber-font">

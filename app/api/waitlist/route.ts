@@ -10,14 +10,12 @@ console.log('API Environment Check:', {
 });
 
 // Initialize Resend with your API key
-let resend: Resend;
-try {
-  resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
-  console.log('Resend client initialized successfully');
-} catch (error) {
-  console.error('Error initializing Resend client:', error);
-  resend = new Resend('dummy_key'); // Fallback to dummy key
-}
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Initialize Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Function to create the Supabase client
 function getSupabaseClient() {
@@ -202,165 +200,75 @@ export async function POST(request: NextRequest) {
 
     console.log(`Processing waitlist signup for: ${email}`);
 
-    // Store in database section
-    try {
-      // Get supabase client
-      const supabase = getSupabaseClient();
-      
-      if (!supabase) {
-        console.error('Failed to initialize Supabase client');
-        
-        // For now, since database connection is failing, let's still try to send the email
-        // but make sure we inform the user about the issue
-        const message = 'Thank you for your interest! We received your email, but there was an issue storing it in our database. Our team will be notified.';
-        
-        // Even with DB issues, try to send the welcome email if properly configured
-        if (process.env.RESEND_API_KEY && 
-            process.env.RESEND_API_KEY !== 'dummy_key' && 
-            process.env.RESEND_API_KEY !== 'your_resend_api_key_here' && 
-            process.env.RESEND_API_KEY !== 're_123456789') {
-          
-          try {
-            const { data, error } = await resend.emails.send({
-              from: 'CyberNex Academy <onboarding@resend.dev>',
-              to: email,
-              subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
-              html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                  <h1 style="color: #3b82f6; margin-bottom: 20px;">Welcome to CyberNex Academy!</h1>
-                  
-                  <p style="color: #374151; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-                    We're working hard to build the most comprehensive cybersecurity resource platform that will help guide your journey in the field. Your support means the world to us.
-                  </p>
+    // Check if email already exists in waitlist
+    const { data: existingUser } = await supabase
+      .from('waitlist')
+      .select('email')
+      .eq('email', email)
+      .single();
 
-                  <p style="color: #374151; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-                    We'll keep you updated on our progress and you'll be among the first to know when we launch. Get ready to discover, learn, and advance your cybersecurity career with CyberNex Academy!
-                  </p>
-
-                  <div style="background-color: #1e40af; color: white; padding: 15px; border-radius: 8px; margin-top: 30px;">
-                    <p style="margin: 0; font-size: 14px;">
-                      Stay tuned for updates and exclusive early access!
-                    </p>
-                  </div>
-
-                  <div style="margin-top: 30px; font-size: 12px; color: #6b7280; text-align: center;">
-                    <p>If you didn't sign up for CyberNex Academy, please ignore this email.</p>
-                    <p>© 2025 CyberNex Academy. All rights reserved.</p>
-                  </div>
-                </div>
-              `
-            });
-            
-            if (error) {
-              console.error('Email sending error:', error);
-            } else {
-              console.log('Welcome email sent successfully despite database issues', data);
-            }
-          } catch (emailError) {
-            console.error('Failed to send welcome email:', emailError);
-          }
-        }
-        
-        return NextResponse.json({
-          message: message,
-          warning: "Your information couldn't be stored in our database, but we've received your request."
-        });
-      }
-      
-      // Test the connection with a simpler query
-      try {
-        console.log('Testing Supabase connection...');
-        const { error: pingError } = await supabase.from('waitlist').select('count').limit(1);
-        
-        if (pingError) {
-          if (pingError.message.includes('relation') && pingError.message.includes('does not exist')) {
-            console.error('Waitlist table does not exist:', pingError);
-            return NextResponse.json(
-              { error: 'The waitlist table does not exist in your database. Please run database migrations.' }, 
-              { status: 500 }
-            );
-          } else {
-            console.error('Failed to query waitlist table:', pingError);
-            return NextResponse.json(
-              { error: `Database error: ${pingError.message}` },
-              { status: 500 }
-            );
-          }
-        }
-        
-        console.log('Connection to waitlist table successful');
-      } catch (pingError) {
-        console.error('Error testing database connection:', pingError);
-        return NextResponse.json(
-          { error: 'Failed to connect to the database. Please check your Supabase configuration.' },
-          { status: 500 }
-        );
-      }
-      
-      // Try to insert the email
-      try {
-        console.log('Inserting email into waitlist table...');
-        const { data, error: insertError } = await supabase
-          .from('waitlist')
-          .upsert({ 
-            email,
-            subscribed_at: new Date().toISOString(),
-            status: 'active'
-          }, { 
-            onConflict: 'email',
-            ignoreDuplicates: false 
-          });
-
-        if (insertError) {
-          console.error('Error inserting email into waitlist:', insertError);
-          return NextResponse.json(
-            { error: `Failed to store email: ${insertError.message}` },
-            { status: 500 }
-          );
-        }
-        
-        console.log('Successfully added email to waitlist table');
-      } catch (insertError: any) {
-        console.error('Exception during insert operation:', insertError);
-        return NextResponse.json(
-          { error: `Database error: ${insertError?.message || 'Unknown error during insert'}` },
-          { status: 500 }
-        );
-      }
-    } catch (dbError: any) {
-      console.error('General database error:', dbError);
+    if (existingUser) {
       return NextResponse.json(
-        { error: `Database operation failed: ${dbError?.message || 'Unknown database error'}` },
+        { error: 'Email already on waitlist' },
+        { status: 400 }
+      );
+    }
+
+    // Add email to waitlist
+    const { error: insertError } = await supabase
+      .from('waitlist')
+      .insert([{ email, status: 'active', subscribed_at: new Date().toISOString() }]);
+
+    if (insertError) {
+      console.error('Error inserting into waitlist:', insertError);
+      return NextResponse.json(
+        { error: 'Failed to add to waitlist' },
         { status: 500 }
       );
     }
 
-    // After successfully storing the email in database
+    // Send welcome email
     try {
-      const emailResult = await sendWelcomeEmail(email);
-      if (!emailResult.success) {
-        console.warn('Email sending failed but user was added to waitlist:', emailResult.message);
-      }
+      await resend.emails.send({
+        from: 'CyberNex Academy <notifications@cybernex.academy>',
+        to: email,
+        subject: 'Welcome to CyberNex Academy Waitlist!',
+        html: `
+          <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #60ff96; margin-bottom: 24px;">Welcome to CyberNex Academy!</h1>
+            <p style="color: #333; line-height: 1.6; margin-bottom: 24px;">
+              Thank you for joining our waitlist! We're excited to have you on board.
+            </p>
+            <p style="color: #333; line-height: 1.6; margin-bottom: 24px;">
+              You'll be among the first to know when we launch, and you'll receive:
+            </p>
+            <ul style="color: #333; line-height: 1.6; margin-bottom: 24px;">
+              <li>Launch notifications</li>
+              <li>Weekly cybersecurity newsletters</li>
+              <li>Exclusive early access to new features</li>
+            </ul>
+            <p style="color: #333; line-height: 1.6; margin-bottom: 24px;">
+              Stay tuned for updates!
+            </p>
+            <p style="color: #666; font-size: 14px; margin-top: 32px;">
+              If you didn't sign up for this, you can safely ignore this email.
+            </p>
+          </div>
+        `,
+      });
     } catch (emailError) {
-      console.error('Error in email sending process:', emailError);
-      // Continue since the user is already added to the database
+      console.error('Error sending welcome email:', emailError);
+      // Don't fail the request if email sending fails
     }
 
-    // Return success response
-    return NextResponse.json({
-      message: 'Thank you for joining our waitlist! Please check your email for a welcome message.'
-    });
-  } catch (error: any) {
-    console.error('Waitlist error:', error);
-    
-    // Provide more detailed error message
-    let errorMessage = 'Failed to join waitlist: Unexpected error occurred';
-    if (error?.message) {
-      errorMessage += ` - ${error.message}`;
-    }
-    
     return NextResponse.json(
-      { error: errorMessage },
+      { message: 'Successfully joined waitlist' },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error processing waitlist signup:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
