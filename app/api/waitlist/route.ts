@@ -73,11 +73,13 @@ async function sendWelcomeEmail(email: string) {
     if (!process.env.RESEND_API_KEY || 
         process.env.RESEND_API_KEY === 'dummy_key' || 
         process.env.RESEND_API_KEY === 'your_resend_api_key_here' ||
+        process.env.RESEND_API_KEY === 'your_complete_resend_api_key_here' ||
         !process.env.RESEND_API_KEY.startsWith('re_')) {
       console.warn('RESEND_API_KEY is not properly configured:', {
         isSet: !!process.env.RESEND_API_KEY,
         isDummy: process.env.RESEND_API_KEY === 'dummy_key',
         isPlaceholder: process.env.RESEND_API_KEY === 'your_resend_api_key_here',
+        length: process.env.RESEND_API_KEY?.length,
         startsWithRe: process.env.RESEND_API_KEY?.startsWith('re_')
       });
       return { success: false, message: 'Email delivery is disabled (API key not configured)' };
@@ -85,7 +87,7 @@ async function sendWelcomeEmail(email: string) {
     
     // Define the email content with improved HTML template
     const { data, error } = await resend.emails.send({
-      from: 'CyberNex Academy <cybernexacademy@proton.me>',
+      from: 'CyberNex Academy <info@cybernexacademy.com>',
       to: email,
       subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
       html: `

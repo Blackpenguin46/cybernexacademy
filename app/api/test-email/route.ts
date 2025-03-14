@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     if (type === 'broadcast') {
       // Test broadcast email (sending to multiple recipients)
       result = await resend.emails.send({
-        from: 'CyberNex Academy <cybernexacademy@proton.me>',
+        from: 'CyberNex Academy <info@cybernexacademy.com>',
         to: [email, 'test2@example.com'], // You can add more recipients here
         subject: 'Test Broadcast Email',
         html: emailTemplate,
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     } else {
       // Test single recipient email
       result = await resend.emails.send({
-        from: 'CyberNex Academy <cybernexacademy@proton.me>',
+        from: 'CyberNex Academy <info@cybernexacademy.com>',
         to: email,
         subject: 'Test Single Email',
         html: emailTemplate,
