@@ -43,9 +43,12 @@ export default function LandingPage() {
           <div className="absolute inset-0 opacity-20">
             <Image 
               src="/images/matrix-bg.png" 
-              alt="Background Pattern" 
+              alt="" 
               fill
               quality={100}
+              priority
+              aria-hidden="true"
+              style={{ objectFit: 'cover' }}
             />
           </div>
           <div className="absolute inset-0 animated-gradient opacity-10"></div>
