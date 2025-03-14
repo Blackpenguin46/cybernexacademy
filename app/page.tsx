@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import Image from 'next/image';
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -39,18 +38,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-gray-100 flex flex-col">
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-32">
-          <div className="absolute inset-0 opacity-20">
-            <Image 
-              src="/images/matrix-bg.png" 
-              alt="" 
-              fill
-              quality={100}
-              priority
-              aria-hidden="true"
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
+        <section className="relative overflow-hidden py-20 md:py-32 bg-grid-pattern">
           <div className="absolute inset-0 animated-gradient opacity-10"></div>
           
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
