@@ -6,11 +6,26 @@ import { createClient } from '@supabase/supabase-js';
 console.log('API Environment Check:', {
   supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
   supabaseKeyFirstChars: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.substring(0, 12) + '...' : 'Missing',
-  resendKeyFirstChars: process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.substring(0, 10) + '...' : 'Missing'
+  resendKeyFirstChars: process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.substring(0, 10) + '...' : 'Missing',
+  resendKeyLength: process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.length : 0,
+  resendKeyStartsWith: process.env.RESEND_API_KEY ? process.env.RESEND_API_KEY.startsWith('re_') : false
 });
 
 // Initialize Resend with your API key
-const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
+let resend: Resend;
+try {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY is not set');
+  }
+  if (!process.env.RESEND_API_KEY.startsWith('re_')) {
+    throw new Error('RESEND_API_KEY does not start with "re_"');
+  }
+  resend = new Resend(process.env.RESEND_API_KEY);
+  console.log('Resend client initialized successfully');
+} catch (error) {
+  console.error('Failed to initialize Resend client:', error);
+  resend = new Resend('dummy_key'); // Fallback to dummy key
+}
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -57,14 +72,20 @@ async function sendWelcomeEmail(email: string) {
     // Verify we have proper configuration
     if (!process.env.RESEND_API_KEY || 
         process.env.RESEND_API_KEY === 'dummy_key' || 
-        process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
-      console.warn('RESEND_API_KEY is not properly set. Email will not be sent.');
+        process.env.RESEND_API_KEY === 'your_resend_api_key_here' ||
+        !process.env.RESEND_API_KEY.startsWith('re_')) {
+      console.warn('RESEND_API_KEY is not properly configured:', {
+        isSet: !!process.env.RESEND_API_KEY,
+        isDummy: process.env.RESEND_API_KEY === 'dummy_key',
+        isPlaceholder: process.env.RESEND_API_KEY === 'your_resend_api_key_here',
+        startsWithRe: process.env.RESEND_API_KEY?.startsWith('re_')
+      });
       return { success: false, message: 'Email delivery is disabled (API key not configured)' };
     }
     
     // Define the email content with improved HTML template
     const { data, error } = await resend.emails.send({
-      from: 'CyberNex Academy <onboarding@resend.dev>', // This is Resend's test domain that works without verification
+      from: 'CyberNex Academy <onboarding@resend.dev>', // Using Resend's test domain
       to: email,
       subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
       html: `
@@ -89,11 +110,11 @@ async function sendWelcomeEmail(email: string) {
               background-color: #ffffff;
             }
             .header {
-              background: linear-gradient(to right, #3B82F6, #8B5CF6);
+              background: linear-gradient(135deg, #60ff96 0%, #31d8d8 100%);
               padding: 30px 20px;
               text-align: center;
-              color: white;
-              border-radius: 6px 6px 0 0;
+              color: #000;
+              border-radius: 8px 8px 0 0;
             }
             .header h1 {
               margin: 0;
@@ -103,20 +124,39 @@ async function sendWelcomeEmail(email: string) {
             .content {
               padding: 30px 20px;
               background-color: #f8fafc;
-              border-radius: 0 0 6px 6px;
+              border-radius: 0 0 8px 8px;
             }
-            .feature {
-              background-color: #1e40af;
-              color: white;
-              padding: 15px;
+            .feature-list {
+              background-color: #f8f9fa;
               border-radius: 8px;
-              margin-top: 30px;
+              padding: 20px;
+              margin: 20px 0;
+            }
+            .feature-list ul {
+              margin: 0;
+              padding-left: 20px;
+            }
+            .feature-list li {
+              margin-bottom: 10px;
+              color: #444;
             }
             .footer {
-              margin-top: 30px;
               text-align: center;
-              font-size: 12px;
-              color: #6b7280;
+              margin-top: 30px;
+              padding-top: 20px;
+              border-top: 1px solid #eee;
+              color: #666;
+              font-size: 14px;
+            }
+            .button {
+              display: inline-block;
+              padding: 12px 24px;
+              background-color: #60ff96;
+              color: #000;
+              text-decoration: none;
+              border-radius: 4px;
+              font-weight: 600;
+              margin: 20px 0;
             }
           </style>
         </head>
@@ -126,29 +166,29 @@ async function sendWelcomeEmail(email: string) {
               <h1>Welcome to CyberNex Academy!</h1>
             </div>
             <div class="content">
-              <p>Thank you for joining our waitlist!</p>
+              <p>Thank you for joining our waitlist! We're excited to have you on board.</p>
               
-              <p>We're building the most comprehensive cybersecurity resource platform to guide your journey in this exciting field. Your support means the world to us.</p>
+              <p>You'll be among the first to know when we launch, and you'll receive:</p>
               
-              <p>Here's what you can expect from CyberNex Academy:</p>
-              <ul>
-                <li>Curated cybersecurity learning resources</li>
-                <li>Path comparisons to find the right learning options</li>
-                <li>Expert-verified information</li>
-                <li>Regular updates on industry trends</li>
-              </ul>
-              
-              <div class="feature">
-                <p style="margin: 0; font-size: 14px;">
-                  You'll be among the first to know when we launch. Get ready to discover, learn, and advance your cybersecurity career with CyberNex Academy!
-                </p>
+              <div class="feature-list">
+                <ul>
+                  <li>🚀 Launch notifications</li>
+                  <li>📚 Weekly cybersecurity newsletters</li>
+                  <li>🎯 Exclusive early access to new features</li>
+                  <li>💡 Tips and insights from industry experts</li>
+                </ul>
               </div>
+
+              <p>We're working hard to bring you the most comprehensive cybersecurity resource platform. Stay tuned for updates!</p>
               
-              <div class="footer">
-                <p>If you didn't sign up for CyberNex Academy, please ignore this email.</p>
-                <p>© 2025 CyberNex Academy. All rights reserved.</p>
-                <p><a href="https://v0-cybernex-r5aktld1jft.vercel.app">CyberNex Academy</a></p>
+              <div style="text-align: center;">
+                <a href="https://cybernex.academy" class="button">Visit CyberNex Academy</a>
               </div>
+            </div>
+            
+            <div class="footer">
+              <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
+              <p>© 2025 CyberNex Academy. All rights reserved.</p>
             </div>
           </div>
         </body>
@@ -217,135 +257,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Send welcome email
-    try {
-      // Check if Resend API key is properly configured
-      if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy_key') {
-        console.warn('Email service not configured - skipping welcome email');
-        return NextResponse.json(
-          { message: 'Successfully joined waitlist (email service not configured)' },
-          { status: 200 }
-        );
-      }
-
-      await resend.emails.send({
-        from: 'CyberNex Academy <notifications@cybernex.academy>',
-        to: email,
-        subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
-        html: `
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Welcome to CyberNex Academy</title>
-            <style>
-              body {
-                font-family: system-ui, -apple-system, sans-serif;
-                line-height: 1.6;
-                color: #333;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-              }
-              .container {
-                max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
-                background-color: #ffffff;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-              }
-              .header {
-                background: linear-gradient(135deg, #60ff96 0%, #31d8d8 100%);
-                color: #000;
-                padding: 30px 20px;
-                text-align: center;
-                border-radius: 8px 8px 0 0;
-              }
-              .header h1 {
-                margin: 0;
-                font-size: 28px;
-                font-weight: 700;
-              }
-              .content {
-                padding: 30px 20px;
-              }
-              .feature-list {
-                background-color: #f8f9fa;
-                border-radius: 8px;
-                padding: 20px;
-                margin: 20px 0;
-              }
-              .feature-list ul {
-                margin: 0;
-                padding-left: 20px;
-              }
-              .feature-list li {
-                margin-bottom: 10px;
-                color: #444;
-              }
-              .footer {
-                text-align: center;
-                margin-top: 30px;
-                padding-top: 20px;
-                border-top: 1px solid #eee;
-                color: #666;
-                font-size: 14px;
-              }
-              .button {
-                display: inline-block;
-                padding: 12px 24px;
-                background-color: #60ff96;
-                color: #000;
-                text-decoration: none;
-                border-radius: 4px;
-                font-weight: 600;
-                margin: 20px 0;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <div class="header">
-                <h1>Welcome to CyberNex Academy!</h1>
-              </div>
-              <div class="content">
-                <p>Thank you for joining our waitlist! We're excited to have you on board.</p>
-                
-                <p>You'll be among the first to know when we launch, and you'll receive:</p>
-                
-                <div class="feature-list">
-                  <ul>
-                    <li>🚀 Launch notifications</li>
-                    <li>📚 Weekly cybersecurity newsletters</li>
-                    <li>🎯 Exclusive early access to new features</li>
-                    <li>💡 Tips and insights from industry experts</li>
-                  </ul>
-                </div>
-
-                <p>We're working hard to bring you the most comprehensive cybersecurity resource platform. Stay tuned for updates!</p>
-                
-                <div style="text-align: center;">
-                  <a href="https://cybernex.academy" class="button">Visit CyberNex Academy</a>
-                </div>
-              </div>
-              
-              <div class="footer">
-                <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
-                <p>© 2025 CyberNex Academy. All rights reserved.</p>
-              </div>
-            </div>
-          </body>
-          </html>
-        `,
-      });
-    } catch (emailError) {
-      console.error('Error sending welcome email:', emailError);
-      // Don't fail the request if email sending fails
+    const emailResult = await sendWelcomeEmail(email);
+    
+    if (!emailResult.success) {
+      console.warn('Email sending failed but user was added to waitlist:', emailResult.message);
     }
 
     return NextResponse.json(
-      { message: 'Successfully joined waitlist' },
+      { 
+        message: 'Successfully joined waitlist',
+        emailSent: emailResult.success,
+        emailMessage: emailResult.message
+      },
       { status: 200 }
     );
   } catch (error) {
