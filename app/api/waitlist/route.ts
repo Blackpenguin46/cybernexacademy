@@ -85,114 +85,29 @@ async function sendWelcomeEmail(email: string) {
     
     // Define the email content with improved HTML template
     const { data, error } = await resend.emails.send({
-      from: 'CyberNex Academy <onboarding@resend.dev>', // Using Resend's test domain
+      from: 'CyberNex Academy <onboarding@resend.dev>',
       to: email,
       subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
       html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Welcome to CyberNex Academy</title>
-          <style>
-            body, html {
-              margin: 0;
-              padding: 0;
-              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-              line-height: 1.6;
-              color: #333;
-            }
-            .container {
-              max-width: 600px;
-              margin: 0 auto;
-              padding: 20px;
-              background-color: #ffffff;
-            }
-            .header {
-              background: linear-gradient(135deg, #60ff96 0%, #31d8d8 100%);
-              padding: 30px 20px;
-              text-align: center;
-              color: #000;
-              border-radius: 8px 8px 0 0;
-            }
-            .header h1 {
-              margin: 0;
-              font-size: 28px;
-              font-weight: 700;
-            }
-            .content {
-              padding: 30px 20px;
-              background-color: #f8fafc;
-              border-radius: 0 0 8px 8px;
-            }
-            .feature-list {
-              background-color: #f8f9fa;
-              border-radius: 8px;
-              padding: 20px;
-              margin: 20px 0;
-            }
-            .feature-list ul {
-              margin: 0;
-              padding-left: 20px;
-            }
-            .feature-list li {
-              margin-bottom: 10px;
-              color: #444;
-            }
-            .footer {
-              text-align: center;
-              margin-top: 30px;
-              padding-top: 20px;
-              border-top: 1px solid #eee;
-              color: #666;
-              font-size: 14px;
-            }
-            .button {
-              display: inline-block;
-              padding: 12px 24px;
-              background-color: #60ff96;
-              color: #000;
-              text-decoration: none;
-              border-radius: 4px;
-              font-weight: 600;
-              margin: 20px 0;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Welcome to CyberNex Academy!</h1>
-            </div>
-            <div class="content">
-              <p>Thank you for joining our waitlist! We're excited to have you on board.</p>
-              
-              <p>You'll be among the first to know when we launch, and you'll receive:</p>
-              
-              <div class="feature-list">
-                <ul>
-                  <li>🚀 Launch notifications</li>
-                  <li>📚 Weekly cybersecurity newsletters</li>
-                  <li>🎯 Exclusive early access to new features</li>
-                  <li>💡 Tips and insights from industry experts</li>
-                </ul>
-              </div>
-
-              <p>We're working hard to bring you the most comprehensive cybersecurity resource platform. Stay tuned for updates!</p>
-              
-              <div style="text-align: center;">
-                <a href="https://cybernex.academy" class="button">Visit CyberNex Academy</a>
-              </div>
-            </div>
-            
-            <div class="footer">
-              <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
-              <p>© 2025 CyberNex Academy. All rights reserved.</p>
-            </div>
+        <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+          <h1 style="color: #000; text-align: center;">Welcome to CyberNex Academy!</h1>
+          <p>Thank you for joining our waitlist! We're excited to have you on board.</p>
+          <p>You'll be among the first to know when we launch, and you'll receive:</p>
+          <ul>
+            <li>🚀 Launch notifications</li>
+            <li>📚 Weekly cybersecurity newsletters</li>
+            <li>🎯 Exclusive early access to new features</li>
+            <li>💡 Tips and insights from industry experts</li>
+          </ul>
+          <p>We're working hard to bring you the most comprehensive cybersecurity resource platform. Stay tuned for updates!</p>
+          <div style="text-align: center; margin-top: 30px;">
+            <a href="https://cybernex.academy" style="display: inline-block; padding: 12px 24px; background-color: #60ff96; color: #000; text-decoration: none; border-radius: 4px; font-weight: 600;">Visit CyberNex Academy</a>
           </div>
-        </body>
-        </html>
+          <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
+            <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
+            <p>© 2025 CyberNex Academy. All rights reserved.</p>
+          </div>
+        </div>
       `,
     });
     
