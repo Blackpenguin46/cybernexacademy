@@ -1,39 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-
 export default function LandingPage() {
-  const [email, setEmail] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setSubmitting(true);
-    try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await response.json();
-      
-      if (response.ok) {
-        setMessage(data.message);
-        setEmail('');
-      } else {
-        throw new Error(data.error);
-      }
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Failed to join waitlist');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-gray-100 flex flex-col">
       <main className="flex-grow">
@@ -61,34 +28,14 @@ export default function LandingPage() {
                 from beginner to expert.
               </p>
 
-              {/* Email Signup Form */}
-              <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8">
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {submitting ? 'Submitting...' : 'Notify Me'}
-                  </button>
-                </div>
-                {message && (
-                  <p className={`text-sm mt-2 ${message.includes('error') ? 'text-red-500' : 'text-green-500'} whitespace-pre-line`}>
-                    {message}
-                  </p>
-                )}
-                <p className="text-sm text-gray-400 mt-2">
-                  Be the first to know when we launch. No spam, ever.
+              {/* Coming Soon Message (Replacing the email signup form) */}
+              <div className="max-w-md mx-auto mb-8 p-4 bg-blue-900/20 rounded-lg border border-blue-800">
+                <p className="text-lg font-medium text-blue-300">Coming Soon!</p>
+                <p className="text-sm text-gray-300 mt-2">
+                  We're working hard to bring you the best cybersecurity resource platform.
+                  Check back soon for updates!
                 </p>
-              </form>
+              </div>
             </div>
           </div>
         </section>
