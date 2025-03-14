@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
+import { handleRateLimit } from '../lib/rate-limit';
+import { validateEmail } from '../lib/validate';
+import { validateCsrfToken } from '../lib/csrf';
 
 // More detailed environment variable logging - with actual values for debugging
 console.log('API Environment Check:', {
@@ -127,6 +130,13 @@ async function sendWelcomeEmail(email: string) {
 
 export async function POST(request: NextRequest) {
   try {
+    // Apply rate limiting - 5 requests per minute
+    const rateLimitResult = await handleRateLimit(request, { limit: 5, windowMs: 60000 });
+    if (!rateLimitResult.success) {
+      // Return the rate limit response if exceeded
+      return rateLimitResult.response;
+    }
+
     // For debugging - log environment variables (sanitized)
     console.log('Environment check in handler:', {
       supabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -134,15 +144,28 @@ export async function POST(request: NextRequest) {
       resendKey: !!process.env.RESEND_API_KEY 
     });
 
-    const { email } = await request.json();
-
-    if (!email) {
+    // Parse and validate input
+    const body = await request.json();
+    
+    // Validate CSRF token
+    const csrfToken = body.csrfToken || request.headers.get('X-CSRF-Token');
+    if (!csrfToken || !validateCsrfToken(csrfToken, 'waitlist')) {
       return NextResponse.json(
-        { error: 'Email is required' },
+        { error: 'Invalid or expired CSRF token' },
+        { status: 403 }
+      );
+    }
+    
+    const emailValidation = validateEmail(body.email);
+    
+    if (!emailValidation.valid) {
+      return NextResponse.json(
+        { error: emailValidation.message },
         { status: 400 }
       );
     }
-
+    
+    const email = emailValidation.sanitized;
     console.log(`Processing waitlist signup for: ${email}`);
 
     // Check if email already exists in waitlist
