@@ -23,6 +23,13 @@ function getSupabaseClient() {
 
 export async function POST(request: NextRequest) {
   try {
+    // For debugging - log environment variables (sanitized)
+    console.log('Environment check:', {
+      supabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      supabaseKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      resendKey: !!process.env.RESEND_API_KEY && process.env.RESEND_API_KEY !== 're_123456789'
+    });
+
     const { email } = await request.json();
 
     if (!email) {
@@ -42,9 +49,30 @@ export async function POST(request: NextRequest) {
       try {
         console.log('Attempting to store email in Supabase waitlist table');
         
+        // Test the connection first
+        try {
+          const { data, error } = await supabase.from('_test_connection').select('*').limit(1).maybeSingle();
+          
+          if (error && !error.message.includes('does not exist')) {
+            // If we get an error other than "relation does not exist", there's a connection issue
+            console.error('Supabase connection test failed:', error);
+            return NextResponse.json(
+              { error: `Connection error: ${error.message}` },
+              { status: 500 }
+            );
+          }
+          
+          console.log('Supabase connection test: Connection appears to be working');
+        } catch (connectionError) {
+          // Non-fatal, just log it
+          console.warn('Supabase connection test error:', connectionError);
+        }
+        
         // Try to directly insert the email
         try {
-          const { error: dbError } = await supabase
+          console.log('Attempting to insert email into waitlist table');
+          
+          const { data, error: dbError } = await supabase
             .from('waitlist')
             .upsert({ 
               email,
@@ -59,8 +87,10 @@ export async function POST(request: NextRequest) {
             // If we get a "relation does not exist" error, the table is missing
             if (dbError.message.includes('relation') && dbError.message.includes('does not exist')) {
               console.error('Waitlist table does not exist!');
+              
+              // Return a specific error for missing table
               return NextResponse.json(
-                { error: 'Database error: Waitlist table not found' },
+                { error: 'The waitlist table does not exist. Please run the database migrations.' },
                 { status: 500 }
               );
             }
@@ -73,29 +103,29 @@ export async function POST(request: NextRequest) {
           }
           
           console.log('Successfully added email to waitlist table');
-        } catch (insertError) {
+        } catch (insertError: any) {
           console.error('Error during insert operation:', insertError);
           return NextResponse.json(
-            { error: 'Database error during insert' },
+            { error: `Database insert error: ${insertError?.message || JSON.stringify(insertError)}` },
             { status: 500 }
           );
         }
-      } catch (dbError) {
+      } catch (dbError: any) {
         console.error('Failed to store email in database:', dbError);
         return NextResponse.json(
-          { error: 'Failed to store email in database' },
+          { error: `Database operation failed: ${dbError?.message || JSON.stringify(dbError)}` },
           { status: 500 }
         );
       }
     } else {
       console.error('Supabase client not available - cannot store email');
       return NextResponse.json(
-        { error: 'Database connection error' },
+        { error: 'Database connection error: Supabase client could not be initialized' },
         { status: 500 }
       );
     }
 
-    // Send confirmation email
+    // Send confirmation email if Resend API key is properly configured
     if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy_key' || process.env.RESEND_API_KEY === 'your_resend_api_key_here' || process.env.RESEND_API_KEY === 're_123456789') {
       console.warn('RESEND_API_KEY is not properly set. Email will not be sent.');
       return NextResponse.json({
@@ -136,7 +166,7 @@ export async function POST(request: NextRequest) {
         `
       });
       console.log('Welcome email sent successfully');
-    } catch (emailError) {
+    } catch (emailError: any) {
       console.error('Failed to send welcome email:', emailError);
       // We will still return success since the email is in the database
     }
@@ -147,11 +177,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       message: 'Thank you for joining our waitlist! Please check your email for a welcome message.'
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Waitlist error:', error);
+    
+    // Provide more detailed error message
+    let errorMessage = 'Failed to join waitlist: Unexpected error occurred';
+    if (error?.message) {
+      errorMessage += ` - ${error.message}`;
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to join waitlist: Unexpected error occurred' },
+      { error: errorMessage },
       { status: 500 }
     );
   }
-} 
+}
