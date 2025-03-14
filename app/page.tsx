@@ -38,7 +38,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-gray-100 flex flex-col">
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-20 md:py-32 bg-grid-pattern">
+        <section className="relative overflow-hidden py-20 md:py-32 pb-28 bg-grid-pattern">
           {/* Background elements with higher z-index control */}
           <div className="absolute inset-0 animated-gradient opacity-10 z-0"></div>
           
@@ -60,7 +60,7 @@ export default function LandingPage() {
               </p>
 
               {/* Email Signup Form */}
-              <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-2">
+              <form onSubmit={handleSubmit} className="max-w-md mx-auto mb-8">
                 <div className="flex gap-2">
                   <input
                     type="email"
@@ -92,7 +92,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section id="features" className="pt-4 pb-12 bg-gray-900/50">
+        <section id="features" className="pt-12 pb-12 bg-gray-900/50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Key Resources</h2>
