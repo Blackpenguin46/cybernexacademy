@@ -49,12 +49,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Test email template
+    const unsubscribeToken = Buffer.from(email + '-unsubscribe').toString('base64').substring(0, 16);
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cybernexacademy.com';
+    const unsubscribeLink = `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(email)}&token=${unsubscribeToken}`;
+    
     const emailTemplate = `
       <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h1 style="color: #000; text-align: center;">Test Email from CyberNex Academy</h1>
         <p>This is a test email to verify the email service is working correctly.</p>
         <p>Email type: ${type}</p>
         <p>If you're seeing this, the email service is working!</p>
+        
+        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
+          <p>© 2025 CyberNex Academy. All rights reserved.</p>
+          <p style="margin-top: 15px; font-size: 12px;">
+            <a href="${unsubscribeLink}" style="color: #666; text-decoration: underline;">Unsubscribe from our mailing list</a>
+          </p>
+        </div>
       </div>
     `;
 

@@ -85,6 +85,11 @@ async function sendWelcomeEmail(email: string) {
       return { success: false, message: 'Email delivery is disabled (API key not configured)' };
     }
     
+    // Generate unsubscribe token
+    const unsubscribeToken = Buffer.from(email + '-unsubscribe').toString('base64').substring(0, 16);
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://cybernexacademy.com';
+    const unsubscribeLink = `${siteUrl}/api/unsubscribe?email=${encodeURIComponent(email)}&token=${unsubscribeToken}`;
+    
     // Define the email content with improved HTML template
     const { data, error } = await resend.emails.send({
       from: 'CyberNex Academy <info@cybernexacademy.com>',
@@ -99,6 +104,9 @@ async function sendWelcomeEmail(email: string) {
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
             <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
             <p>© 2025 CyberNex Academy. All rights reserved.</p>
+            <p style="margin-top: 15px; font-size: 12px;">
+              <a href="${unsubscribeLink}" style="color: #666; text-decoration: underline;">Unsubscribe from our mailing list</a>
+            </p>
           </div>
         </div>
       `,
