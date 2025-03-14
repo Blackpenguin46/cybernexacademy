@@ -8,11 +8,29 @@ export default function LandingPage() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
+  const [csrfToken, setCsrfToken] = useState('');
   
   // Function to handle scroll to features section
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  // Fetch CSRF token on component mount
+  useEffect(() => {
+    const fetchCsrfToken = async () => {
+      try {
+        const response = await fetch('/api/csrf-token?action=waitlist');
+        if (response.ok) {
+          const data = await response.json();
+          setCsrfToken(data.token);
+        }
+      } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+      }
+    };
+    
+    fetchCsrfToken();
+  }, []);
   
   // Hide arrow when user has scrolled down
   useEffect(() => {
@@ -36,24 +54,87 @@ export default function LandingPage() {
     setStatus('loading');
     setMessage('');
 
+    // Don't proceed if we don't have a CSRF token
+    if (!csrfToken) {
+      setStatus('error');
+      setMessage('Security token not available. Please refresh the page.');
+      return;
+    }
+
     try {
       const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken,
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ 
+          email,
+          csrfToken  // Also include it in the request body as a fallback
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
+        // Special handling for CSRF errors - try to get a new token and retry once
+        if (data.code === 'CSRF_ERROR') {
+          console.log('CSRF token expired, fetching new token and retrying');
+          
+          try {
+            // Fetch a new token
+            const tokenResponse = await fetch('/api/csrf-token?action=waitlist');
+            if (tokenResponse.ok) {
+              const tokenData = await tokenResponse.json();
+              const newToken = tokenData.token;
+              setCsrfToken(newToken);
+              
+              // Retry the submission with the new token
+              const retryResponse = await fetch('/api/waitlist', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-Token': newToken,
+                },
+                body: JSON.stringify({ 
+                  email,
+                  csrfToken: newToken
+                }),
+              });
+              
+              const retryData = await retryResponse.json();
+              
+              if (!retryResponse.ok) {
+                throw new Error(retryData.error || 'Failed to join waitlist');
+              }
+              
+              setStatus('success');
+              setMessage('Successfully joined the waitlist! We\'ll keep you updated.');
+              setEmail('');
+              return;
+            }
+          } catch (retryError) {
+            console.error('Retry failed:', retryError);
+          }
+        }
+        
         throw new Error(data.error || 'Failed to join waitlist');
       }
 
       setStatus('success');
       setMessage('Successfully joined the waitlist! We\'ll keep you updated.');
       setEmail('');
+      
+      // Fetch a new CSRF token for any subsequent submissions
+      try {
+        const tokenResponse = await fetch('/api/csrf-token?action=waitlist');
+        if (tokenResponse.ok) {
+          const tokenData = await tokenResponse.json();
+          setCsrfToken(tokenData.token);
+        }
+      } catch (error) {
+        console.error('Failed to refresh CSRF token:', error);
+      }
     } catch (error) {
       setStatus('error');
       setMessage(error instanceof Error ? error.message : 'Failed to join waitlist');

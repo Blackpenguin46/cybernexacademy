@@ -150,8 +150,17 @@ export async function POST(request: NextRequest) {
     // Validate CSRF token
     const csrfToken = body.csrfToken || request.headers.get('X-CSRF-Token');
     if (!csrfToken || !validateCsrfToken(csrfToken, 'waitlist')) {
+      console.warn('CSRF validation failed:', { 
+        tokenReceived: !!csrfToken,
+        tokenEmpty: csrfToken === '',
+        tokenLength: csrfToken?.length
+      });
+      
       return NextResponse.json(
-        { error: 'Invalid or expired CSRF token' },
+        { 
+          error: 'Invalid or expired security token. Please refresh the page and try again.',
+          code: 'CSRF_ERROR'
+        },
         { status: 403 }
       );
     }
