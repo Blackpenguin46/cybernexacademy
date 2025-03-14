@@ -85,24 +85,15 @@ async function sendWelcomeEmail(email: string) {
     
     // Define the email content with improved HTML template
     const { data, error } = await resend.emails.send({
-      from: 'CyberNex Academy <onboarding@resend.dev>',
+      from: 'CyberNex Academy <cybernexacademy@proton.me>',
       to: email,
       subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
       html: `
         <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #000; text-align: center;">Welcome to CyberNex Academy!</h1>
           <p>Thank you for joining our waitlist! We're excited to have you on board.</p>
-          <p>You'll be among the first to know when we launch, and you'll receive:</p>
-          <ul>
-            <li>🚀 Launch notifications</li>
-            <li>📚 Weekly cybersecurity newsletters</li>
-            <li>🎯 Exclusive early access to new features</li>
-            <li>💡 Tips and insights from industry experts</li>
-          </ul>
-          <p>We're working hard to bring you the most comprehensive cybersecurity resource platform. Stay tuned for updates!</p>
-          <div style="text-align: center; margin-top: 30px;">
-            <a href="https://cybernex.academy" style="display: inline-block; padding: 12px 24px; background-color: #60ff96; color: #000; text-decoration: none; border-radius: 4px; font-weight: 600;">Visit CyberNex Academy</a>
-          </div>
+          <p>You'll be among the first to know when we launch our comprehensive cybersecurity resource platform.</p>
+          <p>Stay tuned for updates!</p>
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 14px;">
             <p>If you didn't sign up for CyberNex Academy, you can safely ignore this email.</p>
             <p>© 2025 CyberNex Academy. All rights reserved.</p>
