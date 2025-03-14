@@ -10,7 +10,7 @@ console.log('API Environment Check:', {
 });
 
 // Initialize Resend with your API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || 'dummy_key');
 
 // Initialize Supabase client
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -218,6 +218,15 @@ export async function POST(request: NextRequest) {
 
     // Send welcome email
     try {
+      // Check if Resend API key is properly configured
+      if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy_key') {
+        console.warn('Email service not configured - skipping welcome email');
+        return NextResponse.json(
+          { message: 'Successfully joined waitlist (email service not configured)' },
+          { status: 200 }
+        );
+      }
+
       await resend.emails.send({
         from: 'CyberNex Academy <notifications@cybernex.academy>',
         to: email,
