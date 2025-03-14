@@ -51,6 +51,126 @@ function getSupabaseClient() {
   }
 }
 
+// Email sending helper function
+async function sendWelcomeEmail(email: string) {
+  try {
+    console.log('Sending welcome email to:', email);
+    
+    // Verify we have proper configuration
+    if (!process.env.RESEND_API_KEY || 
+        process.env.RESEND_API_KEY === 'dummy_key' || 
+        process.env.RESEND_API_KEY === 'your_resend_api_key_here') {
+      console.warn('RESEND_API_KEY is not properly set. Email will not be sent.');
+      return { success: false, message: 'Email delivery is disabled (API key not configured)' };
+    }
+    
+    // Define the email content with improved HTML template
+    const { data, error } = await resend.emails.send({
+      from: 'CyberNex Academy <onboarding@resend.dev>', // This is Resend's test domain that works without verification
+      to: email,
+      subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
+      html: `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Welcome to CyberNex Academy</title>
+          <style>
+            body, html {
+              margin: 0;
+              padding: 0;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              line-height: 1.6;
+              color: #333;
+            }
+            .container {
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+              background-color: #ffffff;
+            }
+            .header {
+              background: linear-gradient(to right, #3B82F6, #8B5CF6);
+              padding: 30px 20px;
+              text-align: center;
+              color: white;
+              border-radius: 6px 6px 0 0;
+            }
+            .header h1 {
+              margin: 0;
+              font-size: 28px;
+              font-weight: 700;
+            }
+            .content {
+              padding: 30px 20px;
+              background-color: #f8fafc;
+              border-radius: 0 0 6px 6px;
+            }
+            .feature {
+              background-color: #1e40af;
+              color: white;
+              padding: 15px;
+              border-radius: 8px;
+              margin-top: 30px;
+            }
+            .footer {
+              margin-top: 30px;
+              text-align: center;
+              font-size: 12px;
+              color: #6b7280;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              <h1>Welcome to CyberNex Academy!</h1>
+            </div>
+            <div class="content">
+              <p>Thank you for joining our waitlist!</p>
+              
+              <p>We're building the most comprehensive cybersecurity resource platform to guide your journey in this exciting field. Your support means the world to us.</p>
+              
+              <p>Here's what you can expect from CyberNex Academy:</p>
+              <ul>
+                <li>Curated cybersecurity learning resources</li>
+                <li>Path comparisons to find the right learning options</li>
+                <li>Expert-verified information</li>
+                <li>Regular updates on industry trends</li>
+              </ul>
+              
+              <div class="feature">
+                <p style="margin: 0; font-size: 14px;">
+                  You'll be among the first to know when we launch. Get ready to discover, learn, and advance your cybersecurity career with CyberNex Academy!
+                </p>
+              </div>
+              
+              <div class="footer">
+                <p>If you didn't sign up for CyberNex Academy, please ignore this email.</p>
+                <p>© 2025 CyberNex Academy. All rights reserved.</p>
+                <p><a href="https://v0-cybernex-r5aktld1jft.vercel.app">CyberNex Academy</a></p>
+              </div>
+            </div>
+          </div>
+        </body>
+        </html>
+      `,
+    });
+    
+    if (error) {
+      console.error('Failed to send welcome email:', error);
+      return { success: false, message: `Email error: ${error.message}` };
+    }
+    
+    console.log('Welcome email sent successfully:', data);
+    return { success: true, message: 'Email sent successfully' };
+  } catch (error: any) {
+    console.error('Exception while sending email:', error);
+    return { success: false, message: `Email exception: ${error.message || 'Unknown error'}` };
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // For debugging - log environment variables (sanitized)
@@ -215,60 +335,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send confirmation email if Resend API key is properly configured
-    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY === 'dummy_key' || process.env.RESEND_API_KEY === 'your_resend_api_key_here' || process.env.RESEND_API_KEY === 're_123456789') {
-      console.warn('RESEND_API_KEY is not properly set. Email will not be sent.');
-      return NextResponse.json({
-        message: 'Thank you for joining our waitlist! (Email delivery is currently disabled)'
-      });
-    }
-
+    // After successfully storing the email in database
     try {
-      console.log('Sending welcome email...');
-      // Send welcome email
-      const { data, error } = await resend.emails.send({
-        from: 'CyberNex Academy <onboarding@resend.dev>',
-        to: email,
-        subject: 'Welcome to CyberNex Academy Waitlist! 🚀',
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            <h1 style="color: #3b82f6; margin-bottom: 20px;">Welcome to CyberNex Academy!</h1>
-            
-            <p style="color: #374151; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-              We're working hard to build the most comprehensive cybersecurity resource platform that will help guide your journey in the field. Your support means the world to us.
-            </p>
-
-            <p style="color: #374151; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-              We'll keep you updated on our progress and you'll be among the first to know when we launch. Get ready to discover, learn, and advance your cybersecurity career with CyberNex Academy!
-            </p>
-
-            <div style="background-color: #1e40af; color: white; padding: 15px; border-radius: 8px; margin-top: 30px;">
-              <p style="margin: 0; font-size: 14px;">
-                Stay tuned for updates and exclusive early access!
-              </p>
-            </div>
-
-            <div style="margin-top: 30px; font-size: 12px; color: #6b7280; text-align: center;">
-              <p>If you didn't sign up for CyberNex Academy, please ignore this email.</p>
-              <p>© 2025 CyberNex Academy. All rights reserved.</p>
-            </div>
-          </div>
-        `
-      });
-      
-      if (error) {
-        console.error('Email sending error:', error);
-      } else {
-        console.log('Welcome email sent successfully', data);
+      const emailResult = await sendWelcomeEmail(email);
+      if (!emailResult.success) {
+        console.warn('Email sending failed but user was added to waitlist:', emailResult.message);
       }
-    } catch (emailError: any) {
-      console.error('Failed to send welcome email:', emailError);
-      // We will still return success since the email is in the database
+    } catch (emailError) {
+      console.error('Error in email sending process:', emailError);
+      // Continue since the user is already added to the database
     }
 
-    // Log the successful signup
-    console.log(`New waitlist signup completed for: ${email}`);
-
+    // Return success response
     return NextResponse.json({
       message: 'Thank you for joining our waitlist! Please check your email for a welcome message.'
     });

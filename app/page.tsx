@@ -39,20 +39,21 @@ export default function LandingPage() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-20 md:py-32 bg-grid-pattern">
-          <div className="absolute inset-0 animated-gradient opacity-10"></div>
+          {/* Background elements with higher z-index control */}
+          <div className="absolute inset-0 animated-gradient opacity-10 z-0"></div>
           
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-3xl mx-auto">
+            <div className="text-center max-w-3xl mx-auto pt-4 md:pt-0">
               {/* Logo */}
-              <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
                 CyberNex Academy
               </h1>
               
-              <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-gray-100">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-6 text-gray-100">
                 Your Ultimate Cybersecurity Resource Hub
               </h2>
               
-              <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+              <p className="text-base md:text-lg lg:text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
                 CyberNex Academy is revolutionizing how you discover and access cybersecurity resources. 
                 We&apos;re building the most comprehensive platform to guide your cybersecurity journey, 
                 from beginner to expert.
