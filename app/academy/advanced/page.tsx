@@ -1,6 +1,10 @@
-import { Zap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { Zap, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Target, Flame, Brain, Filter, X, BookOpen, Wrench } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 interface Resource {
   name: string
@@ -32,6 +36,8 @@ function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): re
 }
 
 export default function AdvancedPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+
   const resourceCategories: ResourceCategory[] = [
     {
       title: "Exploit Development Tools",
@@ -371,78 +377,144 @@ export default function AdvancedPage() {
     }
   ]
 
+  // Filter categories for the CategoryFilter component
+  const filterCategories = [
+    { id: 'All', name: 'All Resources', icon: BookOpen },
+    { id: 'Reverse Engineering', name: 'Reverse Engineering', icon: Code },
+    { id: 'Debugger', name: 'Debuggers', icon: Terminal },
+    { id: 'Instrumentation', name: 'Instrumentation', icon: Wrench },
+    { id: 'Analysis Suite', name: 'Analysis Suites', icon: Shield },
+    { id: 'Security Tool', name: 'Security Tools', icon: Lock },
+    { id: 'Exploit Development', name: 'Exploit Development', icon: Flame },
+    { id: 'Debugging Tool', name: 'Debugging Tools', icon: Terminal },
+    { id: 'Book', name: 'Books', icon: BookOpen },
+  ]
+
+  // Filter resources based on selected category
+  const getFilteredCategories = () => {
+    // If All is selected, return all categories
+    if (selectedCategory === 'All') {
+      return resourceCategories;
+    }
+    
+    // Otherwise, filter resources by type
+    return resourceCategories.map(category => ({
+      ...category,
+      resources: category.resources.filter(resource => resource.type === selectedCategory)
+    })).filter(category => category.resources.length > 0);
+  }
+
+  const filteredCategories = getFilteredCategories();
+  
+  // Calculate total resource count
+  const totalResourceCount = filteredCategories.reduce(
+    (total, category) => total + category.resources.length, 
+    0
+  );
+
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gray-950 pb-20">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <Zap className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Advanced Resources</span>
+      <div className="relative bg-gradient-to-b from-black via-gray-900 to-gray-950 pt-24 pb-12">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col items-center text-center mb-8">
+            {/* Category Badge */}
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium mb-4">
+              <Zap className="w-4 h-4 mr-2" />
+              Academy Resources
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Expert-Level Security Resources
+            
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Advanced Resources
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              A curated collection of advanced cybersecurity tools, research materials, and specialized resources.
+            
+            <p className="text-xl text-gray-400 max-w-2xl">
+              Master advanced cybersecurity techniques with these specialized resources for security professionals.
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Resources Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            {resourceCategories.map((category, index) => (
-              <div key={index} className="mb-16 last:mb-0">
-                <div className="flex items-center mb-8">
-                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
-                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
-                </div>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {category.resources.map((resource, resourceIndex) => (
-                    <a
-                      key={resourceIndex}
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
-                          {resource.name}
-                        </h3>
-                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
-                          {resource.type}
+      </div>
+      
+      {/* Category Filter */}
+      <CategoryFilter
+        categories={filterCategories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="red"
+      />
+      
+      {/* Resources Count */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-400 text-sm">
+            Showing {totalResourceCount} {totalResourceCount === 1 ? 'resource' : 'resources'}
+            {selectedCategory !== 'All' ? ` in category: ${selectedCategory}` : ''}
+          </p>
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 mt-8">
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="mb-16 last:mb-0">
+              <div className="flex items-center mb-8">
+                <category.icon className="w-6 h-6 text-blue-500 mr-3" />
+                <h2 className="text-2xl font-bold text-white">{category.title}</h2>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                {category.resources.map((resource, resourceIndex) => (
+                  <a
+                    key={resourceIndex}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
+                        {resource.name}
+                      </h3>
+                      <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
+                        {resource.type}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-400 mb-3">
+                      {resource.description}
+                    </p>
+                    {hasAuthor(resource) && (
+                      <div className="text-sm text-blue-500">
+                        By {resource.author}
+                      </div>
+                    )}
+                    {hasFree(resource) && (
+                      <div className="mt-2">
+                        <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
+                          {resource.free ? 'Free' : 'Paid'}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-400 mb-3">
-                        {resource.description}
-                      </p>
-                      {hasAuthor(resource) && (
-                        <div className="text-sm text-blue-500">
-                          By {resource.author}
-                        </div>
-                      )}
-                      {hasFree(resource) && (
-                        <div className="mt-2">
-                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
-                            {resource.free ? 'Free' : 'Paid'}
-                          </span>
-                        </div>
-                      )}
-                    </a>
-                  ))}
-                </div>
+                    )}
+                  </a>
+                ))}
               </div>
-            ))}
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No resources found</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category</p>
+            <Button 
+              onClick={() => setSelectedCategory('All')}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear filter
+            </Button>
           </div>
-        </div>
-      </section>
+        )}
+      </div>
     </div>
-  )
+  );
 } 

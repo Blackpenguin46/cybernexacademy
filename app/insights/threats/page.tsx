@@ -1,8 +1,24 @@
-import { AlertTriangle, ExternalLink, Clock, Tag, Globe, Shield, Target, ArrowUpRight } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { AlertTriangle, ExternalLink, Clock, Tag, Globe, Shield, Target, ArrowUpRight, Filter, X, Code, Lock, Server, Database } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 export default function ThreatReportsPage() {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+
+  // Categories for filtering
+  const categories = [
+    { id: 'All', name: 'All Threats', icon: AlertTriangle },
+    { id: 'Ransomware', name: 'Ransomware', icon: Lock },
+    { id: 'Banking Malware', name: 'Banking Malware', icon: Database },
+    { id: 'Supply Chain Attack', name: 'Supply Chain Attacks', icon: Server },
+    { id: 'Zero-day', name: 'Zero-day Exploits', icon: Code },
+    { id: 'Phishing', name: 'Phishing', icon: Target },
+  ]
+
   const activeThreatAlerts = [
     {
       title: "Ransomware Campaign Targeting Healthcare",
@@ -252,99 +268,140 @@ export default function ThreatReportsPage() {
     }
   ]
 
+  // Filter threats based on selected category
+  const filteredThreats = selectedCategory === 'All'
+    ? activeThreatAlerts
+    : activeThreatAlerts.filter(threat => threat.type === selectedCategory);
+
   return (
     <div className="min-h-screen bg-black">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-yellow-900/20 to-black/20 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 to-black/20 z-10"></div>
         <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
         <div className="container relative z-20">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-yellow-600/10 rounded-xl mb-4">
-              <AlertTriangle className="w-5 h-5 text-yellow-500 mr-2" />
-              <span className="text-yellow-500 font-medium">Threat Intelligence</span>
+            <div className="inline-flex items-center justify-center p-2 bg-red-600/10 rounded-xl mb-4">
+              <AlertTriangle className="w-5 h-5 text-red-500 mr-2" />
+              <span className="text-red-500 font-medium">Threat Intelligence</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Threat Reports
+              Active Threat Reports
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Stay informed about active threats, vulnerabilities, and emerging attack patterns.
+              Stay informed about the latest cybersecurity threats, vulnerabilities, and actor profiles
             </p>
           </div>
         </div>
       </section>
 
-      {/* Active Threats Section */}
-      <section className="py-20 border-t border-gray-800">
+      {/* Filter Section */}
+      <CategoryFilter
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        accentColor="red"
+      />
+      
+      {/* Resources Count */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-400 text-sm">
+            Showing {filteredThreats.length} {filteredThreats.length === 1 ? 'threat' : 'threats'}
+            {selectedCategory !== 'All' ? ` in category: ${selectedCategory}` : ''}
+          </p>
+        </div>
+      </div>
+      
+      {/* Alerts Section */}
+      <section className="py-16">
         <div className="container">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Active Threat Alerts
-            </h2>
-            <div className="grid gap-8 md:grid-cols-3">
-              {activeThreatAlerts.map((alert, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-yellow-500/50 transition-colors"
-                >
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-yellow-500 text-sm">{alert.type}</span>
-                        <span className={`text-sm px-2 py-1 rounded ${
-                          alert.severity === 'Critical' 
-                            ? 'bg-red-500/10 text-red-500' 
-                            : 'bg-yellow-500/10 text-yellow-500'
-                        }`}>
-                          {alert.severity}
-                        </span>
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{alert.title}</h3>
-                      <div className="flex items-center text-sm text-gray-400 mb-2">
-                        <Target className="w-4 h-4 mr-1" />
-                        {alert.target}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Attack Details</div>
-                      <div className="space-y-2">
-                        <div className="text-sm text-gray-400">Vector: {alert.details.vector}</div>
-                        <div className="text-sm text-gray-400">Impact: {alert.details.impact}</div>
-                        <div className="text-sm text-gray-400">Scope: {alert.details.scope}</div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Key Indicators</div>
-                      <div className="space-y-2">
-                        {alert.indicators.map((indicator, indIndex) => (
-                          <div
-                            key={indIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <AlertTriangle className="w-4 h-4 text-yellow-500 mr-2" />
-                            {indicator}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm text-gray-500 mb-2">Mitigation Steps</div>
-                      <div className="space-y-2">
-                        {alert.mitigation.map((step, stepIndex) => (
-                          <div
-                            key={stepIndex}
-                            className="flex items-center text-gray-300 text-sm"
-                          >
-                            <Shield className="w-4 h-4 text-yellow-500 mr-2" />
-                            {step}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+            {filteredThreats.length > 0 ? (
+              <>
+                <div className="flex items-center mb-8">
+                  <AlertTriangle className="w-6 h-6 text-red-500 mr-3" />
+                  <h2 className="text-2xl font-bold text-white">Active Threat Alerts</h2>
                 </div>
-              ))}
-            </div>
+                
+                <div className="space-y-8">
+                  {filteredThreats.map((alert, index) => (
+                    <div
+                      key={index}
+                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-yellow-500/50 transition-colors"
+                    >
+                      <div className="space-y-4">
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-yellow-500 text-sm">{alert.type}</span>
+                            <span className={`text-sm px-2 py-1 rounded ${
+                              alert.severity === 'Critical' 
+                                ? 'bg-red-500/10 text-red-500' 
+                                : 'bg-yellow-500/10 text-yellow-500'
+                            }`}>
+                              {alert.severity}
+                            </span>
+                          </div>
+                          <h3 className="text-xl font-semibold text-white mb-2">{alert.title}</h3>
+                          <div className="flex items-center text-sm text-gray-400 mb-2">
+                            <Target className="w-4 h-4 mr-1" />
+                            {alert.target}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500 mb-2">Attack Details</div>
+                          <div className="space-y-2">
+                            <div className="text-sm text-gray-400">Vector: {alert.details.vector}</div>
+                            <div className="text-sm text-gray-400">Impact: {alert.details.impact}</div>
+                            <div className="text-sm text-gray-400">Scope: {alert.details.scope}</div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500 mb-2">Key Indicators</div>
+                          <div className="space-y-2">
+                            {alert.indicators.map((indicator, indIndex) => (
+                              <div
+                                key={indIndex}
+                                className="flex items-center text-gray-300 text-sm"
+                              >
+                                <AlertTriangle className="w-4 h-4 text-yellow-500 mr-2" />
+                                {indicator}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-gray-500 mb-2">Mitigation Steps</div>
+                          <div className="space-y-2">
+                            {alert.mitigation.map((step, stepIndex) => (
+                              <div
+                                key={stepIndex}
+                                className="flex items-center text-gray-300 text-sm"
+                              >
+                                <Shield className="w-4 h-4 text-yellow-500 mr-2" />
+                                {step}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
+                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+                <h3 className="text-xl font-medium text-white mb-2">No threats found</h3>
+                <p className="text-gray-400 mb-6">Try selecting a different category</p>
+                <Button 
+                  onClick={() => setSelectedCategory('All')}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" /> Clear filter
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </section>
