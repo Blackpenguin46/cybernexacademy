@@ -71,6 +71,7 @@ export default function GitHubPage() {
     { id: 'defensive_security', name: 'Defensive Security', icon: Shield },
     { id: 'cryptography', name: 'Cryptography', icon: Lock },
     { id: 'osint', name: 'OSINT', icon: Search },
+    { id: 'resources', name: 'Learning Resources', icon: BookOpen },
   ]
   
   // Featured repositories organized by category
@@ -252,7 +253,7 @@ export default function GitHubPage() {
       stars: 16400,
       forks: 2600,
       language: "",
-      category: "learning",
+      category: "resources",
       tags: ["collection", "resources", "learning"]
     },
     {
@@ -263,8 +264,86 @@ export default function GitHubPage() {
       stars: 10300,
       forks: 860,
       language: "",
-      category: "learning",
+      category: "resources",
       tags: ["guide", "resources", "learning"]
+    },
+    // New GitHub Repositories from our resources
+    {
+      name: "Cybersecurity Resources",
+      fullName: "bst04/cybersources",
+      description: "Comprehensive collection of cybersecurity learning resources, tools and references for all skill levels",
+      url: "https://github.com/bst04/cybersources",
+      stars: 275,
+      forks: 82,
+      language: "Markdown",
+      category: "resources",
+      tags: ["collection", "learning", "resources"]
+    },
+    {
+      name: "OSCP Guide",
+      fullName: "0xsyr0/OSCP",
+      description: "Comprehensive collection of resources for OSCP exam preparation and penetration testing",
+      url: "https://github.com/0xsyr0/OSCP",
+      stars: 1450,
+      forks: 320,
+      language: "Markdown",
+      category: "pentesting",
+      tags: ["oscp", "certification", "pentesting"]
+    },
+    {
+      name: "SecLists",
+      fullName: "danielmiessler/SecLists",
+      description: "Collection of multiple types of lists used during security assessments, including usernames, passwords, URLs and more",
+      url: "https://github.com/danielmiessler/SecLists",
+      stars: 46800,
+      forks: 21300,
+      language: "PHP",
+      category: "pentesting",
+      tags: ["wordlists", "pentesting", "security-assessment"]
+    },
+    {
+      name: "Awesome Password Cracking",
+      fullName: "n0kovo/awesome-password-cracking",
+      description: "Curated list of password cracking resources, tools and techniques for security professionals",
+      url: "https://github.com/n0kovo/awesome-password-cracking",
+      stars: 3200,
+      forks: 680,
+      language: "Markdown",
+      category: "pentesting",
+      tags: ["password-cracking", "hashcat", "wordlists"]
+    },
+    {
+      name: "Security Certifications & Pentesting Academy",
+      fullName: "ghostsec420/SCPA",
+      description: "Security Contents & Penetration Analysis Framework for learning cybersecurity and penetration testing",
+      url: "https://github.com/ghostsec420/SCPA",
+      stars: 320,
+      forks: 95,
+      language: "Markdown",
+      category: "resources",
+      tags: ["learning", "pentesting", "framework"]
+    },
+    {
+      name: "Bug Bounty Resources",
+      fullName: "gotr00t0day/BugBounty",
+      description: "Curated collection of bug bounty resources, tools and methodologies for security researchers",
+      url: "https://github.com/gotr00t0day/BugBounty",
+      stars: 860,
+      forks: 190,
+      language: "Markdown",
+      category: "web_security",
+      tags: ["bug-bounty", "web-security", "tools"]
+    },
+    {
+      name: "Exploit Collection",
+      fullName: "gotr00t0day/exp0s3d",
+      description: "Collection of exploits, vulnerabilities, and security research for penetration testers and researchers",
+      url: "https://github.com/gotr00t0day/exp0s3d",
+      stars: 740,
+      forks: 210,
+      language: "Python",
+      category: "pentesting",
+      tags: ["exploits", "vulnerabilities", "security-research"]
     }
   ]
   
