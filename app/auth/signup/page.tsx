@@ -87,8 +87,9 @@ export default function SignupPage() {
       try {
         console.log('Attempting to sign up with:', { email, password })
         
-        // Define the redirect URL explicitly
-        const redirectUrl = 'https://v0-cybernex-r5aktld1jft.vercel.app/auth/verify-email';
+        // Define the redirect URL dynamically based on the current environment
+        const baseUrl = window.location.origin;
+        const redirectUrl = `${baseUrl}/auth/verify-email`;
         console.log('Using redirect URL in signUp function:', redirectUrl);
         
         const { data, error } = await supabase.auth.signUp({
@@ -139,9 +140,9 @@ export default function SignupPage() {
         
         setSuccessMessage('Registration successful! Please check your email to verify your account.')
         
-        // After successful sign-up, redirect to verify email page
+        // After successful sign-up, redirect to verify email page with email param
         setTimeout(() => {
-          router.push("/auth/verify-email")
+          router.push(`/auth/verify-email?email=${encodeURIComponent(email)}`)
         }, 2000)
       } catch (signupError) {
         console.error('Unexpected signup error:', signupError)

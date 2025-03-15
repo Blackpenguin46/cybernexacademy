@@ -294,8 +294,11 @@ export async function signIn(email: string, password: string) {
 // Sign up with email and password
 export async function signUp(email: string, password: string) {
   try {
-    // Define the redirect URL explicitly
-    const redirectUrl = 'https://v0-cybernex-r5aktld1jft.vercel.app/auth/verify-email';
+    // Use environment variable if available, or construct from deployment URL
+    const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL 
+      ? `${process.env.NEXT_PUBLIC_SITE_URL}/auth/verify-email`
+      : typeof window !== 'undefined' ? `${window.location.origin}/auth/verify-email` : undefined;
+    
     console.log('Using redirect URL in signUp function:', redirectUrl);
     
     const { data, error } = await supabase.auth.signUp({
