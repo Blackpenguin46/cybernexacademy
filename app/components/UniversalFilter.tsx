@@ -161,6 +161,38 @@ const UniversalFilter = ({
     return false
   }
   
+  // Get accent color classes
+  const getAccentColorClasses = (component: string) => {
+    const colorMap: Record<string, Record<string, string>> = {
+      badge: {
+        blue: 'bg-blue-900/40 text-blue-300 hover:bg-blue-900/60',
+        red: 'bg-red-900/40 text-red-300 hover:bg-red-900/60',
+        green: 'bg-green-900/40 text-green-300 hover:bg-green-900/60',
+        purple: 'bg-purple-900/40 text-purple-300 hover:bg-purple-900/60',
+        yellow: 'bg-yellow-900/40 text-yellow-800 hover:bg-yellow-900/60',
+        violet: 'bg-violet-900/40 text-violet-300 hover:bg-violet-900/60',
+      },
+      checkbox: {
+        blue: 'data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600',
+        red: 'data-[state=checked]:bg-red-600 data-[state=checked]:border-red-600',
+        green: 'data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600',
+        purple: 'data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600',
+        yellow: 'data-[state=checked]:bg-yellow-600 data-[state=checked]:border-yellow-600',
+        violet: 'data-[state=checked]:bg-violet-600 data-[state=checked]:border-violet-600',
+      },
+      slider: {
+        blue: 'bg-blue-600',
+        red: 'bg-red-600',
+        green: 'bg-green-600',
+        purple: 'bg-purple-600',
+        yellow: 'bg-yellow-600',
+        violet: 'bg-violet-600',
+      }
+    }
+    
+    return colorMap[component][accentColor] || colorMap[component]['blue']
+  }
+  
   return (
     <section className="py-6 border-t border-b border-gray-800">
       <div className="container">
@@ -203,7 +235,7 @@ const UniversalFilter = ({
                   return (
                     <Badge 
                       key={`${key}-${optionId}`}
-                      className={`bg-${accentColor}-900/40 text-${accentColor}-300 gap-1 hover:bg-${accentColor}-900/60`}
+                      className={`gap-1 ${getAccentColorClasses('badge')}`}
                     >
                       {option.label}
                       <X 
@@ -223,7 +255,7 @@ const UniversalFilter = ({
                 return (
                   <Badge 
                     key={key}
-                    className={`bg-${accentColor}-900/40 text-${accentColor}-300 gap-1 hover:bg-${accentColor}-900/60`}
+                    className={`gap-1 ${getAccentColorClasses('badge')}`}
                   >
                     {category.name}: {displayValue}
                     <X 
@@ -298,7 +330,7 @@ const UniversalFilter = ({
                             id={`${category.id}-${option.id}`}
                             checked={(activeFilters[category.id] || []).includes(option.id)}
                             onCheckedChange={() => handleCheckboxChange(category.id, option.id)}
-                            className={`data-[state=checked]:bg-${accentColor}-600 data-[state=checked]:border-${accentColor}-600`}
+                            className={getAccentColorClasses('checkbox')}
                           />
                           <label
                             htmlFor={`${category.id}-${option.id}`}
@@ -321,7 +353,7 @@ const UniversalFilter = ({
                             name={category.id}
                             checked={activeFilters[category.id] === option.id}
                             onChange={() => handleRadioChange(category.id, option.id)}
-                            className={`text-${accentColor}-600 focus:ring-${accentColor}-500 h-4 w-4 border-gray-700 bg-gray-800`}
+                            className="h-4 w-4 border-gray-700 bg-gray-800"
                           />
                           <label
                             htmlFor={`${category.id}-${option.id}`}
@@ -342,6 +374,7 @@ const UniversalFilter = ({
                         max={category.max}
                         step={category.step || 1}
                         onValueChange={(value) => handleSliderChange(category.id, value)}
+                        className="my-4"
                       />
                       <div className="flex justify-between mt-2 text-xs text-gray-400">
                         <span>{category.min}</span>
