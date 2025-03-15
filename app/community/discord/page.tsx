@@ -17,7 +17,11 @@ interface Category {
 
 export default function DiscordPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [activeFilters, setActiveFilters] = useState({
+  const [activeFilters, setActiveFilters] = useState<{
+    searchQuery: string;
+    memberSize: string;
+    categories: string[];
+  }>({
     searchQuery: '',
     memberSize: '',
     categories: []
@@ -193,7 +197,7 @@ export default function DiscordPage() {
         searchPlaceholder="Search Discord servers by name or description..."
         filterCategories={filterCategories}
         activeFilters={activeFilters}
-        setActiveFilters={setActiveFilters}
+        setActiveFilters={(filters) => setActiveFilters(filters as typeof activeFilters)}
         accentColor="blue"
         itemCount={filteredServers.length}
       />
