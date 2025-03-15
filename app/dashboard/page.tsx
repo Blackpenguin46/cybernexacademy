@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import FeedbackForm from "@/app/components/FeedbackForm";
+import PersonalizedResourceDashboard from "@/app/components/PersonalizedResourceDashboard";
 import { Newspaper, Calendar, BookOpen, MessageSquare, Lightbulb, ArrowRight, LogOut } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -25,17 +26,6 @@ interface Event {
   type: string;
 }
 
-interface RecommendedResource {
-  id: string;
-  title: string;
-  description: string;
-  url: string;
-  resource_type: string;
-  interests: string[];
-  experience_levels: string[];
-  goals: string[];
-}
-
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
@@ -46,7 +36,6 @@ export default function DashboardPage() {
   const [userInterests, setUserInterests] = useState<string[]>([]);
   const [userExperience, setUserExperience] = useState<string>("");
   const [userGoals, setUserGoals] = useState<string[]>([]);
-  const [recommendedResources, setRecommendedResources] = useState<RecommendedResource[]>([]);
   const [onboardingCompleted, setOnboardingCompleted] = useState<boolean>(true);
 
   useEffect(() => {
@@ -121,52 +110,12 @@ export default function DashboardPage() {
         console.error('Error fetching events:', error);
       }
     };
-    
-    const fetchRecommendedResources = async () => {
-      try {
-        if (!userInterests || userInterests.length === 0) return;
-        
-        // Fetch resources that match user interests and experience level
-        let query = supabase
-          .from('recommended_resources')
-          .select('*');
-        
-        // Build a condition that checks if any of the user's interests are in the resource's interests array
-        const interestFilter = userInterests.map(interest => `interests.cs.{${interest}}`).join(',');
-        
-        // Add experience level filter if available
-        if (userExperience) {
-          query = query.or(`experience_levels.cs.{${userExperience}}`);
-        }
-        
-        // Add goals filter if available
-        if (userGoals && userGoals.length > 0) {
-          const goalsFilter = userGoals.map(goal => `goals.cs.{${goal}}`).join(',');
-          query = query.or(goalsFilter);
-        }
-        
-        // Fetch the data with the combined filters
-        const { data, error } = await query.limit(6);
-        
-        if (error) throw error;
-        
-        // Filter results to match at least one interest
-        const filteredResources = data.filter(resource => 
-          resource.interests.some((interest: string) => userInterests.includes(interest))
-        );
-        
-        setRecommendedResources(filteredResources || []);
-      } catch (error) {
-        console.error('Error fetching recommended resources:', error);
-      }
-    };
 
     if (userInterests.length > 0) {
       fetchArticles();
       fetchEvents();
-      fetchRecommendedResources();
     }
-  }, [userInterests, userExperience, userGoals]);
+  }, [userInterests]);
 
   if (loading) {
     return (
@@ -224,53 +173,11 @@ export default function DashboardPage() {
           
           {/* Personalized Recommendations */}
           <div className="bg-gray-900/50 backdrop-blur-sm p-6 rounded-lg border border-gray-800">
-            <div className="flex items-center mb-4">
-              <Lightbulb className="w-5 h-5 text-blue-500 mr-2" />
-              <h2 className="text-xl font-semibold text-white">Recommended For You</h2>
-            </div>
-            
-            {recommendedResources.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {recommendedResources.map((resource) => (
-                  <Link 
-                    href={resource.url} 
-                    target="_blank" 
-                    key={resource.id}
-                    className="border border-gray-800 hover:border-blue-500/50 bg-gray-800/30 p-4 rounded-lg transition-colors hover:bg-gray-800/50"
-                  >
-                    <div className="flex flex-col h-full">
-                      <h3 className="text-white font-medium mb-2">{resource.title}</h3>
-                      <p className="text-gray-400 text-sm mb-3 flex-grow">{resource.description}</p>
-                      <div className="flex justify-between mt-auto">
-                        <span className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded">
-                          {resource.resource_type}
-                        </span>
-                        <span className="text-blue-400 text-xs flex items-center">
-                          View Resource
-                          <ArrowRight className="w-3 h-3 ml-1" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-400">
-                  {userInterests.length > 0 
-                    ? "We're preparing personalized recommendations based on your interests." 
-                    : "Complete your profile to get personalized recommendations."}
-                </p>
-                {userInterests.length === 0 && (
-                  <Link 
-                    href="/onboarding" 
-                    className="text-blue-500 hover:text-blue-400 mt-2 inline-block"
-                  >
-                    Set your interests
-                  </Link>
-                )}
-              </div>
-            )}
+            <PersonalizedResourceDashboard 
+              userInterests={userInterests}
+              userExperience={userExperience}
+              maxResources={6}
+            />
           </div>
 
           {/* News Articles */}
