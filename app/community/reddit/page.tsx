@@ -1,21 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark, Code, Target, Server, Lock, AlertTriangle, BookOpen, Briefcase, Filter, X } from "lucide-react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark, Code, Target, Server, Lock, AlertTriangle, BookOpen, Briefcase } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import UniversalFilter from '@/app/components/UniversalFilter'
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 export default function RedditPage() {
-  const [activeFilters, setActiveFilters] = useState<{
-    searchQuery: string;
-    memberSize: string;
-    categories: string[];
-  }>({
-    searchQuery: '',
-    memberSize: '',
-    categories: []
-  })
+  const [selectedCategory, setSelectedCategory] = useState('All')
 
   // Categories for filtering
   const categories = [
@@ -136,84 +128,10 @@ export default function RedditPage() {
     }
   ]
 
-  // Extract all unique categories from subreddits
-  const allCategories = Array.from(
-    new Set(popularSubreddits.flatMap(subreddit => subreddit.categories))
-  ).sort()
-
-  // Universal filter categories
-  const filterCategories = [
-    {
-      id: 'memberSize',
-      name: 'Member Size',
-      type: 'radio' as const,
-      icon: Users,
-      options: [
-        { id: '', label: 'Any Size', value: '' },
-        { id: 'small', label: 'Small (< 100K)', value: 'small' },
-        { id: 'medium', label: 'Medium (100K - 500K)', value: 'medium' },
-        { id: 'large', label: 'Large (500K - 1M)', value: 'large' },
-        { id: 'huge', label: 'Huge (1M+)', value: 'huge' }
-      ]
-    },
-    {
-      id: 'categories',
-      name: 'Categories',
-      type: 'checkbox' as const,
-      icon: Target,
-      options: allCategories.map(category => ({
-        id: category,
-        label: category.charAt(0).toUpperCase() + category.slice(1).replace('_', ' '),
-        value: category
-      }))
-    }
-  ]
-
-  // Filter subreddits based on all active filters
-  const filterSubreddits = () => {
-    let filtered = popularSubreddits
-
-    // Search query filter
-    if (activeFilters.searchQuery) {
-      const query = activeFilters.searchQuery.toLowerCase()
-      filtered = filtered.filter(subreddit => 
-        subreddit.name.toLowerCase().includes(query) ||
-        subreddit.description.toLowerCase().includes(query)
-      )
-    }
-
-    // Member size filter
-    if (activeFilters.memberSize) {
-      filtered = filtered.filter(subreddit => {
-        const members = subreddit.members
-        
-        switch(activeFilters.memberSize) {
-          case 'small':
-            return !members.includes('M') && parseInt(members) < 100
-          case 'medium':
-            return !members.includes('M') && parseInt(members) >= 100 && parseInt(members) < 500
-          case 'large':
-            return !members.includes('M') && parseInt(members) >= 500 || (members.includes('M') && parseInt(members) < 1)
-          case 'huge':
-            return members.includes('M') && parseInt(members) >= 1
-          default:
-            return true
-        }
-      })
-    }
-
-    // Categories filter (checkbox)
-    if (activeFilters.categories && activeFilters.categories.length > 0) {
-      filtered = filtered.filter(subreddit => 
-        activeFilters.categories.some(category => subreddit.categories.includes(category))
-      )
-    }
-
-    return filtered
-  }
-
-  // Apply filters
-  const filteredSubreddits = filterSubreddits()
+  // Filter subreddits based on selected category
+  const filteredSubreddits = selectedCategory === 'All'
+    ? popularSubreddits
+    : popularSubreddits.filter(subreddit => subreddit.categories.includes(selectedCategory));
 
   // Featured subreddits - display first 4 of filter results or all subreddits
   const featuredSubreddits = filteredSubreddits.slice(0, 4);
@@ -257,15 +175,23 @@ export default function RedditPage() {
         </div>
       </div>
 
-      {/* Universal Filter Component */}
-      <UniversalFilter
-        searchPlaceholder="Search subreddits by name or description..."
-        filterCategories={filterCategories}
-        activeFilters={activeFilters}
-        setActiveFilters={(filters) => setActiveFilters(filters as typeof activeFilters)}
+      {/* Category Filter Component */}
+      <CategoryFilter
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
         accentColor="red"
-        itemCount={filteredSubreddits.length}
       />
+      
+      {/* Resources Count */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-400 text-sm">
+            Showing {filteredSubreddits.length} {filteredSubreddits.length === 1 ? 'subreddit' : 'subreddits'}
+            {selectedCategory !== 'All' ? ` in category: ${categories.find(c => c.id === selectedCategory)?.name || selectedCategory}` : ''}
+          </p>
+        </div>
+      </div>
       
       {/* Main Content */}
       <div className="container mx-auto px-4 mt-8">
@@ -380,18 +306,18 @@ export default function RedditPage() {
             </div>
           </div>
         )}
-
+        
         {/* No Results */}
         {filteredSubreddits.length === 0 && (
           <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
-            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No subreddits match your filters</h3>
-            <p className="text-gray-400 mb-6">Try adjusting your search criteria or clearing filters</p>
+            <div className="h-12 w-12 text-gray-500 mx-auto mb-4">🔍</div>
+            <h3 className="text-xl font-medium text-white mb-2">No subreddits found</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category</p>
             <Button 
-              onClick={() => setActiveFilters({ searchQuery: '', memberSize: '', categories: [] })}
+              onClick={() => setSelectedCategory('All')}
               className="flex items-center gap-2"
             >
-              <X className="h-4 w-4" /> Clear all filters
+              Clear filter
             </Button>
           </div>
         )}

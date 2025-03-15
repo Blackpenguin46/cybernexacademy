@@ -4,7 +4,7 @@ import { useState } from "react"
 import { BookOpen, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Bookmark, Search, Filter, X, Target, Users, Laptop, Book, GraduationCap, Globe } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import UniversalFilter from '@/app/components/UniversalFilter'
+import CategoryFilter from '@/app/components/CategoryFilter'
 
 interface Resource {
   name: string
@@ -30,15 +30,7 @@ function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): re
 }
 
 export default function FoundationalPage() {
-  const [activeFilters, setActiveFilters] = useState<{
-    searchQuery: string;
-    resourceType: string;
-    freeOnly: string[];
-  }>({
-    searchQuery: '',
-    resourceType: '',
-    freeOnly: []
-  });
+  const [selectedCategory, setSelectedCategory] = useState('All')
 
   const resourceCategories = [
     {
@@ -355,83 +347,38 @@ export default function FoundationalPage() {
     }
   ]
 
-  // Extract all resource types from resources
-  const allResourceTypes = Array.from(
-    new Set(
-      resourceCategories.flatMap(category => 
-        category.resources.map(resource => resource.type)
-      )
-    )
-  ).sort();
-
-  // Universal filter categories
+  // Filter categories for the CategoryFilter component
   const filterCategories = [
-    {
-      id: 'resourceType',
-      name: 'Resource Type',
-      type: 'radio' as const,
-      icon: Book,
-      options: [
-        { id: '', label: 'All Types', value: '' },
-        ...allResourceTypes.map(type => ({
-          id: type,
-          label: type,
-          value: type
-        }))
-      ]
-    },
-    {
-      id: 'freeOnly',
-      name: 'Availability',
-      type: 'checkbox' as const,
-      icon: Bookmark,
-      options: [
-        { id: 'free', label: 'Free Resources', value: 'free' }
-      ]
+    { id: 'All', name: 'All Resources', icon: BookOpen },
+    { id: 'Interactive Platform', name: 'Interactive Platforms', icon: Terminal },
+    { id: 'Interactive Training', name: 'Interactive Training', icon: Code },
+    { id: 'Online Course', name: 'Online Courses', icon: GraduationCap },
+    { id: 'Book', name: 'Books', icon: Book },
+    { id: 'GitHub Repository', name: 'GitHub Repositories', icon: Code },
+    { id: 'Framework', name: 'Frameworks', icon: Network },
+    { id: 'Security Guide', name: 'Security Guides', icon: Shield },
+    { id: 'YouTube Channel', name: 'YouTube Channels', icon: Laptop },
+    { id: 'YouTube Video', name: 'YouTube Videos', icon: Laptop },
+    { id: 'YouTube Playlist', name: 'YouTube Playlists', icon: Laptop },
+    { id: 'Operating System', name: 'Operating Systems', icon: Server },
+    { id: 'Tutorial', name: 'Tutorials', icon: Book },
+  ]
+
+  // Filter resources based on selected category
+  const getFilteredCategories = () => {
+    // If All is selected, return all categories
+    if (selectedCategory === 'All') {
+      return resourceCategories;
     }
-  ];
-
-  // Filter resources based on active filters
-  const filterResources = () => {
-    // Start with all categories
-    const filteredCategories = resourceCategories.map(category => {
-      // Filter resources in each category
-      const filteredResources = category.resources.filter(resource => {
-        // Search query filter
-        if (activeFilters.searchQuery) {
-          const query = activeFilters.searchQuery.toLowerCase();
-          const nameMatch = resource.name.toLowerCase().includes(query);
-          const descMatch = resource.description.toLowerCase().includes(query);
-          
-          if (!nameMatch && !descMatch) return false;
-        }
-        
-        // Resource type filter
-        if (activeFilters.resourceType && resource.type !== activeFilters.resourceType) {
-          return false;
-        }
-        
-        // Free only filter
-        if (activeFilters.freeOnly.includes('free') && hasFree(resource) && !resource.free) {
-          return false;
-        }
-        
-        return true;
-      });
-      
-      // Return category with filtered resources
-      return {
-        ...category,
-        resources: filteredResources
-      };
-    });
     
-    // Filter out categories with no resources
-    return filteredCategories.filter(category => category.resources.length > 0);
-  };
+    // Otherwise, filter resources by type
+    return resourceCategories.map(category => ({
+      ...category,
+      resources: category.resources.filter(resource => resource.type === selectedCategory)
+    })).filter(category => category.resources.length > 0);
+  }
 
-  // Apply filters
-  const filteredCategories = filterResources();
+  const filteredCategories = getFilteredCategories();
   
   // Calculate total resource count
   const totalResourceCount = filteredCategories.reduce(
@@ -464,18 +411,26 @@ export default function FoundationalPage() {
         </div>
       </div>
       
-      {/* Universal Filter Component */}
-      <UniversalFilter
-        searchPlaceholder="Search foundational resources by name or description..."
-        filterCategories={filterCategories}
-        activeFilters={activeFilters}
-        setActiveFilters={(filters) => setActiveFilters(filters as typeof activeFilters)}
+      {/* Category Filter */}
+      <CategoryFilter
+        categories={filterCategories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
         accentColor="green"
-        itemCount={totalResourceCount}
       />
       
+      {/* Resources Count */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-400 text-sm">
+            Showing {totalResourceCount} {totalResourceCount === 1 ? 'resource' : 'resources'}
+            {selectedCategory !== 'All' ? ` in category: ${selectedCategory}` : ''}
+          </p>
+        </div>
+      </div>
+      
       {/* Main Content */}
-      <div className="container mx-auto px-4 mt-12">
+      <div className="container mx-auto px-4 mt-8">
         {filteredCategories.length > 0 ? (
           filteredCategories.map((category, categoryIndex) => (
             <div key={categoryIndex} className="mb-20">
@@ -537,13 +492,13 @@ export default function FoundationalPage() {
         ) : (
           <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
             <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No resources match your filters</h3>
-            <p className="text-gray-400 mb-6">Try adjusting your search criteria or clearing filters</p>
+            <h3 className="text-xl font-medium text-white mb-2">No resources found</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category</p>
             <Button 
-              onClick={() => setActiveFilters({ searchQuery: '', resourceType: '', freeOnly: [] })}
+              onClick={() => setSelectedCategory('All')}
               className="flex items-center gap-2"
             >
-              <X className="h-4 w-4" /> Clear all filters
+              <X className="h-4 w-4" /> Clear filter
             </Button>
           </div>
         )}

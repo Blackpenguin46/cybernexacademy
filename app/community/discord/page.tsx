@@ -1,11 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase, Filter, X, HardDrive, Cloud, Wrench, FileDigit, Bug, TerminalSquare, Search } from "lucide-react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase, Filter, X, HardDrive, Cloud, Wrench, FileDigit, Bug, TerminalSquare } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
-import UniversalFilter from '@/app/components/UniversalFilter'
 import { discordServers } from "@/data/discord-servers"
 
 // Define interface for Category
@@ -17,21 +16,7 @@ interface Category {
 
 export default function DiscordPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
-  const [activeFilters, setActiveFilters] = useState<{
-    searchQuery: string;
-    memberSize: string;
-    categories: string[];
-  }>({
-    searchQuery: '',
-    memberSize: '',
-    categories: []
-  })
   
-  // Extract all unique tags from discord servers
-  const allTags = Array.from(
-    new Set(discordServers.flatMap(server => server.categories))
-  ).sort()
-
   // Categories for filtering
   const categories: Category[] = [
     { id: 'All', name: 'All Servers', icon: Users },
@@ -49,79 +34,10 @@ export default function DiscordPage() {
     { id: 'development', name: 'Secure Development', icon: HardDrive },
   ]
 
-  // Universal filter categories
-  const filterCategories = [
-    {
-      id: 'memberSize',
-      name: 'Member Size',
-      type: 'radio' as const,
-      icon: Users,
-      options: [
-        { id: '', label: 'Any Size', value: '' },
-        { id: 'small', label: 'Small (< 10K)', value: 'small' },
-        { id: 'medium', label: 'Medium (10K - 50K)', value: 'medium' },
-        { id: 'large', label: 'Large (50K - 100K)', value: 'large' },
-        { id: 'huge', label: 'Huge (100K+)', value: 'huge' }
-      ]
-    },
-    {
-      id: 'categories',
-      name: 'Categories',
-      type: 'checkbox' as const,
-      icon: Target,
-      options: allTags.map(tag => ({
-        id: tag,
-        label: tag.replace('_', ' '),
-        value: tag
-      }))
-    }
-  ]
-
-  // Filter servers based on all active filters
-  const filterServers = () => {
-    let filtered = discordServers
-
-    // Search query filter
-    if (activeFilters.searchQuery) {
-      const query = activeFilters.searchQuery.toLowerCase()
-      filtered = filtered.filter(server => 
-        server.name.toLowerCase().includes(query) ||
-        server.description.toLowerCase().includes(query)
-      )
-    }
-
-    // Member size filter
-    if (activeFilters.memberSize) {
-      filtered = filtered.filter(server => {
-        const members = server.members
-        
-        switch(activeFilters.memberSize) {
-          case 'small':
-            return members.includes('K') && parseInt(members) < 10
-          case 'medium':
-            return members.includes('K') && parseInt(members) >= 10 && parseInt(members) < 50
-          case 'large':
-            return members.includes('K') && parseInt(members) >= 50 && parseInt(members) < 100
-          case 'huge':
-            return members.includes('K') && parseInt(members) >= 100 || members.includes('M')
-          default:
-            return true
-        }
-      })
-    }
-
-    // Categories filter (checkbox)
-    if (activeFilters.categories && activeFilters.categories.length > 0) {
-      filtered = filtered.filter(server => 
-        activeFilters.categories.some(category => server.categories.includes(category))
-      )
-    }
-
-    return filtered
-  }
-
-  // Apply filters
-  const filteredServers = filterServers()
+  // Filter servers based on selected category
+  const filteredServers = selectedCategory === 'All'
+    ? discordServers
+    : discordServers.filter(server => server.categories.includes(selectedCategory));
 
   // Featured servers - display first 4 of filter results or all servers
   const featuredServers = filteredServers.slice(0, 4);
@@ -192,15 +108,23 @@ export default function DiscordPage() {
         </div>
       </div>
       
-      {/* Universal Filter Component */}
-      <UniversalFilter
-        searchPlaceholder="Search Discord servers by name or description..."
-        filterCategories={filterCategories}
-        activeFilters={activeFilters}
-        setActiveFilters={(filters) => setActiveFilters(filters as typeof activeFilters)}
+      {/* Category Filter Component */}
+      <CategoryFilter
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
         accentColor="blue"
-        itemCount={filteredServers.length}
       />
+      
+      {/* Resources Count */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-400 text-sm">
+            Showing {filteredServers.length} {filteredServers.length === 1 ? 'server' : 'servers'}
+            {selectedCategory !== 'All' ? ` in category: ${categories.find(c => c.id === selectedCategory)?.name || selectedCategory}` : ''}
+          </p>
+        </div>
+      </div>
       
       {/* Main Content */}
       <div className="container mx-auto px-4 mt-8">
@@ -319,14 +243,14 @@ export default function DiscordPage() {
         {/* No Results */}
         {filteredServers.length === 0 && (
           <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
-            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <h3 className="text-xl font-medium text-white mb-2">No Discord servers match your filters</h3>
-            <p className="text-gray-400 mb-6">Try adjusting your search criteria or clearing filters</p>
+            <div className="h-12 w-12 text-gray-500 mx-auto mb-4">🔍</div>
+            <h3 className="text-xl font-medium text-white mb-2">No Discord servers found</h3>
+            <p className="text-gray-400 mb-6">Try selecting a different category</p>
             <Button 
-              onClick={() => setActiveFilters({ searchQuery: '', memberSize: '', categories: [] })}
+              onClick={() => setSelectedCategory('All')}
               className="flex items-center gap-2"
             >
-              <X className="h-4 w-4" /> Clear all filters
+              Clear filter
             </Button>
           </div>
         )}
