@@ -1,6 +1,10 @@
-import { BookOpen, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2 } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { BookOpen, Code, Network, Shield, Terminal, Server, Lock, ExternalLink, CheckCircle2, Bookmark, Search, Filter, X, Target, Users, Laptop, Book, GraduationCap, Globe } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import UniversalFilter from '@/app/components/UniversalFilter'
 
 interface Resource {
   name: string
@@ -17,12 +21,6 @@ interface ResourceWithAuthor extends Resource {
   author: string
 }
 
-interface ResourceCategory {
-  title: string
-  icon: any
-  resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
-}
-
 function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
   return 'author' in resource;
 }
@@ -32,7 +30,17 @@ function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): re
 }
 
 export default function FoundationalPage() {
-  const resourceCategories: ResourceCategory[] = [
+  const [activeFilters, setActiveFilters] = useState<{
+    searchQuery: string;
+    resourceType: string;
+    freeOnly: string[];
+  }>({
+    searchQuery: '',
+    resourceType: '',
+    freeOnly: []
+  });
+
+  const resourceCategories = [
     {
       title: "Learning Platforms",
       icon: BookOpen,
@@ -347,78 +355,199 @@ export default function FoundationalPage() {
     }
   ]
 
+  // Extract all resource types from resources
+  const allResourceTypes = Array.from(
+    new Set(
+      resourceCategories.flatMap(category => 
+        category.resources.map(resource => resource.type)
+      )
+    )
+  ).sort();
+
+  // Universal filter categories
+  const filterCategories = [
+    {
+      id: 'resourceType',
+      name: 'Resource Type',
+      type: 'radio' as const,
+      icon: Book,
+      options: [
+        { id: '', label: 'All Types', value: '' },
+        ...allResourceTypes.map(type => ({
+          id: type,
+          label: type,
+          value: type
+        }))
+      ]
+    },
+    {
+      id: 'freeOnly',
+      name: 'Availability',
+      type: 'checkbox' as const,
+      icon: Bookmark,
+      options: [
+        { id: 'free', label: 'Free Resources', value: 'free' }
+      ]
+    }
+  ];
+
+  // Filter resources based on active filters
+  const filterResources = () => {
+    // Start with all categories
+    const filteredCategories = resourceCategories.map(category => {
+      // Filter resources in each category
+      const filteredResources = category.resources.filter(resource => {
+        // Search query filter
+        if (activeFilters.searchQuery) {
+          const query = activeFilters.searchQuery.toLowerCase();
+          const nameMatch = resource.name.toLowerCase().includes(query);
+          const descMatch = resource.description.toLowerCase().includes(query);
+          
+          if (!nameMatch && !descMatch) return false;
+        }
+        
+        // Resource type filter
+        if (activeFilters.resourceType && resource.type !== activeFilters.resourceType) {
+          return false;
+        }
+        
+        // Free only filter
+        if (activeFilters.freeOnly.includes('free') && hasFree(resource) && !resource.free) {
+          return false;
+        }
+        
+        return true;
+      });
+      
+      // Return category with filtered resources
+      return {
+        ...category,
+        resources: filteredResources
+      };
+    });
+    
+    // Filter out categories with no resources
+    return filteredCategories.filter(category => category.resources.length > 0);
+  };
+
+  // Apply filters
+  const filteredCategories = filterResources();
+  
+  // Calculate total resource count
+  const totalResourceCount = filteredCategories.reduce(
+    (total, category) => total + category.resources.length, 
+    0
+  );
+
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gray-950 pb-20">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <BookOpen className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Foundational Resources</span>
+      <div className="relative bg-gradient-to-b from-black via-gray-900 to-gray-950 pt-24 pb-12">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col items-center text-center mb-8">
+            {/* Category Badge */}
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-medium mb-4">
+              <BookOpen className="w-4 h-4 mr-2" />
+              Academy Resources
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Learning Resources
+            
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Foundational Resources
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              A curated collection of foundational cybersecurity resources, tools, and learning materials.
+            
+            <p className="text-xl text-gray-400 max-w-2xl">
+              Start your cybersecurity journey with these essential foundational resources and learning materials.
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Resources Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            {resourceCategories.map((category, index) => (
-              <div key={index} className="mb-16 last:mb-0">
-                <div className="flex items-center mb-8">
-                  <category.icon className="w-6 h-6 text-blue-500 mr-3" />
-                  <h2 className="text-2xl font-bold text-white">{category.title}</h2>
-                </div>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {category.resources.map((resource, resourceIndex) => (
-                    <a
-                      key={resourceIndex}
-                      href={resource.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors group"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className="text-lg font-semibold text-white group-hover:text-blue-500 transition-colors">
+      </div>
+      
+      {/* Universal Filter Component */}
+      <UniversalFilter
+        searchPlaceholder="Search foundational resources by name or description..."
+        filterCategories={filterCategories}
+        activeFilters={activeFilters}
+        setActiveFilters={(filters) => setActiveFilters(filters as typeof activeFilters)}
+        accentColor="green"
+        itemCount={totalResourceCount}
+      />
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 mt-12">
+        {filteredCategories.length > 0 ? (
+          filteredCategories.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="mb-20">
+              <div className="flex items-center mb-6">
+                <category.icon className="w-5 h-5 text-green-500 mr-2" />
+                <h2 className="text-xl font-bold text-white">{category.title}</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {category.resources.map((resource, resourceIndex) => (
+                  <div 
+                    key={resourceIndex}
+                    className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-green-500/50 transition-colors"
+                  >
+                    <div className="p-6">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="text-lg font-semibold text-white">
                           {resource.name}
                         </h3>
-                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
-                          {resource.type}
-                        </span>
+                        {hasFree(resource) && resource.free && (
+                          <span className="bg-green-900/30 text-green-400 text-xs px-2 py-1 rounded flex items-center">
+                            <CheckCircle2 className="w-3 h-3 mr-1" />
+                            Free
+                          </span>
+                        )}
                       </div>
-                      <p className="text-sm text-gray-400 mb-3">
+                      
+                      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
                         {resource.description}
                       </p>
-                      {hasAuthor(resource) && (
-                        <div className="text-sm text-blue-500">
-                          By {resource.author}
-                        </div>
-                      )}
-                      {hasFree(resource) && (
-                        <div className="mt-2">
-                          <span className={`text-xs px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800' : 'bg-blue-900/50 text-blue-400 border border-blue-800'}`}>
-                            {resource.free ? 'Free' : 'Paid'}
+                      
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <span className="bg-gray-800 text-gray-400 text-xs px-2 py-1 rounded">
+                          {resource.type}
+                        </span>
+                        
+                        {hasAuthor(resource) && (
+                          <span className="bg-gray-800 text-gray-400 text-xs px-2 py-1 rounded">
+                            By: {resource.author}
                           </span>
-                        </div>
-                      )}
-                    </a>
-                  ))}
-                </div>
+                        )}
+                      </div>
+                      
+                      <a 
+                        href={resource.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-medium rounded transition-colors"
+                      >
+                        View Resource
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No resources match your filters</h3>
+            <p className="text-gray-400 mb-6">Try adjusting your search criteria or clearing filters</p>
+            <Button 
+              onClick={() => setActiveFilters({ searchQuery: '', resourceType: '', freeOnly: [] })}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear all filters
+            </Button>
           </div>
-        </div>
-      </section>
+        )}
+      </div>
     </div>
-  )
+  );
 } 

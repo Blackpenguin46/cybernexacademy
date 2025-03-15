@@ -1,13 +1,21 @@
 "use client"
 
 import { useState } from "react"
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark, Code, Target, Server, Lock, AlertTriangle, BookOpen, Briefcase } from "lucide-react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, Bookmark, Code, Target, Server, Lock, AlertTriangle, BookOpen, Briefcase, Filter, X } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import CategoryFilter from '@/app/components/CategoryFilter'
+import UniversalFilter from '@/app/components/UniversalFilter'
 
 export default function RedditPage() {
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [activeFilters, setActiveFilters] = useState<{
+    searchQuery: string;
+    memberSize: string;
+    categories: string[];
+  }>({
+    searchQuery: '',
+    memberSize: '',
+    categories: []
+  })
 
   // Categories for filtering
   const categories = [
@@ -128,44 +136,90 @@ export default function RedditPage() {
     }
   ]
 
-  // Filter subreddits based on selected category
-  const filteredSubreddits = popularSubreddits.filter(subreddit => {
-    return selectedCategory === 'All' || subreddit.categories.includes(selectedCategory)
-  })
+  // Extract all unique categories from subreddits
+  const allCategories = Array.from(
+    new Set(popularSubreddits.flatMap(subreddit => subreddit.categories))
+  ).sort()
 
-  const additionalSubreddits = [
-    { name: "r/lockpicking", url: "https://www.reddit.com/r/lockpicking/" },
-    { name: "r/pwned", url: "https://www.reddit.com/r/pwned/" },
-    { name: "r/CloudSecurity", url: "https://www.reddit.com/r/CloudSecurity/" },
-    { name: "r/IoTSecurity", url: "https://www.reddit.com/r/IoTSecurity/" },
-    { name: "r/SOCjobs", url: "https://www.reddit.com/r/SOCjobs/" },
-    { name: "r/redteamsec", url: "https://www.reddit.com/r/redteamsec/" },
-    { name: "r/securityCTF", url: "https://www.reddit.com/r/securityCTF/" },
-    { name: "r/ThreatIntelligence", url: "https://www.reddit.com/r/ThreatIntelligence/" },
-    { name: "r/BlueTeamJobs", url: "https://www.reddit.com/r/BlueTeamJobs/" },
-    { name: "r/CyberSecurityMemes", url: "https://www.reddit.com/r/CyberSecurityMemes/" },
-    { name: "r/computerforensics", url: "https://www.reddit.com/r/computerforensics/" },
-    { name: "r/dfir", url: "https://www.reddit.com/r/dfir/" },
-    { name: "r/ComputerSecurity", url: "https://www.reddit.com/r/ComputerSecurity/" },
-    { name: "r/Crypto", url: "https://www.reddit.com/r/Crypto/" },
-    { name: "r/Cyber", url: "https://www.reddit.com/r/Cyber/" },
-    { name: "r/cyberlaws", url: "https://www.reddit.com/r/cyberlaws/" },
-    { name: "r/CyberSecurityJobs", url: "https://www.reddit.com/r/CyberSecurityJobs/" },
-    { name: "r/datarecovery", url: "https://www.reddit.com/r/datarecovery/" },
-    { name: "r/exploitdev", url: "https://www.reddit.com/r/exploitdev/" },
-    { name: "r/Hacking_Tutorials", url: "https://www.reddit.com/r/Hacking_Tutorials/" },
-    { name: "r/ISO27001", url: "https://www.reddit.com/r/ISO27001/" },
-    { name: "r/OSINT", url: "https://www.reddit.com/r/OSINT/" },
-    { name: "r/pentesting", url: "https://www.reddit.com/r/pentesting/" },
-    { name: "r/ReverseEngineering", url: "https://www.reddit.com/r/ReverseEngineering/" },
-    { name: "r/SocialEngineering", url: "https://www.reddit.com/r/SocialEngineering/" },
-    { name: "r/ThreatHunting", url: "https://www.reddit.com/r/ThreatHunting/" },
-    { name: "r/ZeroDay", url: "https://www.reddit.com/r/ZeroDay/" },
-    { name: "r/InfoSecNews", url: "https://www.reddit.com/r/InfoSecNews/" },
-    { name: "r/NetSecStudents", url: "https://www.reddit.com/r/NetSecStudents/" },
-    { name: "r/Privacy", url: "https://www.reddit.com/r/Privacy/" },
-    { name: "r/SecurityAnalysis", url: "https://www.reddit.com/r/SecurityAnalysis/" }
+  // Universal filter categories
+  const filterCategories = [
+    {
+      id: 'memberSize',
+      name: 'Member Size',
+      type: 'radio' as const,
+      icon: Users,
+      options: [
+        { id: '', label: 'Any Size', value: '' },
+        { id: 'small', label: 'Small (< 100K)', value: 'small' },
+        { id: 'medium', label: 'Medium (100K - 500K)', value: 'medium' },
+        { id: 'large', label: 'Large (500K - 1M)', value: 'large' },
+        { id: 'huge', label: 'Huge (1M+)', value: 'huge' }
+      ]
+    },
+    {
+      id: 'categories',
+      name: 'Categories',
+      type: 'checkbox' as const,
+      icon: Target,
+      options: allCategories.map(category => ({
+        id: category,
+        label: category.charAt(0).toUpperCase() + category.slice(1).replace('_', ' '),
+        value: category
+      }))
+    }
   ]
+
+  // Filter subreddits based on all active filters
+  const filterSubreddits = () => {
+    let filtered = popularSubreddits
+
+    // Search query filter
+    if (activeFilters.searchQuery) {
+      const query = activeFilters.searchQuery.toLowerCase()
+      filtered = filtered.filter(subreddit => 
+        subreddit.name.toLowerCase().includes(query) ||
+        subreddit.description.toLowerCase().includes(query)
+      )
+    }
+
+    // Member size filter
+    if (activeFilters.memberSize) {
+      filtered = filtered.filter(subreddit => {
+        const members = subreddit.members
+        
+        switch(activeFilters.memberSize) {
+          case 'small':
+            return !members.includes('M') && parseInt(members) < 100
+          case 'medium':
+            return !members.includes('M') && parseInt(members) >= 100 && parseInt(members) < 500
+          case 'large':
+            return !members.includes('M') && parseInt(members) >= 500 || (members.includes('M') && parseInt(members) < 1)
+          case 'huge':
+            return members.includes('M') && parseInt(members) >= 1
+          default:
+            return true
+        }
+      })
+    }
+
+    // Categories filter (checkbox)
+    if (activeFilters.categories && activeFilters.categories.length > 0) {
+      filtered = filtered.filter(subreddit => 
+        activeFilters.categories.some(category => subreddit.categories.includes(category))
+      )
+    }
+
+    return filtered
+  }
+
+  // Apply filters
+  const filteredSubreddits = filterSubreddits()
+
+  // Featured subreddits - display first 4 of filter results or all subreddits
+  const featuredSubreddits = filteredSubreddits.slice(0, 4);
+  
+  // Additional subreddits - display the rest
+  const additionalSubreddits = filteredSubreddits.slice(4);
 
   const guidelines = [
     "Read each subreddit's rules before posting or commenting",
@@ -179,126 +233,171 @@ export default function RedditPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gray-950 pb-20">
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <Shield className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Reddit Community</span>
+      <div className="relative bg-gradient-to-b from-black via-gray-900 to-gray-950 pt-24 pb-12">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col items-center text-center mb-8">
+            {/* Category Badge */}
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium mb-4">
+              <MessageSquare className="w-4 h-4 mr-2" />
+              Community Resources
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Join the Cybersecurity Discussion on Reddit
+            
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Reddit Communities
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Connect with cybersecurity professionals, enthusiasts, and learners in some of the most active security communities on Reddit.
+            
+            <p className="text-xl text-gray-400 max-w-2xl">
+              Join cybersecurity subreddits to connect with professionals, learn new skills, and stay updated with the latest security trends.
             </p>
-            <Link href="https://www.reddit.com" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Visit Reddit
-                <ExternalLink className="w-4 h-4 ml-2" />
-              </Button>
-            </Link>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Categories Filter */}
-      <CategoryFilter 
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        accentColor="blue"
+      {/* Universal Filter Component */}
+      <UniversalFilter
+        searchPlaceholder="Search subreddits by name or description..."
+        filterCategories={filterCategories}
+        activeFilters={activeFilters}
+        setActiveFilters={(filters) => setActiveFilters(filters as typeof activeFilters)}
+        accentColor="red"
+        itemCount={filteredSubreddits.length}
       />
-
-      {/* Popular Subreddits Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              Popular Cybersecurity Subreddits
-            </h2>
-            {filteredSubreddits.length > 0 ? (
-              <div className="space-y-6">
-                {filteredSubreddits.map((subreddit, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="text-xl font-semibold text-white mb-2">
-                          <Link
-                            href={subreddit.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-blue-500 transition-colors inline-flex items-center"
-                          >
-                            {subreddit.name}
-                            <ExternalLink className="w-4 h-4 ml-2" />
-                          </Link>
-                        </h3>
-                        <p className="text-gray-400">{subreddit.description}</p>
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {subreddit.categories.map((category, i) => (
-                            <span key={i} className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full">
-                              {categories.find(c => c.id === category)?.name || category}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="flex items-center text-gray-400">
-                        <Users className="w-4 h-4 mr-2" />
-                        <span>{subreddit.members}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-20 border border-gray-800 rounded-lg">
-                <p className="text-gray-400 mb-2">No subreddits found matching your criteria</p>
-                <button 
-                  onClick={() => setSelectedCategory('All')}
-                  className="text-blue-500 hover:text-blue-400"
-                >
-                  Clear filters
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Additional Subreddits Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-white mb-12 text-center">
-              More Cybersecurity Communities
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {additionalSubreddits.map((subreddit, index) => (
-                <Link
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 mt-8">
+        {/* Featured Subreddits */}
+        {featuredSubreddits.length > 0 && (
+          <div className="mb-20">
+            <div className="flex items-center mb-6">
+              <Shield className="w-5 h-5 text-red-500 mr-2" />
+              <h2 className="text-xl font-bold text-white">
+                {filteredSubreddits.length > 4 ? "Featured Subreddits" : "Subreddits"}
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredSubreddits.map((subreddit, index) => (
+                <div 
                   key={index}
-                  href={subreddit.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-blue-500/50 transition-colors flex items-center justify-between"
+                  className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-red-500/50 transition-colors"
                 >
-                  <span className="text-gray-300 hover:text-blue-500">{subreddit.name}</span>
-                  <ExternalLink className="w-4 h-4 text-gray-500" />
-                </Link>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-white mb-2">
+                      {subreddit.name}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm mb-4">
+                      {subreddit.description}
+                    </p>
+                    
+                    <div className="flex items-center text-gray-500 text-sm mb-4">
+                      <Users className="w-4 h-4 mr-1" />
+                      <span>{subreddit.members}</span>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {subreddit.categories.map((category, catIndex) => (
+                        <span 
+                          key={catIndex}
+                          className="bg-red-900/30 text-red-400 text-xs px-2 py-1 rounded"
+                        >
+                          {category.charAt(0).toUpperCase() + category.slice(1).replace('_', ' ')}
+                        </span>
+                      ))}
+                    </div>
+                    
+                    <a 
+                      href={subreddit.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-full py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-medium rounded transition-colors"
+                    >
+                      Visit Subreddit
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        )}
+        
+        {/* Additional Subreddits */}
+        {additionalSubreddits.length > 0 && (
+          <div className="mb-20">
+            <div className="flex items-center mb-6">
+              <MessageSquare className="w-5 h-5 text-red-500 mr-2" />
+              <h2 className="text-xl font-bold text-white">More Subreddits</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {additionalSubreddits.map((subreddit, index) => (
+                <div 
+                  key={index}
+                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-red-500/50 transition-colors flex items-start justify-between"
+                >
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">
+                      {subreddit.name}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm mt-1">
+                      {subreddit.description}
+                    </p>
+                    
+                    <div className="flex items-center text-gray-500 text-sm mt-2">
+                      <Users className="w-4 h-4 mr-1" />
+                      <span>{subreddit.members}</span>
+                      
+                      <div className="flex ml-4 flex-wrap gap-2">
+                        {subreddit.categories.map((category, catIndex) => (
+                          <span 
+                            key={catIndex}
+                            className="bg-red-900/30 text-red-400 text-xs px-2 py-1 rounded"
+                          >
+                            {category.charAt(0).toUpperCase() + category.slice(1).replace('_', ' ')}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <a 
+                    href={subreddit.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center py-2 px-3 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded transition-colors whitespace-nowrap"
+                  >
+                    Visit
+                    <ExternalLink className="w-3 h-3 ml-1" />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-      {/* Guidelines Section */}
+        {/* No Results */}
+        {filteredSubreddits.length === 0 && (
+          <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-20">
+            <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No subreddits match your filters</h3>
+            <p className="text-gray-400 mb-6">Try adjusting your search criteria or clearing filters</p>
+            <Button 
+              onClick={() => setActiveFilters({ searchQuery: '', memberSize: '', categories: [] })}
+              className="flex items-center gap-2"
+            >
+              <X className="h-4 w-4" /> Clear all filters
+            </Button>
+          </div>
+        )}
+      </div>
+      
+      {/* Resources Section */}
       <section className="py-20 border-t border-gray-800">
         <div className="container">
           <div className="max-w-4xl mx-auto">
