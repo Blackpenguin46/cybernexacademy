@@ -59,11 +59,25 @@ export default function IntermediatePage() {
           free: true
         },
         {
-          name: "Hack The Box",
-          description: "Advanced penetration testing labs and challenges",
-          url: "https://www.hackthebox.com",
+          name: "ModSecurity",
+          description: "Open-source web application firewall with powerful rule configuration",
+          url: "https://modsecurity.org",
+          type: "Security Tool",
+          free: true
+        },
+        {
+          name: "HackTheBox Web Challenges",
+          description: "Hands-on web security challenges ranging from beginner to expert",
+          url: "https://app.hackthebox.com/challenges/Web",
           type: "Practice Platform",
-          free: false
+          free: true
+        },
+        {
+          name: "OWASP WebGoat",
+          description: "Deliberately insecure web application designed for teaching web security lessons",
+          url: "https://owasp.org/www-project-webgoat/",
+          type: "Training Platform",
+          free: true
         },
         {
           name: "Netsparker",
@@ -78,6 +92,13 @@ export default function IntermediatePage() {
           url: "https://www.acunetix.com",
           type: "Security Tool",
           free: false
+        },
+        {
+          name: "PortSwigger SQL Injection Guide",
+          description: "Comprehensive tutorial on SQL injection vulnerabilities and techniques",
+          url: "https://portswigger.net/web-security/sql-injection",
+          type: "Tutorial",
+          free: true
         },
         {
           name: "Qualys Web Application Scanning",
@@ -116,6 +137,27 @@ export default function IntermediatePage() {
           url: "https://github.com/cisagov/Malcolm",
           type: "Analysis Tool",
           free: true
+        },
+        {
+          name: "Let's Defend",
+          description: "Hands-on SOC analyst training platform with realistic scenarios",
+          url: "https://app.letsdefend.io/",
+          type: "Training Platform",
+          free: true
+        },
+        {
+          name: "CyberDefenders",
+          description: "Blue team challenge platform focusing on defensive security",
+          url: "https://cyberdefenders.org/",
+          type: "Challenge Platform",
+          free: true
+        },
+        {
+          name: "WPA-sec",
+          description: "Collaborative WPA password recovery platform",
+          url: "https://wpa-sec.stanev.org/",
+          type: "Password Recovery",
+          free: true
         }
       ]
     },
@@ -149,6 +191,13 @@ export default function IntermediatePage() {
           description: "Software reverse engineering framework",
           url: "https://ghidra-sre.org",
           type: "RE Tool",
+          free: true
+        },
+        {
+          name: "Malicious Website Lookup Tools",
+          description: "Curated list of tools for malware and malicious website analysis",
+          url: "https://zeltser.com/lookup-malicious-websites/",
+          type: "Resource List",
           free: true
         }
       ]
@@ -209,6 +258,47 @@ export default function IntermediatePage() {
           url: "https://www.amazon.com/Rtfm-Red-Team-Field-Manual/dp/1494295504",
           type: "Book",
           author: "Ben Clark"
+        },
+        {
+          name: "Total OSCP Guide",
+          description: "Comprehensive guide for OSCP exam preparation",
+          url: "https://sushant747.gitbooks.io/total-oscp-guide/content/",
+          type: "Online Book",
+          free: true
+        },
+        {
+          name: "Security Blog Collection",
+          description: "Collection of articles on small business cybersecurity threats and solutions",
+          url: "https://www.webdyno.net/post/common-cyberattacks-understanding-the-threats",
+          type: "Blog",
+          free: true
+        }
+      ]
+    },
+    {
+      title: "Password Cracking & Wordlists",
+      icon: Target,
+      resources: [
+        {
+          name: "SecLists",
+          description: "Collection of multiple types of lists for security assessments",
+          url: "https://github.com/danielmiessler/SecLists",
+          type: "GitHub Repository",
+          free: true
+        },
+        {
+          name: "Awesome Password Cracking",
+          description: "Curated list of password cracking resources, tools and techniques",
+          url: "https://github.com/n0kovo/awesome-password-cracking",
+          type: "GitHub Repository",
+          free: true
+        },
+        {
+          name: "Rolling Code Cracking",
+          description: "Tools and techniques for cracking rolling codes",
+          url: "https://rolling.pandwarf.com/",
+          type: "Specialized Tool",
+          free: true
         }
       ]
     },
@@ -236,6 +326,20 @@ export default function IntermediatePage() {
           url: "https://ine.com/learning/areas/security",
           type: "Training Platform",
           free: false
+        },
+        {
+          name: "Security Blue Team",
+          description: "Specialized blue team training and certifications",
+          url: "https://www.securityblue.team/",
+          type: "Training Platform",
+          free: false
+        },
+        {
+          name: "Living Off The Land Binaries",
+          description: "Documentation of binaries that can be used by attackers for LOLBins techniques",
+          url: "https://lolbas-project.github.io/",
+          type: "Documentation",
+          free: true
         }
       ]
     }

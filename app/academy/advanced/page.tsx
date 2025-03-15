@@ -119,6 +119,20 @@ export default function AdvancedPage() {
           url: "https://cutter.re",
           type: "Reverse Engineering",
           free: true
+        },
+        {
+          name: "GDB with SLAE64",
+          description: "Linux exploit development tutorial using GDB",
+          url: "https://www.mkdynamics.net/Sections/Cybersecurity/SLAE64/Modules/Module_1/Section_3_GDB_Test/section_3_GDB_test.html",
+          type: "Tutorial",
+          free: true
+        },
+        {
+          name: "Backdoored Webserver",
+          description: "Tutorial on creating and analyzing backdoored webservers",
+          url: "https://www.mkdynamics.net/Sections/Computer_Programming/C/Backdoored_Webserver/backdoored_webserver.html",
+          type: "Tutorial",
+          free: true
         }
       ]
     },
@@ -153,6 +167,96 @@ export default function AdvancedPage() {
           url: "https://github.com/BishopFox/sliver",
           type: "C2 Framework",
           free: true
+        },
+        {
+          name: "RDP Shell",
+          description: "Collection of advanced red team techniques and tools",
+          url: "https://rdp.sh/",
+          type: "Red Team Tools",
+          free: true
+        },
+        {
+          name: "Linux Red Team Persistence Techniques",
+          description: "Guide to establishing persistent access on Linux systems",
+          url: "https://www.linode.com/docs/guides/linux-red-team-persistence-techniques/",
+          type: "Technical Guide",
+          free: true
+        },
+        {
+          name: "Mimikatz Guide",
+          description: "Comprehensive guide to using Mimikatz for credential extraction",
+          url: "https://www.offsec.com/metasploit-unleashed/mimikatz/",
+          type: "Tutorial",
+          free: true
+        },
+        {
+          name: "Forced Authentication",
+          description: "Guide to T1187 forced authentication techniques",
+          url: "https://www.ired.team/offensive-security/initial-access/t1187-forced-authentication",
+          type: "Attack Technique",
+          free: true
+        }
+      ]
+    },
+    {
+      title: "Offensive Security Resources",
+      icon: Server,
+      resources: [
+        {
+          name: "HackTraining.org",
+          description: "Professional hacking training courses and resources",
+          url: "https://hackertraining.org/",
+          type: "Training Platform",
+          free: false 
+        },
+        {
+          name: "OSCP Resources",
+          description: "Comprehensive collection of resources for OSCP exam preparation",
+          url: "https://github.com/0xsyr0/OSCP",
+          type: "GitHub Repository",
+          free: true
+        },
+        {
+          name: "Privilege Escalation Cheatsheet",
+          description: "Extensive guide for Windows/Linux privilege escalation techniques",
+          url: "https://docs.google.com/spreadsheets/u/1/d/1dwSMIAPIam0PuRBkCiDI88pU3yzrqqHkDtBngUHNCw8/htmlview",
+          type: "Cheatsheet",
+          free: true
+        },
+        {
+          name: "Total OSCP Guide",
+          description: "Comprehensive guide to prepare for the OSCP exam",
+          url: "https://sushant747.gitbooks.io/total-oscp-guide/content/",
+          type: "Guide",
+          free: true
+        },
+        {
+          name: "Bug Bounty Hunting",
+          description: "Platform for learning web application security and bug bounty hunting",
+          url: "https://www.bugbountyhunting.com/",
+          type: "Training Platform",
+          free: true
+        },
+        {
+          name: "Penetester Academy",
+          description: "Attack & Defense CTF challenges and courses",
+          url: "https://www.pentesteracademy.com/course?id=7",
+          type: "Training Platform",
+          free: false
+        },
+        {
+          name: "BugBounty Collection",
+          description: "Curated collection of bug bounty resources and tools",
+          url: "https://github.com/gotr00t0day/BugBounty",
+          type: "GitHub Repository",
+          free: true
+        },
+        {
+          name: "exp0s3d",
+          description: "Collection of exploits, vulnerabilities, and security research",
+          url: "https://github.com/gotr00t0day/exp0s3d",
+          type: "GitHub Repository",
+          free: true
         }
       ]
     },
@@ -180,6 +284,27 @@ export default function AdvancedPage() {
           url: "https://www.amazon.com/Guide-Kernel-Exploitation-Attacking-Core/dp/1597494860",
           type: "Book",
           author: "Enrico Perla, Massimiliano Oldani"
+        },
+        {
+          name: "HackTricks",
+          description: "Comprehensive wiki with a vast collection of hacking techniques and notes",
+          url: "https://book.hacktricks.wiki/en/index.html",
+          type: "Wiki",
+          free: true
+        },
+        {
+          name: "Basic Linux Exploits",
+          description: "Practical guide to basic Linux exploit development techniques",
+          url: "https://www.mkdynamics.net/Sections/Cybersecurity/Basic_Linux_Exploits/basic_linux_exploits.html",
+          type: "Tutorial",
+          free: true
+        },
+        {
+          name: "SCPA Framework",
+          description: "Security Contents & Penetration Analysis Framework",
+          url: "https://github.com/ghostsec420/SCPA",
+          type: "GitHub Repository",
+          free: true
         }
       ]
     },
@@ -206,6 +331,13 @@ export default function AdvancedPage() {
           description: "Underground computer security publication",
           url: "http://www.phrack.org",
           type: "Publication",
+          free: true
+        },
+        {
+          name: "Hacker's Additional Resources",
+          description: "Extensive list of hacking resources, courses, and tools",
+          url: "https://pastebin.com/ZLXCZ3YY",
+          type: "Resource List",
           free: true
         }
       ]

@@ -45,9 +45,9 @@ export default function FoundationalPage() {
           free: true
         },
         {
-          name: "Hack The Box Academy",
-          description: "Structured cybersecurity courses with hands-on labs",
-          url: "https://academy.hackthebox.com",
+          name: "Hack The Box",
+          description: "Gamified cybersecurity training platform with hands-on penetration testing labs",
+          url: "https://www.hackthebox.com",
           type: "Interactive Platform",
           free: true
         },
@@ -66,32 +66,32 @@ export default function FoundationalPage() {
           free: true
         },
         {
-          name: "Coursera Cybersecurity",
-          description: "Cybersecurity courses from top universities and companies",
-          url: "https://www.coursera.org/browse/computer-science/cybersecurity",
-          type: "Online Course",
-          free: false
-        },
-        {
-          name: "Udemy Cybersecurity",
-          description: "Wide range of cybersecurity courses for all levels",
-          url: "https://www.udemy.com/topic/cyber-security/",
-          type: "Online Course",
-          free: false
-        },
-        {
-          name: "daily.dev",
-          description: "Personalized developer news feed and knowledge-sharing platform. Stay updated with the latest in tech, including cybersecurity.",
-          url: "https://daily.dev",
-          type: "Learning Platform",
+          name: "Cisco Networking Academy",
+          description: "Free courses on networking, cybersecurity, and IT fundamentals from Cisco",
+          url: "https://www.netacad.com/",
+          type: "Training Platform",
           free: true
         },
         {
-          name: "Learn Anything",
-          description: "Open-source platform for knowledge discovery. Find curated learning paths and resources for various topics, including cybersecurity.",
-          url: "https://learn-anything.xyz",
-          type: "Learning Platform",
+          name: "Professor Messer",
+          description: "Free training videos and resources for CompTIA certifications",
+          url: "https://www.professormesser.com/",
+          type: "Training Videos",
           free: true
+        },
+        {
+          name: "Hacksplaining",
+          description: "Interactive tutorials explaining common vulnerabilities in web applications",
+          url: "https://www.hacksplaining.com/",
+          type: "Interactive Tutorials",
+          free: true
+        },
+        {
+          name: "Coursera Google Cybersecurity Certificate",
+          description: "Entry-level cybersecurity certification program covering fundamentals and essential tools",
+          url: "https://www.coursera.org/professional-certificates/google-cybersecurity",
+          type: "Certification Course",
+          free: false
         }
       ]
     },
@@ -107,15 +107,43 @@ export default function FoundationalPage() {
         },
         {
           name: "OWASP Top 10",
-          description: "Top 10 web application security risks and prevention",
+          description: "Top 10 web application security risks and prevention strategies",
           url: "https://owasp.org/www-project-top-ten",
           type: "Security Guide"
+        },
+        {
+          name: "Surveillance Self-Defense",
+          description: "EFF's guide to defending yourself against surveillance",
+          url: "https://ssd.eff.org/",
+          type: "Security Guide",
+          free: true
         },
         {
           name: "Linux Journey",
           description: "Learn Linux fundamentals through interactive lessons",
           url: "https://linuxjourney.com",
           type: "Tutorial"
+        },
+        {
+          name: "Introduction to Linux",
+          description: "Comprehensive guide to Linux basics from Texas Tech University",
+          url: "https://www.depts.ttu.edu/itts/apps/handouts/Introduction_to_Linux_1.pdf",
+          type: "PDF Guide",
+          free: true
+        },
+        {
+          name: "Linux Handbook Bash Guide",
+          description: "Complete guide to Bash scripting fundamentals",
+          url: "https://linuxhandbook.com/bash/",
+          type: "Tutorial",
+          free: true
+        },
+        {
+          name: "Microsoft Security Digital Defense Report",
+          description: "Annual report providing insights on current cybersecurity threats",
+          url: "https://www.microsoft.com/en-us/security/security-insider/intelligence-reports/microsoft-digital-defense-report-2024",
+          type: "Report",
+          free: true
         },
         {
           name: "Microsoft Learn - Security",
@@ -130,28 +158,53 @@ export default function FoundationalPage() {
       icon: Terminal,
       resources: [
         {
+          name: "Kali Linux",
+          description: "Security-focused Linux distribution with hundreds of preinstalled penetration testing tools",
+          url: "https://www.kali.org/",
+          type: "Operating System",
+          free: true
+        },
+        {
           name: "Wireshark",
-          description: "Network protocol analyzer for network troubleshooting",
+          description: "Network protocol analyzer for network troubleshooting and security analysis",
           url: "https://www.wireshark.org",
-          type: "Network Analysis"
+          type: "Network Analysis",
+          free: true
         },
         {
           name: "Nmap",
           description: "Network discovery and security auditing tool",
           url: "https://nmap.org",
-          type: "Network Scanner"
-        },
-        {
-          name: "Burp Suite Community",
-          description: "Web application security testing platform",
-          url: "https://portswigger.net/burp/communitydownload",
-          type: "Web Security"
+          type: "Network Scanner",
+          free: true
         },
         {
           name: "VirtualBox",
           description: "Virtualization software for security labs",
           url: "https://www.virtualbox.org",
-          type: "Virtualization"
+          type: "Virtualization",
+          free: true
+        },
+        {
+          name: "John the Ripper",
+          description: "Password cracking tool for Unix/Linux passwords",
+          url: "https://www.openwall.com/john/",
+          type: "Password Cracker",
+          free: true
+        },
+        {
+          name: "Hashcat",
+          description: "Advanced password recovery tool",
+          url: "https://hashcat.net/hashcat/",
+          type: "Password Cracker",
+          free: true
+        },
+        {
+          name: "CrackStation",
+          description: "Online hash cracking service using massive pre-computed lookup tables",
+          url: "https://crackstation.net/",
+          type: "Online Tool",
+          free: true
         }
       ]
     },
@@ -168,24 +221,31 @@ export default function FoundationalPage() {
         },
         {
           name: "OWASP Juice Shop",
-          description: "Intentionally vulnerable web application",
+          description: "Intentionally vulnerable web application for security training",
           url: "https://owasp.org/www-project-juice-shop",
           type: "Web App",
           free: true
         },
         {
-          name: "Metasploitable",
-          description: "Vulnerable Linux virtual machine",
-          url: "https://sourceforge.net/projects/metasploitable",
-          type: "VM",
+          name: "PicoCTF",
+          description: "Free computer security education program with challenges and tutorials",
+          url: "https://picoctf.org/",
+          type: "CTF Platform",
           free: true
         },
         {
-          name: "PentesterLab",
-          description: "Hands-on web penetration testing exercises",
-          url: "https://pentesterlab.com",
-          type: "Labs",
-          free: false
+          name: "CryptoHack",
+          description: "Fun platform for learning cryptography through challenges",
+          url: "https://cryptohack.org/",
+          type: "Challenge Platform",
+          free: true
+        },
+        {
+          name: "Security Lab in VirtualBox",
+          description: "Guide to building your own security lab environment using VirtualBox",
+          url: "https://benheater.com/building-a-security-lab-in-virtualbox/",
+          type: "Tutorial",
+          free: true
         }
       ]
     },
@@ -213,6 +273,20 @@ export default function FoundationalPage() {
           description: "Linux fundamentals for cybersecurity professionals",
           url: "https://www.amazon.com/Linux-Basics-Hackers-Networking-Scripting/dp/1593278551",
           type: "Book"
+        },
+        {
+          name: "Cybersecurity Resources Collection",
+          description: "Comprehensive collection of cybersecurity learning resources, tools, and references",
+          url: "https://github.com/bst04/cybersources",
+          type: "GitHub Repository",
+          free: true
+        },
+        {
+          name: "30 Cybersecurity Projects with Python",
+          description: "Collection of hands-on Python projects for cybersecurity practice",
+          url: "https://denizhalil.com/2025/01/24/30-cybersecurity-projects-with-python/",
+          type: "Blog Article",
+          free: true
         }
       ]
     },
@@ -222,7 +296,7 @@ export default function FoundationalPage() {
       resources: [
         {
           name: "NetworkChuck",
-          description: "Networking and cybersecurity tutorials",
+          description: "Networking and cybersecurity tutorials with hands-on demonstrations",
           url: "https://www.youtube.com/networkchuck",
           type: "YouTube Channel",
           free: true
@@ -230,7 +304,7 @@ export default function FoundationalPage() {
         {
           name: "John Hammond",
           description: "Cybersecurity tutorials and CTF walkthroughs",
-          url: "https://www.youtube.com/johnhammond010",
+          url: "https://www.youtube.com/c/johnhammond010",
           type: "YouTube Channel",
           free: true
         },
@@ -239,6 +313,34 @@ export default function FoundationalPage() {
           description: "Networking and cybersecurity courses",
           url: "https://www.youtube.com/davidbombal",
           type: "YouTube Channel",
+          free: true
+        },
+        {
+          name: "Linux Tutorials For Beginners",
+          description: "Comprehensive Linux tutorial series with practical examples",
+          url: "https://youtu.be/v7BNtpw53AA?si=Ffg1zAj-WXCHQcP1",
+          type: "YouTube Video",
+          free: true
+        },
+        {
+          name: "Bash Shell Scripting Tutorial",
+          description: "Introduction to shell scripting for beginners",
+          url: "https://www.youtube.com/watch?v=TGmjaK_dUGc",
+          type: "YouTube Video",
+          free: true
+        },
+        {
+          name: "Cybersecurity Fundamentals",
+          description: "Complete introduction to cybersecurity basics for beginners",
+          url: "https://youtu.be/WV7KTqVstb0?si=hL4mhxFBDJKVZxOR",
+          type: "YouTube Video",
+          free: true
+        },
+        {
+          name: "Professor Messer's CompTIA Security+ Videos",
+          description: "Free complete course covering the Security+ certification objectives",
+          url: "https://www.youtube.com/playlist?list=PLIhvC56v63IJVXv0GJcl9vO5Z6znCVb1P",
+          type: "YouTube Playlist",
           free: true
         }
       ]
