@@ -19,11 +19,17 @@ import {
   BookOpen,
   ThumbsUp,
   X,
-  Lock
+  Lock,
+  SlidersHorizontal,
+  Tag,
+  CheckCircle2
 } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import CategoryFilter from '@/app/components/CategoryFilter'
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { Checkbox } from "@/components/ui/checkbox"
 
 interface GithubRepo {
   name: string
@@ -40,6 +46,13 @@ interface GithubRepo {
 export default function GitHubPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   const [userInterests, setUserInterests] = useState<string[]>([])
+  
+  // Universal filtering
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([])
+  const [minStars, setMinStars] = useState(0)
+  const [showFilters, setShowFilters] = useState(false)
   
   // Fetch user interests from profile
   useEffect(() => {
@@ -347,10 +360,58 @@ export default function GitHubPage() {
     }
   ]
   
-  // Filter repositories based on selected category
-  const filteredRepos = selectedCategory === 'All'
-    ? featuredRepositories
-    : featuredRepositories.filter(repo => repo.category === selectedCategory)
+  // Extract all unique tags and languages for filters
+  const allTags = Array.from(
+    new Set(featuredRepositories.flatMap(repo => repo.tags))
+  ).sort()
+  
+  const allLanguages = Array.from(
+    new Set(featuredRepositories.map(repo => repo.language).filter(Boolean))
+  ).sort()
+  
+  // Universal filtering function
+  const filterRepositories = () => {
+    let filtered = featuredRepositories
+    
+    // Filter by category
+    if (selectedCategory !== 'All') {
+      filtered = filtered.filter(repo => repo.category === selectedCategory)
+    }
+    
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase()
+      filtered = filtered.filter(repo => 
+        repo.name.toLowerCase().includes(query) || 
+        repo.description.toLowerCase().includes(query) ||
+        repo.fullName.toLowerCase().includes(query)
+      )
+    }
+    
+    // Filter by tags
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter(repo => 
+        selectedTags.some(tag => repo.tags.includes(tag))
+      )
+    }
+    
+    // Filter by languages
+    if (selectedLanguages.length > 0) {
+      filtered = filtered.filter(repo => 
+        selectedLanguages.includes(repo.language)
+      )
+    }
+    
+    // Filter by minimum stars
+    if (minStars > 0) {
+      filtered = filtered.filter(repo => repo.stars >= minStars)
+    }
+    
+    return filtered
+  }
+  
+  // Get filtered repositories
+  const filteredRepos = filterRepositories()
   
   // Sort repositories - prioritize those matching user interests
   const sortedRepos = [...filteredRepos].sort((a, b) => {
@@ -364,6 +425,33 @@ export default function GitHubPage() {
     // Then sort by stars
     return b.stars - a.stars
   })
+  
+  // Handle tag selection/deselection
+  const toggleTag = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) 
+        ? prev.filter(t => t !== tag) 
+        : [...prev, tag]
+    )
+  }
+  
+  // Handle language selection/deselection
+  const toggleLanguage = (language: string) => {
+    setSelectedLanguages(prev => 
+      prev.includes(language) 
+        ? prev.filter(l => l !== language) 
+        : [...prev, language]
+    )
+  }
+  
+  // Reset all filters
+  const resetFilters = () => {
+    setSelectedCategory('All')
+    setSearchQuery('')
+    setSelectedTags([])
+    setSelectedLanguages([])
+    setMinStars(0)
+  }
   
   return (
     <div className="min-h-screen bg-black">
@@ -383,6 +471,173 @@ export default function GitHubPage() {
             <p className="text-xl text-gray-400 mb-8">
               Discover the best open source security tools, frameworks, and learning resources on GitHub
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Universal Search & Filter */}
+      <section className="py-6 border-t border-b border-gray-800">
+        <div className="container">
+          <div className="max-w-6xl mx-auto">
+            {/* Search Bar */}
+            <div className="relative flex items-center mb-6">
+              <Search className="w-5 h-5 absolute text-gray-400 left-3" />
+              <Input
+                type="text"
+                placeholder="Search repositories by name or description..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-gray-900/90 border-gray-700 pl-10 text-white focus:ring-blue-500"
+              />
+              {searchQuery && (
+                <button 
+                  className="absolute right-3 text-gray-400 hover:text-white"
+                  onClick={() => setSearchQuery('')}
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            
+            {/* Active Filters Display */}
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              {selectedCategory !== 'All' && (
+                <Badge className="bg-blue-900/40 text-blue-300 gap-1 hover:bg-blue-900/60">
+                  {categories.find(c => c.id === selectedCategory)?.name}
+                  <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedCategory('All')} />
+                </Badge>
+              )}
+              
+              {selectedTags.map(tag => (
+                <Badge key={tag} className="bg-violet-900/40 text-violet-300 gap-1 hover:bg-violet-900/60">
+                  #{tag}
+                  <X className="w-3 h-3 cursor-pointer" onClick={() => toggleTag(tag)} />
+                </Badge>
+              ))}
+              
+              {selectedLanguages.map(lang => (
+                <Badge key={lang} className="bg-emerald-900/40 text-emerald-300 gap-1 hover:bg-emerald-900/60">
+                  {lang}
+                  <X className="w-3 h-3 cursor-pointer" onClick={() => toggleLanguage(lang)} />
+                </Badge>
+              ))}
+              
+              {minStars > 0 && (
+                <Badge className="bg-amber-900/40 text-amber-300 gap-1 hover:bg-amber-900/60">
+                  ★ {minStars}+
+                  <X className="w-3 h-3 cursor-pointer" onClick={() => setMinStars(0)} />
+                </Badge>
+              )}
+              
+              {(selectedCategory !== 'All' || searchQuery || selectedTags.length > 0 || 
+               selectedLanguages.length > 0 || minStars > 0) && (
+                <Button 
+                  onClick={resetFilters}
+                  className="h-7 bg-gray-800 text-xs text-gray-300 hover:bg-gray-700"
+                >
+                  Clear all filters
+                </Button>
+              )}
+            </div>
+            
+            {/* Advanced Filters Toggle */}
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="bg-gray-800 text-gray-300 hover:bg-gray-700 flex gap-2 items-center"
+                >
+                  <SlidersHorizontal className="w-4 h-4" />
+                  {showFilters ? 'Hide Filters' : 'Show Advanced Filters'}
+                </Button>
+                
+                <span className="text-gray-400 text-sm">
+                  {sortedRepos.length} repositories found
+                </span>
+              </div>
+            </div>
+            
+            {/* Advanced Filters Panel */}
+            {showFilters && (
+              <div className="grid md:grid-cols-3 gap-6 p-6 bg-gray-900/50 border border-gray-800 rounded-lg mb-8">
+                {/* Popular Tags */}
+                <div>
+                  <h3 className="text-white font-medium mb-3 flex items-center">
+                    <Tag className="w-4 h-4 mr-2" /> Filter by Tags
+                  </h3>
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2">
+                    {allTags.map(tag => (
+                      <div key={tag} className="flex items-center">
+                        <Checkbox
+                          id={`tag-${tag}`}
+                          checked={selectedTags.includes(tag)}
+                          onCheckedChange={() => toggleTag(tag)}
+                          className="data-[state=checked]:bg-violet-600 data-[state=checked]:border-violet-600"
+                        />
+                        <label
+                          htmlFor={`tag-${tag}`}
+                          className="ml-2 text-sm text-gray-300 cursor-pointer"
+                        >
+                          {tag}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Languages */}
+                <div>
+                  <h3 className="text-white font-medium mb-3 flex items-center">
+                    <Code className="w-4 h-4 mr-2" /> Filter by Language
+                  </h3>
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-2">
+                    {allLanguages.map(language => (
+                      <div key={language} className="flex items-center">
+                        <Checkbox
+                          id={`lang-${language}`}
+                          checked={selectedLanguages.includes(language)}
+                          onCheckedChange={() => toggleLanguage(language)}
+                          className="data-[state=checked]:bg-emerald-600 data-[state=checked]:border-emerald-600"
+                        />
+                        <label
+                          htmlFor={`lang-${language}`}
+                          className="ml-2 text-sm text-gray-300 cursor-pointer"
+                        >
+                          {language}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Star Rating */}
+                <div>
+                  <h3 className="text-white font-medium mb-3 flex items-center">
+                    <Star className="w-4 h-4 mr-2" /> Minimum Stars
+                  </h3>
+                  <div className="space-y-2">
+                    {[0, 1000, 5000, 10000, 20000].map(stars => (
+                      <div key={stars} className="flex items-center">
+                        <input
+                          type="radio"
+                          id={`stars-${stars}`}
+                          name="stars"
+                          checked={minStars === stars}
+                          onChange={() => setMinStars(stars)}
+                          className="text-blue-600 focus:ring-blue-500 h-4 w-4 border-gray-700 bg-gray-800"
+                        />
+                        <label
+                          htmlFor={`stars-${stars}`}
+                          className="ml-2 text-sm text-gray-300 cursor-pointer"
+                        >
+                          {stars === 0 ? 'Any' : `${stars}+ stars`}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -452,13 +707,20 @@ export default function GitHubPage() {
                     
                     <div className="flex flex-wrap items-center gap-2">
                       {repo.language && (
-                        <span className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-full">
+                        <span 
+                          className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-full cursor-pointer hover:bg-emerald-900/30 hover:text-emerald-300"
+                          onClick={() => toggleLanguage(repo.language)}
+                        >
                           {repo.language}
                         </span>
                       )}
                       {repo.tags.map((tag, index) => (
-                        <span key={index} className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full">
-                          {tag}
+                        <span 
+                          key={index} 
+                          className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full cursor-pointer hover:bg-violet-900/30 hover:text-violet-300"
+                          onClick={() => toggleTag(tag)}
+                        >
+                          #{tag}
                         </span>
                       ))}
                     </div>
@@ -468,14 +730,13 @@ export default function GitHubPage() {
             ) : (
               <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
                 <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                <h3 className="text-xl font-medium text-white mb-2">No repositories match your filter</h3>
-                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
+                <h3 className="text-xl font-medium text-white mb-2">No repositories match your filters</h3>
+                <p className="text-gray-400 mb-6">Try adjusting your search criteria or clearing filters</p>
                 <Button 
-                  variant="outline" 
-                  onClick={() => setSelectedCategory('all')}
+                  onClick={resetFilters}
                   className="flex items-center gap-2"
                 >
-                  <X className="h-4 w-4" /> Clear filters
+                  <X className="h-4 w-4" /> Clear all filters
                 </Button>
               </div>
             )}
