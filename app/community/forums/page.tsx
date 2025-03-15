@@ -12,7 +12,6 @@ import {
   BookOpen, 
   Users,
   ThumbsUp,
-  Search,
   Filter,
   X,
   Code,

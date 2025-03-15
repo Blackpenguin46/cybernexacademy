@@ -226,15 +226,12 @@ export default function TwitterPage() {
               </h2>
               <div className="flex flex-wrap gap-3">
                 {popularHashtags.map((hashtag, index) => (
-                  <Link 
+                  <span 
                     key={index}
-                    href={`https://twitter.com/search?q=${encodeURIComponent(hashtag)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gray-900/50 border border-gray-800 px-4 py-2 rounded-full hover:border-sky-500/50 hover:text-sky-400 transition-colors text-gray-300"
+                    className="bg-gray-900/50 border border-gray-800 px-4 py-2 rounded-full text-gray-300"
                   >
                     {hashtag}
-                  </Link>
+                  </span>
                 ))}
               </div>
             </div>
