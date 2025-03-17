@@ -5,6 +5,7 @@ import { Shield, ExternalLink, Clock, Tag, Newspaper, Filter, AlertTriangle, Ser
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
+import LiveNewsFeed from '@/app/components/LiveNewsFeed'
 
 export default function NewsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -131,80 +132,64 @@ export default function NewsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <Newspaper className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Security News</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity News & Updates
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Stay informed about the latest cybersecurity threats, vulnerabilities, and industry developments.
-            </p>
-          </div>
-        </div>
-      </section>
+    <div className="container mx-auto py-8 px-4 max-w-7xl">
+      <h1 className="text-4xl font-bold mb-6 text-white">Cybersecurity News & Updates</h1>
+      <p className="text-gray-400 text-lg mb-8">
+        Stay informed with the latest cybersecurity news, vulnerability disclosures, and industry trends.
+      </p>
+      
+      {/* Live News Feed Component - Automatically updates every 24 hours */}
+      <LiveNewsFeed />
+      
+      {/* Category filters */}
+      <div className="mb-8">
+        <CategoryFilter 
+          categories={categories} 
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </div>
 
-      {/* Categories Filter */}
-      <CategoryFilter 
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        accentColor="blue"
-      />
-
-      {/* Featured News Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center mb-10">
-              <Newspaper className="w-6 h-6 text-blue-500 mr-3" />
-              <h2 className="text-2xl font-bold text-white">Featured Stories</h2>
-            </div>
-            
-            {filteredFeaturedNews.length > 0 ? (
-              <div className="grid gap-8 md:grid-cols-3">
-                {filteredFeaturedNews.map((item, index) => (
+      {/* Featured News Section - keep existing code */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-semibold mb-6 text-white">Featured Stories</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {featuredNews
+            .filter(news => selectedCategory === 'All' || news.category === selectedCategory)
+            .map((news, index) => (
+              <div key={index} className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden hover:border-neon-blue/50 transition-all duration-300">
+                <div className="p-6">
+                  <span className={`text-xs font-medium px-2.5 py-1 rounded-md inline-flex items-center ${
+                    news.category === 'Vulnerabilities' ? 'bg-red-900/20 text-red-400' :
+                    news.category === 'Threats' ? 'bg-orange-900/20 text-orange-400' :
+                    news.category === 'Events' ? 'bg-purple-900/20 text-purple-400' :
+                    'bg-blue-900/20 text-blue-400'
+                  }`}>
+                    {news.category === 'Vulnerabilities' && <AlertTriangle className="w-3 h-3 mr-1" />}
+                    {news.category === 'Threats' && <Shield className="w-3 h-3 mr-1" />}
+                    {news.category === 'Events' && <Target className="w-3 h-3 mr-1" />}
+                    {news.category}
+                  </span>
+                  <h3 className="text-xl font-bold mt-3 mb-2 text-white">{news.title}</h3>
+                  <p className="text-gray-400 mb-4">{news.description}</p>
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm text-gray-500 flex items-center">
+                      <Clock className="w-4 h-4 mr-1" />
+                      {news.date}
+                    </div>
+                    <div className="text-sm text-gray-500">{news.source}</div>
+                  </div>
                   <Link 
-                    key={index}
-                    href={item.url}
-                    className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden hover:border-blue-500/50 transition-colors flex flex-col h-full"
+                    href={news.url} 
+                    className="mt-4 inline-flex items-center text-neon-blue hover:text-blue-400"
                   >
-                    <div className="p-6 flex-grow">
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs bg-blue-900/50 text-blue-400 px-2 py-1 rounded border border-blue-800">
-                          {item.category}
-                        </span>
-                        <div className="flex items-center text-gray-500 text-xs">
-                          <Clock className="w-3 h-3 mr-1" />
-                          <span>{item.date}</span>
-                        </div>
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
-                      <p className="text-gray-400 text-sm">{item.description}</p>
-                    </div>
-                    <div className="px-6 py-4 border-t border-gray-800 flex items-center justify-between">
-                      <span className="text-gray-500 text-sm">{item.source}</span>
-                      <ExternalLink className="w-4 h-4 text-blue-500" />
-                    </div>
+                    Read more <ExternalLink className="w-4 h-4 ml-1" />
                   </Link>
-                ))}
+                </div>
               </div>
-            ) : (
-              <div className="text-center py-10 border border-gray-800 rounded-lg mb-10">
-                <p className="text-gray-400">No featured stories found in this category</p>
-              </div>
-            )}
-          </div>
+            ))}
         </div>
-      </section>
+      </div>
 
       {/* Latest News Section */}
       <section className="py-20 border-t border-gray-800">
