@@ -246,7 +246,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-0 right-0 z-30 mt-2 mx-auto max-w-[1200px] w-full bg-black/90 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                        className="absolute left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-full bg-black/90 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
                         id={`dropdown-${section.id}`}
                         role="menu"
                         aria-labelledby={`dropdown-button-${section.id}`}
@@ -258,7 +258,7 @@ export default function Navbar() {
                       >
                         <div className="flex">
                           {/* Sidebar with title and description - made narrower */}
-                          <div className="w-1/5 bg-gray-900/50 p-4">
+                          <div className="w-1/6 bg-gray-900/50 p-4">
                             <h3 className="text-lg font-bold text-white mb-1">{section.title}</h3>
                             <p className="text-gray-400 text-sm mb-2">{section.description}</p>
                             
@@ -272,13 +272,13 @@ export default function Navbar() {
                           </div>
                           
                           {/* Links grid - made wider and more columns */}
-                          <div className="w-4/5 py-3 px-4">
-                            <div className="grid grid-cols-6 gap-1">
+                          <div className="w-5/6 py-2 px-4">
+                            <div className="grid grid-cols-8 gap-1">
                               {section.links.map((link) => (
                                 <Link 
                                   key={link.name}
                                   href={link.href} 
-                                  className={`flex items-center px-2 py-1.5 rounded-md ${
+                                  className={`flex items-center px-2 py-1 rounded-md text-sm ${
                                     isActive(link.href) 
                                       ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium' 
                                       : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5'

@@ -60,6 +60,15 @@ const academySections = [
     color: "from-sky-500/20 to-sky-600/5",
     borderColor: "border-sky-500/30",
     hoverColor: "group-hover:border-sky-500/60"
+  },
+  {
+    title: "Cybersecurity Resources",
+    description: "Comprehensive collection of books, websites, podcasts, and tools for cybersecurity professionals.",
+    icon: Book,
+    link: "/academy/resources",
+    color: "from-purple-500/20 to-indigo-600/20",
+    borderColor: "border-purple-500/30",
+    hoverColor: "group-hover:border-purple-500/60"
   }
 ];
 
