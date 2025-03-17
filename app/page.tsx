@@ -15,11 +15,11 @@ export const revalidate = 0;
 export default function HomePage() {
   const mainSections = [
     {
-      title: "Academy",
-      description: "Educational resources, learning paths, courses, and certification guides to build your cybersecurity knowledge.",
-      icon: <GraduationCap className="h-12 w-12 text-neon-blue" />,
-      link: "/academy",
-      color: "from-blue-600/20 to-blue-600/5"
+      title: "Community",
+      description: "Connect with cybersecurity professionals through forums, Discord servers, Reddit communities, and more.",
+      icon: <Users className="h-12 w-12 text-neon-blue" />,
+      link: "/community",
+      color: "from-cyan-600/20 to-cyan-600/5"
     },
     {
       title: "Insights",
@@ -29,11 +29,11 @@ export default function HomePage() {
       color: "from-purple-600/20 to-purple-600/5"
     },
     {
-      title: "Community",
-      description: "Connect with cybersecurity professionals through forums, Discord servers, Reddit communities, and more.",
-      icon: <Users className="h-12 w-12 text-neon-blue" />,
-      link: "/community",
-      color: "from-cyan-600/20 to-cyan-600/5"
+      title: "Academy",
+      description: "Educational resources, learning paths, courses, and certification guides to build your cybersecurity knowledge.",
+      icon: <GraduationCap className="h-12 w-12 text-neon-blue" />,
+      link: "/academy",
+      color: "from-blue-600/20 to-blue-600/5"
     }
   ];
 
