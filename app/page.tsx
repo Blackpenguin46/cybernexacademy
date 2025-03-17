@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import Link from "next/link";
-import { Shield, Book, Users, Bell, Lock, ArrowRight, Rocket, Target, Brain, Code, ChevronDown, Terminal, Database } from "lucide-react";
-import AnimatedBackground from "./components/AnimatedBackground";
+import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -14,42 +13,27 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function HomePage() {
-  const features = [
+  const mainSections = [
     {
-      title: "Comprehensive Resources",
-      description: "Access a curated collection of cybersecurity resources, from beginner fundamentals to advanced techniques.",
-      icon: <Shield className="h-8 w-8 text-neon-blue" />,
-      link: "/academy/foundational"
+      title: "Academy",
+      description: "Educational resources, learning paths, courses, and certification guides to build your cybersecurity knowledge.",
+      icon: <GraduationCap className="h-12 w-12 text-neon-blue" />,
+      link: "/academy",
+      color: "from-blue-600/20 to-blue-600/5"
     },
     {
-      title: "Practical Guides",
-      description: "Find guides to practical tools and techniques used by professionals in the field.",
-      icon: <Terminal className="h-8 w-8 text-neon-blue" />,
-      link: "/insights/tools"
+      title: "Insights",
+      description: "Stay informed with the latest cybersecurity news, threat intelligence, tools, and industry trends.",
+      icon: <Lightbulb className="h-12 w-12 text-neon-blue" />,
+      link: "/insights",
+      color: "from-purple-600/20 to-purple-600/5"
     },
     {
-      title: "Community Links",
-      description: "Connect with cybersecurity communities, forums, and discussion groups to expand your network.",
-      icon: <Users className="h-8 w-8 text-neon-blue" />,
-      link: "/community"
-    },
-    {
-      title: "Security Updates",
-      description: "Stay informed with links to the latest vulnerabilities, threats, and industry trends.",
-      icon: <Bell className="h-8 w-8 text-neon-blue" />,
-      link: "/insights/threats"
-    },
-    {
-      title: "Certification Resources",
-      description: "Find study materials and resources to help prepare for industry-recognized certifications.",
-      icon: <Lock className="h-8 w-8 text-neon-blue" />,
-      link: "/academy/certifications"
-    },
-    {
-      title: "Career Information",
-      description: "Access resources for cybersecurity career paths, job requirements, and industry insights.",
-      icon: <Database className="h-8 w-8 text-neon-blue" />,
-      link: "/insights/jobs"
+      title: "Community",
+      description: "Connect with cybersecurity professionals through forums, Discord servers, Reddit communities, and more.",
+      icon: <Users className="h-12 w-12 text-neon-blue" />,
+      link: "/community",
+      color: "from-cyan-600/20 to-cyan-600/5"
     }
   ];
 
@@ -73,7 +57,7 @@ export default function HomePage() {
                   <Link href="/auth/signup">
                     <HeroButton />
                   </Link>
-                  <Link href="/academy/courses">
+                  <Link href="#main-sections">
                     <Button variant="outline" size="lg" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10">
                       Explore Resources
                     </Button>
@@ -95,27 +79,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 relative">
+      {/* Main Sections */}
+      <section id="main-sections" className="py-20 relative">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Resource Categories</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">Main Resources</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              A carefully curated collection of cybersecurity resources to help you learn, grow, and excel in the field.
+              Explore our three core sections designed to help you learn, stay informed, and connect with the cybersecurity community.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <Link href={feature.link} key={index}>
-                <Card className="bg-gray-900/50 border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-300 h-full cursor-pointer">
-                  <CardHeader>
-                    <div className="mb-4">{feature.icon}</div>
-                    <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {mainSections.map((section, index) => (
+              <Link href={section.link} key={index} className="block h-full">
+                <Card className={`bg-gray-900/50 border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-300 h-full bg-gradient-to-br ${section.color}`}>
+                  <CardHeader className="pb-4">
+                    <div className="mb-4 flex justify-center">{section.icon}</div>
+                    <CardTitle className="text-white text-2xl text-center">{section.title}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-gray-400">{feature.description}</p>
+                    <p className="text-gray-400 text-center">{section.description}</p>
                   </CardContent>
+                  <CardFooter className="justify-center pt-2">
+                    <Button variant="ghost" className="text-neon-blue hover:bg-neon-blue/10 group mt-2">
+                      Explore {section.title}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </CardFooter>
                 </Card>
               </Link>
             ))}

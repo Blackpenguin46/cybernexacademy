@@ -202,152 +202,161 @@ export default function Navbar() {
               <span>Home</span>
             </Link>
             
-            {navSections.map((section) => (
-              <div key={section.title} className="relative group">
-                <button 
-                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 ${
-                    activeDropdown === section.id 
-                      ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40' 
-                      : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5 hover:border border-neon-blue/30'
-                  }`}
-                  onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
-                  onMouseEnter={() => setActiveDropdown(section.id)}
-                  onMouseLeave={() => setActiveDropdown(null)}
-                  aria-expanded={activeDropdown === section.id}
-                  aria-haspopup="true"
-                >
-                  <section.icon className="w-4 h-4" />
-                  <span>{section.title}</span>
-                  <motion.div 
-                    animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+            <div
+              className="ml-10 flex items-center space-x-8"
+            >
+              {navSections.map((section) => (
+                <div key={section.id} className="relative">
+                  <button 
+                    className={`flex items-center font-medium text-gray-300 hover:text-white transition-colors gap-1 ${
+                      pathname?.includes(`/${section.id}`) ? 'text-white' : ''
+                    }`}
+                    onMouseEnter={() => setActiveDropdown(section.id)}
+                    onMouseLeave={() => setActiveDropdown(null)}
                   >
-                    <ChevronDown className="w-4 h-4" />
-                  </motion.div>
-                </button>
-                
-                <AnimatePresence>
-                  {activeDropdown === section.id && (
+                    <Link href={`/${section.id}`} className="flex items-center">
+                      <span>{section.title}</span>
+                    </Link>
                     <motion.div 
-                      initial="hidden"
-                      animate="visible"
-                      exit="hidden"
-                      variants={dropdownVariants}
-                      className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/30 rounded-md overflow-hidden shadow-xl shadow-neon-blue/20"
-                      style={{ 
-                        width: '800px', 
-                        left: section.id === 'academy' ? 'auto' : 
-                             section.id === 'insights' ? '-150px' : '0',
-                        right: section.id === 'academy' ? '0' : 'auto'
-                      }}
-                      onMouseEnter={() => setActiveDropdown(section.id)}
-                      onMouseLeave={() => setActiveDropdown(null)}
+                      animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="flex items-center"
+                      onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
                     >
-                      <div className="flex p-6">
-                        {/* Section Overview */}
-                        <div className="w-1/3 border-r border-neon-blue/30 pr-6">
-                          <h3 className="text-lg font-semibold text-neon-blue mb-2 flex items-center gap-2">
-                            <section.icon className="w-5 h-5" />
-                            {section.title}
-                          </h3>
-                          <p className="text-gray-400 text-sm leading-relaxed">
-                            {section.description}
-                          </p>
-                        </div>
-                        
-                        {/* Links */}
-                        <div className="w-2/3 pl-6">
-                          <div className="grid grid-cols-2 gap-4">
-                            {section.links.map((link) => (
-                              <Link 
-                                key={link.name}
-                                href={link.href} 
-                                className={`flex items-center px-4 py-3 rounded-md ${
-                                  isActive(link.href) 
-                                    ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium' 
-                                    : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5'
-                                } transition-all duration-200 relative group overflow-hidden`}
-                                onClick={() => setActiveDropdown(null)}
-                              >
-                                {/* Animated highlight effect on hover */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
-                                
-                                {/* Icon based on link name */}
-                                <div className="mr-3 text-neon-blue">
-                                  {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
-                                  {link.name.includes("Reddit") && <User className="w-4 h-4" />}
-                                  {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
-                                  {link.name.includes("Substack") && <Server className="w-4 h-4" />}
-                                  {link.name.includes("LinkedIn") && <User className="w-4 h-4" />}
-                                  {link.name.includes("Skool") && <Database className="w-4 h-4" />}
-                                  {link.name.includes("Forums") && <User className="w-4 h-4" />}
-                                  {link.name.includes("Events") && <Zap className="w-4 h-4" />}
+                      <ChevronDown className="w-4 h-4" />
+                    </motion.div>
+                  </button>
+                  
+                  <AnimatePresence>
+                    {activeDropdown === section.id && (
+                      <motion.div 
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        variants={dropdownVariants}
+                        className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/30 rounded-md overflow-hidden shadow-xl shadow-neon-blue/20"
+                        style={{ 
+                          width: '800px', 
+                          left: section.id === 'academy' ? 'auto' : 
+                               section.id === 'insights' ? '-150px' : '0',
+                          right: section.id === 'academy' ? '0' : 'auto'
+                        }}
+                        onMouseEnter={() => setActiveDropdown(section.id)}
+                        onMouseLeave={() => setActiveDropdown(null)}
+                      >
+                        <div className="flex p-6">
+                          {/* Section Overview */}
+                          <div className="w-1/3 border-r border-neon-blue/30 pr-6">
+                            <h3 className="text-lg font-semibold text-neon-blue mb-2 flex items-center gap-2">
+                              <section.icon className="w-5 h-5" />
+                              {section.title}
+                            </h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                              {section.description}
+                            </p>
+                            <Link 
+                              href={`/${section.id}`}
+                              className="flex items-center text-neon-blue hover:underline mt-4 text-sm"
+                              onClick={() => setActiveDropdown(null)}
+                            >
+                              View All {section.title} Resources
+                            </Link>
+                          </div>
+                          
+                          {/* Links */}
+                          <div className="w-2/3 pl-6">
+                            <div className="grid grid-cols-2 gap-4">
+                              {section.links.map((link) => (
+                                <Link 
+                                  key={link.name}
+                                  href={link.href} 
+                                  className={`flex items-center px-4 py-3 rounded-md ${
+                                    isActive(link.href) 
+                                      ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium' 
+                                      : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5'
+                                  } transition-all duration-200 relative group overflow-hidden`}
+                                  onClick={() => setActiveDropdown(null)}
+                                >
+                                  {/* Animated highlight effect on hover */}
+                                  <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
                                   
-                                  {link.name.includes("News") && <Zap className="w-4 h-4" />}
-                                  {link.name.includes("Research") && <Code className="w-4 h-4" />}
-                                  {link.name.includes("Case") && <Server className="w-4 h-4" />}
-                                  {link.name.includes("Threat") && <Shield className="w-4 h-4" />}
-                                  {link.name.includes("Industry") && <Database className="w-4 h-4" />}
-                                  {link.name.includes("Practices") && <Terminal className="w-4 h-4" />}
-                                  
-                                  {link.name.includes("Foundational") && <Shield className="w-4 h-4" />}
-                                  {link.name.includes("Intermediate") && <Server className="w-4 h-4" />}
-                                  {link.name.includes("Advanced") && <Terminal className="w-4 h-4" />}
-                                  {link.name.includes("Courses") && <Code className="w-4 h-4" />}
-                                  {link.name.includes("YouTube") && <Zap className="w-4 h-4" />}
-                                  {link.name.includes("Paths") && <Database className="w-4 h-4" />}
-                                  {link.name.includes("Labs") && <Terminal className="w-4 h-4" />}
-                                  {link.name.includes("Roadmaps") && <Zap className="w-4 h-4" />}
-                                  {link.name.includes("Certifications") && <Lock className="w-4 h-4" />}
-                                  {link.name.includes("General") && <Shield className="w-4 h-4" />}
-                                </div>
-                                
-                                <div className="flex flex-col">
-                                  <span className="text-base font-medium">{link.name}</span>
-                                  
-                                  {/* Add subtle description based on section and link name */}
-                                  <span className="text-xs text-gray-400 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity">
-                                    {section.id === 'community' && link.name.includes("GitHub") && "Open source security tools"}
-                                    {section.id === 'community' && link.name.includes("Reddit") && "Cybersecurity discussions"}
-                                    {section.id === 'community' && link.name.includes("Discord") && "Cybersecurity communities"}
-                                    {section.id === 'community' && link.name.includes("Substack") && "Weekly newsletters"}
-                                    {section.id === 'community' && link.name.includes("LinkedIn") && "Professional networking"}
-                                    {section.id === 'community' && link.name.includes("Skool") && "Learning community"}
-                                    {section.id === 'community' && link.name.includes("Forums") && "Q&A discussions"}
-                                    {section.id === 'community' && link.name.includes("Events") && "Online/in-person meetings"}
+                                  {/* Icon based on link name */}
+                                  <div className="mr-3 text-neon-blue">
+                                    {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
+                                    {link.name.includes("Reddit") && <User className="w-4 h-4" />}
+                                    {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
+                                    {link.name.includes("Substack") && <Server className="w-4 h-4" />}
+                                    {link.name.includes("LinkedIn") && <User className="w-4 h-4" />}
+                                    {link.name.includes("Skool") && <Database className="w-4 h-4" />}
+                                    {link.name.includes("Forums") && <User className="w-4 h-4" />}
+                                    {link.name.includes("Events") && <Zap className="w-4 h-4" />}
                                     
-                                    {section.id === 'insights' && link.name.includes("News") && "Latest security updates"}
-                                    {section.id === 'insights' && link.name.includes("Research") && "Academic publications"}
-                                    {section.id === 'insights' && link.name.includes("Case") && "Real-world scenarios"}
-                                    {section.id === 'insights' && link.name.includes("Threat") && "Current security threats"}
-                                    {section.id === 'insights' && link.name.includes("Industry") && "Market developments"}
-                                    {section.id === 'insights' && link.name.includes("Practices") && "Security guidelines"}
+                                    {link.name.includes("News") && <Zap className="w-4 h-4" />}
+                                    {link.name.includes("Research") && <Code className="w-4 h-4" />}
+                                    {link.name.includes("Case") && <Server className="w-4 h-4" />}
+                                    {link.name.includes("Threat") && <Shield className="w-4 h-4" />}
+                                    {link.name.includes("Industry") && <Database className="w-4 h-4" />}
+                                    {link.name.includes("Practices") && <Terminal className="w-4 h-4" />}
                                     
-                                    {section.id === 'academy' && link.name.includes("Foundational") && "Beginner-friendly courses"}
-                                    {section.id === 'academy' && link.name.includes("Intermediate") && "Build on basics"}
-                                    {section.id === 'academy' && link.name.includes("Advanced") && "Expert-level training"}
-                                    {section.id === 'academy' && link.name.includes("Courses") && "Structured learning"}
-                                    {section.id === 'academy' && link.name.includes("YouTube") && "Video tutorials and demos"}
-                                    {section.id === 'academy' && link.name.includes("Labs") && "Hands-on exercises"}
-                                    {section.id === 'academy' && link.name.includes("Certifications") && "Industry credentials"}
-                                    {section.id === 'academy' && link.name.includes("General") && "Essential resources"}
-                                  </span>
-                                </div>
-                                
-                                {/* Active indicator dot */}
-                                {isActive(link.href) && (
-                                  <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-neon-blue animate-pulse"></div>
-                                )}
-                              </Link>
-                            ))}
+                                    {link.name.includes("Foundational") && <Shield className="w-4 h-4" />}
+                                    {link.name.includes("Intermediate") && <Server className="w-4 h-4" />}
+                                    {link.name.includes("Advanced") && <Terminal className="w-4 h-4" />}
+                                    {link.name.includes("Courses") && <Code className="w-4 h-4" />}
+                                    {link.name.includes("YouTube") && <Zap className="w-4 h-4" />}
+                                    {link.name.includes("Paths") && <Database className="w-4 h-4" />}
+                                    {link.name.includes("Labs") && <Terminal className="w-4 h-4" />}
+                                    {link.name.includes("Roadmaps") && <Zap className="w-4 h-4" />}
+                                    {link.name.includes("Certifications") && <Lock className="w-4 h-4" />}
+                                    {link.name.includes("General") && <Shield className="w-4 h-4" />}
+                                  </div>
+                                  
+                                  <div className="flex flex-col">
+                                    <span className="text-base font-medium">{link.name}</span>
+                                    
+                                    {/* Add subtle description based on section and link name */}
+                                    <span className="text-xs text-gray-400 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity">
+                                      {section.id === 'community' && link.name.includes("GitHub") && "Open source security tools"}
+                                      {section.id === 'community' && link.name.includes("Reddit") && "Cybersecurity discussions"}
+                                      {section.id === 'community' && link.name.includes("Discord") && "Cybersecurity communities"}
+                                      {section.id === 'community' && link.name.includes("Substack") && "Weekly newsletters"}
+                                      {section.id === 'community' && link.name.includes("LinkedIn") && "Professional networking"}
+                                      {section.id === 'community' && link.name.includes("Skool") && "Learning community"}
+                                      {section.id === 'community' && link.name.includes("Forums") && "Q&A discussions"}
+                                      {section.id === 'community' && link.name.includes("Events") && "Online/in-person meetings"}
+                                      
+                                      {section.id === 'insights' && link.name.includes("News") && "Latest security updates"}
+                                      {section.id === 'insights' && link.name.includes("Research") && "Academic publications"}
+                                      {section.id === 'insights' && link.name.includes("Case") && "Real-world scenarios"}
+                                      {section.id === 'insights' && link.name.includes("Threat") && "Current security threats"}
+                                      {section.id === 'insights' && link.name.includes("Industry") && "Market developments"}
+                                      {section.id === 'insights' && link.name.includes("Practices") && "Security guidelines"}
+                                      
+                                      {section.id === 'academy' && link.name.includes("Foundational") && "Beginner-friendly courses"}
+                                      {section.id === 'academy' && link.name.includes("Intermediate") && "Build on basics"}
+                                      {section.id === 'academy' && link.name.includes("Advanced") && "Expert-level training"}
+                                      {section.id === 'academy' && link.name.includes("Courses") && "Structured learning"}
+                                      {section.id === 'academy' && link.name.includes("YouTube") && "Video tutorials and demos"}
+                                      {section.id === 'academy' && link.name.includes("Labs") && "Hands-on exercises"}
+                                      {section.id === 'academy' && link.name.includes("Certifications") && "Industry credentials"}
+                                      {section.id === 'academy' && link.name.includes("General") && "Essential resources"}
+                                    </span>
+                                  </div>
+                                  
+                                  {/* Active indicator dot */}
+                                  {isActive(link.href) && (
+                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-neon-blue animate-pulse"></div>
+                                  )}
+                                </Link>
+                              ))}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Desktop - Right section with user actions */}
