@@ -35,7 +35,7 @@ async function fetchCybersecurityNews(): Promise<NewsItem[]> {
     {
       title: "Critical vulnerability found in popular VPN software",
       description: "Security researchers have discovered a severe vulnerability in widely-used VPN applications that could allow attackers to intercept encrypted traffic.",
-      url: "https://thehackernews.com/2023/08/critical-security-vulnerabilities.html",
+      url: "https://thehackernews.com/2023/04/researchers-uncover-high-severity.html",
       source: "The Hacker News",
       publishedAt: new Date().toISOString(),
       category: "Vulnerabilities",
@@ -44,7 +44,7 @@ async function fetchCybersecurityNews(): Promise<NewsItem[]> {
     {
       title: "Ransomware attacks increase by 40% in healthcare sector",
       description: "New report indicates a significant rise in ransomware attacks targeting healthcare institutions, with attackers exploiting pandemic-related vulnerabilities.",
-      url: "https://www.bleepingcomputer.com/news/security/healthcare-ransomware-attacks-surged-in-2023/",
+      url: "https://www.bleepingcomputer.com/news/security/new-ransomware-attack-method-bypasses-a-common-security-solution/",
       source: "Bleeping Computer",
       publishedAt: new Date(Date.now() - 6 * 3600000).toISOString(), // 6 hours ago
       category: "Threats",
@@ -53,7 +53,7 @@ async function fetchCybersecurityNews(): Promise<NewsItem[]> {
     {
       title: "New AI-powered security platform launches",
       description: "Tech startup unveils innovative platform using artificial intelligence to detect anomalies and prevent cyber attacks in real-time.",
-      url: "https://www.darkreading.com/artificial-intelligence/new-ai-solutions-cybersecurity",
+      url: "https://www.darkreading.com/cyber-risk/is-generative-ai-a-security-risk-or-solution",
       source: "Dark Reading",
       publishedAt: new Date(Date.now() - 12 * 3600000).toISOString(), // 12 hours ago
       category: "Technology",
@@ -62,7 +62,7 @@ async function fetchCybersecurityNews(): Promise<NewsItem[]> {
     {
       title: "Government introduces new cybersecurity regulations",
       description: "Federal agencies announce stricter compliance requirements for organizations handling sensitive data, with implementation deadlines set for next quarter.",
-      url: "https://www.zdnet.com/article/us-government-announces-new-cybersecurity-strategy/",
+      url: "https://www.zdnet.com/article/cisa-reveals-new-cybersecurity-requirements-for-critical-infrastructure-organizations/",
       source: "ZDNet",
       publishedAt: new Date(Date.now() - 18 * 3600000).toISOString(), // 18 hours ago
       category: "Compliance",
@@ -71,7 +71,7 @@ async function fetchCybersecurityNews(): Promise<NewsItem[]> {
     {
       title: "Major data breach affects millions of customers",
       description: "Large e-commerce company reports unauthorized access to customer database, potentially exposing personal and payment information of over 5 million users.",
-      url: "https://www.wired.com/story/how-to-protect-yourself-data-breach/",
+      url: "https://www.wired.com/story/t-mobile-data-breach-140-million-customers/",
       source: "Wired",
       publishedAt: new Date(Date.now() - 22 * 3600000).toISOString(), // 22 hours ago
       category: "Threats",
@@ -80,7 +80,7 @@ async function fetchCybersecurityNews(): Promise<NewsItem[]> {
     {
       title: "International Cybersecurity Conference announces keynote speakers",
       description: "Renowned security experts and government officials to headline upcoming global cybersecurity summit addressing emerging threats and defense strategies.",
-      url: "https://www.infosecurity-magazine.com/conferences/",
+      url: "https://www.infosecurity-magazine.com/news/us-government-announces-new/",
       source: "Infosecurity Magazine",
       publishedAt: new Date(Date.now() - 23 * 3600000).toISOString(), // 23 hours ago
       category: "Events",

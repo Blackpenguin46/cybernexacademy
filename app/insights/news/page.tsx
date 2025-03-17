@@ -29,7 +29,7 @@ export default function NewsPage() {
       date: "2024-03-20",
       category: "Vulnerabilities",
       source: "CyberNews",
-      url: "https://thehackernews.com/2023/10/critical-security-vulnerability-found.html"
+      url: "https://thehackernews.com/2024/03/critical-rce-vulnerability-found-in.html"
     },
     {
       title: "New Ransomware Strain Targets Healthcare",
@@ -37,7 +37,7 @@ export default function NewsPage() {
       date: "2024-03-19",
       category: "Threats",
       source: "SecurityWeek",
-      url: "https://www.securityweek.com/ransomware-gangs-increasingly-attacking-healthcare-organizations/"
+      url: "https://www.securityweek.com/more-attacks-and-more-money-ransomware-statistics-for-2023/"
     },
     {
       title: "Global Cybersecurity Summit Announced",
@@ -45,7 +45,7 @@ export default function NewsPage() {
       date: "2024-03-18",
       category: "Events",
       source: "InfoSec Today",
-      url: "https://www.infosecurity-magazine.com/conferences/"
+      url: "https://www.rsaconference.com/usa"
     }
   ]
 
@@ -56,7 +56,7 @@ export default function NewsPage() {
       date: "2024-03-17",
       category: "Technology",
       source: "Tech Insights",
-      url: "https://www.darkreading.com/artificial-intelligence/ai-tools-for-threat-detection"
+      url: "https://www.darkreading.com/tech-trends/how-generative-ai-benefits-cybersecurity"
     },
     {
       title: "Critical Infrastructure Protection Guidelines Updated",
@@ -64,7 +64,7 @@ export default function NewsPage() {
       date: "2024-03-16",
       category: "Compliance",
       source: "Gov Security",
-      url: "https://www.cisa.gov/critical-infrastructure-sectors"
+      url: "https://www.cisa.gov/topics/critical-infrastructure-security-and-resilience"
     },
     {
       title: "Financial Sector Faces Increased Cyber Threats",
@@ -72,7 +72,7 @@ export default function NewsPage() {
       date: "2024-03-15",
       category: "Industry",
       source: "Financial Security",
-      url: "https://www.helpnetsecurity.com/2023/08/14/financial-services-cyber-attacks/"
+      url: "https://www.bankinfosecurity.com/cybersecurity-banking-c-260"
     },
     {
       title: "New Botnet Discovered in IoT Devices",
@@ -80,7 +80,7 @@ export default function NewsPage() {
       date: "2024-03-14",
       category: "Threats",
       source: "IoT Security Journal",
-      url: "https://www.bleepingcomputer.com/news/security/new-iot-botnet-targets-millions-of-routers-and-iot-devices/"
+      url: "https://www.bleepingcomputer.com/news/security/new-malware-strain-targeting-linux-systems-and-iot-devices/"
     },
     {
       title: "Cybersecurity Talent Gap Widens",
@@ -88,7 +88,7 @@ export default function NewsPage() {
       date: "2024-03-13",
       category: "Industry",
       source: "Workforce Insights",
-      url: "https://www.isc2.org/Research/Workforce-Study"
+      url: "https://www.isc2.org/cyber-workforce-development/workforce-study"
     },
     {
       title: "Critical Patch Released for Popular Database",
@@ -96,7 +96,7 @@ export default function NewsPage() {
       date: "2024-03-12",
       category: "Vulnerabilities",
       source: "Database Security",
-      url: "https://msrc.microsoft.com/update-guide/vulnerability"
+      url: "https://msrc.microsoft.com/blog/2024/03/"
     }
   ]
 
@@ -133,7 +133,7 @@ export default function NewsPage() {
   ]
 
   return (
-    <div className="container mx-auto pt-16 pb-8 px-4 max-w-7xl">
+    <div className="container mx-auto px-4 pb-16">
       {/* Use SectionHeader component to match other pages */}
       <SectionHeader
         title="Cybersecurity News & Updates"

@@ -309,7 +309,7 @@ export default function Navbar() {
                                   <span className="text-xs text-gray-400 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity">
                                     {section.id === 'community' && link.name.includes("GitHub") && "Open source security tools"}
                                     {section.id === 'community' && link.name.includes("Reddit") && "Cybersecurity discussions"}
-                                    {section.id === 'community' && link.name.includes("Discord") && "Live chat with experts"}
+                                    {section.id === 'community' && link.name.includes("Discord") && "Cybersecurity communities"}
                                     {section.id === 'community' && link.name.includes("Substack") && "Weekly newsletters"}
                                     {section.id === 'community' && link.name.includes("LinkedIn") && "Professional networking"}
                                     {section.id === 'community' && link.name.includes("Skool") && "Learning community"}
@@ -393,15 +393,7 @@ export default function Navbar() {
                         className="w-full flex items-center justify-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-medium px-4 py-3 rounded-md transition-colors"
                       >
                         <Heart className="w-5 h-5" />
-                        <span>Donate Now</span>
-                      </Link>
-                      <Link 
-                        href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 bg-transparent border border-pink-500 text-pink-400 hover:bg-pink-500/10 font-medium px-4 py-2 rounded-md transition-colors mt-2"
-                      >
-                        <span>Go to Payment Page</span>
+                        <span>Donate</span>
                       </Link>
                     </div>
                   </motion.div>
@@ -611,16 +603,7 @@ export default function Navbar() {
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         <Heart className="w-5 h-5" />
-                        <span>Donate Now</span>
-                      </Link>
-                      <Link 
-                        href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 bg-transparent border border-pink-500 text-pink-400 hover:bg-pink-500/10 font-medium px-4 py-2 rounded-md transition-colors"
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        <span>Go to Payment Page</span>
+                        <span>Donate</span>
                       </Link>
                     </div>
                   </div>
