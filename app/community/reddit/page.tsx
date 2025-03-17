@@ -53,7 +53,7 @@ export default function RedditPage() {
       name: "r/reverseengineering",
       description: "Community focused on reverse engineering techniques and tools for software analysis.",
       members: "150K+",
-      url: "https://www.reddit.com/r/reverseengineering/",
+      url: "https://www.reddit.com/r/ReverseEngineering/",
       categories: ["technical", "malware"]
     },
     {

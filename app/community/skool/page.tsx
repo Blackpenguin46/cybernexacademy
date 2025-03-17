@@ -8,31 +8,31 @@ export default function SkoolPage() {
       name: "Cybersecurity Fundamentals",
       description: "Learn the core concepts and principles of cybersecurity for beginners.",
       students: "25K+",
-      url: "https://www.skool.com/cybersecurityfundamentals"
+      url: "https://skool.com/cybersecurity-essentials"
     },
     {
       name: "Ethical Hacking Skool",
       description: "Master ethical hacking techniques and methodologies through hands-on practice.",
       students: "22K+",
-      url: "https://www.skool.com/ethicalhacking"
+      url: "https://skool.com/ethical-hacking-101"
     },
     {
       name: "Cyber Career Mastery",
       description: "Navigate your cybersecurity career path with guidance from industry professionals.",
       students: "18K+",
-      url: "https://www.skool.com/cybercareermastery"
+      url: "https://skool.com/cyber-career-mastery"
     },
     {
       name: "Advanced Penetration Testing",
       description: "Advanced techniques for penetration testing and vulnerability assessment.",
       students: "15K+",
-      url: "https://www.skool.com/advancedpentesting"
+      url: "https://skool.com/advanced-pentesting"
     },
     {
       name: "Cloud Security Academy",
       description: "Specialized training in securing cloud environments and services.",
       students: "20K+",
-      url: "https://www.skool.com/cloudsecurityacademy"
+      url: "https://skool.com/cloud-security"
     }
   ]
 

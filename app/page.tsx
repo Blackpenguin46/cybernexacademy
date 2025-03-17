@@ -18,32 +18,38 @@ export default function HomePage() {
     {
       title: "Comprehensive Resources",
       description: "Access a curated collection of cybersecurity resources, from beginner fundamentals to advanced techniques.",
-      icon: <Shield className="h-8 w-8 text-neon-blue" />
+      icon: <Shield className="h-8 w-8 text-neon-blue" />,
+      link: "/academy/foundational"
     },
     {
       title: "Practical Guides",
       description: "Find guides to practical tools and techniques used by professionals in the field.",
-      icon: <Terminal className="h-8 w-8 text-neon-blue" />
+      icon: <Terminal className="h-8 w-8 text-neon-blue" />,
+      link: "/insights/tools"
     },
     {
       title: "Community Links",
       description: "Connect with cybersecurity communities, forums, and discussion groups to expand your network.",
-      icon: <Users className="h-8 w-8 text-neon-blue" />
+      icon: <Users className="h-8 w-8 text-neon-blue" />,
+      link: "/community"
     },
     {
       title: "Security Updates",
       description: "Stay informed with links to the latest vulnerabilities, threats, and industry trends.",
-      icon: <Bell className="h-8 w-8 text-neon-blue" />
+      icon: <Bell className="h-8 w-8 text-neon-blue" />,
+      link: "/insights/threats"
     },
     {
       title: "Certification Resources",
       description: "Find study materials and resources to help prepare for industry-recognized certifications.",
-      icon: <Lock className="h-8 w-8 text-neon-blue" />
+      icon: <Lock className="h-8 w-8 text-neon-blue" />,
+      link: "/academy/certifications"
     },
     {
       title: "Career Information",
       description: "Access resources for cybersecurity career paths, job requirements, and industry insights.",
-      icon: <Database className="h-8 w-8 text-neon-blue" />
+      icon: <Database className="h-8 w-8 text-neon-blue" />,
+      link: "/insights/jobs"
     }
   ];
 
@@ -101,15 +107,17 @@ export default function HomePage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="bg-gray-900/50 border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-300">
-                <CardHeader>
-                  <div className="mb-4">{feature.icon}</div>
-                  <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-400">{feature.description}</p>
-                </CardContent>
-              </Card>
+              <Link href={feature.link} key={index}>
+                <Card className="bg-gray-900/50 border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-300 h-full cursor-pointer">
+                  <CardHeader>
+                    <div className="mb-4">{feature.icon}</div>
+                    <CardTitle className="text-white text-xl">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-gray-400">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

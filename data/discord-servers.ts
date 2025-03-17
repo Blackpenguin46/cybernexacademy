@@ -11,14 +11,14 @@ export const discordServers: DiscordServer[] = [
     name: "The Cyber Mentor",
     description: "Heath Adams' community focused on practical ethical hacking and penetration testing training.",
     members: "100K+",
-    url: "https://discord.gg/thecybermentor",
+    url: "https://discord.com/invite/tcm",
     categories: ["learning", "pentesting", "career"]
   },
   {
     name: "Darknet Diaries",
     description: "Official community for the popular cybersecurity podcast, discussing true stories from the dark side of the Internet.",
     members: "75K+",
-    url: "https://discord.gg/darknetdiaries",
+    url: "https://discord.com/invite/darknetdiaries",
     categories: ["community"]
   },
   {
@@ -32,28 +32,28 @@ export const discordServers: DiscordServer[] = [
     name: "Hack The Box",
     description: "Community for the popular Hack The Box platform for penetration testing and security challenges.",
     members: "180K+",
-    url: "https://discord.gg/hackthebox",
+    url: "https://discord.com/invite/hackthebox",
     categories: ["learning", "ctf", "pentesting"]
   },
   {
     name: "The Many Hats Club",
     description: "Diverse cybersecurity community covering various topics from ethical hacking to threat intelligence.",
     members: "45K+",
-    url: "https://discord.gg/themanyhatsclub",
+    url: "https://discord.gg/infosec",
     categories: ["community", "pentesting", "blue_team"]
   },
   {
     name: "Practical Ethical Hacking",
     description: "Community dedicated to ethical hacking methodologies and practical security training.",
     members: "70K+",
-    url: "https://discord.gg/ethicalhacking",
+    url: "https://discord.com/invite/peh",
     categories: ["learning", "pentesting"]
   },
   {
     name: "John Hammond's Community",
     description: "Active learning community led by popular cybersecurity YouTuber John Hammond.",
     members: "80K+",
-    url: "https://discord.gg/johnhammond",
+    url: "https://discord.com/invite/5MTpnKM",
     categories: ["learning", "ctf", "pentesting"]
   },
   {
