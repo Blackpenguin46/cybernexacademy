@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus } from 'lucide-react';
+import { Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus, Users, LineChart, GraduationCap } from 'lucide-react';
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
@@ -229,48 +229,36 @@ export default function Navbar() {
                   
                   <AnimatePresence>
                     {activeDropdown === section.id && (
-                      <motion.div 
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                        variants={dropdownVariants}
-                        className="absolute z-10 left-0 mt-2 bg-black/90 backdrop-blur-md border border-neon-blue/30 rounded-md overflow-hidden shadow-xl shadow-neon-blue/20"
-                        style={{ 
-                          width: '800px', 
-                          left: section.id === 'academy' ? 'auto' : 
-                               section.id === 'insights' ? '-150px' : '0',
-                          right: section.id === 'academy' ? '0' : 'auto'
-                        }}
-                        onMouseEnter={() => setActiveDropdown(section.id)}
-                        onMouseLeave={() => setActiveDropdown(null)}
+                      <motion.div
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute left-0 right-0 z-30 mt-2 mx-auto max-w-[1000px] bg-black/90 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
                       >
-                        <div className="flex p-6">
-                          {/* Section Overview */}
-                          <div className="w-1/3 border-r border-neon-blue/30 pr-6">
-                            <h3 className="text-lg font-semibold text-neon-blue mb-2 flex items-center gap-2">
-                              <section.icon className="w-5 h-5" />
-                              {section.title}
-                            </h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
-                              {section.description}
-                            </p>
-                            <Link 
-                              href={`/${section.id}`}
-                              className="flex items-center text-neon-blue hover:underline mt-4 text-sm"
-                              onClick={() => setActiveDropdown(null)}
-                            >
-                              View All {section.title} Resources
-                            </Link>
+                        <div className="flex">
+                          {/* Sidebar with title and description */}
+                          <div className="w-1/4 bg-gray-900/50 p-6">
+                            <h3 className="text-xl font-bold text-white mb-2">{section.title}</h3>
+                            <p className="text-gray-400 mb-4">{section.description}</p>
+                            
+                            {/* Graphic element or icon */}
+                            <div className="mt-4 text-neon-blue relative">
+                              {section.id === 'community' && <Users className="w-20 h-20 opacity-30" />}
+                              {section.id === 'insights' && <LineChart className="w-20 h-20 opacity-30" />}
+                              {section.id === 'academy' && <GraduationCap className="w-20 h-20 opacity-30" />}
+                              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-neon-blue/30 to-transparent opacity-50 rounded-full blur-xl"></div>
+                            </div>
                           </div>
                           
-                          {/* Links */}
-                          <div className="w-2/3 pl-6">
-                            <div className="grid grid-cols-2 gap-4">
+                          {/* Links grid */}
+                          <div className="w-3/4 p-6">
+                            <div className="grid grid-cols-4 gap-2">
                               {section.links.map((link) => (
                                 <Link 
                                   key={link.name}
                                   href={link.href} 
-                                  className={`flex items-center px-4 py-3 rounded-md ${
+                                  className={`flex items-center px-3 py-2 rounded-md ${
                                     isActive(link.href) 
                                       ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium' 
                                       : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5'
@@ -281,7 +269,7 @@ export default function Navbar() {
                                   <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
                                   
                                   {/* Icon based on link name */}
-                                  <div className="mr-3 text-neon-blue">
+                                  <div className="mr-2 text-neon-blue">
                                     {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
                                     {link.name.includes("Reddit") && <User className="w-4 h-4" />}
                                     {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
@@ -310,42 +298,7 @@ export default function Navbar() {
                                     {link.name.includes("General") && <Shield className="w-4 h-4" />}
                                   </div>
                                   
-                                  <div className="flex flex-col">
-                                    <span className="text-base font-medium">{link.name}</span>
-                                    
-                                    {/* Add subtle description based on section and link name */}
-                                    <span className="text-xs text-gray-400 mt-0.5 opacity-70 group-hover:opacity-100 transition-opacity">
-                                      {section.id === 'community' && link.name.includes("GitHub") && "Open source security tools"}
-                                      {section.id === 'community' && link.name.includes("Reddit") && "Cybersecurity discussions"}
-                                      {section.id === 'community' && link.name.includes("Discord") && "Cybersecurity communities"}
-                                      {section.id === 'community' && link.name.includes("Substack") && "Weekly newsletters"}
-                                      {section.id === 'community' && link.name.includes("LinkedIn") && "Professional networking"}
-                                      {section.id === 'community' && link.name.includes("Skool") && "Learning community"}
-                                      {section.id === 'community' && link.name.includes("Forums") && "Q&A discussions"}
-                                      {section.id === 'community' && link.name.includes("Events") && "Online/in-person meetings"}
-                                      
-                                      {section.id === 'insights' && link.name.includes("News") && "Latest security updates"}
-                                      {section.id === 'insights' && link.name.includes("Research") && "Academic publications"}
-                                      {section.id === 'insights' && link.name.includes("Case") && "Real-world scenarios"}
-                                      {section.id === 'insights' && link.name.includes("Threat") && "Current security threats"}
-                                      {section.id === 'insights' && link.name.includes("Industry") && "Market developments"}
-                                      {section.id === 'insights' && link.name.includes("Practices") && "Security guidelines"}
-                                      
-                                      {section.id === 'academy' && link.name.includes("Foundational") && "Beginner-friendly courses"}
-                                      {section.id === 'academy' && link.name.includes("Intermediate") && "Build on basics"}
-                                      {section.id === 'academy' && link.name.includes("Advanced") && "Expert-level training"}
-                                      {section.id === 'academy' && link.name.includes("Courses") && "Structured learning"}
-                                      {section.id === 'academy' && link.name.includes("YouTube") && "Video tutorials and demos"}
-                                      {section.id === 'academy' && link.name.includes("Labs") && "Hands-on exercises"}
-                                      {section.id === 'academy' && link.name.includes("Certifications") && "Industry credentials"}
-                                      {section.id === 'academy' && link.name.includes("General") && "Essential resources"}
-                                    </span>
-                                  </div>
-                                  
-                                  {/* Active indicator dot */}
-                                  {isActive(link.href) && (
-                                    <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-neon-blue animate-pulse"></div>
-                                  )}
+                                  <span className="text-sm font-medium">{link.name}</span>
                                 </Link>
                               ))}
                             </div>
@@ -496,7 +449,7 @@ export default function Navbar() {
                         <Link 
                           key={link.name}
                           href={link.href} 
-                          className={`block py-2 px-4 rounded-md ${
+                          className={`flex items-center px-3 py-2 rounded-md ${
                             isActive(link.href) 
                               ? 'text-neon-green bg-neon-blue/10 border border-neon-blue/30 font-medium' 
                               : 'text-gray-300 hover:text-white hover:bg-neon-blue/5 hover:border border-neon-blue/20'
@@ -504,7 +457,7 @@ export default function Navbar() {
                           onClick={() => setMobileMenuOpen(false)}
                         >
                           {/* Icon based on link name */}
-                          <div className="mr-3 text-neon-blue">
+                          <div className="mr-2 text-neon-blue">
                             {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
                             {link.name.includes("Reddit") && <User className="w-4 h-4" />}
                             {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
