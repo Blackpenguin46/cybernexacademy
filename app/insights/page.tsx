@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { Lightbulb, Newspaper, Building, Target, ExternalLink, AlertTriangle, TrendingUp } from 'lucide-react'
+import { Lightbulb, Newspaper, Building, Target, ExternalLink, AlertTriangle, TrendingUp, Shield } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import SectionHeader from '../components/SectionHeader'
 
@@ -65,65 +65,98 @@ const insightSections = [
 
 export default function InsightsPage() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="container mx-auto px-4 pb-20">
       <SectionHeader
-        title="Insights"
-        description="Explore cybersecurity news, trends, research, and industry insights to stay ahead of emerging threats."
-        icon={<Lightbulb className="h-12 w-12 text-white" />}
+        title="Cybersecurity Insights"
+        description="Stay informed with the latest cybersecurity news, threat intelligence, and industry trends"
+        icon={<Lightbulb className="w-12 h-12 text-neon-blue" />}
       />
-
-      {/* Insights Grid */}
-      <section className="py-20">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {insightSections.map((section, index) => (
-                <Link key={index} href={section.link} className="group">
-                  <div className={`h-full p-6 rounded-lg border ${section.borderColor} ${section.hoverColor} transition-colors bg-gradient-to-b ${section.color}`}>
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-lg bg-gray-900/50 flex items-center justify-center">
-                        <section.icon className="w-6 h-6 text-gray-300" />
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                      {section.title}
-                    </h3>
-                    <p className="text-gray-400">
-                      {section.description}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+      
+      <div className="mt-16 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {insightSections.map((section, index) => (
+            <Link href={section.link} key={index} className="group transform transition-all hover:scale-105">
+              <div className={`h-full rounded-lg border ${section.borderColor} ${section.hoverColor} bg-gradient-to-br ${section.color} p-6 transition-all duration-300 shadow-lg hover:shadow-neon-blue/20`}>
+                <div className="flex justify-center mb-4">
+                  <section.icon className="w-10 h-10 text-neon-blue" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2 text-center">{section.title}</h3>
+                <p className="text-gray-300 text-center">{section.description}</p>
+                <div className="mt-4 flex items-center justify-center text-neon-blue text-sm group-hover:underline">
+                  Explore <ExternalLink className="w-3 h-3 ml-1" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+      
+      <div className="mt-20 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="md:col-span-2 bg-gray-900/30 border border-neon-blue/20 rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-white mb-6">Latest Security News</h2>
+          <div className="space-y-6">
+            <div className="bg-gray-900/50 p-4 rounded-lg border border-neon-blue/10">
+              <div className="flex gap-3">
+                <div className="bg-red-900/30 text-red-400 rounded-full px-3 py-1 text-xs font-medium flex items-center">
+                  <AlertTriangle className="w-3 h-3 mr-1" /> Vulnerability
+                </div>
+                <div className="text-xs text-gray-400">March 20, 2024</div>
+              </div>
+              <h3 className="text-lg font-semibold text-white mt-2">Critical Vulnerability Found in Popular VPN Software</h3>
+              <p className="text-gray-300 text-sm mt-1">Researchers have discovered a severe vulnerability that could allow attackers to intercept encrypted traffic.</p>
+              <Link href="/insights/news" className="text-neon-blue text-sm mt-2 inline-flex items-center hover:underline">
+                Read more <ExternalLink className="w-3 h-3 ml-1" />
+              </Link>
+            </div>
+            <div className="bg-gray-900/50 p-4 rounded-lg border border-neon-blue/10">
+              <div className="flex gap-3">
+                <div className="bg-orange-900/30 text-orange-400 rounded-full px-3 py-1 text-xs font-medium flex items-center">
+                  <Shield className="w-3 h-3 mr-1" /> Threat
+                </div>
+                <div className="text-xs text-gray-400">March 19, 2024</div>
+              </div>
+              <h3 className="text-lg font-semibold text-white mt-2">Ransomware Attacks Increase by 40% in Healthcare Sector</h3>
+              <p className="text-gray-300 text-sm mt-1">New report indicates a significant rise in ransomware attacks targeting healthcare institutions.</p>
+              <Link href="/insights/threats" className="text-neon-blue text-sm mt-2 inline-flex items-center hover:underline">
+                Read more <ExternalLink className="w-3 h-3 ml-1" />
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">Stay Informed</h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Subscribe to our newsletter for weekly cybersecurity insights and updates.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild>
-                <Link href="/insights/newsletter" className="flex items-center gap-2">
-                  Subscribe Now
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
+          <div className="mt-6 text-center">
+            <Link href="/insights/news">
+              <Button variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10">
+                View All News
               </Button>
-              <Button variant="outline" asChild>
-                <Link href="/insights/archive" className="flex items-center gap-2">
-                  View Archive
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
+            </Link>
           </div>
         </div>
-      </section>
+        
+        <div className="bg-gray-900/30 border border-neon-blue/20 rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-white mb-6">Trending Topics</h2>
+          <div className="space-y-4">
+            <Link href="/insights/tools" className="bg-gray-900/50 p-3 rounded-lg border border-neon-blue/10 flex items-center hover:border-neon-blue/30 transition-colors">
+              <TrendingUp className="w-5 h-5 text-neon-blue mr-3" />
+              <span className="text-gray-300">AI in Cybersecurity</span>
+            </Link>
+            <Link href="/insights/threats" className="bg-gray-900/50 p-3 rounded-lg border border-neon-blue/10 flex items-center hover:border-neon-blue/30 transition-colors">
+              <Shield className="w-5 h-5 text-neon-blue mr-3" />
+              <span className="text-gray-300">Zero Trust Security</span>
+            </Link>
+            <Link href="/insights/industries" className="bg-gray-900/50 p-3 rounded-lg border border-neon-blue/10 flex items-center hover:border-neon-blue/30 transition-colors">
+              <Building className="w-5 h-5 text-neon-blue mr-3" />
+              <span className="text-gray-300">Supply Chain Security</span>
+            </Link>
+            <Link href="/insights/breaches" className="bg-gray-900/50 p-3 rounded-lg border border-neon-blue/10 flex items-center hover:border-neon-blue/30 transition-colors">
+              <AlertTriangle className="w-5 h-5 text-neon-blue mr-3" />
+              <span className="text-gray-300">Recent Data Breaches</span>
+            </Link>
+            <Link href="/insights/trends" className="bg-gray-900/50 p-3 rounded-lg border border-neon-blue/10 flex items-center hover:border-neon-blue/30 transition-colors">
+              <Target className="w-5 h-5 text-neon-blue mr-3" />
+              <span className="text-gray-300">Cloud Security</span>
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -65,65 +65,53 @@ const academySections = [
 
 export default function AcademyPage() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="container mx-auto px-4 pb-20">
       <SectionHeader
-        title="Academy"
-        description="Learn cybersecurity through structured resources, hands-on labs, and guided career paths."
-        icon={<GraduationCap className="h-12 w-12 text-white" />}
+        title="Cybersecurity Academy"
+        description="Educational resources to help you build your cybersecurity knowledge from fundamentals to advanced techniques"
+        icon={<GraduationCap className="w-12 h-12 text-neon-blue" />}
       />
-
-      {/* Academy Grid */}
-      <section className="py-20">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {academySections.map((section, index) => (
-                <Link key={index} href={section.link} className="group">
-                  <div className={`h-full p-6 rounded-lg border ${section.borderColor} ${section.hoverColor} transition-colors bg-gradient-to-b ${section.color}`}>
-                    <div className="flex items-center mb-4">
-                      <div className="w-12 h-12 rounded-lg bg-gray-900/50 flex items-center justify-center">
-                        <section.icon className="w-6 h-6 text-gray-300" />
-                      </div>
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                      {section.title}
-                    </h3>
-                    <p className="text-gray-400">
-                      {section.description}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
+      
+      <div className="mt-16 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {academySections.map((section, index) => (
+            <Link href={section.link} key={index} className="group transform transition-all hover:scale-105">
+              <div className={`h-full rounded-lg border ${section.borderColor} ${section.hoverColor} bg-gradient-to-br ${section.color} p-6 transition-all duration-300 shadow-lg hover:shadow-neon-blue/20`}>
+                <div className="flex justify-center mb-4">
+                  <section.icon className="w-10 h-10 text-neon-blue" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2 text-center">{section.title}</h3>
+                <p className="text-gray-300 text-center">{section.description}</p>
+                <div className="mt-4 flex items-center justify-center text-neon-blue text-sm group-hover:underline">
+                  Explore <ExternalLink className="w-3 h-3 ml-1" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+      
+      <div className="mt-20 bg-gray-900/30 border border-neon-blue/20 rounded-lg p-8 max-w-6xl mx-auto">
+        <h2 className="text-2xl font-bold text-white mb-8 text-center">Learning Resources</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-gray-900/50 p-6 rounded-lg border border-neon-blue/10 flex flex-col items-center">
+            <Code className="w-10 h-10 text-neon-blue mb-3" />
+            <h3 className="text-xl font-semibold text-white mb-3">Tutorial-Based Learning</h3>
+            <p className="text-gray-300 text-center">Follow step-by-step tutorials on various cybersecurity topics, from basic security practices to advanced penetration testing techniques.</p>
+            <Link href="/academy/youtube" className="mt-auto pt-4">
+              <Button className="bg-neon-blue hover:bg-blue-600">View Tutorials</Button>
+            </Link>
+          </div>
+          <div className="bg-gray-900/50 p-6 rounded-lg border border-neon-blue/10 flex flex-col items-center">
+            <Target className="w-10 h-10 text-neon-blue mb-3" />
+            <h3 className="text-xl font-semibold text-white mb-3">Hands-on Practice</h3>
+            <p className="text-gray-300 text-center">Apply your knowledge with real-world labs and exercises designed to simulate actual cybersecurity scenarios and challenges.</p>
+            <Link href="/academy/labs" className="mt-auto pt-4">
+              <Button className="bg-neon-blue hover:bg-blue-600">Explore Labs</Button>
+            </Link>
           </div>
         </div>
-      </section>
-
-      {/* Learning Path Section */}
-      <section className="py-20 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">Start Your Learning Journey</h2>
-            <p className="text-xl text-gray-400 mb-8">
-              Begin with our foundational resources or jump into hands-on projects based on your experience level.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild>
-                <Link href="/academy/foundational" className="flex items-center gap-2">
-                  Start Learning
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link href="/academy/roadmaps" className="flex items-center gap-2">
-                  View Roadmaps
-                  <ExternalLink className="w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   )
 } 
