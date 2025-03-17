@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
 import LiveNewsFeed from '@/app/components/LiveNewsFeed'
+import SectionHeader from '@/app/components/SectionHeader'
 
 export default function NewsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -28,7 +29,7 @@ export default function NewsPage() {
       date: "2024-03-20",
       category: "Vulnerabilities",
       source: "CyberNews",
-      url: "#"
+      url: "https://thehackernews.com/2023/10/critical-security-vulnerability-found.html"
     },
     {
       title: "New Ransomware Strain Targets Healthcare",
@@ -36,7 +37,7 @@ export default function NewsPage() {
       date: "2024-03-19",
       category: "Threats",
       source: "SecurityWeek",
-      url: "#"
+      url: "https://www.securityweek.com/ransomware-gangs-increasingly-attacking-healthcare-organizations/"
     },
     {
       title: "Global Cybersecurity Summit Announced",
@@ -44,7 +45,7 @@ export default function NewsPage() {
       date: "2024-03-18",
       category: "Events",
       source: "InfoSec Today",
-      url: "#"
+      url: "https://www.infosecurity-magazine.com/conferences/"
     }
   ]
 
@@ -55,7 +56,7 @@ export default function NewsPage() {
       date: "2024-03-17",
       category: "Technology",
       source: "Tech Insights",
-      url: "#"
+      url: "https://www.darkreading.com/artificial-intelligence/ai-tools-for-threat-detection"
     },
     {
       title: "Critical Infrastructure Protection Guidelines Updated",
@@ -63,7 +64,7 @@ export default function NewsPage() {
       date: "2024-03-16",
       category: "Compliance",
       source: "Gov Security",
-      url: "#"
+      url: "https://www.cisa.gov/critical-infrastructure-sectors"
     },
     {
       title: "Financial Sector Faces Increased Cyber Threats",
@@ -71,7 +72,7 @@ export default function NewsPage() {
       date: "2024-03-15",
       category: "Industry",
       source: "Financial Security",
-      url: "#"
+      url: "https://www.helpnetsecurity.com/2023/08/14/financial-services-cyber-attacks/"
     },
     {
       title: "New Botnet Discovered in IoT Devices",
@@ -79,7 +80,7 @@ export default function NewsPage() {
       date: "2024-03-14",
       category: "Threats",
       source: "IoT Security Journal",
-      url: "#"
+      url: "https://www.bleepingcomputer.com/news/security/new-iot-botnet-targets-millions-of-routers-and-iot-devices/"
     },
     {
       title: "Cybersecurity Talent Gap Widens",
@@ -87,7 +88,7 @@ export default function NewsPage() {
       date: "2024-03-13",
       category: "Industry",
       source: "Workforce Insights",
-      url: "#"
+      url: "https://www.isc2.org/Research/Workforce-Study"
     },
     {
       title: "Critical Patch Released for Popular Database",
@@ -95,7 +96,7 @@ export default function NewsPage() {
       date: "2024-03-12",
       category: "Vulnerabilities",
       source: "Database Security",
-      url: "#"
+      url: "https://msrc.microsoft.com/update-guide/vulnerability"
     }
   ]
 
@@ -110,39 +111,41 @@ export default function NewsPage() {
 
   const sources = [
     {
-      name: "CyberNews",
-      url: "#",
-      description: "Breaking cybersecurity news and analysis"
+      name: "The Hacker News",
+      url: "https://thehackernews.com/",
+      description: "Cybersecurity news and analysis for IT professionals"
     },
     {
-      name: "SecurityWeek",
-      url: "#",
-      description: "Enterprise security news and insights"
+      name: "Bleeping Computer",
+      url: "https://www.bleepingcomputer.com/",
+      description: "Information security and technology news"
     },
     {
-      name: "InfoSec Today",
-      url: "#",
-      description: "Daily security updates and coverage"
+      name: "Dark Reading",
+      url: "https://www.darkreading.com/",
+      description: "Connecting the cybersecurity community"
     },
     {
-      name: "Tech Insights",
-      url: "#",
-      description: "Technology and security analysis"
+      name: "Krebs on Security",
+      url: "https://krebsonsecurity.com/",
+      description: "In-depth security news and investigation"
     }
   ]
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-7xl">
-      <h1 className="text-4xl font-bold mb-6 text-white">Cybersecurity News & Updates</h1>
-      <p className="text-gray-400 text-lg mb-8">
-        Stay informed with the latest cybersecurity news, vulnerability disclosures, and industry trends.
-      </p>
+    <div className="container mx-auto pt-16 pb-8 px-4 max-w-7xl">
+      {/* Use SectionHeader component to match other pages */}
+      <SectionHeader
+        title="Cybersecurity News & Updates"
+        description="Stay informed with the latest cybersecurity news, vulnerability disclosures, and industry trends."
+        icon={<Newspaper className="w-12 h-12 text-neon-blue" />}
+      />
       
       {/* Live News Feed Component - Automatically updates every 24 hours */}
       <LiveNewsFeed />
       
       {/* Category filters */}
-      <div className="mb-8">
+      <div className="mb-8 mt-8">
         <CategoryFilter 
           categories={categories} 
           selectedCategory={selectedCategory}
@@ -150,7 +153,7 @@ export default function NewsPage() {
         />
       </div>
 
-      {/* Featured News Section - keep existing code */}
+      {/* Featured News Section */}
       <div className="mb-12">
         <h2 className="text-2xl font-semibold mb-6 text-white">Featured Stories</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
