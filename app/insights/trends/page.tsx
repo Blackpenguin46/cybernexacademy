@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from 'react'
-import { TrendingUp, ExternalLink, Clock, Tag, ChevronRight, ArrowUpRight, Globe, AlertTriangle, Shield, Filter, X, Code, Server, Lock, Database, Zap, Cloud } from "lucide-react"
+import { TrendingUp, ExternalLink, Clock, Tag, ChevronRight, ArrowUpRight, Globe, AlertTriangle, Shield, Filter, X, Code, Server, Lock, Database, Zap, Cloud, Brain, Cpu } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
+import SectionHeader from '../../components/SectionHeader'
 
 // Define interface for Category
 interface Category {
@@ -29,46 +30,84 @@ export default function TrendsPage() {
 
   const emergingTrends = [
     {
-      title: "Zero Trust Evolution",
-      category: "architecture",
-      timeline: "Current - 2025",
-      impact: "Transformative",
-      description: "Advanced implementation of zero trust principles with AI-driven continuous authentication.",
-      keyPoints: [
-        "AI-powered access decisions",
-        "Real-time risk assessment",
-        "Identity-centric security",
-        "Microsegmentation 2.0"
-      ],
-      adoption: "65% of enterprises by 2025"
+      title: "AI in Cybersecurity",
+      description: "How artificial intelligence is transforming threat detection, response, and security operations",
+      icon: Brain,
+      resources: [
+        {
+          title: "AI in Cybersecurity",
+          url: "https://www.youtube.com/watch?v=4QzBdeUQ0Dc",
+          type: "video"
+        },
+        {
+          title: "The AI Cybersecurity future is here",
+          url: "https://www.youtube.com/watch?v=S3QNDSax2IA",
+          type: "video"
+        },
+        {
+          title: "Cybersecurity Strategy: Prioritizing AI and Risk Management",
+          url: "https://www.youtube.com/watch?v=AtRJZxvkbUM",
+          type: "video"
+        },
+        {
+          title: "How AI Can Accelerate Cybersecurity",
+          url: "https://www.youtube.com/watch?v=utcYsBKL7e8",
+          type: "video"
+        }
+      ]
     },
     {
-      title: "Quantum-Safe Security",
-      category: "cryptography",
-      timeline: "2024 - 2027",
-      impact: "Revolutionary",
-      description: "Preparation and transition to quantum-resistant cryptographic algorithms and protocols.",
-      keyPoints: [
-        "Post-quantum algorithms",
-        "Quantum key distribution",
-        "Hybrid cryptography",
-        "Infrastructure updates"
-      ],
-      adoption: "40% of organizations by 2026"
+      title: "Quantum Computing",
+      description: "The impact of quantum computing on encryption, security protocols, and threat landscape",
+      icon: Cpu,
+      resources: [
+        {
+          title: "Quantum-Safe Cryptography",
+          url: "https://www.nist.gov/cryptography/post-quantum-cryptography",
+          type: "website"
+        },
+        {
+          title: "Quantum Computing Courses",
+          url: "/academy/youtube#quantum-computing",
+          type: "internal"
+        }
+      ]
     },
     {
-      title: "AI Security Operations",
-      category: "operations",
-      timeline: "Current - 2026",
-      impact: "Significant",
-      description: "Integration of advanced AI/ML capabilities in security operations and threat detection.",
-      keyPoints: [
-        "Automated threat response",
-        "Predictive analytics",
-        "Behavioral analysis",
-        "Smart SOAR integration"
-      ],
-      adoption: "75% of SOCs by 2025"
+      title: "Zero Trust Architecture",
+      description: "Moving beyond perimeter security to a model that requires verification from everyone",
+      icon: Lock,
+      resources: [
+        {
+          title: "NIST Zero Trust Architecture",
+          url: "https://www.nist.gov/programs-projects/zero-trust-architecture",
+          type: "website"
+        }
+      ]
+    },
+    {
+      title: "Supply Chain Security",
+      description: "Addressing vulnerabilities in the software and hardware supply chain",
+      icon: Server,
+      resources: [
+        {
+          title: "NIST Cybersecurity Supply Chain Risk Management",
+          url: "https://www.nist.gov/itl/smallbusinesscyber/supply-chain",
+          type: "website"
+        }
+      ]
+    },
+    {
+      title: "Cloud Security Posture Management",
+      description: "Tools and practices to identify and remediate risks in cloud environments",
+      icon: Cloud,
+      resources: []
+    },
+    {
+      title: "Extended Detection and Response (XDR)",
+      description: "Unified security incident detection and response across multiple security layers",
+      icon: Shield,
+      resources: []
     }
   ]
 
@@ -219,7 +258,7 @@ export default function TrendsPage() {
   // Filter trends based on selected category
   const filteredEmergingTrends = selectedCategory === 'all'
     ? emergingTrends
-    : emergingTrends.filter(trend => trend.category === selectedCategory);
+    : emergingTrends.filter(trend => trend.title === selectedCategory);
 
   const filteredIndustryShifts = selectedCategory === 'all'
     ? industryTrends
@@ -235,221 +274,151 @@ export default function TrendsPage() {
                     filteredPredictions.length > 0;
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-orange-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-orange-600/10 rounded-xl mb-4">
-              <TrendingUp className="w-5 h-5 text-orange-500 mr-2" />
-              <span className="text-orange-500 font-medium">Emerging Trends</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Cybersecurity Trends & Future Outlook
-            </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Explore emerging trends, industry shifts, and future predictions in cybersecurity.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories Filter */}
-      <CategoryFilter 
-        categories={categories}
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        accentColor="orange"
+    <div className="container mx-auto px-4 pb-20">
+      <SectionHeader
+        title="Emerging Cybersecurity Trends"
+        description="Stay ahead of the curve with the latest developments and emerging technologies in cybersecurity"
+        icon={<TrendingUp className="w-12 h-12 text-neon-blue" />}
       />
       
-      {hasContent ? (
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-6xl mx-auto">
-              {/* Emerging Trends Section */}
-              {filteredEmergingTrends.length > 0 && (
-                <div className="mb-12">
-                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                    <TrendingUp className="w-6 h-6 text-orange-500 mr-3" />
-                    Emerging Trends
-                  </h2>
-                  <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                    {filteredEmergingTrends.map((trend, index) => (
-                      <div
-                        key={index}
-                        className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                      >
-                        <div className="space-y-4">
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <span className="text-orange-500 text-sm">
-                                {categories.find(cat => cat.id === trend.category)?.name || trend.category}
-                              </span>
-                              <span className="text-sm bg-orange-900/50 text-orange-300 px-2 py-1 rounded">
-                                {trend.impact}
-                              </span>
-                            </div>
-                            <h3 className="text-xl font-semibold text-white mb-2">{trend.title}</h3>
-                            <p className="text-gray-400 text-sm">{trend.description}</p>
-                          </div>
-                          <div>
-                            <div className="text-sm text-gray-500 mb-2">Key Points</div>
-                            <div className="space-y-2">
-                              {trend.keyPoints.map((point, pointIndex) => (
-                                <div
-                                  key={pointIndex}
-                                  className="flex items-center text-gray-300 text-sm"
-                                >
-                                  <ChevronRight className="w-4 h-4 text-orange-500 mr-2" />
-                                  {point}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="flex items-center justify-between pt-4 text-sm">
-                            <div className="flex items-center text-gray-500">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {trend.timeline}
-                            </div>
-                            <div className="text-gray-500">
-                              {trend.adoption}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+      <div className="mt-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {filteredEmergingTrends.map((trend, index) => (
+            <div 
+              key={index} 
+              className="bg-gray-900/50 border border-neon-blue/20 rounded-lg p-6 hover:border-neon-blue/50 transition-all hover:shadow-lg hover:shadow-neon-blue/10"
+            >
+              <div className="flex items-center mb-4">
+                <div className="bg-neon-blue/10 p-3 rounded-lg mr-4">
+                  <trend.icon className="w-6 h-6 text-neon-blue" />
                 </div>
-              )}
+                <h3 className="text-xl font-bold text-white">{trend.title}</h3>
+              </div>
               
-              {/* Industry Shifts Section */}
-              {filteredIndustryShifts.length > 0 && (
-                <div className="mb-12">
-                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                    <Globe className="w-6 h-6 text-orange-500 mr-3" />
-                    Industry Shifts
-                  </h2>
-                  <div className="grid gap-6 md:grid-cols-2">
-                    {filteredIndustryShifts.map((shift, index) => (
-                      <div
-                        key={index}
-                        className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
-                      >
-                        <div className="flex items-center justify-between mb-4">
-                          <h3 className="text-xl font-semibold text-white">{shift.sector}</h3>
-                          <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
-                            {categories.find(cat => cat.id === shift.sector)?.name || shift.sector}
-                          </span>
-                        </div>
-                        <p className="text-gray-400 mb-4">{shift.trends.map(trend => trend.description).join(', ')}</p>
-                        <div>
-                          <div className="text-sm text-gray-500 mb-2">Trends</div>
-                          <div className="flex flex-wrap gap-2">
-                            {shift.trends.map((trend, trendIndex) => (
-                              <span
-                                key={trendIndex}
-                                className="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded"
-                              >
-                                {trend.trend}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <p className="text-gray-300 mb-6">{trend.description}</p>
               
-              {/* Predictions Section */}
-              {filteredPredictions.length > 0 && (
-                <div className="mb-12">
-                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-                    <AlertTriangle className="w-6 h-6 text-orange-500 mr-3" />
-                    Future Predictions
-                  </h2>
-                  <div className="space-y-6">
-                    {filteredPredictions.map((prediction, index) => (
-                      <div
-                        key={index}
-                        className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-orange-500/50 transition-colors"
+              {trend.resources.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="text-sm font-semibold text-gray-400 uppercase mb-3">Related Resources</h4>
+                  <div className="space-y-3">
+                    {trend.resources.map((resource, idx) => (
+                      <a 
+                        key={idx} 
+                        href={resource.url} 
+                        target={resource.type === "internal" ? "_self" : "_blank"} 
+                        rel={resource.type !== "internal" ? "noopener noreferrer" : undefined}
+                        className="flex items-center p-3 bg-gray-800/50 rounded-md border border-gray-700 hover:border-neon-blue/30 group transition-colors"
                       >
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center">
-                            <span className="text-2xl font-bold text-orange-500 mr-3">{prediction.year}</span>
-                            <h3 className="text-xl font-semibold text-white">{prediction.predictions.map(p => p.title).join(', ')}</h3>
-                          </div>
-                          <span className="bg-orange-900/50 text-orange-300 text-xs px-2 py-1 rounded">
-                            {categories.find(cat => cat.id === prediction.year)?.name || prediction.year}
-                          </span>
-                        </div>
-                        <p className="text-gray-400 mb-4">{prediction.predictions.map(p => p.description).join(', ')}</p>
-                        <div className="flex items-center text-sm text-gray-500">
-                          <Tag className="w-4 h-4 mr-1" />
-                          <span>Confidence: {prediction.predictions.map(p => p.confidence).join(', ')}</span>
-                        </div>
-                      </div>
+                        <span className="w-6 h-6 mr-3 flex items-center justify-center">
+                          {resource.type === "video" && <PlayIcon className="text-red-400" />}
+                          {resource.type === "website" && <Globe className="text-blue-400 w-5 h-5" />}
+                          {resource.type === "internal" && <Database className="text-green-400 w-5 h-5" />}
+                        </span>
+                        <span className="text-gray-300 group-hover:text-white transition-colors">{resource.title}</span>
+                        {resource.type !== "internal" && <ExternalLink className="w-3 h-3 ml-auto text-gray-500 group-hover:text-neon-blue" />}
+                      </a>
                     ))}
                   </div>
                 </div>
               )}
             </div>
-          </div>
-        </section>
-      ) : (
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                <h3 className="text-xl font-medium text-white mb-2">No trends match your filter</h3>
-                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setSelectedCategory('all')}
-                  className="flex items-center gap-2"
+          ))}
+        </div>
+        
+        <div className="mt-16 bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-neon-blue/20 rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-white mb-6">AI in Cybersecurity Spotlight</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <p className="text-gray-300 mb-4">Artificial Intelligence is revolutionizing cybersecurity by enhancing threat detection, automating security operations, and improving incident response capabilities.</p>
+              <p className="text-gray-300 mb-6">Organizations are leveraging AI to process vast amounts of security data, identify patterns, and detect anomalies that human analysts might miss.</p>
+              
+              <h3 className="text-lg font-semibold text-white mb-3">Key Advancements:</h3>
+              <ul className="space-y-2 text-gray-300">
+                <li className="flex items-start">
+                  <div className="w-5 h-5 rounded-full bg-neon-blue/20 flex items-center justify-center text-neon-blue mr-2 mt-1">•</div>
+                  <span>Predictive threat intelligence</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-5 h-5 rounded-full bg-neon-blue/20 flex items-center justify-center text-neon-blue mr-2 mt-1">•</div>
+                  <span>Automated incident response</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-5 h-5 rounded-full bg-neon-blue/20 flex items-center justify-center text-neon-blue mr-2 mt-1">•</div>
+                  <span>Behavioral analysis and anomaly detection</span>
+                </li>
+                <li className="flex items-start">
+                  <div className="w-5 h-5 rounded-full bg-neon-blue/20 flex items-center justify-center text-neon-blue mr-2 mt-1">•</div>
+                  <span>Adversarial machine learning</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="bg-black/30 rounded-lg p-6 border border-neon-blue/10">
+              <h3 className="text-lg font-semibold text-white mb-4">Latest AI in Cybersecurity Resources</h3>
+              <div className="space-y-4">
+                <a 
+                  href="https://www.youtube.com/watch?v=4QzBdeUQ0Dc" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block p-3 bg-gray-800/80 rounded-md hover:bg-gray-800 transition-colors group border border-transparent hover:border-neon-blue/30"
                 >
-                  <X className="h-4 w-4" /> Clear filters
-                </Button>
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-300 group-hover:text-white transition-colors">AI in Cybersecurity Overview</span>
+                    <ExternalLink className="w-4 h-4 text-neon-blue/70 group-hover:text-neon-blue" />
+                  </div>
+                </a>
+                <a 
+                  href="https://www.youtube.com/watch?v=S3QNDSax2IA" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block p-3 bg-gray-800/80 rounded-md hover:bg-gray-800 transition-colors group border border-transparent hover:border-neon-blue/30"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-gray-300 group-hover:text-white transition-colors">The AI Cybersecurity Future</span>
+                    <ExternalLink className="w-4 h-4 text-neon-blue/70 group-hover:text-neon-blue" />
+                  </div>
+                </a>
+                <Link href="/academy/youtube">
+                  <div className="p-3 bg-gray-800/80 rounded-md hover:bg-gray-800 transition-colors border border-transparent hover:border-neon-blue/30 flex items-center justify-between group">
+                    <span className="text-gray-300 group-hover:text-white transition-colors">More AI Cybersecurity Videos</span>
+                    <TrendingUp className="w-4 h-4 text-neon-blue/70 group-hover:text-neon-blue" />
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
-        </section>
-      )}
-      
-      {/* Resources Section */}
-      <section className="py-16 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-white">Stay Ahead of Trends</h2>
-            <ul className="space-y-4">
-              <li className="flex gap-3">
-                <Globe className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
-                <div>
-                  <p className="text-white font-medium">Follow industry research</p>
-                  <p className="text-gray-400">Subscribe to reports from Gartner, Forrester, and other research organizations.</p>
-                </div>
-              </li>
-              <li className="flex gap-3">
-                <Shield className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
-                <div>
-                  <p className="text-white font-medium">Join security communities</p>
-                  <p className="text-gray-400">Participate in forums and groups where professionals discuss emerging threats.</p>
-                </div>
-              </li>
-              <li className="flex gap-3">
-                <TrendingUp className="h-6 w-6 flex-shrink-0 text-orange-500 mt-1" />
-                <div>
-                  <p className="text-white font-medium">Experiment with new technologies</p>
-                  <p className="text-gray-400">Set up lab environments to test emerging security tools and techniques.</p>
-                </div>
-              </li>
-            </ul>
+        </div>
+        
+        <div className="text-center mt-12">
+          <p className="text-gray-400 mb-4">Want to explore more trends and innovations in cybersecurity?</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link href="/insights/research">
+              <Button variant="outline" className="border-neon-blue text-neon-blue hover:bg-neon-blue/10">
+                Research Papers
+              </Button>
+            </Link>
+            <Link href="/insights">
+              <Button variant="outline" className="border-purple-500 text-purple-400 hover:bg-purple-500/10">
+                Insights Home
+              </Button>
+            </Link>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   )
+}
+
+// PlayIcon component for video resources
+function PlayIcon({ className = "" }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      fill="currentColor" 
+      className={`w-5 h-5 ${className}`}
+    >
+      <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" />
+    </svg>
+  );
 } 

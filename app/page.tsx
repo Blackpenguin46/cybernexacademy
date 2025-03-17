@@ -17,21 +17,21 @@ export default function HomePage() {
     {
       title: "Community",
       description: "Connect with cybersecurity professionals through forums, Discord servers, Reddit communities, and more.",
-      icon: <Users className="h-12 w-12 text-neon-blue" aria-hidden="true" />,
+      icon: <Users className="h-16 w-16 text-neon-blue" aria-hidden="true" />,
       link: "/community",
       color: "from-cyan-600/20 to-cyan-600/5"
     },
     {
       title: "Insights",
       description: "Stay informed with the latest cybersecurity news, threat intelligence, tools, and industry trends.",
-      icon: <Lightbulb className="h-12 w-12 text-neon-blue" aria-hidden="true" />,
+      icon: <Lightbulb className="h-16 w-16 text-neon-blue" aria-hidden="true" />,
       link: "/insights",
       color: "from-purple-600/20 to-purple-600/5"
     },
     {
       title: "Academy",
       description: "Educational resources, learning paths, courses, and certification guides to build your cybersecurity knowledge.",
-      icon: <GraduationCap className="h-12 w-12 text-neon-blue" aria-hidden="true" />,
+      icon: <GraduationCap className="h-16 w-16 text-neon-blue" aria-hidden="true" />,
       link: "/academy",
       color: "from-blue-600/20 to-blue-600/5"
     }
@@ -66,7 +66,7 @@ export default function HomePage() {
               </div>
             </div>
             <div className="md:w-1/2 relative">
-              <div className="rounded-lg border border-neon-blue/20 bg-black/50 p-6 backdrop-blur-sm" aria-label="Terminal display demonstration">
+              <div className="rounded-lg border border-neon-blue/20 bg-black/50 p-6 backdrop-blur-sm mt-8 md:mt-16 shadow-lg shadow-neon-blue/10" aria-label="Terminal display demonstration">
                 <h3 className="text-neon-blue font-mono mb-3 flex items-center">
                   <Terminal className="w-5 h-5 mr-2" aria-hidden="true" />
                   <span>cybernex@academy:~$</span>
@@ -92,18 +92,23 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {mainSections.map((section, index) => (
               <Link href={section.link} key={index} className="block h-full" aria-label={`Explore ${section.title} resources`}>
-                <Card className={`bg-gray-900/50 border-neon-blue/20 hover:border-neon-blue/50 transition-all duration-300 h-full bg-gradient-to-br ${section.color}`}>
-                  <CardHeader className="pb-4">
-                    <div className="mb-4 flex justify-center">{section.icon}</div>
-                    <CardTitle className="text-white text-2xl text-center">{section.title}</CardTitle>
+                <Card className={`bg-gray-900/50 border-neon-blue/20 hover:border-neon-blue/50 hover:transform hover:scale-105 transition-all duration-300 h-full bg-gradient-to-br ${section.color} shadow-lg hover:shadow-xl hover:shadow-neon-blue/20`}>
+                  <CardHeader className="pb-2 pt-8">
+                    <div className="mb-6 flex justify-center">
+                      <div className="relative">
+                        {section.icon}
+                        <div className="absolute inset-0 bg-neon-blue/10 rounded-full blur-xl"></div>
+                      </div>
+                    </div>
+                    <CardTitle className="text-white text-3xl text-center font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-300">{section.title}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-400 text-center">{section.description}</p>
+                  <CardContent className="py-4">
+                    <p className="text-gray-300 text-center">{section.description}</p>
                   </CardContent>
-                  <CardFooter className="justify-center pt-2">
-                    <Button variant="ghost" className="text-neon-blue hover:bg-neon-blue/10 group mt-2">
+                  <CardFooter className="justify-center pt-2 pb-8">
+                    <Button variant="outline" size="lg" className="text-neon-blue hover:bg-neon-blue/10 group mt-2 border-neon-blue/50 hover:border-neon-blue">
                       Explore {section.title}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     </Button>
                   </CardFooter>
                 </Card>
