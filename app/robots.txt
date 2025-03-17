@@ -1,0 +1,21 @@
+# Allow all web crawlers to access all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://cybernex.vercel.app/sitemap.xml
+
+# Prevent crawling of specific admin areas
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /dashboard/
+
+# Prevent specific crawlers from accessing certain areas
+User-agent: GPTBot
+Disallow: /auth/
+Disallow: /academy/paid/
+
+User-agent: ChatGPT-User
+Disallow: /auth/
+Disallow: /academy/paid/ 

@@ -213,15 +213,27 @@ export default function Navbar() {
                     }`}
                     onMouseEnter={() => setActiveDropdown(section.id)}
                     onMouseLeave={() => setActiveDropdown(null)}
+                    onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                    aria-expanded={activeDropdown === section.id}
+                    aria-controls={`dropdown-${section.id}`}
+                    aria-haspopup="true"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        setActiveDropdown(activeDropdown === section.id ? null : section.id);
+                      } else if (e.key === 'Escape' && activeDropdown === section.id) {
+                        setActiveDropdown(null);
+                      }
+                    }}
                   >
-                    <Link href={`/${section.id}`} className="flex items-center">
+                    <Link href={`/${section.id}`} className="flex items-center" onClick={(e) => e.stopPropagation()}>
                       <span>{section.title}</span>
                     </Link>
                     <motion.div 
                       animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
                       transition={{ duration: 0.3 }}
                       className="flex items-center"
-                      onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                      aria-hidden="true"
                     >
                       <ChevronDown className="w-4 h-4" />
                     </motion.div>
@@ -235,6 +247,14 @@ export default function Navbar() {
                         exit={{ opacity: 0, y: -5 }}
                         transition={{ duration: 0.2 }}
                         className="absolute left-0 right-0 z-30 mt-2 mx-auto max-w-[1000px] bg-black/90 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                        id={`dropdown-${section.id}`}
+                        role="menu"
+                        aria-labelledby={`dropdown-button-${section.id}`}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Escape') {
+                            setActiveDropdown(null);
+                          }
+                        }}
                       >
                         <div className="flex">
                           {/* Sidebar with title and description */}
@@ -264,6 +284,7 @@ export default function Navbar() {
                                       : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5'
                                   } transition-all duration-200 relative group overflow-hidden`}
                                   onClick={() => setActiveDropdown(null)}
+                                  aria-current={isActive(link.href) ? "page" : undefined}
                                 >
                                   {/* Animated highlight effect on hover */}
                                   <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
@@ -319,8 +340,11 @@ export default function Navbar() {
                 className="flex items-center gap-2 text-white px-4 py-2 rounded-md transition-all duration-300 border border-transparent hover:border-pink-500/50 hover:bg-pink-500/10 group"
                 onMouseEnter={() => setShowDonateInfo(true)}
                 onMouseLeave={() => setShowDonateInfo(false)}
+                aria-expanded={showDonateInfo}
+                aria-controls="donate-info"
+                aria-haspopup="true"
               >
-                <Heart className="w-4 h-4 text-pink-400 group-hover:text-pink-300" />
+                <Heart className="w-4 h-4 text-pink-400 group-hover:text-pink-300" aria-hidden="true" />
                 <span className="group-hover:text-pink-300">Donate</span>
               </button>
 
@@ -334,6 +358,9 @@ export default function Navbar() {
                     className="absolute right-0 mt-2 w-80 p-4 bg-black/90 backdrop-blur-md border border-pink-500/30 rounded-md shadow-xl shadow-pink-500/10"
                     onMouseEnter={() => setShowDonateInfo(true)}
                     onMouseLeave={() => setShowDonateInfo(false)}
+                    id="donate-info"
+                    role="dialog"
+                    aria-label="Donation information"
                   >
                     <h4 className="text-pink-400 font-semibold mb-2 flex items-center gap-2">
                       <Heart className="w-4 h-4" />
@@ -407,9 +434,10 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 text-gray-400 hover:text-neon-blue border border-transparent hover:border-neon-blue/30 rounded-md transition-all bg-black/30"
             aria-expanded={mobileMenuOpen}
-            aria-label="Toggle menu"
+            aria-controls="mobile-menu"
+            aria-label="Toggle mobile menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
           </button>
         </div>
 
@@ -422,6 +450,9 @@ export default function Navbar() {
               exit="hidden"
               variants={mobileMenuVariants}
               className="lg:hidden bg-black/95 backdrop-blur-md border-t border-neon-blue/30 overflow-hidden"
+              id="mobile-menu"
+              role="navigation"
+              aria-label="Mobile navigation"
             >
               <div className="px-4 py-6 space-y-6">
                 <Link
@@ -432,8 +463,9 @@ export default function Navbar() {
                       : 'text-gray-300 border border-transparent hover:text-neon-blue hover:border-neon-blue/30 hover:bg-neon-blue/5'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
+                  aria-current={pathname === '/' ? "page" : undefined}
                 >
-                  <Home className="w-5 h-5" />
+                  <Home className="w-5 h-5" aria-hidden="true" />
                   <span>Home</span>
                 </Link>
                 
@@ -455,6 +487,7 @@ export default function Navbar() {
                               : 'text-gray-300 hover:text-white hover:bg-neon-blue/5 hover:border border-neon-blue/20'
                           } transition-colors flex items-center`}
                           onClick={() => setMobileMenuOpen(false)}
+                          aria-current={isActive(link.href) ? "page" : undefined}
                         >
                           {/* Icon based on link name */}
                           <div className="mr-2 text-neon-blue">
