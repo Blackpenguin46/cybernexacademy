@@ -48,8 +48,8 @@ export default function HomePage() {
     <>
       <CyberBackground />
 
-      {/* CYBERNEX ACADEMY title - positioned above everything else */}
-      <div className="sticky top-0 left-0 right-0 z-50 py-4 bg-gray-950/80 backdrop-blur-md border-b border-neon-blue/20 shadow-lg shadow-neon-blue/10">
+      {/* CYBERNEX ACADEMY title - positioned as part of the page flow, not sticky */}
+      <div className="relative z-10 py-8 bg-gradient-to-b from-black/90 to-transparent border-b border-neon-blue/10">
         <div className="container mx-auto px-4">
           <div className="text-center relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-indigo-800/30 to-purple-900/30 blur-xl -z-10 transform scale-150 rounded-full opacity-70"></div>
@@ -69,7 +69,7 @@ export default function HomePage() {
       </div>
       
       {/* Hero Section with improved layout */}
-      <section className="relative pt-16 pb-32 overflow-hidden" aria-labelledby="hero-heading">
+      <section className="relative pt-10 pb-32 overflow-hidden" aria-labelledby="hero-heading">
         <div className="container mx-auto px-4">
           {/* Glowing accent circles */}
           <div className="absolute top-40 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -z-10"></div>
