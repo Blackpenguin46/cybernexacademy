@@ -48,8 +48,8 @@ export default function HomePage() {
     <>
       <CyberBackground />
 
-      {/* CYBERNEX ACADEMY title - positioned as part of the page flow, not sticky */}
-      <div className="relative z-10 py-8 bg-gradient-to-b from-black/90 to-transparent border-b border-neon-blue/10">
+      {/* CYBERNEX ACADEMY title - positioned below navbar */}
+      <div className="relative z-10 pt-28 pb-8 bg-gradient-to-b from-black/90 to-transparent">
         <div className="container mx-auto px-4">
           <div className="text-center relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-indigo-800/30 to-purple-900/30 blur-xl -z-10 transform scale-150 rounded-full opacity-70"></div>
