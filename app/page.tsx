@@ -47,29 +47,33 @@ export default function HomePage() {
   return (
     <>
       <CyberBackground />
-      
-      {/* Hero Section with improved layout */}
-      <section className="relative pt-24 pb-32 overflow-hidden" aria-labelledby="hero-heading">
+
+      {/* CYBERNEX ACADEMY title - positioned above everything else */}
+      <div className="sticky top-0 left-0 right-0 z-50 py-4 bg-gray-950/80 backdrop-blur-md border-b border-neon-blue/20 shadow-lg shadow-neon-blue/10">
         <div className="container mx-auto px-4">
-          {/* Glowing accent circles */}
-          <div className="absolute top-40 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -z-10"></div>
-          <div className="absolute bottom-20 -right-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] -z-10"></div>
-          
-          {/* CYBERNEX ACADEMY title at top */}
-          <div className="text-center mb-12 mt-4 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 via-indigo-800/20 to-purple-900/20 blur-xl -z-10 transform scale-150 rounded-full opacity-70"></div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide leading-none text-center mb-5">
+          <div className="text-center relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-indigo-800/30 to-purple-900/30 blur-xl -z-10 transform scale-150 rounded-full opacity-70"></div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide leading-none text-center">
               <span className="relative inline-block">
-                <span className="absolute inset-0 blur-md bg-neon-blue/20 rounded-lg transform scale-110"></span>
+                <span className="absolute inset-0 blur-md bg-neon-blue/30 rounded-lg transform scale-110"></span>
                 <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-blue-400 to-indigo-500 drop-shadow-[0_0_15px_rgba(0,157,255,0.7)]">CYBERNEX</span>
               </span>
               <span className="relative inline-block ml-2">
-                <span className="absolute inset-0 blur-md bg-neon-green/20 rounded-lg transform scale-110"></span>
+                <span className="absolute inset-0 blur-md bg-neon-green/30 rounded-lg transform scale-110"></span>
                 <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-neon-green via-green-400 to-teal-500 drop-shadow-[0_0_15px_rgba(80,255,170,0.7)]">ACADEMY</span>
               </span>
             </h1>
             <div className="h-1.5 w-64 bg-gradient-to-r from-neon-blue to-neon-green rounded-full mx-auto shadow-lg shadow-neon-blue/30"></div>
           </div>
+        </div>
+      </div>
+      
+      {/* Hero Section with improved layout */}
+      <section className="relative pt-16 pb-32 overflow-hidden" aria-labelledby="hero-heading">
+        <div className="container mx-auto px-4">
+          {/* Glowing accent circles */}
+          <div className="absolute top-40 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -z-10"></div>
+          <div className="absolute bottom-20 -right-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] -z-10"></div>
           
           <div className="text-center max-w-4xl mx-auto mb-12">
             <h2 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-purple-600 leading-tight drop-shadow-lg">
