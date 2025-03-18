@@ -375,31 +375,35 @@ export default function Navbar() {
                             {section.id === 'community' && (
                               <div>
                                 <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Popular Communities</div>
-                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                                    {section.links.slice(0, 4).map((link) => (
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Featured Communities</div>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    {[
+                                      { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: <MessageSquare className="w-5 h-5" />, href: "/community/discord" },
+                                      { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: <Code className="w-5 h-5" />, href: "/community/github" },
+                                      { title: "Reddit Forums", desc: "Engage with security discussion threads", icon: <User className="w-5 h-5" />, href: "/community/reddit" }
+                                    ].map((item) => (
                                       <Link 
-                                        key={link.name}
-                                        href={link.href} 
-                                        className={`flex flex-col items-center p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
+                                        key={item.title}
+                                        href={item.href} 
+                                        className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
                                         onClick={() => setActiveDropdown(null)}
                                       >
-                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mb-2 group-hover:scale-110 transition-transform`}>
-                                          {link.name.includes("Discord") && <MessageSquare className="w-6 h-6" />}
-                                          {link.name.includes("GitHub") && <Code className="w-6 h-6" />}
-                                          {link.name.includes("Reddit") && <User className="w-6 h-6" />}
-                                          {link.name.includes("LinkedIn") && <Briefcase className="w-6 h-6" />}
+                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
+                                          {item.icon}
                                         </div>
-                                        <span className={`text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon} text-center`}>{link.name}</span>
+                                        <div>
+                                          <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
+                                          <div className="text-xs text-gray-400">{item.desc}</div>
+                                        </div>
                                       </Link>
                                     ))}
                                   </div>
                                 </div>
                                 
                                 <div className="mt-3">
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>More Resources</div>
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>All Communities</div>
                                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                    {section.links.slice(4).map((link) => (
+                                    {section.links.map((link) => (
                                       <Link 
                                         key={link.name}
                                         href={link.href} 
