@@ -206,13 +206,14 @@ export default function Navbar() {
               className="ml-10 flex items-center space-x-8"
             >
               {navSections.map((section) => (
-                <div key={section.id} className="relative">
+                <div key={section.id} className="relative"
+                  onMouseEnter={() => setActiveDropdown(section.id)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
                   <button 
                     className={`flex items-center font-medium text-gray-300 hover:text-white transition-colors gap-1 ${
                       pathname?.includes(`/${section.id}`) ? 'text-white' : ''
                     }`}
-                    onMouseEnter={() => setActiveDropdown(section.id)}
-                    onMouseLeave={() => setActiveDropdown(null)}
                     onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
                     aria-expanded={activeDropdown === section.id}
                     aria-controls={`dropdown-${section.id}`}
@@ -246,52 +247,59 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-[90vw] bg-black/95 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                        className="fixed left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-[95vw] bg-black/95 backdrop-blur-xl border border-neon-blue/30 rounded-xl shadow-2xl shadow-neon-blue/10 overflow-hidden"
                         style={{ top: "60px" }}
                         id={`dropdown-${section.id}`}
                         role="menu"
                         aria-labelledby={`dropdown-button-${section.id}`}
+                        onMouseEnter={() => setActiveDropdown(section.id)}
+                        onMouseLeave={() => setActiveDropdown(null)}
                         onKeyDown={(e) => {
                           if (e.key === 'Escape') {
                             setActiveDropdown(null);
                           }
                         }}
                       >
+                        {/* Top accent line for dropdown */}
+                        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-80"></div>
+                        
                         <div className="flex flex-col md:flex-row">
                           {/* Sidebar with title and description - made narrower */}
-                          <div className="w-full md:w-1/5 lg:w-1/6 bg-gray-900/70 p-3">
-                            <h3 className="text-lg font-bold text-white mb-1">{section.title}</h3>
-                            <p className="text-gray-400 text-sm mb-2">{section.description}</p>
+                          <div className="w-full md:w-1/5 lg:w-1/6 bg-gradient-to-b from-gray-900/80 to-black/80 p-4 border-r border-gray-800/50">
+                            <h3 className="text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-neon-blue">{section.title}</h3>
+                            <p className="text-gray-300 text-sm mb-3 leading-relaxed">{section.description}</p>
                             
-                            {/* Graphic element or icon */}
-                            <div className="mt-2 text-neon-blue relative hidden md:block">
-                              {section.id === 'community' && <Users className="w-12 h-12 opacity-30" />}
-                              {section.id === 'insights' && <LineChart className="w-12 h-12 opacity-30" />}
-                              {section.id === 'academy' && <GraduationCap className="w-12 h-12 opacity-30" />}
-                              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-neon-blue/30 to-transparent opacity-50 rounded-full blur-xl"></div>
+                            {/* Graphic element or icon with enhanced styling */}
+                            <div className="mt-3 text-neon-blue relative hidden md:block">
+                              <div className="relative">
+                                {section.id === 'community' && <Users className="w-14 h-14 opacity-50" />}
+                                {section.id === 'insights' && <LineChart className="w-14 h-14 opacity-50" />}
+                                {section.id === 'academy' && <GraduationCap className="w-14 h-14 opacity-50" />}
+                                <div className="absolute -inset-1 bg-gradient-to-br from-neon-blue/20 to-transparent rounded-full blur-xl"></div>
+                              </div>
                             </div>
                           </div>
                           
                           {/* Links grid - made wider and more columns */}
-                          <div className="w-full md:w-4/5 lg:w-5/6 py-2 px-3">
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-1 gap-y-0.5">
+                          <div className="w-full md:w-4/5 lg:w-5/6 py-3 px-4 bg-gradient-to-br from-black/90 to-gray-900/20">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-2 gap-y-1">
                               {section.links.map((link) => (
                                 <Link 
                                   key={link.name}
                                   href={link.href} 
-                                  className={`flex items-center px-2 py-1 rounded-md text-sm ${
+                                  className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
                                     isActive(link.href) 
-                                      ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium' 
-                                      : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5'
+                                      ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
+                                      : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
                                   } transition-all duration-200 relative group overflow-hidden`}
                                   onClick={() => setActiveDropdown(null)}
                                   aria-current={isActive(link.href) ? "page" : undefined}
                                 >
-                                  {/* Animated highlight effect on hover */}
+                                  {/* Enhanced hover effect */}
                                   <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
                                   
-                                  {/* Icon based on link name */}
-                                  <div className="mr-2 text-neon-blue">
+                                  {/* Icon with improved styling */}
+                                  <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
                                     {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
                                     {link.name.includes("Reddit") && <User className="w-4 h-4" />}
                                     {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
