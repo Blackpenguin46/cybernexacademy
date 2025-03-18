@@ -443,4 +443,4 @@ export const discordServers: DiscordServer[] = [
     url: "https://discord.com/invite/bXv87xAzvA",
     categories: ["blue_team", "learning", "career"]
   }
-]; 
+];
