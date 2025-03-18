@@ -46,6 +46,15 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 md:pr-12 mb-10 md:mb-0">
+              <div className="rounded-lg border border-neon-blue/20 bg-black/50 p-6 backdrop-blur-sm mb-8 shadow-lg shadow-neon-blue/10" aria-label="Terminal display demonstration">
+                <h3 className="text-neon-blue font-mono mb-3 flex items-center">
+                  <Terminal className="w-5 h-5 mr-2" aria-hidden="true" />
+                  <span>cybernex@academy:~$</span>
+                </h3>
+                <TerminalDisplay commandText="find /resources -type f -name 'cybersecurity*' | sort" />
+                <p className="mt-4 text-green-400 font-mono text-sm">Resource discovery complete. Ready to begin your cybersecurity journey.</p>
+              </div>
+              
               <div className="relative z-10">
                 <h1 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-purple-600 leading-tight">
                   Your Cybersecurity Resource Hub
@@ -66,13 +75,31 @@ export default function HomePage() {
               </div>
             </div>
             <div className="md:w-1/2 relative">
-              <div className="rounded-lg border border-neon-blue/20 bg-black/50 p-6 backdrop-blur-sm mt-8 md:mt-16 shadow-lg shadow-neon-blue/10" aria-label="Terminal display demonstration">
-                <h3 className="text-neon-blue font-mono mb-3 flex items-center">
-                  <Terminal className="w-5 h-5 mr-2" aria-hidden="true" />
-                  <span>cybernex@academy:~$</span>
-                </h3>
-                <TerminalDisplay commandText="find /resources -type f -name 'cybersecurity*' | sort" />
-                <p className="mt-4 text-green-400 font-mono text-sm">Resource discovery complete. Ready to begin your cybersecurity journey.</p>
+              {/* Content for the right side of the hero section can go here */}
+              <div className="relative z-10 flex justify-center items-center h-full">
+                <div className="bg-gray-900/30 border border-neon-blue/20 rounded-lg p-8">
+                  <h3 className="text-2xl font-bold text-white mb-4">Key Features</h3>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <div className="bg-neon-blue/20 p-1 rounded mr-3 mt-1">
+                        <Users className="h-4 w-4 text-neon-blue" />
+                      </div>
+                      <span className="text-gray-300">Active community forums and discussions</span>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="bg-neon-blue/20 p-1 rounded mr-3 mt-1">
+                        <Lightbulb className="h-4 w-4 text-neon-blue" />
+                      </div>
+                      <span className="text-gray-300">Latest insights on cybersecurity trends</span>
+                    </li>
+                    <li className="flex items-start">
+                      <div className="bg-neon-blue/20 p-1 rounded mr-3 mt-1">
+                        <GraduationCap className="h-4 w-4 text-neon-blue" />
+                      </div>
+                      <span className="text-gray-300">Structured learning resources and courses</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

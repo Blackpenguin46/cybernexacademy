@@ -196,8 +196,8 @@ export default function Navbar() {
             <Link href="/" className={`px-3 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${
               pathname === '/' 
                 ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40' 
-                : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5 hover:border border-neon-blue/30'
-            }`} onClick={() => setActiveDropdown(null)}>
+                : 'text-gray-300 hover:text-neon-blue hover:bg-neon-blue/5 border border-transparent hover:border-neon-blue/30'
+            }`} onClick={() => {setActiveDropdown(null); setTimeout(() => setScrolled(window.scrollY > 10), 100)}}>
               <Home className="w-4 h-4" />
               <span>Home</span>
             </Link>
@@ -246,7 +246,8 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-full bg-black/90 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                        className="fixed left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-[90vw] bg-black/95 backdrop-blur-lg border border-gray-800 rounded-lg shadow-2xl overflow-hidden"
+                        style={{ top: "60px" }}
                         id={`dropdown-${section.id}`}
                         role="menu"
                         aria-labelledby={`dropdown-button-${section.id}`}
@@ -256,14 +257,14 @@ export default function Navbar() {
                           }
                         }}
                       >
-                        <div className="flex">
+                        <div className="flex flex-col md:flex-row">
                           {/* Sidebar with title and description - made narrower */}
-                          <div className="w-1/6 bg-gray-900/50 p-4">
+                          <div className="w-full md:w-1/5 lg:w-1/6 bg-gray-900/70 p-3">
                             <h3 className="text-lg font-bold text-white mb-1">{section.title}</h3>
                             <p className="text-gray-400 text-sm mb-2">{section.description}</p>
                             
                             {/* Graphic element or icon */}
-                            <div className="mt-2 text-neon-blue relative">
+                            <div className="mt-2 text-neon-blue relative hidden md:block">
                               {section.id === 'community' && <Users className="w-12 h-12 opacity-30" />}
                               {section.id === 'insights' && <LineChart className="w-12 h-12 opacity-30" />}
                               {section.id === 'academy' && <GraduationCap className="w-12 h-12 opacity-30" />}
@@ -272,8 +273,8 @@ export default function Navbar() {
                           </div>
                           
                           {/* Links grid - made wider and more columns */}
-                          <div className="w-5/6 py-2 px-4">
-                            <div className="grid grid-cols-8 gap-1">
+                          <div className="w-full md:w-4/5 lg:w-5/6 py-2 px-3">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-1 gap-y-0.5">
                               {section.links.map((link) => (
                                 <Link 
                                   key={link.name}
