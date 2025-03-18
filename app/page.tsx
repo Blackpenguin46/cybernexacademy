@@ -55,10 +55,19 @@ export default function HomePage() {
           <div className="absolute top-40 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -z-10"></div>
           <div className="absolute bottom-20 -right-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] -z-10"></div>
           
-          <div className="text-center max-w-4xl mx-auto mb-12">
-            <h1 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-purple-600 leading-tight drop-shadow-lg">
-              Your Cybersecurity Resource Hub
+          {/* CYBERNEX ACADEMY title at top */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-none text-center mb-4">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-blue-400 to-indigo-500 drop-shadow-[0_0_10px_rgba(0,157,255,0.5)]">CYBERNEX</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-green via-green-400 to-teal-500 ml-2 drop-shadow-[0_0_10px_rgba(80,255,170,0.5)]">ACADEMY</span>
             </h1>
+            <div className="h-1 w-32 bg-gradient-to-r from-neon-blue to-neon-green rounded-full mx-auto"></div>
+          </div>
+          
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h2 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-purple-600 leading-tight drop-shadow-lg">
+              Your Cybersecurity Resource Hub
+            </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
               A comprehensive repository of cybersecurity resources for beginners and professionals, all in one place.
             </p>
@@ -136,7 +145,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 id="main-sections-heading" className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-neon-blue/90 px-2">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white px-2">
                 Main Resources
               </span>
             </h2>
