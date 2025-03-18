@@ -227,11 +227,14 @@ export default function Navbar() {
       clearTimeout(dropdownTimer);
     }
     
-    const timer = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 200); // Slight delay to prevent flickering
-    
-    setDropdownTimer(timer);
+    // Remove the delay when closing dropdowns to fix the issue when hovering between them
+    // Only set a timeout when actually intending to close all dropdowns
+    if (!document.querySelectorAll(":hover")[0]?.closest('[data-dropdown="true"]')) {
+      const timer = setTimeout(() => {
+        setActiveDropdown(null);
+      }, 100);
+      setDropdownTimer(timer);
+    }
   };
 
   // Helper function to get icons based on link name
@@ -297,6 +300,7 @@ export default function Navbar() {
             >
               {navSections.map((section) => (
                 <div key={section.id} className="relative"
+                  data-dropdown="true"
                   onMouseEnter={() => handleDropdownOpen(section.id)}
                   onMouseLeave={() => handleDropdownClose()}
                 >
@@ -308,6 +312,7 @@ export default function Navbar() {
                     aria-expanded={activeDropdown === section.id}
                     aria-controls={`dropdown-${section.id}`}
                     aria-haspopup="true"
+                    data-dropdown="true"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -342,6 +347,7 @@ export default function Navbar() {
                         id={`dropdown-${section.id}`}
                         role="menu"
                         aria-labelledby={`dropdown-button-${section.id}`}
+                        data-dropdown="true"
                         onMouseEnter={() => handleDropdownOpen(section.id)}
                         onMouseLeave={() => handleDropdownClose()}
                         onKeyDown={(e) => {

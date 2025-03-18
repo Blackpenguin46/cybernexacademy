@@ -283,9 +283,9 @@ export default function TrendsPage() {
       
       <div className="mt-12 max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {filteredEmergingTrends.map((trend, index) => (
-            <div 
-              key={index} 
+                    {filteredEmergingTrends.map((trend, index) => (
+                      <div
+                        key={index}
               className="bg-gray-900/50 border border-neon-blue/20 rounded-lg p-6 hover:border-neon-blue/50 transition-all hover:shadow-lg hover:shadow-neon-blue/10"
             >
               <div className="flex items-center mb-4">
@@ -313,7 +313,7 @@ export default function TrendsPage() {
                           {resource.type === "video" && <PlayIcon className="text-red-400" />}
                           {resource.type === "website" && <Globe className="text-blue-400 w-5 h-5" />}
                           {resource.type === "internal" && <Database className="text-green-400 w-5 h-5" />}
-                        </span>
+                          </span>
                         <span className="text-gray-300 group-hover:text-white transition-colors">{resource.title}</span>
                         {resource.type !== "internal" && <ExternalLink className="w-3 h-3 ml-auto text-gray-500 group-hover:text-neon-blue" />}
                       </a>
@@ -365,7 +365,7 @@ export default function TrendsPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-gray-300 group-hover:text-white transition-colors">AI in Cybersecurity Overview</span>
                     <ExternalLink className="w-4 h-4 text-neon-blue/70 group-hover:text-neon-blue" />
-                  </div>
+          </div>
                 </a>
                 <a 
                   href="https://www.youtube.com/watch?v=S3QNDSax2IA" 
