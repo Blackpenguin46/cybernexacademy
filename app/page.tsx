@@ -56,14 +56,14 @@ export default function HomePage() {
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide leading-none text-center">
               <span className="relative inline-block">
                 <span className="absolute inset-0 blur-md bg-neon-blue/30 rounded-lg transform scale-110"></span>
-                <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-neon-blue via-blue-400 to-indigo-500 drop-shadow-[0_0_15px_rgba(0,157,255,0.7)]">CYBERNEX</span>
+                <span className="relative text-neon-blue">CYBERNEX</span>
               </span>
               <span className="relative inline-block ml-2">
-                <span className="absolute inset-0 blur-md bg-neon-green/30 rounded-lg transform scale-110"></span>
-                <span className="relative text-transparent bg-clip-text bg-gradient-to-r from-neon-green via-green-400 to-teal-500 drop-shadow-[0_0_15px_rgba(80,255,170,0.7)]">ACADEMY</span>
+                <span className="absolute inset-0 blur-md bg-neon-blue/30 rounded-lg transform scale-110"></span>
+                <span className="relative text-neon-blue">ACADEMY</span>
               </span>
             </h1>
-            <div className="h-1.5 w-64 bg-gradient-to-r from-neon-blue to-neon-green rounded-full mx-auto shadow-lg shadow-neon-blue/30"></div>
+            <div className="h-1.5 w-64 bg-gradient-to-r from-neon-blue to-neon-blue rounded-full mx-auto shadow-lg shadow-neon-blue/30"></div>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function HomePage() {
           <div className="absolute bottom-20 -right-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] -z-10"></div>
           
           <div className="text-center max-w-4xl mx-auto mb-12">
-            <h2 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-purple-600 leading-tight drop-shadow-lg">
+            <h2 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight drop-shadow-lg">
               Your Cybersecurity Resource Hub
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
