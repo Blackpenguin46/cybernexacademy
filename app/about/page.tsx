@@ -146,9 +146,16 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {teamMembers.map((member, index) => (
               <div key={index} className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800 overflow-hidden">
-                <div className="aspect-square bg-gray-800 flex items-center justify-center">
-                  {/* Placeholder for team member image */}
-                  <Users className="w-16 h-16 text-gray-600" />
+                <div className="aspect-square bg-gray-800 flex items-center justify-center relative">
+                  {member.image ? (
+                    <img 
+                      src={member.image} 
+                      alt={member.name} 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Users className="w-16 h-16 text-gray-600" />
+                  )}
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-white mb-1">{member.name}</h3>

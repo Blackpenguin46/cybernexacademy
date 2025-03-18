@@ -55,33 +55,19 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-indigo-800/30 to-purple-900/30 blur-xl -z-10 transform scale-150 rounded-full opacity-70"></div>
             
             {/* Enhanced CYBERNEXACADEMY header */}
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-none text-center mb-2">
-              <div className="relative inline-block overflow-hidden">
-                <span className="absolute inset-0 blur-xl bg-gradient-to-r from-blue-600/40 to-indigo-600/40 rounded-2xl transform scale-110"></span>
-                <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-neon-blue py-2 px-1">
-                  CYBER<span className="text-white drop-shadow-[0_0_2px_rgba(255,255,255,1)]">NEX</span>
-                </span>
-              </div>
-              <div className="relative inline-block overflow-hidden">
-                <span className="absolute inset-0 blur-xl bg-gradient-to-r from-indigo-600/40 to-blue-600/40 rounded-2xl transform scale-110"></span>
-                <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-blue-400 py-2 px-1">
-                  <span className="text-white drop-shadow-[0_0_2px_rgba(255,255,255,1)]">A</span>CADEMY
-                </span>
-              </div>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-none text-center mb-2">
+              <span className="text-neon-blue">CYBERNEX</span>
+              <span className="text-neon-blue">ACADEMY</span>
             </h1>
             
-            {/* Stylized separator */}
-            <div className="flex items-center justify-center mb-6 mt-4">
-              <div className="h-0.5 w-12 bg-gradient-to-r from-transparent to-neon-blue/70 rounded-full"></div>
-              <div className="h-2 w-20 mx-2 bg-gradient-to-r from-neon-blue to-blue-400 rounded-full shadow-md shadow-neon-blue/40"></div>
-              <div className="h-0.5 w-12 bg-gradient-to-r from-neon-blue/70 to-transparent rounded-full"></div>
-            </div>
+            {/* Simplified separator */}
+            <div className="h-0.5 w-48 bg-neon-blue mx-auto mb-6 mt-4"></div>
             
             {/* Enhanced tagline */}
             <p className="text-lg sm:text-xl md:text-2xl font-semibold tracking-wider text-white mb-8 uppercase relative inline-block">
-              <span className="bg-gradient-to-r from-gray-200 via-white to-gray-200 bg-clip-text text-transparent">Knowledge Is Security</span>
+              <span className="text-gray-200">Knowledge Is Security</span>
               <span className="mx-2 text-neon-blue">•</span>
-              <span className="bg-gradient-to-r from-gray-200 via-white to-gray-200 bg-clip-text text-transparent">Security Is Power</span>
+              <span className="text-gray-200">Security Is Power</span>
             </p>
           </div>
         </div>
