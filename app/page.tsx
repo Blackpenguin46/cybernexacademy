@@ -53,36 +53,53 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-900/30 via-indigo-800/30 to-purple-900/30 blur-xl -z-10 transform scale-150 rounded-full opacity-70"></div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-wide leading-none text-center">
-              <span className="relative inline-block">
-                <span className="absolute inset-0 blur-md bg-neon-blue/30 rounded-lg transform scale-110"></span>
-                <span className="relative text-neon-blue">CYBERNEX</span>
-              </span>
-              <span className="relative inline-block ml-2">
-                <span className="absolute inset-0 blur-md bg-neon-blue/30 rounded-lg transform scale-110"></span>
-                <span className="relative text-neon-blue">ACADEMY</span>
-              </span>
-            </h1>
-            <div className="h-1.5 w-64 bg-gradient-to-r from-neon-blue to-neon-blue rounded-full mx-auto shadow-lg shadow-neon-blue/30 mb-4"></div>
             
-            {/* Quote tagline - without quotation marks */}
-            <p className="text-lg md:text-xl font-medium tracking-wide text-gray-200 mt-2 uppercase letter-spacing-wider">
-              Knowledge Is Security, Security Is Power
+            {/* Enhanced CYBERNEXACADEMY header */}
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-none text-center mb-2">
+              <div className="relative inline-block overflow-hidden">
+                <span className="absolute inset-0 blur-xl bg-gradient-to-r from-blue-600/40 to-indigo-600/40 rounded-2xl transform scale-110"></span>
+                <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-neon-blue py-2 px-1">
+                  CYBER<span className="text-white drop-shadow-[0_0_2px_rgba(255,255,255,1)]">NEX</span>
+                </span>
+              </div>
+              <div className="relative inline-block overflow-hidden">
+                <span className="absolute inset-0 blur-xl bg-gradient-to-r from-indigo-600/40 to-blue-600/40 rounded-2xl transform scale-110"></span>
+                <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-neon-blue to-blue-400 py-2 px-1">
+                  <span className="text-white drop-shadow-[0_0_2px_rgba(255,255,255,1)]">A</span>CADEMY
+                </span>
+              </div>
+            </h1>
+            
+            {/* Stylized separator */}
+            <div className="flex items-center justify-center mb-6 mt-4">
+              <div className="h-0.5 w-12 bg-gradient-to-r from-transparent to-neon-blue/70 rounded-full"></div>
+              <div className="h-2 w-20 mx-2 bg-gradient-to-r from-neon-blue to-blue-400 rounded-full shadow-md shadow-neon-blue/40"></div>
+              <div className="h-0.5 w-12 bg-gradient-to-r from-neon-blue/70 to-transparent rounded-full"></div>
+            </div>
+            
+            {/* Enhanced tagline */}
+            <p className="text-lg sm:text-xl md:text-2xl font-semibold tracking-wider text-white mb-8 uppercase relative inline-block">
+              <span className="bg-gradient-to-r from-gray-200 via-white to-gray-200 bg-clip-text text-transparent">Knowledge Is Security</span>
+              <span className="mx-2 text-neon-blue">•</span>
+              <span className="bg-gradient-to-r from-gray-200 via-white to-gray-200 bg-clip-text text-transparent">Security Is Power</span>
             </p>
           </div>
         </div>
       </div>
       
       {/* Hero Section with improved layout */}
-      <section className="relative pt-10 pb-32 overflow-hidden" aria-labelledby="hero-heading">
+      <section className="relative pt-6 pb-32 overflow-hidden" aria-labelledby="hero-heading">
         <div className="container mx-auto px-4">
           {/* Glowing accent circles */}
           <div className="absolute top-40 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] -z-10"></div>
           <div className="absolute bottom-20 -right-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] -z-10"></div>
           
           <div className="text-center max-w-4xl mx-auto mb-12">
-            <h2 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight drop-shadow-lg">
-              Your Cybersecurity Resource Hub
+            {/* Enhanced hero heading */}
+            <h2 id="hero-heading" className="text-4xl md:text-6xl font-bold mb-8 leading-tight relative">
+              <span className="absolute -left-4 top-0 h-full w-1 bg-gradient-to-b from-transparent via-neon-blue to-transparent opacity-70 rounded-full blur-sm"></span>
+              <span className="absolute -right-4 top-0 h-full w-1 bg-gradient-to-b from-transparent via-neon-blue to-transparent opacity-70 rounded-full blur-sm"></span>
+              <span className="text-white drop-shadow-[0_0_30px_rgba(0,157,255,0.3)]">Your Cybersecurity Resource Hub</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
               A comprehensive repository of cybersecurity resources for beginners and professionals, all in one place.
