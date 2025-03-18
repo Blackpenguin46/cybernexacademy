@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from "next/link";
-import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal, Cpu, Shield, Lock, ChevronRight } from "lucide-react";
+import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal, Cpu, Shield, Lock, ChevronRight, Newspaper } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -198,6 +198,108 @@ export default function HomePage() {
                 </Card>
               </Link>
             ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Favorite Resources Section */}
+      <section className="py-20 relative" aria-labelledby="favorite-resources-heading">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 id="favorite-resources-heading" className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white px-2">
+                Favorite Resources
+              </span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Our top recommended platforms and websites for cybersecurity learning and staying informed.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {/* HackTheBox */}
+            <Link href="https://www.hackthebox.com/" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="h-full bg-gray-900/50 border border-green-500/30 hover:border-green-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-green-600/20 to-green-600/5 hover:shadow-xl hover:shadow-green-500/20 group cursor-pointer">
+                <div className="flex justify-center mb-4">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 flex items-center justify-center bg-green-500/20 rounded-full">
+                      <Lock className="h-8 w-8 text-green-400" aria-hidden="true" />
+                    </div>
+                    <div className="absolute inset-0 bg-green-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+                  </div>
+                </div>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-green-400 transition-colors">HackTheBox</h3>
+                <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
+                  Hands-on cybersecurity training platform with real-world penetration testing labs and challenges.
+                </p>
+                <div className="mt-4 flex items-center justify-center text-green-400 text-sm group-hover:underline">
+                  Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* Network Chuck */}
+            <Link href="https://www.youtube.com/@NetworkChuck" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="h-full bg-gray-900/50 border border-red-500/30 hover:border-red-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-red-600/20 to-red-600/5 hover:shadow-xl hover:shadow-red-500/20 group cursor-pointer">
+                <div className="flex justify-center mb-4">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 flex items-center justify-center bg-red-500/20 rounded-full">
+                      <Terminal className="h-8 w-8 text-red-400" aria-hidden="true" />
+                    </div>
+                    <div className="absolute inset-0 bg-red-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+                  </div>
+                </div>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-red-400 transition-colors">Network Chuck</h3>
+                <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
+                  Engaging YouTube channel with tutorials on networking, cybersecurity, and IT concepts for all levels.
+                </p>
+                <div className="mt-4 flex items-center justify-center text-red-400 text-sm group-hover:underline">
+                  Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* Dark Reading */}
+            <Link href="https://www.darkreading.com/" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="h-full bg-gray-900/50 border border-purple-500/30 hover:border-purple-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-purple-600/20 to-purple-600/5 hover:shadow-xl hover:shadow-purple-500/20 group cursor-pointer">
+                <div className="flex justify-center mb-4">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 flex items-center justify-center bg-purple-500/20 rounded-full">
+                      <Newspaper className="h-8 w-8 text-purple-400" aria-hidden="true" />
+                    </div>
+                    <div className="absolute inset-0 bg-purple-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+                  </div>
+                </div>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-purple-400 transition-colors">Dark Reading</h3>
+                <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
+                  Leading news source for information security professionals with analysis on emerging threats and trends.
+                </p>
+                <div className="mt-4 flex items-center justify-center text-purple-400 text-sm group-hover:underline">
+                  Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+
+            {/* OverTheWire */}
+            <Link href="https://overthewire.org/wargames/" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="h-full bg-gray-900/50 border border-blue-500/30 hover:border-blue-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-blue-600/20 to-blue-600/5 hover:shadow-xl hover:shadow-blue-500/20 group cursor-pointer">
+                <div className="flex justify-center mb-4">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 flex items-center justify-center bg-blue-500/20 rounded-full">
+                      <Cpu className="h-8 w-8 text-blue-400" aria-hidden="true" />
+                    </div>
+                    <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+                  </div>
+                </div>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-blue-400 transition-colors">OverTheWire</h3>
+                <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
+                  Fun and educational wargames to learn and practice security concepts through progressive challenges.
+                </p>
+                <div className="mt-4 flex items-center justify-center text-blue-400 text-sm group-hover:underline">
+                  Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
