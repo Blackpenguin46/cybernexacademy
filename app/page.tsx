@@ -63,7 +63,12 @@ export default function HomePage() {
                 <span className="relative text-neon-blue">ACADEMY</span>
               </span>
             </h1>
-            <div className="h-1.5 w-64 bg-gradient-to-r from-neon-blue to-neon-blue rounded-full mx-auto shadow-lg shadow-neon-blue/30"></div>
+            <div className="h-1.5 w-64 bg-gradient-to-r from-neon-blue to-neon-blue rounded-full mx-auto shadow-lg shadow-neon-blue/30 mb-4"></div>
+            
+            {/* Quote tagline - without quotation marks */}
+            <p className="text-lg md:text-xl font-medium tracking-wide text-gray-200 mt-2 uppercase letter-spacing-wider">
+              Knowledge Is Security, Security Is Power
+            </p>
           </div>
         </div>
       </div>
