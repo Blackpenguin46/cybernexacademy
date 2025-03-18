@@ -7,6 +7,51 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus, Users, LineChart, GraduationCap, MessageSquare, Briefcase, BookOpen, Award, CheckSquare, Beaker, AlertTriangle, Newspaper, Calendar, FileText, ChevronRight } from 'lucide-react';
 import { supabase } from "@/lib/supabase";
 
+// Add color theme variables near the top of the component but after imports
+type SectionId = 'community' | 'insights' | 'academy';
+
+type SectionColors = {
+  [key in SectionId]: {
+    primary: string;
+    light: string;
+    secondary: string;
+    accent: string;
+    border: string;
+    hover: string;
+    icon: string;
+  }
+};
+
+const sectionColors: SectionColors = {
+  community: {
+    primary: "from-cyan-500 to-blue-600",
+    light: "from-cyan-400 to-blue-500",
+    secondary: "cyan-500",
+    accent: "bg-cyan-500/10 text-cyan-400",
+    border: "border-cyan-500/30",
+    hover: "hover:border-cyan-500/50 hover:bg-cyan-500/5 hover:shadow-cyan-500/10",
+    icon: "text-cyan-400"
+  },
+  insights: {
+    primary: "from-purple-500 to-pink-600",
+    light: "from-purple-400 to-pink-500",
+    secondary: "purple-500",
+    accent: "bg-purple-500/10 text-purple-400",
+    border: "border-purple-500/30",
+    hover: "hover:border-purple-500/50 hover:bg-purple-500/5 hover:shadow-purple-500/10",
+    icon: "text-purple-400"
+  },
+  academy: {
+    primary: "from-blue-500 to-indigo-600",
+    light: "from-blue-400 to-indigo-500",
+    secondary: "blue-500",
+    accent: "bg-blue-500/10 text-blue-400",
+    border: "border-blue-500/30",
+    hover: "hover:border-blue-500/50 hover:bg-blue-500/5 hover:shadow-blue-500/10",
+    icon: "text-blue-400"
+  }
+};
+
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -306,79 +351,82 @@ export default function Navbar() {
                         }}
                       >
                         {/* Top accent line for dropdown */}
-                        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-neon-blue to-transparent opacity-80"></div>
+                        <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary} to-transparent opacity-80`}></div>
                         
                         <div className="flex flex-col md:flex-row">
                           {/* Sidebar with title and description - made narrower */}
-                          <div className="w-full md:w-1/5 lg:w-1/6 bg-gradient-to-b from-gray-900/80 to-black/80 p-4 border-r border-gray-800/50">
-                            <h3 className="text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-neon-blue">{section.title}</h3>
+                          <div className={`w-full md:w-1/5 lg:w-1/6 bg-gradient-to-b from-gray-900/80 to-black/80 p-4 border-r border-gray-800/50`}>
+                            <h3 className={`text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r ${sectionColors[section.id as SectionId].primary}`}>{section.title}</h3>
                             <p className="text-gray-300 text-sm mb-3 leading-relaxed">{section.description}</p>
                             
                             {/* Graphic element or icon with enhanced styling */}
-                            <div className="mt-3 text-neon-blue relative hidden md:block">
+                            <div className={`mt-3 ${sectionColors[section.id as SectionId].icon} relative hidden md:block`}>
                               <div className="relative">
                                 {section.id === 'community' && <Users className="w-14 h-14 opacity-50" />}
                                 {section.id === 'insights' && <LineChart className="w-14 h-14 opacity-50" />}
                                 {section.id === 'academy' && <GraduationCap className="w-14 h-14 opacity-50" />}
-                                <div className="absolute -inset-1 bg-gradient-to-br from-neon-blue/20 to-transparent rounded-full blur-xl"></div>
+                                <div className={`absolute -inset-1 bg-gradient-to-br ${sectionColors[section.id as SectionId].primary}/20 to-transparent rounded-full blur-xl`}></div>
                               </div>
                             </div>
                           </div>
                           
                           {/* Links grid - made wider and more columns */}
-                          <div className="w-full md:w-4/5 lg:w-5/6 py-3 px-4 bg-gradient-to-br from-black/90 to-gray-900/20">
+                          <div className={`w-full md:w-4/5 lg:w-5/6 py-3 px-4 bg-gradient-to-br from-black/90 to-gray-900/20`}>
                             {section.id === 'community' && (
                               <div>
-                                <div className="mb-3 pb-2 border-b border-gray-800">
-                                  <div className="text-sm font-medium text-white/70 ml-1 mb-1">Popular Communities</div>
+                                <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Popular Communities</div>
                                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                     {section.links.slice(0, 4).map((link) => (
                                       <Link 
                                         key={link.name}
                                         href={link.href} 
-                                        className="flex flex-col items-center p-3 rounded-lg border border-gray-800 bg-gray-900/50 hover:bg-neon-blue/5 hover:border-neon-blue/30 transition-all duration-200 group"
+                                        className={`flex flex-col items-center p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
                                         onClick={() => setActiveDropdown(null)}
                                       >
-                                        <div className="p-2 rounded-full bg-neon-blue/10 text-neon-blue mb-2 group-hover:scale-110 transition-transform">
+                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mb-2 group-hover:scale-110 transition-transform`}>
                                           {link.name.includes("Discord") && <MessageSquare className="w-6 h-6" />}
                                           {link.name.includes("GitHub") && <Code className="w-6 h-6" />}
                                           {link.name.includes("Reddit") && <User className="w-6 h-6" />}
                                           {link.name.includes("LinkedIn") && <Briefcase className="w-6 h-6" />}
                                         </div>
-                                        <span className="text-gray-200 group-hover:text-neon-blue text-center">{link.name}</span>
+                                        <span className={`text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon} text-center`}>{link.name}</span>
                                       </Link>
                                     ))}
                                   </div>
                                 </div>
                                 
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                  {section.links.slice(4).map((link) => (
-                                    <Link 
-                                      key={link.name}
-                                      href={link.href} 
-                                      className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                        isActive(link.href) 
-                                          ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
-                                          : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
-                                      } transition-all duration-200 relative group overflow-hidden`}
-                                      onClick={() => setActiveDropdown(null)}
-                                      aria-current={isActive(link.href) ? "page" : undefined}
-                                    >
-                                      <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
-                                      <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
-                                        {getLinkIcon(link.name)}
-                                      </div>
-                                      <span>{link.name}</span>
-                                    </Link>
-                                  ))}
+                                <div className="mt-3">
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>More Resources</div>
+                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                    {section.links.slice(4).map((link) => (
+                                      <Link 
+                                        key={link.name}
+                                        href={link.href} 
+                                        className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                          isActive(link.href) 
+                                            ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
+                                            : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
+                                        } transition-all duration-200 relative group overflow-hidden`}
+                                        onClick={() => setActiveDropdown(null)}
+                                        aria-current={isActive(link.href) ? "page" : undefined}
+                                      >
+                                        <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
+                                        <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
+                                          {getLinkIcon(link.name)}
+                                        </div>
+                                        <span>{link.name}</span>
+                                      </Link>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             )}
                             
                             {section.id === 'insights' && (
                               <div>
-                                <div className="mb-3 pb-2 border-b border-gray-800">
-                                  <div className="text-sm font-medium text-white/70 ml-1 mb-1">Featured Insights</div>
+                                <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Featured Insights</div>
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     {[
                                       { title: "Latest News", desc: "Stay updated with cybersecurity events", icon: <Newspaper className="w-5 h-5" />, href: "/insights/news" },
@@ -388,14 +436,14 @@ export default function Navbar() {
                                       <Link 
                                         key={item.title}
                                         href={item.href} 
-                                        className="flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 hover:bg-neon-blue/5 hover:border-neon-blue/30 transition-all duration-200 group"
+                                        className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
                                         onClick={() => setActiveDropdown(null)}
                                       >
-                                        <div className="p-2 rounded-full bg-neon-blue/10 text-neon-blue mr-3 group-hover:scale-110 transition-transform">
+                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
                                           {item.icon}
                                         </div>
                                         <div>
-                                          <div className="font-medium text-gray-200 group-hover:text-neon-blue">{item.title}</div>
+                                          <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
                                           <div className="text-xs text-gray-400">{item.desc}</div>
                                         </div>
                                       </Link>
@@ -403,51 +451,54 @@ export default function Navbar() {
                                   </div>
                                 </div>
                                 
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                  {section.links.map((link) => (
-                                    <Link 
-                                      key={link.name}
-                                      href={link.href} 
-                                      className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                        isActive(link.href) 
-                                          ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
-                                          : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
-                                      } transition-all duration-200 relative group overflow-hidden`}
-                                      onClick={() => setActiveDropdown(null)}
-                                      aria-current={isActive(link.href) ? "page" : undefined}
-                                    >
-                                      <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
-                                      <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
-                                        {getLinkIcon(link.name)}
-                                      </div>
-                                      <span>{link.name}</span>
-                                    </Link>
-                                  ))}
+                                <div className="mt-3">
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>All Topics</div>
+                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                    {section.links.map((link) => (
+                                      <Link 
+                                        key={link.name}
+                                        href={link.href} 
+                                        className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                          isActive(link.href) 
+                                            ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
+                                            : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
+                                        } transition-all duration-200 relative group overflow-hidden`}
+                                        onClick={() => setActiveDropdown(null)}
+                                        aria-current={isActive(link.href) ? "page" : undefined}
+                                      >
+                                        <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
+                                        <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
+                                          {getLinkIcon(link.name)}
+                                        </div>
+                                        <span>{link.name}</span>
+                                      </Link>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             )}
                             
                             {section.id === 'academy' && (
                               <div>
-                                <div className="mb-3 pb-2 border-b border-gray-800">
-                                  <div className="text-sm font-medium text-white/70 ml-1 mb-1">Learning Paths</div>
+                                <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Learning Paths</div>
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                                     {[
-                                      { title: "Foundational Resources", desc: "Start your cybersecurity journey", icon: <BookOpen className="w-5 h-5" />, href: "/academy/foundational" },
-                                      { title: "Advanced Techniques", desc: "Deepen your technical expertise", icon: <Code className="w-5 h-5" />, href: "/academy/advanced" },
-                                      { title: "Certifications", desc: "Prepare for industry certifications", icon: <Award className="w-5 h-5" />, href: "/academy/certifications" }
+                                      { title: "Beginner", desc: "Start your cybersecurity journey", icon: <BookOpen className="w-5 h-5" />, href: "/academy/beginner" },
+                                      { title: "Advanced", desc: "Enhance your technical skills", icon: <Code className="w-5 h-5" />, href: "/academy/advanced" },
+                                      { title: "Certification", desc: "Prepare for industry certifications", icon: <Award className="w-5 h-5" />, href: "/academy/certification" }
                                     ].map((item) => (
                                       <Link 
                                         key={item.title}
                                         href={item.href} 
-                                        className="flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 hover:bg-neon-blue/5 hover:border-neon-blue/30 transition-all duration-200 group"
+                                        className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
                                         onClick={() => setActiveDropdown(null)}
                                       >
-                                        <div className="p-2 rounded-full bg-neon-blue/10 text-neon-blue mr-3 group-hover:scale-110 transition-transform">
+                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
                                           {item.icon}
                                         </div>
                                         <div>
-                                          <div className="font-medium text-gray-200 group-hover:text-neon-blue">{item.title}</div>
+                                          <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
                                           <div className="text-xs text-gray-400">{item.desc}</div>
                                         </div>
                                       </Link>
@@ -455,26 +506,29 @@ export default function Navbar() {
                                   </div>
                                 </div>
                                 
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                  {section.links.map((link) => (
-                                    <Link 
-                                      key={link.name}
-                                      href={link.href} 
-                                      className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                        isActive(link.href) 
-                                          ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
-                                          : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
-                                      } transition-all duration-200 relative group overflow-hidden`}
-                                      onClick={() => setActiveDropdown(null)}
-                                      aria-current={isActive(link.href) ? "page" : undefined}
-                                    >
-                                      <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
-                                      <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
-                                        {getLinkIcon(link.name)}
-                                      </div>
-                                      <span>{link.name}</span>
-                                    </Link>
-                                  ))}
+                                <div className="mt-3">
+                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Resources</div>
+                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                    {section.links.map((link) => (
+                                      <Link 
+                                        key={link.name}
+                                        href={link.href} 
+                                        className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                          isActive(link.href) 
+                                            ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
+                                            : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
+                                        } transition-all duration-200 relative group overflow-hidden`}
+                                        onClick={() => setActiveDropdown(null)}
+                                        aria-current={isActive(link.href) ? "page" : undefined}
+                                      >
+                                        <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
+                                        <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
+                                          {getLinkIcon(link.name)}
+                                        </div>
+                                        <span>{link.name}</span>
+                                      </Link>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             )}

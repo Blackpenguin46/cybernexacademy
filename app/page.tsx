@@ -136,7 +136,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 id="main-sections-heading" className="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-neon-blue">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-neon-blue/90 px-2">
                 Main Resources
               </span>
             </h2>
