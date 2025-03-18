@@ -196,5 +196,251 @@ export const discordServers: DiscordServer[] = [
     members: "44K+",
     url: "https://discord.gg/cybermentorship",
     categories: ["career", "learning", "community"]
+  },
+  // Adding new Discord servers from the KillSwitchX7 Medium article
+  {
+    name: "David Bombal",
+    description: "Community focused on IT networking, cybersecurity tutorials, and career development in tech.",
+    members: "50K+",
+    url: "https://discord.com/invite/davidbombal",
+    categories: ["learning", "career", "community"]
+  },
+  {
+    name: "NetworkChuck",
+    description: "Community for IT enthusiasts with focus on networking, cloud technologies, and cybersecurity.",
+    members: "49K+",
+    url: "https://discord.gg/networkchuck",
+    categories: ["learning", "community"]
+  },
+  {
+    name: "The Rat Pack",
+    description: "Cybersecurity community with focus on various security topics and threat intelligence.",
+    members: "3K+",
+    url: "https://discord.gg/theratpack",
+    categories: ["community", "technical"]
+  },
+  {
+    name: "InsiderPhD",
+    description: "Community led by InsiderPhD with focus on bug bounty and web security testing.",
+    members: "2.5K+",
+    url: "https://discord.gg/insiderphd",
+    categories: ["pentesting", "learning"]
+  },
+  {
+    name: "Nahamsec",
+    description: "Community for all things infosec led by Nahamsec with emphasis on bug bounty hunting.",
+    members: "15K+",
+    url: "https://discord.com/invite/nahamsec",
+    categories: ["pentesting", "community"]
+  },
+  {
+    name: "HackerSploit",
+    description: "Hub for infosec professionals and students interested in practical security training.",
+    members: "30K+",
+    url: "https://discord.gg/hackersploit",
+    categories: ["learning", "pentesting"]
+  },
+  {
+    name: "Tib3rius",
+    description: "Security community focused on web application security and penetration testing.",
+    members: "1K+",
+    url: "https://discord.gg/tib3rius",
+    categories: ["pentesting", "learning"]
+  },
+  {
+    name: "Cyberspatial",
+    description: "Cybersecurity community with diverse focus areas and learning resources.",
+    members: "20K+",
+    url: "https://discord.gg/ZKwR9CV",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "TrustedSec",
+    description: "Security company-led community for security professionals and enthusiasts.",
+    members: "25K+",
+    url: "https://discord.gg/4mM9puKjMB",
+    categories: ["community", "technical"]
+  },
+  {
+    name: "Hack This Site",
+    description: "Community for ethical hackers with focus on website security and challenges.",
+    members: "30K+",
+    url: "https://discord.gg/4bgTqWPBmF",
+    categories: ["ctf", "pentesting"]
+  },
+  {
+    name: "DEFCON",
+    description: "Official community for the world's largest hacking convention.",
+    members: "100K+",
+    url: "https://discord.gg/defcon",
+    categories: ["community", "pentesting", "ctf"]
+  },
+  {
+    name: "Hacker101",
+    description: "Community for learning web security and participating in Hacker101 CTF challenges.",
+    members: "40K+",
+    url: "https://discord.gg/CJR9xtzPaa",
+    categories: ["ctf", "learning", "pentesting"]
+  },
+  {
+    name: "Bugcrowd Community",
+    description: "Official community for Bugcrowd platform users and bug bounty hunters.",
+    members: "45K+",
+    url: "https://discord.com/invite/TWr3Brs",
+    categories: ["pentesting", "career"]
+  },
+  {
+    name: "InfoSec Writeups",
+    description: "Community focused on security writeups, tutorials, and knowledge sharing.",
+    members: "20K+",
+    url: "https://discord.gg/4DZpgvV",
+    categories: ["learning", "community"]
+  },
+  {
+    name: "Certification Station",
+    description: "Community dedicated to helping members prepare for IT and security certifications.",
+    members: "35K+",
+    url: "https://discord.gg/certstation",
+    categories: ["career", "learning"]
+  },
+  {
+    name: "Intercollegiate Discord",
+    description: "Connecting students interested in cybersecurity across different colleges and universities.",
+    members: "10K+",
+    url: "https://discord.gg/zXYNfEKChu",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Pico CTF",
+    description: "Community related to the popular educational CTF competition designed for beginners.",
+    members: "30K+",
+    url: "https://discord.com/invite/WQGdYaB",
+    categories: ["ctf", "learning"]
+  },
+  {
+    name: "Laptop Hacking Coffee",
+    description: "Casual community for hackers and security enthusiasts to exchange ideas and knowledge.",
+    members: "15K+",
+    url: "https://discord.gg/k3RGz3x",
+    categories: ["community", "technical"]
+  },
+  {
+    name: "The OSINTion",
+    description: "Community focused on Open Source Intelligence gathering techniques and tools.",
+    members: "20K+",
+    url: "https://discord.gg/RMv5Y8dfCz",
+    categories: ["technical", "learning"]
+  },
+  {
+    name: "Bellingcat",
+    description: "OSINT and investigative journalism community for online investigations.",
+    members: "15K+",
+    url: "https://discord.gg/pCB9Xn8fK4",
+    categories: ["technical", "community"]
+  },
+  {
+    name: "The OSINT Curious Project",
+    description: "Community dedicated to learning and sharing OSINT techniques and methodologies.",
+    members: "15K+",
+    url: "https://discord.gg/ykJXcXtEka",
+    categories: ["technical", "learning"]
+  },
+  {
+    name: "Digital Forensics",
+    description: "Community focused on digital forensics techniques, tools, and investigations.",
+    members: "20K+",
+    url: "https://discord.gg/m4d6GvknvV",
+    categories: ["forensics", "blue_team", "technical"]
+  },
+  {
+    name: "Threat Hunter Community",
+    description: "Focused on threat hunting, detection, and analysis of security threats.",
+    members: "18K+",
+    url: "https://discord.gg/B5zKchpcRW",
+    categories: ["blue_team", "technical"]
+  },
+  {
+    name: "Blue Team Labs Online",
+    description: "Community for blue team security professionals with focus on defensive security exercises.",
+    members: "25K+",
+    url: "https://discord.gg/Vmv5Y3DQmk",
+    categories: ["blue_team", "learning"]
+  },
+  {
+    name: "Security Blue Team",
+    description: "Community dedicated to blue team operations, defense strategies, and skill development.",
+    members: "30K+",
+    url: "https://discord.gg/kSNzeDsgpW",
+    categories: ["blue_team", "learning"]
+  },
+  {
+    name: "SOC Core Skills Training",
+    description: "Focused on developing skills necessary for Security Operations Center analysts.",
+    members: "22K+",
+    url: "https://discord.gg/s5eHgFEAej",
+    categories: ["blue_team", "learning", "career"]
+  },
+  {
+    name: "Wild West Hackin' Fest",
+    description: "Community for the popular cybersecurity conference with focus on practical skills.",
+    members: "15K+",
+    url: "https://discord.gg/qHpFHWJX9n",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Black Hills Information Security",
+    description: "Community led by BHIS team with focus on offensive and defensive security topics.",
+    members: "20K+",
+    url: "https://discord.gg/mVRJXCPVBP",
+    categories: ["community", "technical", "learning"]
+  },
+  {
+    name: "Red Team Village",
+    description: "Community focused on red team operations, offensive security, and penetration testing.",
+    members: "25K+",
+    url: "https://discord.com/invite/BXf3Bz6U2H",
+    categories: ["pentesting", "technical"]
+  },
+  {
+    name: "Unofficial INE / Elearn Security",
+    description: "Community for students of INE and Elearn Security courses to discuss and collaborate.",
+    members: "18K+",
+    url: "https://discord.gg/ZSkMQdCXTK",
+    categories: ["learning", "career"]
+  },
+  {
+    name: "Bounty Hunters",
+    description: "Community for bug bounty hunters to share techniques, tools, and experiences.",
+    members: "30K+",
+    url: "https://discord.gg/DjzZ9t6nuC",
+    categories: ["pentesting", "career"]
+  },
+  {
+    name: "Offensive Security",
+    description: "Community for OffSec students and professionals with focus on offensive security.",
+    members: "40K+",
+    url: "https://discord.gg/sHJrrSWV9W",
+    categories: ["pentesting", "learning", "career"]
+  },
+  {
+    name: "Reverse Engineering",
+    description: "Community focused on reverse engineering techniques, tools, and challenges.",
+    members: "30K+",
+    url: "https://discord.gg/xmgrBahpdE",
+    categories: ["technical", "malware"]
+  },
+  {
+    name: "SANS Offensive Operations",
+    description: "Community for SANS offensive security courses and certifications.",
+    members: "25K+",
+    url: "https://discord.gg/f3R93W38gs",
+    categories: ["pentesting", "learning", "career"]
+  },
+  {
+    name: "SANS Defensive Operations",
+    description: "Community for SANS blue team and defensive security courses and certifications.",
+    members: "25K+",
+    url: "https://discord.com/invite/bXv87xAzvA",
+    categories: ["blue_team", "learning", "career"]
   }
 ]; 

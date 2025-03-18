@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus, Users, LineChart, GraduationCap } from 'lucide-react';
+import { Lock, User, Menu, X, ChevronDown, Shield, Terminal, Zap, Server, Database, Code, Settings, Home, Heart, LogIn, UserPlus, Users, LineChart, GraduationCap, MessageSquare, Briefcase, BookOpen, Award, CheckSquare, Beaker, AlertTriangle, Newspaper, Calendar, FileText, ChevronRight } from 'lucide-react';
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
@@ -15,6 +15,7 @@ export default function Navbar() {
   const [showDonateInfo, setShowDonateInfo] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
   
   // Navigation sections with cybersecurity icons
   const navSections = [
@@ -167,6 +168,50 @@ export default function Navbar() {
     }
   };
 
+  // Function to handle dropdown visibility with delay
+  const handleDropdownOpen = (sectionId: string) => {
+    if (dropdownTimer) {
+      clearTimeout(dropdownTimer);
+      setDropdownTimer(null);
+    }
+    setActiveDropdown(sectionId);
+  };
+
+  const handleDropdownClose = () => {
+    if (dropdownTimer) {
+      clearTimeout(dropdownTimer);
+    }
+    
+    const timer = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 200); // Slight delay to prevent flickering
+    
+    setDropdownTimer(timer);
+  };
+
+  // Helper function to get icons based on link name
+  const getLinkIcon = (name: string) => {
+    if (name.includes("GitHub")) return <Code className="w-4 h-4" />;
+    if (name.includes("Reddit")) return <User className="w-4 h-4" />;
+    if (name.includes("Discord")) return <MessageSquare className="w-4 h-4" />;
+    if (name.includes("Substack")) return <Server className="w-4 h-4" />;
+    if (name.includes("LinkedIn")) return <Briefcase className="w-4 h-4" />;
+    if (name.includes("Skool")) return <Database className="w-4 h-4" />;
+    if (name.includes("Forums")) return <User className="w-4 h-4" />;
+    if (name.includes("Events")) return <Calendar className="w-4 h-4" />;
+    if (name.includes("News")) return <Newspaper className="w-4 h-4" />;
+    if (name.includes("Research")) return <BookOpen className="w-4 h-4" />;
+    if (name.includes("Cases")) return <FileText className="w-4 h-4" />;
+    if (name.includes("Threats")) return <AlertTriangle className="w-4 h-4" />;
+    if (name.includes("Industry")) return <LineChart className="w-4 h-4" />;
+    if (name.includes("Practices")) return <CheckSquare className="w-4 h-4" />;
+    if (name.includes("Foundations")) return <BookOpen className="w-4 h-4" />;
+    if (name.includes("Labs")) return <Beaker className="w-4 h-4" />;
+    if (name.includes("Courses")) return <GraduationCap className="w-4 h-4" />;
+    if (name.includes("Certifications")) return <Award className="w-4 h-4" />;
+    return <ChevronRight className="w-4 h-4" />;
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -207,8 +252,8 @@ export default function Navbar() {
             >
               {navSections.map((section) => (
                 <div key={section.id} className="relative"
-                  onMouseEnter={() => setActiveDropdown(section.id)}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  onMouseEnter={() => handleDropdownOpen(section.id)}
+                  onMouseLeave={() => handleDropdownClose()}
                 >
                   <button 
                     className={`flex items-center font-medium text-gray-300 hover:text-white transition-colors gap-1 ${
@@ -246,14 +291,14 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -5 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -5 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                         className="fixed left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-[95vw] bg-black/95 backdrop-blur-xl border border-neon-blue/30 rounded-xl shadow-2xl shadow-neon-blue/10 overflow-hidden"
                         style={{ top: "60px" }}
                         id={`dropdown-${section.id}`}
                         role="menu"
                         aria-labelledby={`dropdown-button-${section.id}`}
-                        onMouseEnter={() => setActiveDropdown(section.id)}
-                        onMouseLeave={() => setActiveDropdown(null)}
+                        onMouseEnter={() => handleDropdownOpen(section.id)}
+                        onMouseLeave={() => handleDropdownClose()}
                         onKeyDown={(e) => {
                           if (e.key === 'Escape') {
                             setActiveDropdown(null);
@@ -282,56 +327,157 @@ export default function Navbar() {
                           
                           {/* Links grid - made wider and more columns */}
                           <div className="w-full md:w-4/5 lg:w-5/6 py-3 px-4 bg-gradient-to-br from-black/90 to-gray-900/20">
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-2 gap-y-1">
-                              {section.links.map((link) => (
-                                <Link 
-                                  key={link.name}
-                                  href={link.href} 
-                                  className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                    isActive(link.href) 
-                                      ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
-                                      : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
-                                  } transition-all duration-200 relative group overflow-hidden`}
-                                  onClick={() => setActiveDropdown(null)}
-                                  aria-current={isActive(link.href) ? "page" : undefined}
-                                >
-                                  {/* Enhanced hover effect */}
-                                  <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
-                                  
-                                  {/* Icon with improved styling */}
-                                  <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
-                                    {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
-                                    {link.name.includes("Reddit") && <User className="w-4 h-4" />}
-                                    {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
-                                    {link.name.includes("Substack") && <Server className="w-4 h-4" />}
-                                    {link.name.includes("LinkedIn") && <User className="w-4 h-4" />}
-                                    {link.name.includes("Skool") && <Database className="w-4 h-4" />}
-                                    {link.name.includes("Forums") && <User className="w-4 h-4" />}
-                                    {link.name.includes("Events") && <Zap className="w-4 h-4" />}
-                                    
-                                    {link.name.includes("News") && <Zap className="w-4 h-4" />}
-                                    {link.name.includes("Research") && <Code className="w-4 h-4" />}
-                                    {link.name.includes("Case") && <Server className="w-4 h-4" />}
-                                    {link.name.includes("Threat") && <Shield className="w-4 h-4" />}
-                                    {link.name.includes("Industry") && <Database className="w-4 h-4" />}
-                                    {link.name.includes("Practices") && <Terminal className="w-4 h-4" />}
-                                    
-                                    {link.name.includes("Foundational") && <Shield className="w-4 h-4" />}
-                                    {link.name.includes("Intermediate") && <Server className="w-4 h-4" />}
-                                    {link.name.includes("Advanced") && <Terminal className="w-4 h-4" />}
-                                    {link.name.includes("Courses") && <Code className="w-4 h-4" />}
-                                    {link.name.includes("YouTube") && <Zap className="w-4 h-4" />}
-                                    {link.name.includes("Paths") && <Database className="w-4 h-4" />}
-                                    {link.name.includes("Labs") && <Terminal className="w-4 h-4" />}
-                                    {link.name.includes("Roadmaps") && <Zap className="w-4 h-4" />}
-                                    {link.name.includes("Certifications") && <Lock className="w-4 h-4" />}
-                                    {link.name.includes("General") && <Shield className="w-4 h-4" />}
+                            {section.id === 'community' && (
+                              <div>
+                                <div className="mb-3 pb-2 border-b border-gray-800">
+                                  <div className="text-sm font-medium text-white/70 ml-1 mb-1">Popular Communities</div>
+                                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    {section.links.slice(0, 4).map((link) => (
+                                      <Link 
+                                        key={link.name}
+                                        href={link.href} 
+                                        className="flex flex-col items-center p-3 rounded-lg border border-gray-800 bg-gray-900/50 hover:bg-neon-blue/5 hover:border-neon-blue/30 transition-all duration-200 group"
+                                        onClick={() => setActiveDropdown(null)}
+                                      >
+                                        <div className="p-2 rounded-full bg-neon-blue/10 text-neon-blue mb-2 group-hover:scale-110 transition-transform">
+                                          {link.name.includes("Discord") && <MessageSquare className="w-6 h-6" />}
+                                          {link.name.includes("GitHub") && <Code className="w-6 h-6" />}
+                                          {link.name.includes("Reddit") && <User className="w-6 h-6" />}
+                                          {link.name.includes("LinkedIn") && <Briefcase className="w-6 h-6" />}
+                                        </div>
+                                        <span className="text-gray-200 group-hover:text-neon-blue text-center">{link.name}</span>
+                                      </Link>
+                                    ))}
                                   </div>
-                                  
-                                  <span className="text-sm font-medium">{link.name}</span>
-                                </Link>
-                              ))}
-                            </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                  {section.links.slice(4).map((link) => (
+                                    <Link 
+                                      key={link.name}
+                                      href={link.href} 
+                                      className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                        isActive(link.href) 
+                                          ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
+                                          : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
+                                      } transition-all duration-200 relative group overflow-hidden`}
+                                      onClick={() => setActiveDropdown(null)}
+                                      aria-current={isActive(link.href) ? "page" : undefined}
+                                    >
+                                      <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
+                                      <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
+                                        {getLinkIcon(link.name)}
+                                      </div>
+                                      <span>{link.name}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            
+                            {section.id === 'insights' && (
+                              <div>
+                                <div className="mb-3 pb-2 border-b border-gray-800">
+                                  <div className="text-sm font-medium text-white/70 ml-1 mb-1">Featured Insights</div>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    {[
+                                      { title: "Latest News", desc: "Stay updated with cybersecurity events", icon: <Newspaper className="w-5 h-5" />, href: "/insights/news" },
+                                      { title: "Threat Reports", desc: "Analyses of emerging threats", icon: <AlertTriangle className="w-5 h-5" />, href: "/insights/threats" },
+                                      { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: <LineChart className="w-5 h-5" />, href: "/insights/industry" }
+                                    ].map((item) => (
+                                      <Link 
+                                        key={item.title}
+                                        href={item.href} 
+                                        className="flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 hover:bg-neon-blue/5 hover:border-neon-blue/30 transition-all duration-200 group"
+                                        onClick={() => setActiveDropdown(null)}
+                                      >
+                                        <div className="p-2 rounded-full bg-neon-blue/10 text-neon-blue mr-3 group-hover:scale-110 transition-transform">
+                                          {item.icon}
+                                        </div>
+                                        <div>
+                                          <div className="font-medium text-gray-200 group-hover:text-neon-blue">{item.title}</div>
+                                          <div className="text-xs text-gray-400">{item.desc}</div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                  {section.links.map((link) => (
+                                    <Link 
+                                      key={link.name}
+                                      href={link.href} 
+                                      className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                        isActive(link.href) 
+                                          ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
+                                          : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
+                                      } transition-all duration-200 relative group overflow-hidden`}
+                                      onClick={() => setActiveDropdown(null)}
+                                      aria-current={isActive(link.href) ? "page" : undefined}
+                                    >
+                                      <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
+                                      <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
+                                        {getLinkIcon(link.name)}
+                                      </div>
+                                      <span>{link.name}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            
+                            {section.id === 'academy' && (
+                              <div>
+                                <div className="mb-3 pb-2 border-b border-gray-800">
+                                  <div className="text-sm font-medium text-white/70 ml-1 mb-1">Learning Paths</div>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                    {[
+                                      { title: "Foundational Resources", desc: "Start your cybersecurity journey", icon: <BookOpen className="w-5 h-5" />, href: "/academy/foundational" },
+                                      { title: "Advanced Techniques", desc: "Deepen your technical expertise", icon: <Code className="w-5 h-5" />, href: "/academy/advanced" },
+                                      { title: "Certifications", desc: "Prepare for industry certifications", icon: <Award className="w-5 h-5" />, href: "/academy/certifications" }
+                                    ].map((item) => (
+                                      <Link 
+                                        key={item.title}
+                                        href={item.href} 
+                                        className="flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 hover:bg-neon-blue/5 hover:border-neon-blue/30 transition-all duration-200 group"
+                                        onClick={() => setActiveDropdown(null)}
+                                      >
+                                        <div className="p-2 rounded-full bg-neon-blue/10 text-neon-blue mr-3 group-hover:scale-110 transition-transform">
+                                          {item.icon}
+                                        </div>
+                                        <div>
+                                          <div className="font-medium text-gray-200 group-hover:text-neon-blue">{item.title}</div>
+                                          <div className="text-xs text-gray-400">{item.desc}</div>
+                                        </div>
+                                      </Link>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                  {section.links.map((link) => (
+                                    <Link 
+                                      key={link.name}
+                                      href={link.href} 
+                                      className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                        isActive(link.href) 
+                                          ? 'text-neon-blue bg-neon-blue/10 border border-neon-blue/40 font-medium shadow-sm shadow-neon-blue/20' 
+                                          : 'text-gray-300 border border-transparent hover:text-white hover:border-neon-blue/30 hover:bg-neon-blue/5 hover:shadow-sm hover:shadow-neon-blue/10'
+                                      } transition-all duration-200 relative group overflow-hidden`}
+                                      onClick={() => setActiveDropdown(null)}
+                                      aria-current={isActive(link.href) ? "page" : undefined}
+                                    >
+                                      <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/0 via-neon-blue/5 to-neon-blue/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none"></div>
+                                      <div className="mr-2 text-neon-blue group-hover:scale-110 transition-transform duration-200">
+                                        {getLinkIcon(link.name)}
+                                      </div>
+                                      <span>{link.name}</span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </motion.div>
@@ -500,32 +646,7 @@ export default function Navbar() {
                         >
                           {/* Icon based on link name */}
                           <div className="mr-2 text-neon-blue">
-                            {link.name.includes("GitHub") && <Code className="w-4 h-4" />}
-                            {link.name.includes("Reddit") && <User className="w-4 h-4" />}
-                            {link.name.includes("Discord") && <Zap className="w-4 h-4" />}
-                            {link.name.includes("Substack") && <Server className="w-4 h-4" />}
-                            {link.name.includes("LinkedIn") && <User className="w-4 h-4" />}
-                            {link.name.includes("Skool") && <Database className="w-4 h-4" />}
-                            {link.name.includes("Forums") && <User className="w-4 h-4" />}
-                            {link.name.includes("Events") && <Zap className="w-4 h-4" />}
-                            
-                            {link.name.includes("News") && <Zap className="w-4 h-4" />}
-                            {link.name.includes("Research") && <Code className="w-4 h-4" />}
-                            {link.name.includes("Case") && <Server className="w-4 h-4" />}
-                            {link.name.includes("Threat") && <Shield className="w-4 h-4" />}
-                            {link.name.includes("Industry") && <Database className="w-4 h-4" />}
-                            {link.name.includes("Practices") && <Terminal className="w-4 h-4" />}
-                            
-                            {link.name.includes("Foundational") && <Shield className="w-4 h-4" />}
-                            {link.name.includes("Intermediate") && <Server className="w-4 h-4" />}
-                            {link.name.includes("Advanced") && <Terminal className="w-4 h-4" />}
-                            {link.name.includes("Courses") && <Code className="w-4 h-4" />}
-                            {link.name.includes("YouTube") && <Zap className="w-4 h-4" />}
-                            {link.name.includes("Paths") && <Database className="w-4 h-4" />}
-                            {link.name.includes("Labs") && <Terminal className="w-4 h-4" />}
-                            {link.name.includes("Roadmaps") && <Zap className="w-4 h-4" />}
-                            {link.name.includes("Certifications") && <Lock className="w-4 h-4" />}
-                            {link.name.includes("General") && <Shield className="w-4 h-4" />}
+                            {getLinkIcon(link.name)}
                           </div>
                           {link.name}
                         </Link>

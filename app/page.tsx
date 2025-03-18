@@ -76,8 +76,8 @@ export default function HomePage() {
           </div>
           
           {/* Terminal and Features in grid layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Terminal Display */}
+          <div className="flex flex-col gap-8 max-w-6xl mx-auto">
+            {/* Terminal Display - full width */}
             <div className="bg-black/60 border border-neon-blue/30 rounded-xl p-6 backdrop-blur-md shadow-xl shadow-neon-blue/10" aria-label="Terminal display demonstration">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-neon-blue font-mono flex items-center">
@@ -97,13 +97,15 @@ export default function HomePage() {
               </div>
             </div>
             
-            {/* Key Features */}
+            {/* Key Features - horizontal layout */}
             <div className="bg-black/60 border border-neon-blue/30 rounded-xl p-6 backdrop-blur-md shadow-xl shadow-neon-blue/10">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
+              <div className="flex items-center justify-center mb-6">
                 <Shield className="h-6 w-6 text-neon-blue mr-3" />
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-neon-blue">Key Features</span>
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <h3 className="text-2xl font-bold text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-neon-blue">
+                  Key Features
+                </h3>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {features.map((feature, index) => (
                   <div key={index} className="border border-gray-800 hover:border-neon-blue/30 rounded-lg p-4 transition-all duration-300 hover:bg-neon-blue/5 group">
                     <div className="flex items-center mb-3">
