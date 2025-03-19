@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from "next/link";
-import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal, Cpu, Shield, Lock, ChevronRight, Newspaper } from "lucide-react";
+import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal, Cpu, Shield, Lock, ChevronRight, Newspaper, Globe } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -280,22 +280,43 @@ export default function HomePage() {
               </div>
             </Link>
 
-            {/* OverTheWire */}
-            <Link href="https://overthewire.org/wargames/" target="_blank" rel="noopener noreferrer" className="group">
+            {/* TCM Security */}
+            <Link href="https://tcm-sec.com/" target="_blank" rel="noopener noreferrer" className="group">
               <div className="h-full bg-gray-900/50 border border-blue-500/30 hover:border-blue-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-blue-600/20 to-blue-600/5 hover:shadow-xl hover:shadow-blue-500/20 group cursor-pointer">
                 <div className="flex justify-center mb-4">
                   <div className="relative group-hover:scale-110 transition-transform duration-300">
                     <div className="w-16 h-16 flex items-center justify-center bg-blue-500/20 rounded-full">
-                      <Cpu className="h-8 w-8 text-blue-400" aria-hidden="true" />
+                      <Shield className="h-8 w-8 text-blue-400" aria-hidden="true" />
                     </div>
                     <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
                   </div>
                 </div>
-                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-blue-400 transition-colors">OverTheWire</h3>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-blue-400 transition-colors">TCM Security</h3>
                 <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
-                  Fun and educational wargames to learn and practice security concepts through progressive challenges.
+                  Comprehensive cybersecurity training courses and certifications taught by industry professionals.
                 </p>
                 <div className="mt-4 flex items-center justify-center text-blue-400 text-sm group-hover:underline">
+                  Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+            
+            {/* daily.dev */}
+            <Link href="https://daily.dev/" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="h-full bg-gray-900/50 border border-cyan-500/30 hover:border-cyan-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-cyan-600/20 to-cyan-600/5 hover:shadow-xl hover:shadow-cyan-500/20 group cursor-pointer">
+                <div className="flex justify-center mb-4">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 flex items-center justify-center bg-cyan-500/20 rounded-full">
+                      <Globe className="h-8 w-8 text-cyan-400" aria-hidden="true" />
+                    </div>
+                    <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+                  </div>
+                </div>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-cyan-400 transition-colors">daily.dev</h3>
+                <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
+                  All-in-one developer news reader featuring the latest articles, blogs and discussions for tech professionals.
+                </p>
+                <div className="mt-4 flex items-center justify-center text-cyan-400 text-sm group-hover:underline">
                   Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
