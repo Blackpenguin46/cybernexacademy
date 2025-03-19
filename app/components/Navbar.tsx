@@ -280,270 +280,277 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop - Center section with nav sections */}
-          <div className="hidden md:flex items-center justify-start space-x-1 flex-1 pl-24">
-            <Link href="/" className={`px-3 py-2 transition-all duration-300 flex items-center gap-2 ${
-              isActive('/') 
-                ? 'text-neon-blue' 
-                : 'text-gray-300 hover:text-white'
-            }`}>
-              <Home className="w-5 h-5" />
-              <span>Home</span>
-            </Link>
-            
-            <div
-              className="ml-10 flex items-center space-x-8"
-            >
-              {navSections.map((section) => (
-                <div key={section.id} className="relative"
-                  data-dropdown="true"
-                  onMouseEnter={() => handleDropdownOpen(section.id)}
-                  onMouseLeave={() => handleDropdownClose()}
-                >
-                  <button 
-                    className={`flex items-center font-medium text-gray-300 hover:text-white transition-colors gap-1 ${
-                      pathname?.includes(`/${section.id}`) ? 'text-white' : ''
-                    }`}
-                    onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
-                    aria-expanded={activeDropdown === section.id}
-                    aria-controls={`dropdown-${section.id}`}
-                    aria-haspopup="true"
+          <div className="hidden md:flex items-center justify-center space-x-1 flex-1">
+            <div className="flex items-center w-full">
+              {/* Home button positioned to the left */}
+              <div className="flex-none pl-8 pr-12">
+                <Link href="/" className={`px-3 py-2 transition-all duration-300 flex items-center gap-2 ${
+                  isActive('/') 
+                    ? 'text-neon-blue' 
+                    : 'text-gray-300 hover:text-white'
+                }`}>
+                  <Home className="w-5 h-5" />
+                  <span>Home</span>
+                </Link>
+              </div>
+              
+              {/* Nav sections centered */}
+              <div className="flex-1 flex items-center justify-center space-x-8">
+                {navSections.map((section) => (
+                  <div key={section.id} className="relative"
                     data-dropdown="true"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        setActiveDropdown(activeDropdown === section.id ? null : section.id);
-                      } else if (e.key === 'Escape' && activeDropdown === section.id) {
-                        setActiveDropdown(null);
-                      }
-                    }}
+                    onMouseEnter={() => handleDropdownOpen(section.id)}
+                    onMouseLeave={() => handleDropdownClose()}
                   >
-                    <Link href={`/${section.id}`} className="flex items-center" onClick={(e) => e.stopPropagation()}>
-                      <span>{section.title}</span>
-                    </Link>
-                    <motion.div 
-                      animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="flex items-center"
-                      aria-hidden="true"
+                    <button 
+                      className={`flex items-center font-medium text-gray-300 hover:text-white transition-colors gap-1 ${
+                        pathname?.includes(`/${section.id}`) ? 'text-white' : ''
+                      }`}
+                      onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                      aria-expanded={activeDropdown === section.id}
+                      aria-controls={`dropdown-${section.id}`}
+                      aria-haspopup="true"
+                      data-dropdown="true"
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setActiveDropdown(activeDropdown === section.id ? null : section.id);
+                        } else if (e.key === 'Escape' && activeDropdown === section.id) {
+                          setActiveDropdown(null);
+                        }
+                      }}
                     >
-                      <ChevronDown className="w-4 h-4" />
-                    </motion.div>
-                  </button>
-                  
-                  <AnimatePresence>
-                    {activeDropdown === section.id && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -5 }}
+                      <Link href={`/${section.id}`} className="flex items-center" onClick={(e) => e.stopPropagation()}>
+                        <span>{section.title}</span>
+                      </Link>
+                      <motion.div 
+                        animate={{ rotate: activeDropdown === section.id ? 180 : 0 }}
                         transition={{ duration: 0.3 }}
-                        className="fixed left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-[95vw] bg-black/95 backdrop-blur-xl border border-neon-blue/30 rounded-xl shadow-2xl shadow-neon-blue/10 overflow-hidden"
-                        style={{ top: "60px" }}
-                        id={`dropdown-${section.id}`}
-                        role="menu"
-                        aria-labelledby={`dropdown-button-${section.id}`}
-                        data-dropdown="true"
-                        onMouseEnter={() => handleDropdownOpen(section.id)}
-                        onMouseLeave={() => handleDropdownClose()}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Escape') {
-                            setActiveDropdown(null);
-                          }
-                        }}
+                        className="flex items-center"
+                        aria-hidden="true"
                       >
-                        {/* Top accent line for dropdown */}
-                        <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary} to-transparent opacity-80`}></div>
-                        
-                        <div className="flex flex-col md:flex-row">
-                          {/* Sidebar with title and description - made narrower */}
-                          <div className={`w-full md:w-1/5 lg:w-1/6 bg-gradient-to-b from-gray-900/80 to-black/80 p-4 border-r border-gray-800/50`}>
-                            <h3 className={`text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r ${sectionColors[section.id as SectionId].primary}`}>{section.title}</h3>
-                            <p className="text-gray-300 text-sm mb-3 leading-relaxed">{section.description}</p>
-                            
-                            {/* Graphic element or icon with enhanced styling */}
-                            <div className={`mt-3 ${sectionColors[section.id as SectionId].icon} relative hidden md:block`}>
-                              <div className="relative">
-                                {section.id === 'community' && <Users className="w-14 h-14 opacity-50" />}
-                                {section.id === 'insights' && <LineChart className="w-14 h-14 opacity-50" />}
-                                {section.id === 'academy' && <GraduationCap className="w-14 h-14 opacity-50" />}
-                                <div className={`absolute -inset-1 bg-gradient-to-br ${sectionColors[section.id as SectionId].primary}/20 to-transparent rounded-full blur-xl`}></div>
+                        <ChevronDown className="w-4 h-4" />
+                      </motion.div>
+                    </button>
+                    
+                    <AnimatePresence>
+                      {activeDropdown === section.id && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -5 }}
+                          transition={{ duration: 0.3 }}
+                          className="fixed left-0 right-0 z-30 mt-2 mx-auto max-w-[1400px] w-[95vw] bg-black/95 backdrop-blur-xl border border-neon-blue/30 rounded-xl shadow-2xl shadow-neon-blue/10 overflow-hidden"
+                          style={{ top: "60px" }}
+                          id={`dropdown-${section.id}`}
+                          role="menu"
+                          aria-labelledby={`dropdown-button-${section.id}`}
+                          data-dropdown="true"
+                          onMouseEnter={() => handleDropdownOpen(section.id)}
+                          onMouseLeave={() => handleDropdownClose()}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Escape') {
+                              setActiveDropdown(null);
+                            }
+                          }}
+                        >
+                          {/* Top accent line for dropdown */}
+                          <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary} to-transparent opacity-80`}></div>
+                          
+                          <div className="flex flex-col md:flex-row">
+                            {/* Sidebar with title and description - made narrower */}
+                            <div className={`w-full md:w-1/5 lg:w-1/6 bg-gradient-to-b from-gray-900/80 to-black/80 p-4 border-r border-gray-800/50`}>
+                              <h3 className={`text-xl font-bold text-white mb-2 bg-clip-text text-transparent bg-gradient-to-r ${sectionColors[section.id as SectionId].primary}`}>{section.title}</h3>
+                              <p className="text-gray-300 text-sm mb-3 leading-relaxed">{section.description}</p>
+                              
+                              {/* Graphic element or icon with enhanced styling */}
+                              <div className={`mt-3 ${sectionColors[section.id as SectionId].icon} relative hidden md:block`}>
+                                <div className="relative">
+                                  {section.id === 'community' && <Users className="w-14 h-14 opacity-50" />}
+                                  {section.id === 'insights' && <LineChart className="w-14 h-14 opacity-50" />}
+                                  {section.id === 'academy' && <GraduationCap className="w-14 h-14 opacity-50" />}
+                                  <div className={`absolute -inset-1 bg-gradient-to-br ${sectionColors[section.id as SectionId].primary}/20 to-transparent rounded-full blur-xl`}></div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                          
-                          {/* Links grid - made wider and more columns */}
-                          <div className={`w-full md:w-4/5 lg:w-5/6 py-3 px-4 bg-gradient-to-br from-black/90 to-gray-900/20`}>
-                            {section.id === 'community' && (
-                              <div>
-                                <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Featured Communities</div>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                    {[
-                                      { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: <MessageSquare className="w-5 h-5" />, href: "/community/discord" },
-                                      { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: <Code className="w-5 h-5" />, href: "/community/github" },
-                                      { title: "Reddit Forums", desc: "Engage with security discussion threads", icon: <User className="w-5 h-5" />, href: "/community/reddit" }
-                                    ].map((item) => (
-                                      <Link 
-                                        key={item.title}
-                                        href={item.href} 
-                                        className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
-                                        onClick={() => setActiveDropdown(null)}
-                                      >
-                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
-                                          {item.icon}
-                                        </div>
-                                        <div>
-                                          <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
-                                          <div className="text-xs text-gray-400">{item.desc}</div>
-                                        </div>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                                
-                                <div className="mt-3">
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>All Communities</div>
-                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                    {section.links.map((link) => (
-                                      <Link 
-                                        key={link.name}
-                                        href={link.href} 
-                                        className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                          isActive(link.href) 
-                                            ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
-                                            : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
-                                        } transition-all duration-200 relative group overflow-hidden`}
-                                        onClick={() => setActiveDropdown(null)}
-                                        aria-current={isActive(link.href) ? "page" : undefined}
-                                      >
-                                        <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
-                                        <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
-                                          {getLinkIcon(link.name)}
-                                        </div>
-                                        <span>{link.name}</span>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            )}
                             
-                            {section.id === 'insights' && (
-                              <div>
-                                <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Featured Insights</div>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                    {[
-                                      { title: "Latest News", desc: "Stay updated with cybersecurity events", icon: <Newspaper className="w-5 h-5" />, href: "/insights/news" },
-                                      { title: "Threat Reports", desc: "Analyses of emerging threats", icon: <AlertTriangle className="w-5 h-5" />, href: "/insights/threats" },
-                                      { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: <LineChart className="w-5 h-5" />, href: "/insights/industry" }
-                                    ].map((item) => (
-                                      <Link 
-                                        key={item.title}
-                                        href={item.href} 
-                                        className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
-                                        onClick={() => setActiveDropdown(null)}
-                                      >
-                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
-                                          {item.icon}
-                                        </div>
-                                        <div>
-                                          <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
-                                          <div className="text-xs text-gray-400">{item.desc}</div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                            {/* Links grid - made wider and more columns */}
+                            <div className={`w-full md:w-4/5 lg:w-5/6 py-3 px-4 bg-gradient-to-br from-black/90 to-gray-900/20`}>
+                              {section.id === 'community' && (
+                                <div>
+                                  <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
+                                    <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Featured Communities</div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                      {[
+                                        { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: <MessageSquare className="w-5 h-5" />, href: "/community/discord" },
+                                        { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: <Code className="w-5 h-5" />, href: "/community/github" },
+                                        { title: "Reddit Forums", desc: "Engage with security discussion threads", icon: <User className="w-5 h-5" />, href: "/community/reddit" }
+                                      ].map((item) => (
+                                        <Link 
+                                          key={item.title}
+                                          href={item.href} 
+                                          className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
+                                          onClick={() => setActiveDropdown(null)}
+                                        >
+                                          <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
+                                            {item.icon}
+                                          </div>
+                                          <div>
+                                            <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
+                                            <div className="text-xs text-gray-400">{item.desc}</div>
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="mt-3">
+                                    <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>All Communities</div>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                      {section.links.map((link) => (
+                                        <Link 
+                                          key={link.name}
+                                          href={link.href} 
+                                          className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                            isActive(link.href) 
+                                              ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
+                                              : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
+                                          } transition-all duration-200 relative group overflow-hidden`}
+                                          onClick={() => setActiveDropdown(null)}
+                                          aria-current={isActive(link.href) ? "page" : undefined}
+                                        >
+                                          <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
+                                          <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
+                                            {getLinkIcon(link.name)}
+                                          </div>
+                                          <span>{link.name}</span>
+                                        </Link>
+                                      ))}
+                                    </div>
                                   </div>
                                 </div>
-                                
-                                <div className="mt-3">
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>All Topics</div>
-                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                    {section.links.map((link) => (
-                                      <Link 
-                                        key={link.name}
-                                        href={link.href} 
-                                        className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                          isActive(link.href) 
-                                            ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
-                                            : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
-                                        } transition-all duration-200 relative group overflow-hidden`}
-                                        onClick={() => setActiveDropdown(null)}
-                                        aria-current={isActive(link.href) ? "page" : undefined}
-                                      >
-                                        <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
-                                        <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
-                                          {getLinkIcon(link.name)}
-                                        </div>
-                                        <span>{link.name}</span>
-                                      </Link>
-                                    ))}
+                              )}
+                              
+                              {section.id === 'insights' && (
+                                <div>
+                                  <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
+                                    <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Featured Insights</div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                      {[
+                                        { title: "Latest News", desc: "Stay updated with cybersecurity events", icon: <Newspaper className="w-5 h-5" />, href: "/insights/news" },
+                                        { title: "Threat Reports", desc: "Analyses of emerging threats", icon: <AlertTriangle className="w-5 h-5" />, href: "/insights/threats" },
+                                        { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: <LineChart className="w-5 h-5" />, href: "/insights/industry" }
+                                      ].map((item) => (
+                                        <Link 
+                                          key={item.title}
+                                          href={item.href} 
+                                          className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
+                                          onClick={() => setActiveDropdown(null)}
+                                        >
+                                          <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
+                                            {item.icon}
+                                          </div>
+                                          <div>
+                                            <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
+                                            <div className="text-xs text-gray-400">{item.desc}</div>
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="mt-3">
+                                    <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>All Topics</div>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                      {section.links.map((link) => (
+                                        <Link 
+                                          key={link.name}
+                                          href={link.href} 
+                                          className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                            isActive(link.href) 
+                                              ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
+                                              : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
+                                          } transition-all duration-200 relative group overflow-hidden`}
+                                          onClick={() => setActiveDropdown(null)}
+                                          aria-current={isActive(link.href) ? "page" : undefined}
+                                        >
+                                          <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
+                                          <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
+                                            {getLinkIcon(link.name)}
+                                          </div>
+                                          <span>{link.name}</span>
+                                        </Link>
+                                      ))}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            )}
-                            
-                            {section.id === 'academy' && (
-                              <div>
-                                <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Learning Paths</div>
-                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                                    {[
-                                      { title: "Beginner", desc: "Start your cybersecurity journey", icon: <BookOpen className="w-5 h-5" />, href: "/academy/beginner" },
-                                      { title: "Advanced", desc: "Enhance your technical skills", icon: <Code className="w-5 h-5" />, href: "/academy/advanced" },
-                                      { title: "Certification", desc: "Prepare for industry certifications", icon: <Award className="w-5 h-5" />, href: "/academy/certification" }
-                                    ].map((item) => (
-                                      <Link 
-                                        key={item.title}
-                                        href={item.href} 
-                                        className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
-                                        onClick={() => setActiveDropdown(null)}
-                                      >
-                                        <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
-                                          {item.icon}
-                                        </div>
-                                        <div>
-                                          <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
-                                          <div className="text-xs text-gray-400">{item.desc}</div>
-                                        </div>
-                                      </Link>
-                                    ))}
+                              )}
+                              
+                              {section.id === 'academy' && (
+                                <div>
+                                  <div className={`mb-4 pb-3 border-b ${sectionColors[section.id as SectionId].border}`}>
+                                    <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Learning Paths</div>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                      {[
+                                        { title: "Beginner", desc: "Start your cybersecurity journey", icon: <BookOpen className="w-5 h-5" />, href: "/academy/beginner" },
+                                        { title: "Advanced", desc: "Enhance your technical skills", icon: <Code className="w-5 h-5" />, href: "/academy/advanced" },
+                                        { title: "Certification", desc: "Prepare for industry certifications", icon: <Award className="w-5 h-5" />, href: "/academy/certification" }
+                                      ].map((item) => (
+                                        <Link 
+                                          key={item.title}
+                                          href={item.href} 
+                                          className={`flex items-start p-3 rounded-lg border border-gray-800 bg-gray-900/50 ${sectionColors[section.id as SectionId].hover} transition-all duration-200 group`}
+                                          onClick={() => setActiveDropdown(null)}
+                                        >
+                                          <div className={`p-2 rounded-full ${sectionColors[section.id as SectionId].accent} mr-3 group-hover:scale-110 transition-transform`}>
+                                            {item.icon}
+                                          </div>
+                                          <div>
+                                            <div className={`font-medium text-gray-200 group-hover:${sectionColors[section.id as SectionId].icon}`}>{item.title}</div>
+                                            <div className="text-xs text-gray-400">{item.desc}</div>
+                                          </div>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="mt-3">
+                                    <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Resources</div>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
+                                      {section.links.map((link) => (
+                                        <Link 
+                                          key={link.name}
+                                          href={link.href} 
+                                          className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
+                                            isActive(link.href) 
+                                              ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
+                                              : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
+                                          } transition-all duration-200 relative group overflow-hidden`}
+                                          onClick={() => setActiveDropdown(null)}
+                                          aria-current={isActive(link.href) ? "page" : undefined}
+                                        >
+                                          <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
+                                          <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
+                                            {getLinkIcon(link.name)}
+                                          </div>
+                                          <span>{link.name}</span>
+                                        </Link>
+                                      ))}
+                                    </div>
                                   </div>
                                 </div>
-                                
-                                <div className="mt-3">
-                                  <div className={`inline-block px-3 py-1 rounded-full ${sectionColors[section.id as SectionId].accent} text-sm font-medium mb-3`}>Resources</div>
-                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-1">
-                                    {section.links.map((link) => (
-                                      <Link 
-                                        key={link.name}
-                                        href={link.href} 
-                                        className={`flex items-center px-3 py-1.5 rounded-md text-sm ${
-                                          isActive(link.href) 
-                                            ? `${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].accent} border ${sectionColors[section.id as SectionId].border} font-medium shadow-sm shadow-${sectionColors[section.id as SectionId].secondary}/20` 
-                                            : `text-gray-300 border border-transparent hover:${sectionColors[section.id as SectionId].icon} ${sectionColors[section.id as SectionId].hover}`
-                                        } transition-all duration-200 relative group overflow-hidden`}
-                                        onClick={() => setActiveDropdown(null)}
-                                        aria-current={isActive(link.href) ? "page" : undefined}
-                                      >
-                                        <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${sectionColors[section.id as SectionId].secondary}/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-x-[-100%] group-hover:translate-x-[100%] pointer-events-none`}></div>
-                                        <div className={`mr-2 ${sectionColors[section.id as SectionId].icon} group-hover:scale-110 transition-transform duration-200`}>
-                                          {getLinkIcon(link.name)}
-                                        </div>
-                                        <span>{link.name}</span>
-                                      </Link>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            )}
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Empty space on the right to balance the layout */}
+              <div className="flex-none pl-12 pr-8"></div>
             </div>
           </div>
 
