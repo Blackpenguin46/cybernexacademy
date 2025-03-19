@@ -280,7 +280,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop - Center section with nav sections */}
-          <div className="hidden md:flex items-center justify-center space-x-1 flex-1">
+          <div className="hidden md:flex items-center justify-start space-x-1 flex-1 pl-24">
             <Link href="/" className={`px-3 py-2 transition-all duration-300 flex items-center gap-2 ${
               isActive('/') 
                 ? 'text-neon-blue' 
