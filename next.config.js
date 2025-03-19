@@ -14,13 +14,6 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
-  // Configure Edge Runtime
-  runtime: {
-    edge: {
-      regions: ['iad1'], // Specify regions if needed
-    },
-  },
-  // Handle deprecated packages
   webpack: (config, { isServer }) => {
     // Handle package deprecation warnings
     config.ignoreWarnings = [

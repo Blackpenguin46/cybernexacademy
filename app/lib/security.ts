@@ -66,7 +66,7 @@ export const validateInput = (input: string): boolean => {
   return !sqlInjectionPattern.test(input);
 };
 
-// Generate nonce for CSP
+// Use Web Crypto API instead of Node's crypto module
 async function generateNonce(): Promise<string> {
   const buffer = new Uint8Array(16);
   crypto.getRandomValues(buffer);
@@ -87,24 +87,23 @@ export const validateCSRFToken = (token: string, storedToken: string): boolean =
   return token === storedToken;
 };
 
-// Rate Limiting
+// Rate limiting using Edge Runtime compatible approach
 const rateLimit = new Map();
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const MAX_REQUESTS = 100;
 
 export function checkRateLimit(ip: string, limit: number = 100, window: number = 60000): boolean {
   const now = Date.now();
   const windowStart = now - window;
 
   // Clean up old entries
-  for (const [key, timestamp] of rateLimit.entries()) {
+  const entries = Array.from(rateLimit.entries());
+  for (const [key, timestamp] of entries) {
     if (timestamp < windowStart) {
       rateLimit.delete(key);
     }
   }
 
   // Check rate limit
-  const count = Array.from(rateLimit.entries()).filter(
+  const count = entries.filter(
     ([key, timestamp]) => key.startsWith(ip) && timestamp > windowStart
   ).length;
 

@@ -73,7 +73,7 @@ export function useResources<T>(
     } finally {
       setIsLoading(false);
     }
-  }, []); // Add any dependencies that fetchData uses
+  }, [endpoint]); // Add endpoint as a dependency
 
   useEffect(() => {
     fetchData();
