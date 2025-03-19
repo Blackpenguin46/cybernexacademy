@@ -1,28 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
-import { validateInput, validateFormInput } from '../app/lib/security';
 
 // Supabase configuration with actual values
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
-}
+const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM';
 
 // Create a Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true
-  },
-  global: {
-    headers: {
-      'X-Client-Info': 'cybernex-academy',
-    },
-  },
-});
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Export a mock version for build/testing environments
 export const mockSupabase = {
@@ -422,113 +406,4 @@ export async function getCurrentUser() {
     return { success: false, error: 'An unexpected error occurred' }
   }
 }
-
-// Secure database query wrapper
-export const secureQuery = async <T>(
-  queryFn: () => Promise<T>,
-  params: Record<string, string>
-): Promise<T> => {
-  // Validate all input parameters
-  if (!validateFormInput(params)) {
-    throw new Error('Invalid input detected');
-  }
-
-  try {
-    const result = await queryFn();
-    return result;
-  } catch (error) {
-    console.error('Database query error:', error);
-    throw new Error('An error occurred while processing your request');
-  }
-};
-
-// Secure data fetching wrapper
-export const secureFetch = async <T>(
-  table: string,
-  query: object,
-  options: object = {}
-): Promise<T> => {
-  // Validate table name
-  if (!validateInput(table)) {
-    throw new Error('Invalid table name');
-  }
-
-  // Convert query to string for validation
-  const queryString = JSON.stringify(query);
-  if (!validateInput(queryString)) {
-    throw new Error('Invalid query parameters');
-  }
-
-  try {
-    const { data, error } = await supabase
-      .from(table)
-      .select()
-      .match(query)
-      .single();
-
-    if (error) throw error;
-    return data as T;
-  } catch (error) {
-    console.error('Data fetch error:', error);
-    throw new Error('An error occurred while fetching data');
-  }
-};
-
-// Secure data insertion wrapper
-export const secureInsert = async <T>(
-  table: string,
-  data: Record<string, any>
-): Promise<T> => {
-  // Validate table name and data
-  if (!validateInput(table)) {
-    throw new Error('Invalid table name');
-  }
-
-  if (!validateFormInput(data)) {
-    throw new Error('Invalid input data');
-  }
-
-  try {
-    const { data: result, error } = await supabase
-      .from(table)
-      .insert(data)
-      .single();
-
-    if (error) throw error;
-    return result as T;
-  } catch (error) {
-    console.error('Data insertion error:', error);
-    throw new Error('An error occurred while inserting data');
-  }
-};
-
-// Secure data update wrapper
-export const secureUpdate = async <T>(
-  table: string,
-  match: Record<string, any>,
-  data: Record<string, any>
-): Promise<T> => {
-  // Validate all inputs
-  if (!validateInput(table)) {
-    throw new Error('Invalid table name');
-  }
-
-  if (!validateFormInput(match) || !validateFormInput(data)) {
-    throw new Error('Invalid input data');
-  }
-
-  try {
-    const { data: result, error } = await supabase
-      .from(table)
-      .update(data)
-      .match(match)
-      .single();
-
-    if (error) throw error;
-    return result as T;
-  } catch (error) {
-    console.error('Data update error:', error);
-    throw new Error('An error occurred while updating data');
-  }
-};
 

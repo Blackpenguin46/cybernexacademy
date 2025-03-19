@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const productionConfig = require('./config/production.ts').default;
+const productionConfig = require('./config/production.js');
 
 const nextConfig = {
   reactStrictMode: true,

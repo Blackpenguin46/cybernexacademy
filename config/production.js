@@ -1,6 +1,7 @@
-import { NextConfig } from 'next';
-
-const productionConfig: NextConfig = {
+/**
+ * @type {import('next').NextConfig}
+ */
+const productionConfig = {
   // Security Headers
   async headers() {
     return [
@@ -91,4 +92,4 @@ const productionConfig: NextConfig = {
   }
 };
 
-export default productionConfig;
+module.exports = productionConfig; 
