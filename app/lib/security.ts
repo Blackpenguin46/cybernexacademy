@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { headers } from 'next/headers';
-import { createHash } from 'crypto';
 
 // CSP Directives
 const cspDirectives = {
@@ -75,11 +74,15 @@ async function generateNonce(): Promise<string> {
     .join('');
 }
 
-// CSRF Token Generation
-export const generateCSRFToken = (): string => {
-  return createHash('sha256')
-    .update(crypto.getRandomValues(new Uint8Array(32)).toString())
-    .digest('hex');
+// CSRF Token Generation - Edge Runtime compatible
+export const generateCSRFToken = async (): Promise<string> => {
+  const buffer = new Uint8Array(32);
+  crypto.getRandomValues(buffer);
+  
+  // Convert to hex string
+  return Array.from(buffer)
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
 };
 
 // Validate CSRF Token
@@ -134,12 +137,11 @@ export async function securityMiddleware(request: NextRequest) {
   headers.set(
     'Content-Security-Policy',
     `default-src 'self'; \
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https:; \
+    script-src 'self' 'nonce-${nonce}' 'unsafe-inline' https://analytics.vercel.app https://va.vercel-scripts.com; \
     style-src 'self' 'unsafe-inline'; \
     img-src 'self' blob: data: https:; \
-    font-src 'self'; \
-    object-src 'none'; \
-    base-uri 'self'; \
+    font-src 'self' data:; \
+    connect-src 'self' https://*.supabase.co https://*.vercel.app; \
     form-action 'self'; \
     frame-ancestors 'none'; \
     block-all-mixed-content; \

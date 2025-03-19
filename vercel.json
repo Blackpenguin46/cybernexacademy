@@ -1,34 +1,52 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
   "framework": "nextjs",
-  "regions": ["iad1"],
-  "git": {
-    "deploymentEnabled": {
-      "main": true,
-      "development": true,
-      "feature": true
-    }
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "env": {
+    "NEXT_PUBLIC_VERCEL_URL": "${VERCEL_URL}"
   },
-  "github": {
-    "enabled": true,
-    "silent": false,
-    "autoAlias": false,
-    "production": {
-      "branches": []
-    }
-  },
-  "crons": [
+  "headers": [
     {
-      "path": "/api/cron/verify-links?key=${LINK_VERIFICATION_API_KEY}",
-      "schedule": "0 3 * * *"
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+        }
+      ]
     }
   ],
-  "env": {
-    "LINK_VERIFICATION_API_KEY": "preview-placeholder-value-for-verification"
-  }
+  "redirects": [
+    {
+      "source": "/api/docs",
+      "destination": "/api/docs/index.html",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/seed/(.*)",
+      "destination": "/api/seed/disabled"
+    }
+  ],
+  "regions": ["iad1"]
 }
 
 

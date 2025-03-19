@@ -7,6 +7,7 @@ import Footer from "./components/Footer"
 import { Toaster } from "./components/ui/toast"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { ErrorBoundary } from "react-error-boundary"
 
 const inter = Inter({
   subsets: ['latin'],
@@ -111,8 +112,12 @@ export default function RootLayout({
           <Footer />
         </div>
         <Toaster />
-        <Analytics />
-        <SpeedInsights />
+        <ErrorBoundary fallback={<></>} onError={(error) => console.error('Analytics error:', error)}>
+          <Analytics />
+        </ErrorBoundary>
+        <ErrorBoundary fallback={<></>} onError={(error) => console.error('Speed Insights error:', error)}>
+          <SpeedInsights />
+        </ErrorBoundary>
       </body>
     </html>
   )
