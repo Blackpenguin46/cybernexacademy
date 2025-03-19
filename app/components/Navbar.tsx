@@ -554,8 +554,7 @@ export default function Navbar() {
             </div>
           </div>
           
-          {/* Restructured layout with proper positioning */}
-          {/* Logo on left - not absolute positioned anymore */}
+          {/* KEEP ONLY THIS SECTION - New layout with proper positioning */}
           <div className="hidden md:flex items-center w-full">
             <div className="flex-none ml-8">
               <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity" onClick={() => setActiveDropdown(null)}>
