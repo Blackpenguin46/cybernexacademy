@@ -282,8 +282,8 @@ export default function Navbar() {
           {/* Desktop - Center section with nav sections */}
           <div className="hidden md:flex items-center justify-center space-x-1 flex-1">
             <div className="flex items-center w-full">
-              {/* Home button positioned to the left */}
-              <div className="flex-none pl-8 pr-12">
+              {/* Home button with adequate space for logo */}
+              <div className="flex-none pl-24 pr-12">
                 <Link href="/" className={`px-3 py-2 transition-all duration-300 flex items-center gap-2 ${
                   isActive('/') 
                     ? 'text-neon-blue' 
@@ -293,7 +293,7 @@ export default function Navbar() {
                   <span>Home</span>
                 </Link>
               </div>
-              
+               
               {/* Nav sections centered */}
               <div className="flex-1 flex items-center justify-center space-x-8">
                 {navSections.map((section) => (
