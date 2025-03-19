@@ -1,42 +1,58 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { securityMiddleware } from './app/lib/security';
 
-// This middleware runs for all requests
-export async function middleware(request: NextRequest) {
-  // Apply security middleware
-  const response = await securityMiddleware(request);
+export function middleware(request: NextRequest) {
+  const response = NextResponse.next();
+
+  // Add security headers
+  const headers = response.headers;
   
-  // Add CSRF protection for mutations
-  if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(request.method)) {
-    const csrfToken = request.headers.get('X-CSRF-Token');
-    const storedToken = request.cookies.get('csrf-token')?.value;
-    
-    if (!csrfToken || !storedToken || csrfToken !== storedToken) {
-      return new NextResponse('Invalid CSRF token', { status: 403 });
-    }
-  }
+  // HSTS
+  headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
+  // Prevent clickjacking
+  headers.set('X-Frame-Options', 'DENY');
+  
+  // Prevent MIME type sniffing
+  headers.set('X-Content-Type-Options', 'nosniff');
+  
+  // XSS protection
+  headers.set('X-XSS-Protection', '1; mode=block');
+  
+  // Referrer policy
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  
+  // Content Security Policy
+  headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://analytics.vercel.app https://va.vercel-scripts.com; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' blob: data: https://*.vercel.app; " +
+    "font-src 'self'; " +
+    "connect-src 'self' https://*.supabase.co https://*.vercel.app; " +
+    "frame-ancestors 'none';"
+  );
+
+  // Permissions policy
+  headers.set(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+  );
+
   return response;
 }
 
-// Only run on specific paths to avoid interfering with API routes
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
+     * Match all request paths except:
+     * 1. /api/ routes
+     * 2. /_next/ (Next.js internals)
+     * 3. /_static (inside /public)
+     * 4. /_vercel (Vercel internals)
+     * 5. Static files (e.g. /favicon.ico, /sitemap.xml, /robots.txt)
      */
-    {
-      source: '/((?!api|_next/static|_next/image|favicon.ico|public).*)',
-      missing: [
-        { type: 'header', key: 'next-router-prefetch' },
-        { type: 'header', key: 'purpose', value: 'prefetch' },
-      ],
-    },
+    '/((?!api|_next|_static|_vercel|[\\w-]+\\.\\w+).*)',
   ],
 };

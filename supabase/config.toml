@@ -1,0 +1,57 @@
+# Supabase Configuration File
+
+[auth]
+# Disable signup by default - enable only specific providers
+enable_signup = false
+jwt_expiry = 3600 # 1 hour
+refresh_token_expiry = 604800 # 1 week
+
+# Configure auth providers
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+
+[auth.external]
+# Only enable specific providers
+apple_enabled = false
+azure_enabled = false
+bitbucket_enabled = false
+discord_enabled = false
+facebook_enabled = false
+github_enabled = true
+gitlab_enabled = false
+google_enabled = true
+twitch_enabled = false
+twitter_enabled = false
+slack_enabled = false
+
+[api]
+# Enable request logging
+db_query_logging = true
+port = 54321
+schemas = ["public", "auth", "storage"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+# Database security settings
+port = 5432
+max_connections = 100
+pool_mode = "transaction"
+ignore_startup_parameters = ["search_path"]
+
+# SSL configuration
+ssl = true
+ssl_mode = "require"
+
+[storage]
+# File upload restrictions
+file_size_limit = "50MB"
+allowed_mime_types = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "application/pdf",
+  "text/plain"
+] 
