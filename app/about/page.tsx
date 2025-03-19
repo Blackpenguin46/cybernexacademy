@@ -3,6 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { Shield, Users, BookOpen, Award, Zap, Globe, Target } from 'lucide-react'
+import Image from 'next/image'
 
 export default function AboutPage() {
   // Team members data
@@ -148,10 +149,12 @@ export default function AboutPage() {
               <div key={index} className="bg-gray-900/50 backdrop-blur-sm rounded-lg border border-gray-800 overflow-hidden">
                 <div className="aspect-square bg-gray-800 flex items-center justify-center relative">
                   {member.image ? (
-                    <img 
-                      src={member.image} 
-                      alt={member.name} 
-                      className="w-full h-full object-cover"
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={200}
+                      height={200}
+                      className="w-full h-full object-cover rounded-lg shadow-lg"
                     />
                   ) : (
                     <Users className="w-16 h-16 text-gray-600" />

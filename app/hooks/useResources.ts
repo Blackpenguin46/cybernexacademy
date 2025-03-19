@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 // Define types for our resources
 export interface BaseResource {
@@ -47,8 +47,8 @@ export function useResources<T>(
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
-  // Function to fetch data
-  const fetchData = async () => {
+  // Move fetchData outside useEffect and memoize it with useCallback
+  const fetchData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     
@@ -73,12 +73,11 @@ export function useResources<T>(
     } finally {
       setIsLoading(false);
     }
-  };
-  
-  // Fetch data on initial render
+  }, []); // Add any dependencies that fetchData uses
+
   useEffect(() => {
     fetchData();
-  }, [endpoint]);
+  }, [fetchData]); // Now fetchData is properly listed as a dependency
   
   // Return data and state
   return {

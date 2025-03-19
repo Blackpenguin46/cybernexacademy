@@ -67,11 +67,13 @@ export const validateInput = (input: string): boolean => {
 };
 
 // Generate nonce for CSP
-export const generateNonce = (): string => {
-  return createHash('sha256')
-    .update(crypto.getRandomValues(new Uint8Array(32)).toString())
-    .digest('base64');
-};
+async function generateNonce(): Promise<string> {
+  const buffer = new Uint8Array(16);
+  crypto.getRandomValues(buffer);
+  return Array.from(buffer)
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
 
 // CSRF Token Generation
 export const generateCSRFToken = (): string => {
@@ -90,32 +92,78 @@ const rateLimit = new Map();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS = 100;
 
-export const checkRateLimit = (ip: string): boolean => {
+export function checkRateLimit(ip: string, limit: number = 100, window: number = 60000): boolean {
   const now = Date.now();
-  const userRequests = rateLimit.get(ip) || [];
-  
-  // Remove old requests
-  const recentRequests = userRequests.filter(
-    (timestamp: number) => now - timestamp < RATE_LIMIT_WINDOW
-  );
-  
-  if (recentRequests.length >= MAX_REQUESTS) {
+  const windowStart = now - window;
+
+  // Clean up old entries
+  for (const [key, timestamp] of rateLimit.entries()) {
+    if (timestamp < windowStart) {
+      rateLimit.delete(key);
+    }
+  }
+
+  // Check rate limit
+  const count = Array.from(rateLimit.entries()).filter(
+    ([key, timestamp]) => key.startsWith(ip) && timestamp > windowStart
+  ).length;
+
+  if (count >= limit) {
     return false;
   }
-  
-  recentRequests.push(now);
-  rateLimit.set(ip, recentRequests);
+
+  // Add new request
+  rateLimit.set(`${ip}-${now}`, now);
   return true;
-};
+}
 
 // Security Middleware
 export async function securityMiddleware(request: NextRequest) {
+  const nonce = await generateNonce();
   const response = NextResponse.next();
   
-  // Apply security headers
-  Object.entries(securityHeaders).forEach(([key, value]) => {
-    response.headers.set(key, value);
-  });
+  // Security Headers
+  const headers = response.headers;
+
+  // HSTS
+  headers.set(
+    'Strict-Transport-Security',
+    'max-age=63072000; includeSubDomains; preload'
+  );
+
+  // CSP with nonce
+  headers.set(
+    'Content-Security-Policy',
+    `default-src 'self'; \
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https:; \
+    style-src 'self' 'unsafe-inline'; \
+    img-src 'self' blob: data: https:; \
+    font-src 'self'; \
+    object-src 'none'; \
+    base-uri 'self'; \
+    form-action 'self'; \
+    frame-ancestors 'none'; \
+    block-all-mixed-content; \
+    upgrade-insecure-requests;`
+  );
+
+  // XSS Protection
+  headers.set('X-XSS-Protection', '1; mode=block');
+
+  // Prevent MIME type sniffing
+  headers.set('X-Content-Type-Options', 'nosniff');
+
+  // Referrer Policy
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+  // Frame Options
+  headers.set('X-Frame-Options', 'DENY');
+
+  // Permissions Policy
+  headers.set(
+    'Permissions-Policy',
+    'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+  );
   
   // Rate limiting
   const ip = request.ip || 'unknown';
@@ -154,4 +202,15 @@ export const secureCookieOptions = {
   sameSite: 'strict' as const,
   path: '/',
   maxAge: 7200 // 2 hours
-}; 
+};
+
+export function getSecureHeaders() {
+  return {
+    'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+    'X-XSS-Protection': '1; mode=block',
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'X-Frame-Options': 'DENY',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
+  };
+} 
