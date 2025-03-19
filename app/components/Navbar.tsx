@@ -292,13 +292,14 @@ export default function Navbar() {
             
             {/* Home button between logo and sections */}
             <div className="flex-none ml-12">
-              <Link href="http://127.0.0.1:3000" className={`px-3 py-2 transition-all duration-300 flex items-center gap-2 ${
+              <Link href="/" className={`px-3 py-2 transition-all duration-300 flex items-center gap-2 ${
                 isActive('/') 
                   ? 'text-neon-blue' 
                   : 'text-gray-300 hover:text-green-400'
               }`}>
                 <Home className="w-5 h-5" />
-                <span>Home</span>
+                <span className="group-hover:hidden">Home</span>
+                <span className="hidden group-hover:inline">127.0.0.1</span>
               </Link>
             </div>
             
