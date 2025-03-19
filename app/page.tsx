@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from "next/link";
-import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal, Cpu, Shield, Lock, ChevronRight, Newspaper, Globe } from "lucide-react";
+import { GraduationCap, Lightbulb, Users, ArrowRight, Terminal, Cpu, Shield, Lock, ChevronRight, Newspaper, Globe, MessageSquare } from "lucide-react";
 import CyberBackground from "./components/CyberBackground";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
@@ -317,6 +317,27 @@ export default function HomePage() {
                   All-in-one developer news reader featuring the latest articles, blogs and discussions for tech professionals.
                 </p>
                 <div className="mt-4 flex items-center justify-center text-cyan-400 text-sm group-hover:underline">
+                  Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </Link>
+            
+            {/* OwlSec Discord */}
+            <Link href="https://discord.gg/owlsec" target="_blank" rel="noopener noreferrer" className="group">
+              <div className="h-full bg-gray-900/50 border border-indigo-500/30 hover:border-indigo-500/70 rounded-xl p-6 transition-all duration-300 bg-gradient-to-br from-indigo-600/20 to-indigo-600/5 hover:shadow-xl hover:shadow-indigo-500/20 group cursor-pointer">
+                <div className="flex justify-center mb-4">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 flex items-center justify-center bg-indigo-500/20 rounded-full">
+                      <MessageSquare className="h-8 w-8 text-indigo-400" aria-hidden="true" />
+                    </div>
+                    <div className="absolute inset-0 bg-indigo-500/20 rounded-full blur-xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+                  </div>
+                </div>
+                <h3 className="text-white text-xl text-center font-bold mb-2 group-hover:text-indigo-400 transition-colors">OwlSec Discord</h3>
+                <p className="text-gray-300 text-center text-sm group-hover:text-white transition-all duration-300">
+                  Active cybersecurity community with mentoring, CTF teams, learning resources, and networking opportunities.
+                </p>
+                <div className="mt-4 flex items-center justify-center text-indigo-400 text-sm group-hover:underline">
                   Visit Resource <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
