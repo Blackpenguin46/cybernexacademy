@@ -46,7 +46,19 @@
       "destination": "/api/seed/disabled"
     }
   ],
-  "regions": ["iad1"]
+  "regions": ["iad1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": false,
+      "development": true,
+      "preview": true
+    }
+  },
+  "github": {
+    "enabled": true,
+    "silent": false,
+    "autoAlias": true
+  }
 }
 
 
