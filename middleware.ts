@@ -9,19 +9,22 @@ export function middleware(request: NextRequest) {
   // Add security headers
   const securityHeaders = new Headers(response.headers);
   
-  // Content Security Policy - Updated with stricter rules and nonces
+  // Content Security Policy - Updated to allow necessary resources
   securityHeaders.set(
     'Content-Security-Policy',
     "default-src 'self'; " +
     "img-src 'self' data: https:; " +
-    "script-src 'self' 'strict-dynamic' https: 'unsafe-inline'; " + // Using strict-dynamic for better CSP
-    "style-src 'self' 'unsafe-inline'; " +
-    "connect-src 'self' https://*.vercel.app https://*.supabase.co wss://*.supabase.co; " + // Added WSS for Supabase realtime
-    "font-src 'self' data:; " +
+    // Removed 'strict-dynamic', relying on 'unsafe-inline' for now
+    "script-src 'self' 'unsafe-inline' https:; " + 
+    // Added Google Fonts to style-src
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+    "connect-src 'self' https://*.vercel.app https://*.supabase.co wss://*.supabase.co; " +
+    // Added Google Fonts to font-src 
+    "font-src 'self' data: https://fonts.gstatic.com; " +
     "frame-ancestors 'none'; " +
-    "base-uri 'self'; " + // Restrict base tag
-    "form-action 'self'; " + // Restrict form submissions
-    "upgrade-insecure-requests;" // Force HTTPS
+    "base-uri 'self'; " +
+    "form-action 'self'; " +
+    "upgrade-insecure-requests;"
   );
   
   // XSS Protection
