@@ -100,176 +100,157 @@ export default function DiscordNewsPage() {
   const [error, setError] = useState('');
   const [source, setSource] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
-  const [debug, setDebug] = useState<any>({});
-  const [stateCounter, setStateCounter] = useState(0);
+  const [debugData, setDebugData] = useState<any>({});
   const [showDebugPanel, setShowDebugPanel] = useState(true);
   
-  // Debugging refs to track state changes
+  // Refs to track state reliably across renders
   const newsRef = useRef<DiscordMessage[]>([]);
   const loadingRef = useRef(true);
   
   // Function to toggle debug panel visibility
   const toggleDebugPanel = () => {
-    console.log("Toggle debug panel clicked, current state:", showDebugPanel);
     setShowDebugPanel(prev => !prev);
   };
   
-  // Modified fetchNews function with better state handling
+  // Fetch news data
   const fetchNews = useCallback(async () => {
-    try {
-      console.log('Starting to fetch news, setting loading to true');
-      setLoading(true);
-      loadingRef.current = true;
-      setError('');
-      setStateCounter(prev => prev + 1);
-      
-      // Add loading timeout safety net
-      const loadingTimeout = setTimeout(() => {
-        if (loadingRef.current) {
-          console.log('Loading timeout reached, forcing loading state to false');
-          setLoading(false);
-          loadingRef.current = false;
-          setStateCounter(prev => prev + 1);
-          if (newsRef.current.length === 0) {
-            setError('Loading timed out. Please try refreshing.');
-          }
+    let currentLoading = true;
+    let currentError = '';
+    let currentNews: DiscordMessage[] = [];
+    let currentSource = '';
+    let currentStatusMsg = '';
+    
+    setLoading(true); // Set loading immediately
+    loadingRef.current = true;
+    setError(''); // Clear previous errors
+    
+    console.log('[FETCH] Starting fetch...');
+    
+    const loadingTimeout = setTimeout(() => {
+      if (loadingRef.current) {
+        console.warn('[FETCH] Loading timeout reached! Forcing loading state off.');
+        currentLoading = false;
+        loadingRef.current = false;
+        if (newsRef.current.length === 0) {
+          currentError = 'Loading timed out. Please try refreshing.';
         }
-      }, 10000);
-      
-      console.log('Fetching Discord news...');
+        // Update state outside the try/catch/finally block
+        setLoading(currentLoading);
+        setError(currentError);
+      }
+    }, 10000); // 10 seconds timeout
+    
+    try {
       const response = await fetch('/api/discord-news', {
         cache: 'no-store',
         next: { revalidate: 0 }
       });
       
-      // Clear timeout since we got a response
-      clearTimeout(loadingTimeout);
+      clearTimeout(loadingTimeout); // Clear timeout if fetch completes
       
       const data = await response.json();
-      console.log('Received data from API:', data);
+      console.log('[FETCH] API Response Data:', data);
       
-      // More detailed debugging
-      if (data.articles && data.articles.length > 0) {
-        console.log('First article sample:', data.articles[0]);
-      } else {
-        console.log('No articles found in the response');
-      }
-
-      // Save debug info
-      setDebug({
+      setDebugData({ // Update debug info
         responseStatus: response.status,
         responseData: data,
         time: new Date().toISOString()
       });
 
       if (!response.ok) {
-        throw new Error(data.message || `Failed to fetch news: ${response.status} ${response.statusText}`);
+        throw new Error(data.message || `API Error: ${response.status} ${response.statusText}`);
       }
       
       if (!data.articles || !Array.isArray(data.articles)) {
-        throw new Error('Invalid API response format: missing articles array');
+        throw new Error('Invalid API response: missing articles array');
       }
       
-      console.log(`Setting news articles, count: ${data.articles.length}`);
-      setNews(data.articles);
+      console.log(`[FETCH] Success: Received ${data.articles.length} articles from source: ${data.source}`);
+      currentNews = data.articles;
       newsRef.current = data.articles;
-      setSource(data.source || 'unknown');
-      setStatusMsg(data.message || '');
+      currentSource = data.source || 'unknown';
+      currentStatusMsg = data.message || '';
+      currentError = ''; // Clear error on success
       
     } catch (err) {
+      console.error('[FETCH] Error loading news:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-      setError(`Failed to load news. ${errorMessage}`);
-      console.error('Error loading news:', err);
-      
-      setDebug((prev: any) => ({ ...prev, error: errorMessage, time: new Date().toISOString() }));
-      setNews([]);
+      currentError = `Failed to load news. ${errorMessage}`;
+      setDebugData((prev: any) => ({ ...prev, error: errorMessage, time: new Date().toISOString() }));
+      currentNews = []; // Clear news on error
       newsRef.current = [];
-      setSource('error');
+      currentSource = 'error';
     } finally {
-      console.log('Setting loading to false');
-      setLoading(false);
+      console.log('[FETCH] Finally block: Setting final state');
+      currentLoading = false;
       loadingRef.current = false;
-      setStateCounter(prev => prev + 1);
-      console.log('Current state after fetch:', { 
-        loading: false, 
-        newsCount: newsRef.current.length,
-        error: error ? 'yes' : 'no' 
-      });
+      
+      // Update all states together at the end
+      setLoading(currentLoading);
+      setError(currentError);
+      setNews(currentNews);
+      setSource(currentSource);
+      setStatusMsg(currentStatusMsg);
+      
+      console.log('[FETCH] Final State Set:', { loading: currentLoading, error: currentError, newsCount: currentNews.length });
     }
-  }, []);
+  }, []); // No dependencies needed if not using external props/state
 
-  // Add side effect to log whenever state changes
+  // Initial fetch and interval setup
   useEffect(() => {
-    console.log(`State update - Loading: ${loading}, News count: ${news.length}, Error: ${error ? 'yes' : 'no'}`);
-  }, [loading, news.length, error]);
-
-  // Force reset loading if stuck
-  useEffect(() => {
-    const forceLoadingFalse = setTimeout(() => {
-      if (loading) {
-        console.log('Force setting loading to false due to stuck state');
-        setLoading(false);
-        loadingRef.current = false;
-      }
-    }, 15000);
-    
-    return () => clearTimeout(forceLoadingFalse);
-  }, [loading]);
-
-  // Initial fetch
-  useEffect(() => {
+    console.log('[EFFECT] Initial fetch executing...');
     fetchNews();
     
-    const intervalId = setInterval(fetchNews, 2 * 60 * 1000);
-    return () => clearInterval(intervalId);
-  }, [fetchNews]);
-
-  // Determine what message to show to the user
-  let statusDisplay = null;
-  if (source === 'fallback' && !loading) { // Only show if not loading
-    statusDisplay = (
-      <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-4 mb-6">
-        <div className="flex items-center text-yellow-400 mb-2">
-          <AlertTriangle className="w-5 h-5 mr-2" />
-          <h3 className="font-semibold">Using Fallback Data</h3>
-        </div>
-        <p className="text-yellow-300">
-          Could not fetch live data from database. {statusMsg}
-          <br />
-          Displaying sample news. Data might be outdated.
-        </p>
-      </div>
-    );
-  }
-
-  // Format the news content for display - this will parse titles and content from Supabase format
-  const formatNewsContent = (content: string, urls?: string[]) => {
-    // If content includes a title followed by content (common format from Supabase)
-    const parts = content.split('\n\n');
+    const intervalId = setInterval(() => {
+      console.log('[EFFECT] Interval fetch executing...');
+      fetchNews();
+    }, 2 * 60 * 1000); // 2 minutes
     
-    // Extract title from first part
-    let title = 'News Update';
-    let contentText = content;
-    
-    if (parts.length > 1) {
-      title = parts[0];
-      contentText = parts.slice(1).join('\n\n');
-    }
-    
-    // Remove any "Links:" section from the content if we have URLs array
-    if (urls && urls.length > 0) {
-      contentText = contentText.replace(/Links:\n(https?:\/\/[^\s]+\n?)+/g, '');
-    }
-    
-    return {
-      title,
-      content: contentText
+    // Cleanup interval on unmount
+    return () => {
+      console.log('[EFFECT] Cleaning up interval');
+      clearInterval(intervalId);
     };
-  };
+  }, [fetchNews]); // Rerun if fetchNews function identity changes (it shouldn't with useCallback)
+
+  // Log state just before rendering
+  console.log(`[RENDER] Rendering component - Loading: ${loading}, Error: ${error || 'none'}, News Count: ${news.length}`);
+  
+  // Determine status message to display (only if not loading and no error)
+  let statusDisplay = null;
+  if (!loading && !error) {
+    if (source === 'fallback') {
+      statusDisplay = (
+        <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-4 mb-6">
+          <div className="flex items-center text-yellow-400 mb-2">
+            <AlertTriangle className="w-5 h-5 mr-2" />
+            <h3 className="font-semibold">Using Fallback Data</h3>
+          </div>
+          <p className="text-yellow-300">
+            Could not fetch live data. {statusMsg}. Displaying sample news.
+          </p>
+        </div>
+      );
+    } else if (news.length === 0 && source !== 'error') { // Don't show if there was an error
+      statusDisplay = (
+        <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-6 mb-8">
+          <div className="flex items-center text-blue-400 mb-2">
+            <AlertTriangle className="w-5 h-5 mr-2" />
+            <h3 className="font-semibold">No Recent News Found</h3>
+          </div>
+          <p className="text-blue-300">
+            No recent news articles found in the database.
+          </p>
+          {showDebugPanel && <pre className="mt-2 text-xs text-blue-400/50 overflow-auto max-h-20">Debug Info: {JSON.stringify(debugData, null, 2)}</pre>}
+        </div>
+      );
+    }
+  }
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 p-8">
       <div className="max-w-5xl mx-auto">
+        {/* Header and Controls */}
         <div className="flex justify-between items-center mb-6">
           <Link href="/insights" className="text-purple-400 hover:underline flex items-center">
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -277,23 +258,19 @@ export default function DiscordNewsPage() {
           </Link>
           <div className="flex gap-2">
             <Button 
-              variant="outline"
-              size="sm"
+              variant="outline" size="sm"
               onClick={toggleDebugPanel} 
               className="bg-gray-800 border-gray-700 hover:bg-gray-700"
-              id="toggleDebugBtn"
-              name="toggleDebugBtn"
+              id="toggleDebugBtn" name="toggleDebugBtn"
             >
               {showDebugPanel ? 'Hide Debug' : 'Show Debug'}
             </Button>
             <Button 
-              variant="outline"
-              size="sm"
+              variant="outline" size="sm"
               onClick={fetchNews} 
               disabled={loading}
               className="bg-gray-800 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
-              id="refreshFeedBtn"
-              name="refreshFeedBtn"
+              id="refreshFeedBtn" name="refreshFeedBtn"
             >
               <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
               {loading ? 'Refreshing...' : 'Refresh Feed'}
@@ -301,94 +278,69 @@ export default function DiscordNewsPage() {
           </div>
         </div>
         
+        {/* Page Title */}
         <h1 className="text-4xl font-bold mb-4">Cybersecurity News Feed</h1>
         <p className="text-lg text-gray-300 mb-8">
           Real-time cybersecurity news and alerts, typically sourced from our Discord channel.
         </p>
         
-        {/* Debug panel - conditionally shown */}
+        {/* Debug Panel (Conditional) */}
         {showDebugPanel && (
-          <div className="bg-gray-900/50 border border-gray-700 rounded-lg p-4 mb-6">
-            <div className="flex items-center text-gray-400 mb-2">
-              <h3 className="font-semibold">Debug Info</h3>
-            </div>
-            <div className="text-xs text-gray-500 font-mono">
-              <p>Loading: {loading ? 'true' : 'false'}</p>
-              <p>Error: {error ? error : 'none'}</p>
-              <p>News Count: {news.length}</p>
-              <p>Source: {source}</p>
-              <p>Status Message: {statusMsg}</p>
-              <p>State Counter: {stateCounter}</p>
-              <p>Render Time: {new Date().toISOString()}</p>
-            </div>
+          <div className="bg-gray-900/50 border border-gray-700 rounded-lg p-4 mb-6 font-mono text-xs text-gray-500">
+            <h3 className="font-semibold text-gray-400 mb-2">Debug Info</h3>
+            <p>Loading: {loading ? 'true' : 'false'}</p>
+            <p>Error: {error || 'none'}</p>
+            <p>News Count: {news.length}</p>
+            <p>Source: {source || 'N/A'}</p>
+            <p>Status Message: {statusMsg || 'N/A'}</p>
+            <p>Last API Response: <pre className="overflow-auto max-h-20 mt-1">{JSON.stringify(debugData, null, 2)}</pre></p>
           </div>
         )}
         
-        {/* Show fallback status message if applicable */}
-        {statusDisplay}
-        
-        {/* Loading indicator */}
-        {loading && (
-          <div className="flex justify-center py-12">
-            <div className="animate-pulse flex flex-col items-center">
-              <RefreshCw className="h-8 w-8 text-purple-600/50 mb-4 animate-spin" />
-              <p className="text-purple-400/80">Loading latest news...</p>
+        {/* Display Area */} 
+        <div>
+          {/* Loading Indicator */}
+          {loading && (
+            <div className="flex justify-center py-12">
+              <div className="animate-pulse flex flex-col items-center">
+                <RefreshCw className="h-8 w-8 text-purple-600/50 mb-4 animate-spin" />
+                <p className="text-purple-400/80">Loading latest news...</p>
+              </div>
             </div>
-          </div>
-        )}
-        
-        {/* Error message */}
-        {error && !loading && (
-          <div className="bg-red-900/20 border border-red-800 rounded-lg p-6 mb-8">
-            <div className="flex items-center text-red-400 mb-2">
-              <AlertTriangle className="w-5 h-5 mr-2" />
-              <h3 className="font-semibold">Error Loading Feed</h3>
+          )}
+          
+          {/* Error Message */}
+          {!loading && error && (
+            <div className="bg-red-900/20 border border-red-800 rounded-lg p-6 mb-8">
+              <div className="flex items-center text-red-400 mb-2">
+                <AlertTriangle className="w-5 h-5 mr-2" />
+                <h3 className="font-semibold">Error Loading Feed</h3>
+              </div>
+              <p className="text-red-300 mb-3">{error}</p>
+              <Button 
+                variant="outline" size="sm"
+                onClick={fetchNews} 
+                className="bg-red-900/30 border-red-800/50 hover:bg-red-800/50"
+                id="tryAgainBtn" name="tryAgainBtn"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" /> Try Again
+              </Button>
+              {showDebugPanel && <pre className="mt-4 p-3 bg-red-900/30 rounded border border-red-800/50 text-xs text-red-300 font-mono overflow-auto max-h-20">Debug Info: {JSON.stringify(debugData, null, 2)}</pre>}
             </div>
-            <p className="text-red-300 mb-3">{error}</p>
-            <Button 
-              variant="outline"
-              size="sm"
-              onClick={fetchNews} 
-              className="bg-red-900/30 border-red-800/50 hover:bg-red-800/50"
-              id="tryAgainBtn"
-              name="tryAgainBtn"
-            >
-              <RefreshCw className="w-4 h-4 mr-2" />
-              Try Again
-            </Button>
-            <div className="mt-4 p-3 bg-red-900/30 rounded border border-red-800/50 text-xs text-red-300 font-mono">
-              <p>If the issue persists, ensure the database connection is working properly.</p>
-              <p className="mt-1">Debug Info: <pre className="overflow-auto max-h-20 mt-1">{JSON.stringify(debug, null, 2)}</pre></p>
-            </div>
-          </div>
-        )}
-        
-        {/* No news found message */}
-        {!loading && !error && news.length === 0 && source !== 'fallback' && (
-          <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-6 mb-8">
-            <div className="flex items-center text-blue-400 mb-2">
-              <AlertTriangle className="w-5 h-5 mr-2" />
-              <h3 className="font-semibold">No Recent News Found</h3>
-            </div>
-            <p className="text-blue-300">
-              We couldn't find any recent news articles in our database. Please check back later.
-            </p>
-            <div className="mt-4 p-3 bg-blue-900/30 rounded border border-blue-800/50 text-xs text-blue-300 font-mono">
-              <p>Debug Info: <pre className="overflow-auto max-h-20 mt-1">{JSON.stringify(debug, null, 2)}</pre></p>
-            </div>
-          </div>
-        )}
-        
-        {/* News content - MODIFIED to show even if loading (helps debug) */}
-        {news.length > 0 && (
-          <div className="space-y-6">
-            <div className={loading ? "opacity-50" : ""}>
+          )}
+          
+          {/* Status Message (Fallback or No News) */}
+          {!loading && !error && statusDisplay}
+          
+          {/* News Content */}
+          {!loading && !error && news.length > 0 && (
+            <div className="space-y-6">
               {news.map((item) => {
                 const { title, content } = formatNewsContent(item.content, item.urls);
                 const messageType = getMessageType(content);
                 
                 return (
-                  <div key={item.id} className="bg-gray-800/50 border border-gray-700 rounded-lg overflow-hidden mb-6">
+                  <div key={item.id} className="bg-gray-800/50 border border-gray-700 rounded-lg overflow-hidden">
                     <div className="p-4">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="text-xl font-semibold text-white">{title}</h3>
@@ -439,9 +391,34 @@ export default function DiscordNewsPage() {
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
+        </div> 
       </div>
     </div>
   );
+}
+
+// Format the news content for display - this will parse titles and content from Supabase format
+function formatNewsContent(content: string, urls?: string[]) {
+  // If content includes a title followed by content (common format from Supabase)
+  const parts = content.split('\n\n');
+  
+  // Extract title from first part
+  let title = 'News Update';
+  let contentText = content;
+  
+  if (parts.length > 1) {
+    title = parts[0];
+    contentText = parts.slice(1).join('\n\n');
+  }
+  
+  // Remove any "Links:" section from the content if we have URLs array
+  if (urls && urls.length > 0) {
+    contentText = contentText.replace(/Links:\n(https?:\/\/[^\s]+\n?)+/g, '');
+  }
+  
+  return {
+    title,
+    content: contentText
+  };
 } 
