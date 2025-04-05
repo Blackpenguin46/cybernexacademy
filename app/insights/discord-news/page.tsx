@@ -113,12 +113,27 @@ export default function DiscordNewsPage() {
       });
       
       const data = await response.json(); // Try parsing JSON regardless of status
-      console.log('Received data:', data);
+      console.log('Received data from API:', data);
+      
+      // Enhanced debugging to check the structure
+      if (data.articles) {
+        console.log(`Found ${data.articles.length} articles`);
+        if (data.articles.length > 0) {
+          console.log('First article sample:', {
+            id: data.articles[0].id,
+            content: data.articles[0].content?.substring(0, 50) + '...' || 'No content',
+            author: data.articles[0].author,
+            timestamp: data.articles[0].timestamp,
+          });
+        }
+      } else {
+        console.log('No articles property found in response!', Object.keys(data));
+      }
 
       // Save all information for debugging
       setDebug({
         responseStatus: response.status,
-        data: data,
+        responseData: data,
         time: new Date().toISOString()
       });
 
@@ -133,14 +148,14 @@ export default function DiscordNewsPage() {
       
       // Show a more specific message if using fallback data
       if (data.source === 'fallback') {
-        console.warn('Using fallback data:', data.message || 'No Discord messages available');
+        console.warn('Using fallback data:', data.message || 'No news available');
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       setError(`Failed to load news. ${errorMessage}`); // Updated error message
       console.error('Error loading news:', err);
       
-      // Save error for debugging - Explicitly type `prev`
+      // Save error for debugging
       setDebug((prev: any) => ({ ...prev, error: errorMessage, time: new Date().toISOString() }));
       setNews([]); // Clear news on error
       setSource('error'); // Set source to error
@@ -169,13 +184,30 @@ export default function DiscordNewsPage() {
           <h3 className="font-semibold">Using Fallback Data</h3>
         </div>
         <p className="text-yellow-300">
-          Could not fetch live data from Discord. {statusMsg}
+          Could not fetch live data from database. {statusMsg}
           <br />
           Displaying sample news. Data might be outdated.
         </p>
       </div>
     );
   }
+
+  // Format the news content for display - this will parse titles and content from Supabase format
+  const formatNewsContent = (content: string) => {
+    // If content includes a title followed by content (common format from Supabase)
+    const parts = content.split('\n\n');
+    if (parts.length > 1) {
+      return {
+        title: parts[0],
+        content: parts.slice(1).join('\n\n')
+      };
+    }
+    // Default format if no clear title/content separation
+    return {
+      title: 'News Update',
+      content: content
+    };
+  };
 
   return (
     <div className="min-h-screen bg-black text-white pt-24 p-8">
@@ -231,7 +263,7 @@ export default function DiscordNewsPage() {
               Try Again
             </Button>
             <div className="mt-4 p-3 bg-red-900/30 rounded border border-red-800/50 text-xs text-red-300 font-mono">
-              <p>If the issue persists, ensure the Discord bot token and permissions are correct.</p>
+              <p>If the issue persists, ensure the database connection is working properly.</p>
               <p className="mt-1">Debug Info: <pre className="overflow-auto max-h-20 mt-1">{JSON.stringify(debug, null, 2)}</pre></p>
             </div>
           </div>
@@ -241,63 +273,49 @@ export default function DiscordNewsPage() {
           <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-6 mb-8">
             <div className="flex items-center text-blue-400 mb-2">
               <AlertTriangle className="w-5 h-5 mr-2" />
-              <h3 className="font-semibold">No Recent Messages Found</h3>
+              <h3 className="font-semibold">No Recent News Found</h3>
             </div>
             <p className="text-blue-300">
-              We couldn't find any recent messages in the configured Discord channel. Please check back later or ensure the bot is posting correctly.
+              We couldn't find any recent news articles in our database. Please check back later.
             </p>
-            {/* Add debug panel */}
             <div className="mt-4 p-3 bg-blue-900/30 rounded border border-blue-800/50 text-xs text-blue-300 font-mono">
-              <p>Debug information:</p>
-              <pre className="mt-2 overflow-auto max-h-40">
-                {JSON.stringify({source, statusMsg, debug}, null, 2)}
-              </pre>
+              <p>Debug Info: <pre className="overflow-auto max-h-20 mt-1">{JSON.stringify(debug, null, 2)}</pre></p>
             </div>
           </div>
         )}
         
-        {!loading && news.length > 0 && ( // Render news only if not loading and news exists
+        {!loading && !error && news.length > 0 && (
           <div className="space-y-6">
-            {news.map(message => {
-              const { type, color } = getMessageType(message.content);
+            {news.map((item) => {
+              const { title, content } = formatNewsContent(item.content);
+              const messageType = getMessageType(content);
               
               return (
-                <div 
-                  key={message.id} 
-                  className="bg-gray-900/50 p-4 sm:p-6 rounded-lg border border-gray-800 hover:border-purple-500/30 transition-colors shadow-md"
-                >
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 sm:mb-2">
-                    <span className={`text-xs px-3 py-1 rounded-full ${color} font-medium mb-2 sm:mb-0`}>
-                      {type}
-                    </span>
-                    <span className="text-xs text-gray-500 flex items-center">
-                      <Clock className="w-3 h-3 mr-1.5" />
-                      {formatDate(message.timestamp)}
-                    </span>
+                <div key={item.id} className="bg-gray-800/50 border border-gray-700 rounded-lg overflow-hidden">
+                  <div className="p-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-xl font-semibold text-white">{title}</h3>
+                      <span className={`px-2 py-1 text-xs rounded ${messageType.color}`}>
+                        {messageType.type}
+                      </span>
+                    </div>
+                    
+                    <div className="mb-3 text-sm text-gray-400 flex items-center">
+                      <Clock className="w-3 h-3 mr-1" />
+                      <span>{formatDate(item.timestamp)}</span>
+                      {item.author && (
+                        <>
+                          <span className="mx-1">•</span>
+                          <Shield className="w-3 h-3 mr-1" />
+                          <span>{item.author}</span>
+                        </>
+                      )}
+                    </div>
+                    
+                    <div className="text-gray-300 whitespace-pre-line">
+                      {formatContentWithLinks(content)}
+                    </div>
                   </div>
-                  <div className="text-gray-200 text-base mb-3">
-                    {formatContentWithLinks(message.content)}
-                  </div>
-                   <p className="text-xs text-gray-600">Author: {message.author}</p>
-                   {/* Basic attachment rendering (optional) */}
-                   {message.attachments && message.attachments.length > 0 && (
-                     <div className="mt-3 border-t border-gray-700/50 pt-3">
-                       <p className="text-xs text-gray-500 mb-1">Attachments:</p>
-                       <div className="flex flex-wrap gap-2">
-                         {message.attachments.map((att, idx) => (
-                           <a 
-                             key={idx} 
-                             href={att.url} 
-                             target="_blank" 
-                             rel="noopener noreferrer" 
-                             className="text-xs text-purple-400 hover:underline bg-purple-900/20 px-2 py-1 rounded"
-                           >
-                             {att.filename || `Attachment ${idx + 1}`}
-                           </a>
-                         ))}
-                       </div>
-                     </div>
-                   )}
                 </div>
               );
             })}

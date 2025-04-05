@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
-// Example message format for fallback when Discord API fails
+// Initialize Supabase client
+const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Example message format for fallback when Supabase API fails
 const FALLBACK_MESSAGES = [
   {
     id: '1',
@@ -26,173 +32,75 @@ const FALLBACK_MESSAGES = [
 ];
 
 export async function GET() {
-  // Use the specific channel ID for testing
-  const channelId = '1299032261470978159'; // Hardcoded for testing
-  console.log('Fetching Discord news from specific channel ID:', channelId);
-  
-  // Print partial token for debugging (first 5 chars only, for security)
-  const botToken = process.env.DISCORD_BOT_TOKEN || '';
-  console.log('Bot token starts with:', botToken.substring(0, 5) + '...');
-  console.log('Bot token length:', botToken.length);
+  console.log('Fetching news from Supabase newsfeed table');
   
   // Fallback news data in case of API failure
   const fallbackData = {
-    articles: [
-      {
-        id: 'fallback-1',
-        content: '[ALERT] Critical vulnerability discovered in widely used OpenSSL library. Update to version 3.2.1 immediately to patch potential remote code execution vulnerability.',
-        author: 'Security Bot',
-        timestamp: new Date().toISOString(),
-        attachments: []
-      },
-      {
-        id: 'fallback-2',
-        content: '[THREAT] New ransomware campaign targeting healthcare organizations detected. Phishing emails contain malicious attachments disguised as patient records.',
-        author: 'Security Bot',
-        timestamp: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
-        attachments: []
-      },
-      {
-        id: 'fallback-3',
-        content: '[UPDATE] Microsoft has released patches for 3 critical vulnerabilities affecting Windows Server. CVE-2023-xxxxx allows privilege escalation. Apply updates ASAP.',
-        author: 'Security Bot',
-        timestamp: new Date(Date.now() - 172800000).toISOString(), // 2 days ago
-        attachments: []
-      }
-    ],
+    articles: FALLBACK_MESSAGES,
     source: 'fallback',
-    message: 'Could not connect to Discord API or no messages found.'
+    message: 'Could not connect to Supabase or no news found.'
   };
   
   try {
-    if (!process.env.DISCORD_BOT_TOKEN) {
-      console.error('Missing bot token for Discord API');
-      return NextResponse.json({
-        ...fallbackData,
-        message: 'Missing Discord bot token configuration.'
+    // Fetch news articles from Supabase
+    console.log('Querying Supabase newsfeed table...');
+    
+    // Log the Supabase connection details (partial, for security)
+    console.log('Supabase URL:', supabaseUrl);
+    console.log('Supabase key (first 10 chars):', supabaseKey.substring(0, 10) + '...');
+    
+    const { data: newsData, error } = await supabase
+      .from('newsfeed')
+      .select('*')
+      .order('timestamp', { ascending: false })
+      .limit(100);
+    
+    if (error) {
+      console.error('Error fetching from Supabase:', error.message);
+      throw new Error(error.message);
+    }
+    
+    console.log(`Retrieved ${newsData?.length || 0} news items from Supabase`);
+    
+    // Log a sample of the data for debugging
+    if (newsData && newsData.length > 0) {
+      console.log('First news item sample:', {
+        id: newsData[0].id,
+        author: newsData[0].author,
+        timestamp: newsData[0].timestamp,
+        contentPreview: newsData[0].content?.substring(0, 50) + '...' || 'No content'
       });
     }
     
-    const token = process.env.DISCORD_BOT_TOKEN;
-    
-    // Try different API formats (v10, v9, etc)
-    const apiFormats = [
-      {
-        url: `https://discord.com/api/v10/channels/${channelId}/messages?limit=100`,
-        description: "Discord API v10"
-      },
-      {
-        url: `https://discord.com/api/v9/channels/${channelId}/messages?limit=100`,
-        description: "Discord API v9"
-      },
-      {
-        url: `https://discord.com/api/channels/${channelId}/messages?limit=100`,
-        description: "Discord API (no version)"
-      }
-    ];
-    
-    let lastError = null;
-    let messages = null;
-    
-    // Try each API format until one works
-    for (const api of apiFormats) {
-      try {
-        console.log(`Trying ${api.description}: ${api.url}`);
-        
-        const headers = {
-          'Authorization': `Bot ${token}`,
-          'Content-Type': 'application/json'
-        };
-        
-        const response = await fetch(api.url, {
-          headers,
-          cache: 'no-store' // Disable caching for fresh results
-        });
-        
-        console.log(`${api.description} response status:`, response.status, response.statusText);
-        
-        // Extract headers safely
-        const responseHeaders: Record<string, string> = {};
-        response.headers.forEach((value, key) => {
-          responseHeaders[key] = value;
-        });
-        
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`${api.description} error details:`, errorText);
-          lastError = `${api.description} error: ${response.status} - ${response.statusText}`;
-          continue; // Try next API format
-        }
-        
-        // If we got here, the request was successful
-        messages = await response.json();
-        console.log(`${api.description} success! Received ${messages.length} messages`);
-        break; // Exit the loop, we got our messages
-      
-      } catch (apiError) {
-        console.error(`Error with ${api.description}:`, apiError);
-        lastError = `${api.description} fetch error: ${apiError instanceof Error ? apiError.message : String(apiError)}`;
-        // Continue to next API format
-      }
-    }
-    
-    // If we tried all formats and none worked
-    if (!messages) {
-      console.error("All Discord API formats failed:", lastError);
+    if (!newsData || newsData.length === 0) {
+      console.log('No news found in Supabase, using fallback data');
       return NextResponse.json({
         ...fallbackData,
-        message: `Discord API unavailable: ${lastError}`
-      });
-    }
-    
-    // Process messages
-    console.log(`Processing ${messages.length} messages from Discord channel`);
-    
-    // Log message details for debugging
-    messages.forEach((msg: any, index: number) => {
-      console.log(`Message ${index + 1}:`, {
-        id: msg.id,
-        author: msg.author?.username || 'Unknown',
-        content: msg.content?.substring(0, 30) + '...' || 'No content',
-        hasAttachments: msg.attachments?.length > 0
-      });
-    });
-
-    // Filter messages with actual content
-    const filteredMessages = messages.filter((msg: any) => {
-      // Now include ANY message with content, not just from bots
-      const hasContent = msg.content && msg.content.trim().length > 0;
-      return hasContent;
-    });
-    
-    console.log(`Found ${filteredMessages.length} valid messages out of ${messages.length} total messages`);
-
-    if (filteredMessages.length === 0) {
-      console.log('No messages with content found, using fallback data');
-      return NextResponse.json({
-        ...fallbackData,
-        message: 'No messages found in the Discord channel.'
+        message: 'No news found in the database.'
       });
     }
 
-    // Map to a clean format for the frontend
-    const articles = filteredMessages.map((msg: any) => ({
-      id: msg.id,
-      content: msg.content,
-      author: msg.author?.username || 'Unknown',
-      timestamp: msg.timestamp,
-      attachments: msg.attachments || [],
+    // Map to the format expected by the frontend
+    const articles = newsData.map((item) => ({
+      id: item.id?.toString() || Math.random().toString(),
+      content: item.content || 'No content available',
+      author: item.author || 'Unknown',
+      timestamp: item.timestamp || new Date().toISOString(),
+      attachments: []
     }));
-
+    
+    console.log(`Mapped ${articles.length} items for frontend`);
+    
+    // Return a successful response with the articles
     return NextResponse.json({ 
       articles,
-      source: 'discord',
+      source: 'supabase',
       count: articles.length,
-      message: 'Successfully retrieved Discord messages.'
+      message: 'Successfully retrieved news from database.'
     });
     
   } catch (error) {
-    console.error('Error fetching Discord news:', error);
+    console.error('Error fetching news from Supabase:', error);
     return NextResponse.json({
       ...fallbackData,
       message: error instanceof Error ? error.message : 'Unknown error occurred'
