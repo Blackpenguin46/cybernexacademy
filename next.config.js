@@ -21,10 +21,10 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-inline' https://*.vercel.app;
-              script-src-elem 'self' 'unsafe-inline' https://*.vercel.app;
-              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-              style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
+              script-src 'self' 'unsafe-inline' https://cybernex-git-main-cybernexacademy.vercel.app https://*.vercel.app;
+              script-src-elem 'self' 'unsafe-inline' https://cybernex-git-main-cybernexacademy.vercel.app https://*.vercel.app;
+              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cybernex-git-main-cybernexacademy.vercel.app;
+              style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://cybernex-git-main-cybernexacademy.vercel.app;
               img-src 'self' blob: data: https://*.googleusercontent.com https://*.supabase.co;
               font-src 'self' https://fonts.gstatic.com data:;
               connect-src 'self' https://*.supabase.co https://api.openai.com https://fonts.googleapis.com https://fonts.gstatic.com;
