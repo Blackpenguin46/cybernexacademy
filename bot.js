@@ -24,10 +24,21 @@ if (process.env.DISCORD_BOT_TOKEN) {
   debugLog('ERROR: DISCORD_BOT_TOKEN not found in environment');
 }
 
-// Setup Supabase client
-const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM';
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Setup Supabase client using environment variables
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+
+let supabase;
+if (supabaseUrl && supabaseServiceKey) {
+  supabase = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: { persistSession: false } // Recommended for server-side
+  });
+  debugLog('Supabase client initialized using environment variables.');
+} else {
+  debugLog('ERROR: SUPABASE_URL or SUPABASE_SERVICE_KEY environment variables not found for the bot!');
+  // Optional: Exit or prevent operations if Supabase isn't configured
+  // process.exit(1);
+}
 
 // Channel to monitor
 const CHANNEL_ID = '1299032261470978159';
@@ -271,17 +282,22 @@ async function extractAndSaveContent(message, source = 'websocket') {
       fullContent = `${newsTitle}\n\nUnable to extract detailed content from this message type. This appears to be a complex message that requires additional handling.\n\nMessage ID: ${message.id}`;
     }
     
+    // Check if supabase client was initialized before attempting insert
+    if (!supabase) {
+      debugLog('Supabase client not initialized, skipping database insert.');
+      return; 
+    }
+
     // Insert into Supabase
     debugLog(`Inserting content into Supabase with ${urls.length} URLs`);
-    
     const { data, error } = await supabase
-      .from('newsfeed')
-      .insert([{ 
-        author: message.author?.username || 'Discord Bot', 
-        content: fullContent, 
-        timestamp: new Date(),
-        urls: urls.length > 0 ? urls : null  // Store URLs as JSON array if found
-      }]);
+        .from('newsfeed')
+        .insert([{ 
+          author: message.author?.username || 'Discord Bot', 
+          content: fullContent, 
+          timestamp: new Date(),
+          urls: urls.length > 0 ? urls : null
+        }]);
     
     if (error) {
       debugLog(`Error inserting to Supabase: ${error.message}`);
