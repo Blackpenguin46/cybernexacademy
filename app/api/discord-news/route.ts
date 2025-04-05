@@ -31,11 +31,8 @@ const FALLBACK_MESSAGES = [
   }
 ];
 
-// List of possible table names to try
-const possibleTableNames = ['newsfeed', 'news_feed', 'discord_news', 'news', 'feed'];
-
 export async function GET() {
-  console.log('Starting Supabase news fetch process');
+  console.log('Starting direct Supabase newsfeed query');
   
   // Fallback news data in case of API failure
   const fallbackData = {
@@ -45,79 +42,34 @@ export async function GET() {
   };
   
   try {
-    console.log('Supabase connection info:', {
-      url: supabaseUrl,
-      keyPrefix: supabaseKey.substring(0, 10) + '...',
-      tablesToTry: possibleTableNames
-    });
-
-    // First, try to list all tables to see what's available
-    const { data: tableList, error: tableError } = await supabase
-      .from('_tables')
+    // Direct query to the newsfeed table (we know it exists and has no RLS)
+    console.log('Querying newsfeed table directly...');
+    
+    const { data: newsData, error } = await supabase
+      .from('newsfeed')
       .select('*')
-      .limit(20);
+      .order('timestamp', { ascending: false })
+      .limit(50);
     
-    if (tableError) {
-      console.log('Error listing tables:', tableError.message);
-      console.log('Will still try known table names');
-    } else {
-      console.log('Available tables:', tableList);
+    // Log query results for debugging
+    console.log('Supabase query response:', { 
+      success: !error, 
+      errorMessage: error?.message,
+      itemCount: newsData?.length || 0
+    });
+    
+    if (error) {
+      console.error('Error querying newsfeed table:', error);
+      throw new Error(`Supabase query error: ${error.message}`);
     }
     
-    let newsData = null;
-    let lastError: any = null;
-    let usedTable = '';
-    
-    // Try each possible table name until we find one that works
-    for (const tableName of possibleTableNames) {
-      try {
-        console.log(`Trying to query table: ${tableName}`);
-        
-        const { data, error } = await supabase
-          .from(tableName)
-          .select('*')
-          .order('timestamp', { ascending: false })
-          .limit(100);
-        
-        if (error) {
-          console.log(`Error querying ${tableName}:`, error.message);
-          lastError = error;
-          continue; // Try next table
-        }
-        
-        if (data && data.length > 0) {
-          console.log(`Success! Found ${data.length} records in table ${tableName}`);
-          newsData = data;
-          usedTable = tableName;
-          break; // Found data, exit loop
-        } else {
-          console.log(`Table ${tableName} exists but has no data`);
-        }
-      } catch (err) {
-        console.log(`Error with table ${tableName}:`, err);
-        lastError = err;
-      }
-    }
-    
-    // If we tried all tables and found nothing
-    if (!newsData) {
-      console.log('Could not find data in any table, using fallback');
-      return NextResponse.json({
-        ...fallbackData,
-        message: `No news found. Last error: ${lastError?.message || 'Unknown error'}`,
-        tablesChecked: possibleTableNames
-      });
+    if (!newsData || newsData.length === 0) {
+      console.log('Newsfeed table exists but has no data');
+      return NextResponse.json(fallbackData);
     }
 
-    // Log a sample of the data we found
-    console.log(`Data sample from ${usedTable}:`, {
-      count: newsData.length,
-      firstItem: newsData[0] ? {
-        id: newsData[0].id,
-        author: newsData[0].author,
-        contentPreview: newsData[0].content?.substring(0, 50) + '...' || 'No content'
-      } : 'No items'
-    });
+    // Log the actual data for debugging
+    console.log('First record in newsfeed:', newsData[0]);
     
     // Map to the format expected by the frontend
     const articles = newsData.map((item) => ({
@@ -128,18 +80,14 @@ export async function GET() {
       attachments: []
     }));
     
-    console.log(`Mapped ${articles.length} items for frontend from table ${usedTable}`);
+    console.log(`Successfully mapped ${articles.length} news items for frontend`);
     
     // Return a successful response with the articles
     return NextResponse.json({ 
       articles,
       source: 'supabase',
       count: articles.length,
-      message: `Successfully retrieved news from ${usedTable} table.`,
-      debugInfo: {
-        usedTable: usedTable,
-        recordCount: newsData.length
-      }
+      message: 'Successfully retrieved news from newsfeed table.'
     });
     
   } catch (error) {
