@@ -1,0 +1,219 @@
+{
+  "timestamp": "2025-04-02T16:55:23.736Z",
+  "summary": {
+    "total": 52,
+    "valid": 0,
+    "invalid": 52
+  },
+  "validLinks": [],
+  "invalidLinks": [
+    {
+      "url": "https://discord.gg/infosec",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/peh",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/5MTpnKM",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/cybercareernetwork",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/ctftime",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/oscp",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/overthewire",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/cyberdefenders",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/dfir",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/nullbyte",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/secops",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/devsecops",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/cloudsecurity",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/binaryadventures",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/securitypro",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/cybermentorship",
+      "reason": "Invite not found"
+    },
+    {
+      "url": "https://discord.gg/theratpack",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/insiderphd",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/nahamsec",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/hackersploit",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/tib3rius",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/owlsec",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.com/invite/tcm",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.com/invite/darknetdiaries",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/tryhackme",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.com/invite/hackthebox",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/hak5",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/blueteamvillage",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/defcon",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.com/invite/davidbombal",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/networkchuck",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/infosecprep",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/blackhat",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/malwaretech",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/bugbounty",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/cscareerhub",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/security",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/kalilinux",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/metasploit",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/portswigger",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/pfsense",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.com/invite/sans",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/hackerone",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/securecodewarrior",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/snyk",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/offsec",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/thepentestingacademy",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/thminsider",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/letstalkc2",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/hacker101",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/hackthissite",
+      "reason": "HTTP 429"
+    },
+    {
+      "url": "https://discord.gg/rangeforce",
+      "reason": "HTTP 429"
+    }
+  ]
+}

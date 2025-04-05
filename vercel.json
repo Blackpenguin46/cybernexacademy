@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1",
+      "headers": {
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+      }
+    }
+  ],
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "github": {
+    "enabled": true,
+    "silent": false,
+    "autoAlias": false,
+    "production": {
+      "branches": []
+    }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/verify-links?key=${LINK_VERIFICATION_API_KEY}",
+      "schedule": "0 3 * * *"
+    }
+  ],
+  "env": {
+    "LINK_VERIFICATION_API_KEY": "preview-placeholder-value-for-verification"
+  }
+}
+
+

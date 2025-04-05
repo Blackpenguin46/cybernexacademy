@@ -1,0 +1,54 @@
+
+// Here are valid Discord invite links verified on 4/2/2025, 1:32:50 PM
+export const verifiedDiscordServers = [
+  {
+    name: "TryHackMe",
+    url: "https://discord.gg/tryhackme",
+    members: "278K+"
+  },
+  {
+    name: "Hack The Box",
+    url: "https://discord.gg/hackthebox",
+    members: "293K+"
+  },
+  {
+    name: "PortSwigger",
+    url: "https://discord.gg/portswigger",
+    members: "9K+"
+  },
+  {
+    name: "Offensive Security",
+    url: "https://discord.gg/offsec",
+    members: "76K+"
+  },
+  {
+    name: "DEFCON",
+    url: "https://discord.gg/defcon",
+    members: "50K+"
+  },
+  {
+    name: "Blue Team Village",
+    url: "https://discord.gg/blueteamvillage",
+    members: "6K+"
+  },
+  {
+    name: "Red Team Village",
+    url: "https://discord.gg/redteamvillage",
+    members: "20K+"
+  },
+  {
+    name: "Hak5",
+    url: "https://discord.gg/hak5",
+    members: "21K+"
+  },
+  {
+    name: "Black Hills InfoSec",
+    url: "https://discord.gg/bhis",
+    members: "51K+"
+  },
+  {
+    name: "NetworkChuck",
+    url: "https://discord.gg/networkchuck",
+    members: "93K+"
+  }
+];

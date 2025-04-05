@@ -1,0 +1,418 @@
+"use client";
+
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { User, Menu, X, Terminal, Zap, Settings, Home, Heart, LogIn, UserPlus, ChevronDown, MessageSquare, Code, Award, BookOpen, AlertTriangle, Newspaper, LineChart } from 'lucide-react';
+import { supabase } from "@/lib/supabase";
+import Image from 'next/image';
+
+export default function Navbar() {
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [dropdownTimer, setDropdownTimer] = useState<NodeJS.Timeout | null>(null);
+  
+  // Main navigation sections with dropdown content
+  const navSections = [
+    {
+      id: "community",
+      title: "Community",
+      href: "/community",
+      icon: User,
+      featured: [
+        { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord" },
+        { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github" },
+        { title: "Substack", desc: "Subscribe to our cybersecurity newsletter", icon: Terminal, href: "/community/substack" }
+      ],
+      links: [
+        { name: "LinkedIn", href: "/community/linkedin" },
+        { name: "Skool", href: "/community/skool" },
+        { name: "Forums", href: "/community/forums" }
+      ]
+    },
+    {
+      id: "insights",
+      title: "Insights",
+      href: "/insights",
+      icon: Zap,
+      featured: [
+        { title: "Latest News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
+        { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats" },
+        { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry" }
+      ],
+      links: [
+        { name: "Research", href: "/insights/research" },
+        { name: "Cases", href: "/insights/cases" },
+        { name: "Practices", href: "/insights/practices" }
+      ]
+    },
+    {
+      id: "academy",
+      title: "Academy",
+      href: "/academy",
+      icon: Terminal,
+      featured: [
+        { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner" },
+        { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced" },
+        { title: "Certifications", desc: "Prepare for industry certifications", icon: Award, href: "/academy/certifications" }
+      ],
+      links: [
+        { name: "Courses", href: "/academy/courses" },
+        { name: "Labs", href: "/academy/labs" },
+        { name: "YouTube", href: "/academy/youtube" }
+      ]
+    }
+  ];
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu when navigating
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Check if user is authenticated
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setUser(data.session?.user || null);
+        setLoading(false);
+        
+        // Setup auth state change listener
+        const { data: authListener } = supabase.auth.onAuthStateChange(
+          async (event, session) => {
+            setUser(session?.user || null);
+          }
+        );
+        
+        return () => {
+          if (authListener && authListener.subscription) {
+            authListener.subscription.unsubscribe();
+          }
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  };
+
+  // Active link detection
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname?.startsWith(href);
+  };
+
+  // Mobile menu animation variants
+  const mobileMenuVariants = {
+    hidden: { 
+      height: 0,
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    },
+    visible: { 
+      height: "auto",
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  // Function to handle dropdown visibility with delay
+  const handleMouseEnter = (sectionId: string) => {
+    setActiveDropdown(sectionId);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveDropdown(null);
+  };
+
+  // Add custom animation
+  const globalStyles = `
+  @keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.7; }
+  }
+  `;
+
+  return (
+    <>
+      <style jsx global>{globalStyles}</style>
+      <nav 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? 'bg-black/95 backdrop-blur-md shadow-lg' : 'bg-gray-900/80 backdrop-blur-sm'
+        }`}
+      >
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-80"></div>
+        
+        <div className="max-w-[1920px] mx-auto">
+          <div className="flex items-center justify-between h-16 px-4 lg:px-8">
+            {/* Logo */}
+            <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2">
+              <div className="relative">
+                <Terminal className="w-6 h-6 text-blue-400" />
+                <span className="absolute top-0 left-0 w-6 h-6 bg-blue-400 mix-blend-overlay animate-[blink_1s_infinite]"></span>
+              </div>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300">
+                CyberNex Academy
+              </span>
+            </Link>
+
+            {/* Desktop navbar links with dropdowns */}
+            <div className="hidden lg:flex items-center space-x-8">
+              <Link href="/" className={`px-3 py-2 ${isActive('/') ? 'text-blue-500' : 'text-gray-300 hover:text-white'}`}>
+                <span className="flex items-center">
+                  <Home className="w-4 h-4 mr-2" />
+                  Home
+                </span>
+              </Link>
+              
+              {navSections.map((section) => (
+                <div 
+                  key={section.id} 
+                  className="relative"
+                  onMouseEnter={() => handleMouseEnter(section.id)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <Link 
+                    href={section.href}
+                    className={`flex items-center gap-2 px-3 py-2 cursor-pointer ${
+                      isActive(section.href) ? 'text-blue-400' : 'text-gray-300 hover:text-white'
+                    }`}
+                  >
+                    <section.icon className="w-4 h-4" />
+                    <span>{section.title}</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
+                      activeDropdown === section.id ? 'rotate-180' : ''
+                    }`} />
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            {/* Right actions section */}
+            <div className="flex items-center space-x-4">
+              {/* Authentication buttons - Always visible on desktop */}
+              <div className="flex items-center gap-3">
+                {loading ? (
+                  <div className="w-20 h-10 bg-gray-800/50 animate-pulse rounded-md"></div>
+                ) : user ? (
+                  <>
+                    <Link href="/dashboard" 
+                      className="flex items-center gap-2 text-gray-300 hover:text-white px-4 py-2 rounded-md transition-all duration-300 border border-gray-700 hover:border-blue-500/50 hover:bg-blue-500/10"
+                    >
+                      <Settings className="w-4 h-4 text-blue-500" />
+                      <span>Dashboard</span>
+                    </Link>
+                    
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center gap-2 text-gray-300 hover:text-white px-4 py-2 rounded-md transition-all duration-300 border border-red-500/30 hover:border-red-500/50 hover:bg-red-500/10"
+                    >
+                      <LogIn className="w-4 h-4 rotate-180 text-red-400" />
+                      <span>Sign Out</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <a 
+                      href="/auth/signup" 
+                      className="flex items-center text-white px-5 py-2 rounded-md transition-duration-200 border border-white hover:bg-white hover:text-gray-900 text-center"
+                    >
+                      Get Started
+                    </a>
+                  </>
+                )}
+              </div>
+
+              {/* Donate button */}
+              <Link 
+                href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white px-4 py-2 rounded-md transition-all duration-300 border border-pink-500/50 hover:bg-pink-500/10 group"
+              >
+                <Heart className="w-4 h-4 text-pink-400 group-hover:text-pink-300" />
+                <span className="group-hover:text-pink-300">Donate</span>
+              </Link>
+
+              {/* Mobile menu button */}
+              <button 
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-gray-400 hover:text-blue-500 border border-transparent hover:border-blue-500/30 rounded-md transition-all bg-black/30"
+              >
+                {mobileMenuOpen ? 
+                  <X className="w-6 h-6" /> : 
+                  <Menu className="w-6 h-6" />
+                }
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile menu */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div 
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={mobileMenuVariants}
+                className="lg:hidden bg-black/95 backdrop-blur-md border-t border-blue-500/30 overflow-hidden"
+              >
+                <div className="px-4 py-6 space-y-4">
+                  <Link
+                    href="/"
+                    className={`flex items-center gap-2 px-4 py-2 rounded-md ${
+                      pathname === '/' ? 'text-blue-500 bg-blue-500/10 border border-blue-500/40' : 'text-gray-300 hover:text-white'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Home className="w-5 h-5" />
+                    <span>Home</span>
+                  </Link>
+                  
+                  {navSections.map((section) => (
+                    <div key={section.id} className="space-y-2">
+                      <div
+                        className={`flex items-center justify-between px-4 py-2 rounded-md ${
+                          isActive(section.href) ? 'text-blue-500 bg-blue-500/10 border border-blue-500/40' : 'text-gray-300'
+                        }`}
+                        onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
+                      >
+                        <div className="flex items-center gap-2">
+                          <section.icon className="w-5 h-5" />
+                          <span>{section.title}</span>
+                        </div>
+                        <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${
+                          activeDropdown === section.id ? 'rotate-180' : ''
+                        }`} />
+                      </div>
+
+                      <AnimatePresence>
+                        {activeDropdown === section.id && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="pl-4 space-y-2"
+                          >
+                            {section.featured.map((item) => (
+                              <Link
+                                key={item.title}
+                                href={item.href}
+                                className="flex items-start p-2 rounded-md hover:bg-blue-500/10"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                <item.icon className="w-5 h-5 text-blue-400 mr-3" />
+                                <div>
+                                  <div className="text-sm font-medium text-white">{item.title}</div>
+                                  <div className="text-xs text-gray-400">{item.desc}</div>
+                                </div>
+                              </Link>
+                            ))}
+                            
+                            {section.links.map((link) => (
+                              <Link
+                                key={link.name}
+                                href={link.href}
+                                className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-blue-500/10 rounded-md"
+                                onClick={() => setMobileMenuOpen(false)}
+                              >
+                                {link.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+
+                  {/* Mobile auth section */}
+                  <div className="pt-4 border-t border-blue-500/30 space-y-3">
+                    {loading ? (
+                      <div className="w-full h-12 bg-gray-800/50 animate-pulse rounded-md"></div>
+                    ) : user ? (
+                      <>
+                        <Link 
+                          href="/dashboard" 
+                          className="flex items-center gap-2 px-4 py-3 bg-black/50 border-2 border-blue-500/50 rounded-md w-full hover:bg-blue-500/10 transition-colors"
+                        >
+                          <Settings className="w-5 h-5 text-blue-500" />
+                          <span className="text-white">Dashboard</span>
+                        </Link>
+                        
+                        <button 
+                          onClick={() => {
+                            handleSignOut();
+                            setMobileMenuOpen(false);
+                          }}
+                          className="flex items-center gap-2 px-4 py-3 bg-black/50 border-2 border-red-500/40 rounded-md w-full hover:bg-red-500/10 transition-colors"
+                        >
+                          <LogIn className="w-5 h-5 text-red-400 rotate-180" />
+                          <span className="text-white">Sign Out</span>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <a 
+                          href="/auth/signup" 
+                          className="flex items-center justify-center text-white px-4 py-3 border border-white hover:bg-white hover:text-gray-900 rounded-md w-full transition-colors"
+                        >
+                          Get Started
+                        </a>
+                      </>
+                    )}
+                  </div>
+
+                  {/* Mobile donate section */}
+                  <div className="pt-4 border-t border-pink-500/30">
+                    <Link 
+                      href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-3 bg-black/50 border-2 border-pink-500/40 rounded-md w-full hover:bg-pink-500/10 transition-colors"
+                    >
+                      <Heart className="w-5 h-5 text-pink-400" />
+                      <span className="text-white">Support Our Mission</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </nav>
+    </>
+  );
+} 

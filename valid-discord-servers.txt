@@ -1,0 +1,217 @@
+  {
+    name: "OwlSec",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/owlsec",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "TCM Security",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.com/invite/tcm",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Darknet Diaries Community",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.com/invite/darknetdiaries",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "TryHackMe",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/tryhackme",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "HackTheBox",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.com/invite/hackthebox",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Hak5",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/hak5",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Blue Team Village",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/blueteamvillage",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "DEFCON",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/defcon",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "David Bombal",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.com/invite/davidbombal",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "NetworkChuck",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/networkchuck",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "InfoSec Prep",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/infosecprep",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "BlackHat Forum (Social Média )",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/blackhat",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "MalwareTech",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/malwaretech",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Bounty Hunters",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/bugbounty",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "CS Career Hub",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/cscareerhub",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Security",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/security",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/kalilinux",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/metasploit",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "PortSwigger",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/portswigger",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/pfsense",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.com/invite/sans",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/hackerone",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/securecodewarrior",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/snyk",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "OffSec",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/offsec",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/thepentestingacademy",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/thminsider",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/letstalkc2",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/hacker101",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/hackthissite",
+    categories: ["community", "learning"]
+  },
+  {
+    name: "Discord",
+    description: "Active cybersecurity community with resources, discussions, and networking opportunities.",
+    members: "50K+",
+    url: "https://discord.gg/rangeforce",
+    categories: ["community", "learning"]
+  },

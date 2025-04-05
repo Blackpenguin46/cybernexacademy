@@ -1,0 +1,140 @@
+{
+  "timestamp": "2025-04-02T16:35:43.136Z",
+  "summary": {
+    "total": 24,
+    "valid": 23,
+    "invalid": 1,
+    "errors": 0
+  },
+  "results": [
+    {
+      "url": "https://discord.gg/owlsec",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/owlsec"
+    },
+    {
+      "url": "https://discord.com/invite/tcm",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://discord.com/invite/darknetdiaries",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://discord.gg/tryhackme",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/tryhackme"
+    },
+    {
+      "url": "https://discord.com/invite/hackthebox",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://discord.gg/infosec",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/infosec"
+    },
+    {
+      "url": "https://discord.com/invite/peh",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://discord.com/invite/5MTpnKM",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://discord.gg/ZSkMQdCXTK",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/ZSkMQdCXTK"
+    },
+    {
+      "url": "https://discord.gg/certstation",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/certstation"
+    },
+    {
+      "url": "https://discord.gg/hak5",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/hak5"
+    },
+    {
+      "url": "https://discord.gg/blueteamvillage",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/blueteamvillage"
+    },
+    {
+      "url": "https://discord.gg/defcon",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/defcon"
+    },
+    {
+      "url": "https://discord.gg/oscp",
+      "status": "VALID",
+      "statusCode": 301,
+      "redirects": "https://discord.com/invite/oscp"
+    },
+    {
+      "url": "https://therecord.media/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://tcm-sec.com/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://www.hackthebox.com/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://tryhackme.com/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://linkedin.com/company/cybernex-academy",
+      "status": "INVALID",
+      "statusCode": 999
+    },
+    {
+      "url": "https://krebsonsecurity.com/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://thehackernews.com/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://www.cybrary.it/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://www.sans.org/",
+      "status": "VALID",
+      "statusCode": 200
+    },
+    {
+      "url": "https://portswigger.net/web-security",
+      "status": "VALID",
+      "statusCode": 200
+    }
+  ]
+}
