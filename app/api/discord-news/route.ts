@@ -55,10 +55,10 @@ export async function GET() {
     const supabase = createClient(supabaseUrl, supabaseKey);
     console.log('[API Route] Supabase client initialized.');
     
-    console.log('[API Route] Querying newsfeed table...');
+    console.log('[API Route] Querying ONLY id from newsfeed table...');
     const { data: articles, error } = await supabase
       .from('newsfeed')
-      .select('*')
+      .select('id')
       .order('timestamp', { ascending: false })
       .limit(50); 
     
@@ -69,45 +69,27 @@ export async function GET() {
     message = 'Using fallback data due to query error or no data';
 
     if (error) {
-      console.error('[API Route] Error querying newsfeed table:', error);
-      // Check if it's an RLS error specifically
+      console.error('[API Route] Error querying newsfeed table (even with simplified query):', error?.message || error);
       if (error.message.includes('permission denied') || error.code === '42501') {
           message = 'Supabase Row Level Security (RLS) likely preventing read access.';
       } else {
           message = `Supabase query error: ${error.message}`;
       }
     } else if (articles && articles.length > 0) {
-      console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
-      try {
-        const processedArticles = articles.map(article => {
-          // ... (Keep URL processing logic) ...
-          if (article.urls && typeof article.urls === 'string') {
-            try { article.urls = JSON.parse(article.urls); } catch (e) { article.urls = []; }
-          }
-          if (!article.urls || article.urls.length === 0) {
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            article.urls = article.content ? article.content.match(urlRegex) || [] : [];
-          }
-          if (!Array.isArray(article.urls)) { article.urls = []; }
-          return article;
-        });
-        finalArticles = processedArticles;
-        source = 'database';
-        message = 'Retrieved from database';
-      } catch (processingError) {
-         console.error('[API Route] Error processing articles:', processingError);
-         message = `Error processing articles: ${processingError instanceof Error ? processingError.message : 'Unknown processing error'}`;
-      }
+      console.log(`[API Route] Query successful (simplified), retrieved ${articles.length} items`);
+      source = 'database_simplified_query_ok'; 
+      message = `Simplified query OK (${articles.length} IDs found). Returning fallback for now.`;
+      finalArticles = fallbackArticles; 
     } else {
-      console.log('[API Route] No items found in newsfeed table, using fallback data');
-      message = 'No items found in database';
+      console.log('[API Route] No items found in newsfeed table (simplified query)');
+      message = 'No items found in database (simplified query)';
     }
     
     console.log(`[API Route] Returning ${finalArticles.length} articles with source: ${source}`);
     return NextResponse.json({
       articles: finalArticles,
       source: source,
-      count: finalArticles.length,
+      count: articles ? articles.length : 0,
       message: message,
       timestamp: new Date().toISOString()
     });
@@ -116,14 +98,13 @@ export async function GET() {
     console.error('[API Route] Unexpected error in API handler:', catchError);
     let errorMsg = 'Unknown error';
     if (catchError instanceof TypeError && catchError.message.includes('fetch failed')) {
-        errorMsg = 'Network error connecting to database. Check Vercel env vars & Supabase connectivity.';
+        errorMsg = 'Network error connecting/querying database. Check Vercel env vars & Supabase connectivity/permissions.';
     } else if (catchError instanceof Error) {
         errorMsg = catchError.message;
     }
-    
     return NextResponse.json({
       articles: fallbackArticles,
-      source: 'fallback',
+      source: 'fallback_catch_error',
       error: `API Handler Error: ${errorMsg}`,
       message: errorMsg,
       errorTime: new Date().toISOString()
