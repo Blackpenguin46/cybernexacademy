@@ -64,6 +64,51 @@ function extractUrls(text) {
   return text.match(urlRegex) || [];
 }
 
+// Helper function to extract embed content
+function extractEmbedContent(embed) {
+  debugLog('Extracting content from embed');
+  
+  let content = {
+    title: '',
+    description: '',
+    urls: [],
+    fullContent: ''
+  };
+  
+  // Extract from title
+  if (embed.title) {
+    content.title = embed.title;
+    content.urls = content.urls.concat(extractUrls(embed.title));
+  }
+  
+  // Extract from description
+  if (embed.description) {
+    content.description = embed.description;
+    content.urls = content.urls.concat(extractUrls(embed.description));
+  }
+  
+  // Extract from fields
+  if (embed.fields && embed.fields.length > 0) {
+    embed.fields.forEach(field => {
+      if (content.description) content.description += '\n\n';
+      content.description += `${field.name}: ${field.value}`;
+      content.urls = content.urls.concat(extractUrls(field.name));
+      content.urls = content.urls.concat(extractUrls(field.value));
+    });
+  }
+  
+  // Additional sources of URLs
+  if (embed.url) content.urls.push(embed.url);
+  if (embed.image && embed.image.url) content.urls.push(embed.image.url);
+  if (embed.thumbnail && embed.thumbnail.url) content.urls.push(embed.thumbnail.url);
+  
+  // Build the full content
+  content.fullContent = content.title ? content.title + '\n\n' : '';
+  content.fullContent += content.description || '';
+  
+  return content;
+}
+
 // Function to extract content from message
 async function extractAndSaveContent(message, source = 'websocket') {
   try {
@@ -78,192 +123,156 @@ async function extractAndSaveContent(message, source = 'websocket') {
     // Mark as processed
     processedMessages.add(message.id);
     
-    // Extract message content
+    // Initialize variables
     let newsTitle = '';
     let newsContent = '';
-    let sourceInfo = '';
     let urls = [];
     
-    debugLog(`Message content: "${message.content}"`);
-    debugLog(`Has embeds: ${message.embeds?.length > 0}`);
-    
-    // Check for normal content first
-    if (message.content && message.content.trim() !== '') {
-      debugLog(`Message has text content: ${message.content}`);
-      newsContent = message.content;
+    // Handle different message types based on source
+    if (source === 'rest-api') {
+      debugLog('Processing as REST API message');
       
-      // Extract URLs from the content
-      const contentUrls = extractUrls(message.content);
-      if (contentUrls.length > 0) {
-        debugLog(`Found ${contentUrls.length} URLs in message content`);
-        urls = urls.concat(contentUrls);
+      // Extract basic content
+      if (message.content) {
+        newsContent = message.content;
+        urls = urls.concat(extractUrls(message.content));
       }
-    }
-    
-    // Check for embeds
-    if (message.embeds && message.embeds.length > 0) {
-      debugLog(`Message has ${message.embeds.length} embeds`);
       
-      const embed = message.embeds[0];
-      debugLog(`Embed data: ${safeStringify(embed)}`);
-      
-      // Extract title
-      if (embed.title) {
-        newsTitle = embed.title;
-        debugLog(`Found embed title: ${newsTitle}`);
+      // Handle embeds from REST API
+      if (message.embeds && message.embeds.length > 0) {
+        debugLog(`Message has ${message.embeds.length} embeds via REST API`);
         
-        // Extract URLs from title
-        const titleUrls = extractUrls(embed.title);
-        if (titleUrls.length > 0) {
-          urls = urls.concat(titleUrls);
-        }
-      }
-      
-      // Extract description
-      if (embed.description) {
-        newsContent = embed.description;
-        debugLog(`Found embed description: ${newsContent}`);
-        
-        // Extract URLs from description
-        const descriptionUrls = extractUrls(embed.description);
-        if (descriptionUrls.length > 0) {
-          urls = urls.concat(descriptionUrls);
-        }
-      }
-      
-      // Check for fields
-      if (embed.fields && embed.fields.length > 0) {
-        debugLog(`Embed has ${embed.fields.length} fields`);
-        embed.fields.forEach((field, index) => {
-          debugLog(`Field ${index}: ${field.name} - ${field.value}`);
+        message.embeds.forEach(embed => {
+          const embedContent = extractEmbedContent(embed);
           
-          // Extract URLs from field name and value
-          const fieldNameUrls = extractUrls(field.name);
-          const fieldValueUrls = extractUrls(field.value);
-          
-          if (fieldNameUrls.length > 0) urls = urls.concat(fieldNameUrls);
-          if (fieldValueUrls.length > 0) urls = urls.concat(fieldValueUrls);
-          
-          if (!newsContent) {
-            newsContent = `${field.name}: ${field.value}`;
-          } else {
-            newsContent += `\n\n${field.name}: ${field.value}`;
+          if (embedContent.title && !newsTitle) {
+            newsTitle = embedContent.title;
           }
+          
+          if (embedContent.description) {
+            if (newsContent) newsContent += '\n\n';
+            newsContent += embedContent.description;
+          }
+          
+          urls = urls.concat(embedContent.urls);
         });
       }
       
-      // Check for author info
-      if (embed.author && embed.author.name) {
-        sourceInfo = embed.author.name;
-        debugLog(`Found embed source: ${sourceInfo}`);
+      // Handle attachments
+      if (message.attachments && message.attachments.length > 0) {
+        message.attachments.forEach(attachment => {
+          if (attachment.url) urls.push(attachment.url);
+        });
+      }
+    } else {
+      // WebSocket message handling (Discord.js objects)
+      if (message.content) {
+        newsContent = message.content;
+        urls = urls.concat(extractUrls(message.content));
       }
       
-      // Check for footer
-      if (embed.footer && embed.footer.text) {
-        debugLog(`Found embed footer: ${embed.footer.text}`);
-        if (!sourceInfo) sourceInfo = embed.footer.text;
+      // Handle Discord.js embeds
+      if (message.embeds && message.embeds.length > 0) {
+        debugLog(`Message has ${message.embeds.length} embeds via WebSocket`);
+        
+        message.embeds.forEach(embed => {
+          const embedContent = extractEmbedContent(embed);
+          
+          if (embedContent.title && !newsTitle) {
+            newsTitle = embedContent.title;
+          }
+          
+          if (embedContent.description) {
+            if (newsContent) newsContent += '\n\n';
+            newsContent += embedContent.description;
+          }
+          
+          urls = urls.concat(embedContent.urls);
+        });
       }
       
-      // Check for URL in the embed
-      if (embed.url) {
-        debugLog(`Found embed URL: ${embed.url}`);
-        urls.push(embed.url);
+      // Handle attachments
+      if (message.attachments && message.attachments.size > 0) {
+        message.attachments.forEach(attachment => {
+          if (attachment.url) urls.push(attachment.url);
+        });
       }
     }
     
     // Force a default title if we have content but no title
-    if (newsContent && !newsTitle) {
-      newsTitle = "News Update";
+    if (!newsTitle) {
+      newsTitle = message.author?.username === 'CyberSecurity Bot' ? "Cybersecurity News" : "News Update";
     }
     
     // Combine title and content for storage
-    let fullContent = '';
-    if (newsTitle) fullContent += newsTitle + '\n\n';
+    let fullContent = newsTitle + '\n\n';
     if (newsContent) fullContent += newsContent;
     
-    // Add source info if available
-    if (sourceInfo) fullContent += `\n\nSource: ${sourceInfo}`;
+    // Remove duplicate URLs
+    urls = [...new Set(urls)];
+    debugLog(`Extracted ${urls.length} unique URLs`);
     
-    // Add URLs if found and not already in the content
-    if (urls.length > 0) {
-      const urlList = [...new Set(urls)]; // Remove duplicates
-      debugLog(`Extracted unique URLs: ${urlList.join(', ')}`);
+    // Final fallback if we still have nothing meaningful
+    if (fullContent.trim() === newsTitle.trim()) {
+      debugLog('Extraction produced empty content, using raw approach');
       
-      // Only add URLs section if they're not already in the content
-      let urlsAlreadyInContent = true;
-      for (const url of urlList) {
-        if (!fullContent.includes(url)) {
-          urlsAlreadyInContent = false;
-          break;
-        }
-      }
-      
-      if (!urlsAlreadyInContent) {
-        fullContent += '\n\nLinks:';
-        urlList.forEach(url => {
-          fullContent += `\n${url}`;
-        });
-      }
-    }
-    
-    // Handle the case where we can't extract content normally
-    if (fullContent.trim() === '') {
-      debugLog('No content detected using standard methods, trying raw approach');
-      
-      // Try to extract content from the raw message data
       try {
-        const rawData = safeStringify(message);
+        // Try to access raw message data
+        let rawContent = '';
         
-        // Look for content within the raw data using regex
-        const titleRegex = /"title":"([^"]+)"/;
-        const descRegex = /"description":"([^"]+)"/;
-        const urlRegex = /"url":"(https?:\/\/[^"]+)"/g;
-        
-        const titleMatch = rawData.match(titleRegex);
-        const descMatch = rawData.match(descRegex);
-        
-        // Extract URLs from raw data
-        let urlMatch;
-        while ((urlMatch = urlRegex.exec(rawData)) !== null) {
-          urls.push(urlMatch[1]);
+        if (source === 'rest-api' && message.embeds && message.embeds.length > 0) {
+          // REST API handling for image embeds
+          const embed = message.embeds[0];
+          if (embed.image) {
+            rawContent = `[Image] ${embed.image.url}`;
+            if (!urls.includes(embed.image.url)) urls.push(embed.image.url);
+          } else if (embed.thumbnail) {
+            rawContent = `[Thumbnail] ${embed.thumbnail.url}`;
+            if (!urls.includes(embed.thumbnail.url)) urls.push(embed.thumbnail.url);
+          }
+        } else if (source === 'websocket') {
+          // WebSocket handling for complex embeds
+          if (message.embeds && message.embeds.length > 0) {
+            const embed = message.embeds[0];
+            // Try to extract from raw data
+            if (embed.data && JSON.stringify(embed.data).length > 2) {
+              rawContent = `Complex embed message with data: ${JSON.stringify(embed.data).substring(0, 100)}...`;
+              
+              // Extract any URLs from the raw data
+              const rawDataStr = JSON.stringify(embed.data);
+              const urlMatches = rawDataStr.match(/"url":"(https?:\/\/[^"]+)"/g) || [];
+              urlMatches.forEach(match => {
+                const url = match.replace(/"url":"/, '').replace(/"$/, '');
+                if (!urls.includes(url)) urls.push(url);
+              });
+            }
+          }
         }
         
-        if (titleMatch && titleMatch[1]) {
-          newsTitle = titleMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-          debugLog(`Extracted title from raw data: ${newsTitle}`);
-        }
-        
-        if (descMatch && descMatch[1]) {
-          newsContent = descMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
-          debugLog(`Extracted content from raw data: ${newsContent}`);
-        }
-        
-        // Rebuild the full content
-        fullContent = '';
-        if (newsTitle) fullContent += newsTitle + '\n\n';
-        if (newsContent) fullContent += newsContent;
-        
-        // Add URLs if found
-        if (urls.length > 0) {
-          fullContent += '\n\nLinks:';
-          [...new Set(urls)].forEach(url => {
-            fullContent += `\n${url}`;
-          });
+        if (rawContent) {
+          fullContent += '\n\n' + rawContent;
         }
       } catch (err) {
         debugLog(`Error in raw extraction: ${err.message}`);
       }
     }
     
-    // Final fallback if we still have nothing
-    if (fullContent.trim() === '') {
-      debugLog('All extraction methods failed, using fallback');
-      fullContent = `News Update\n\nUnable to extract content from this message type. This appears to be a complex message that requires additional handling.\n\nMessage ID: ${message.id}`;
+    // Add URLs if found and not already in the content
+    if (urls.length > 0) {
+      fullContent += '\n\nLinks:';
+      urls.forEach(url => {
+        fullContent += `\n${url}`;
+      });
+    }
+    
+    // Final fallback if everything failed
+    if (fullContent.trim() === newsTitle.trim()) {
+      debugLog('All extraction methods failed, using fallback with message ID');
+      fullContent = `${newsTitle}\n\nUnable to extract detailed content from this message type. This appears to be a complex message that requires additional handling.\n\nMessage ID: ${message.id}`;
     }
     
     // Insert into Supabase
-    debugLog(`Inserting content into Supabase: ${fullContent}`);
-    debugLog(`URLs found: ${urls.length > 0 ? urls.join(', ') : 'None'}`);
+    debugLog(`Inserting content into Supabase with ${urls.length} URLs`);
     
     const { data, error } = await supabase
       .from('newsfeed')

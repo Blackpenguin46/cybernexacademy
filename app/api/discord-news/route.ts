@@ -76,6 +76,10 @@ export async function GET() {
     console.log(`Query successful, retrieved ${articles?.length || 0} items`);
     if (articles && articles.length > 0) {
       console.log('Sample article:', articles[0]);
+      console.log('Sample article timestamp:', articles[0].timestamp);
+      console.log('Sample article author:', articles[0].author);
+      console.log('Sample article content length:', articles[0].content?.length || 0);
+      console.log('Article array is empty?', articles.length === 0);
       
       return NextResponse.json({
         articles: articles,
