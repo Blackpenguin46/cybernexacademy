@@ -113,21 +113,23 @@ export default function DiscordNewsPage() {
       });
       
       const data = await response.json(); // Try parsing JSON regardless of status
-      console.log('Received data from API:', data);
+      console.log('Received data from API (raw):', JSON.stringify(data, null, 2));
       
-      // Enhanced debugging to check the structure
-      if (data.articles) {
-        console.log(`Found ${data.articles.length} articles`);
-        if (data.articles.length > 0) {
-          console.log('First article sample:', {
-            id: data.articles[0].id,
-            content: data.articles[0].content?.substring(0, 50) + '...' || 'No content',
-            author: data.articles[0].author,
-            timestamp: data.articles[0].timestamp,
-          });
-        }
+      // More detailed debugging
+      console.log('API Response Status:', response.status);
+      console.log('Articles array exists:', Boolean(data.articles));
+      console.log('Articles count:', data.articles?.length || 0);
+      
+      if (data.articles && data.articles.length > 0) {
+        console.log('First article sample:');
+        console.table({
+          id: data.articles[0].id,
+          content: data.articles[0].content?.substring(0, 50) + '...' || 'No content',
+          author: data.articles[0].author,
+          timestamp: data.articles[0].timestamp,
+        });
       } else {
-        console.log('No articles property found in response!', Object.keys(data));
+        console.log('No articles found in the response');
       }
 
       // Save all information for debugging
@@ -140,6 +142,11 @@ export default function DiscordNewsPage() {
       if (!response.ok) {
          // Use message from API response if available, otherwise generic error
         throw new Error(data.message || `Failed to fetch news: ${response.status} ${response.statusText}`);
+      }
+      
+      if (!data.articles || !Array.isArray(data.articles)) {
+        console.error('API response does not contain articles array:', data);
+        throw new Error('Invalid API response format: missing articles array');
       }
       
       setNews(data.articles || []);
