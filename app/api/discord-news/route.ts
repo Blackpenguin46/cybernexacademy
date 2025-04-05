@@ -31,71 +31,130 @@ const FALLBACK_MESSAGES = [
   }
 ];
 
+// Function to log detailed information about an object
+function logObject(name: string, obj: any) {
+  console.log(`${name}:`, {
+    type: typeof obj,
+    isNull: obj === null,
+    isUndefined: obj === undefined,
+    keys: obj ? Object.keys(obj) : 'N/A',
+    sample: obj && typeof obj === 'object' ? JSON.stringify(obj).substring(0, 200) + '...' : obj
+  });
+}
+
 export async function GET() {
-  console.log('Starting direct Supabase newsfeed query');
-  
-  // Fallback news data in case of API failure
-  const fallbackData = {
-    articles: FALLBACK_MESSAGES,
-    source: 'fallback',
-    message: 'Could not connect to Supabase or no news found.'
-  };
+  console.log('Starting API request to fetch Discord news');
   
   try {
-    // Direct query to the newsfeed table (we know it exists and has no RLS)
-    console.log('Querying newsfeed table directly...');
+    // 1. First just check Supabase health
+    console.log('Checking Supabase connection health...');
+    const { data: healthData, error: healthError } = await supabase.from('_tables').select('name').limit(1);
     
-    const { data: newsData, error } = await supabase
+    // If we can't even get table metadata, the connection is definitely broken
+    if (healthError) {
+      console.error('Supabase health check failed:', healthError.message);
+      throw new Error(`Supabase connection error: ${healthError.message}`);
+    }
+    
+    console.log('Supabase health check successful:', { healthData });
+    
+    // 2. Try to list all tables for debugging
+    console.log('Fetching available tables...');
+    const { data: tables, error: tablesError } = await supabase.from('_tables').select('*');
+    
+    if (tablesError) {
+      console.log('Could not list tables (access restriction):', tablesError.message);
+    } else {
+      console.log('Available tables:', tables?.map(t => t.name).join(', ') || 'None found');
+    }
+    
+    // 3. Now query the newsfeed table
+    console.log('Querying newsfeed table...');
+    const { data: newsData, error: newsError } = await supabase
       .from('newsfeed')
       .select('*')
       .order('timestamp', { ascending: false })
-      .limit(50);
+      .limit(10);
     
-    // Log query results for debugging
     console.log('Supabase query response:', { 
-      success: !error, 
-      errorMessage: error?.message,
+      success: !newsError, 
+      errorCode: newsError?.code,
+      errorMessage: newsError?.message,
       itemCount: newsData?.length || 0
     });
     
-    if (error) {
-      console.error('Error querying newsfeed table:', error);
-      throw new Error(`Supabase query error: ${error.message}`);
+    if (newsError) {
+      // If table doesn't exist, try listing all tables to find the right one
+      if (newsError.code === '42P01') { // PostgreSQL error code for "table does not exist"
+        console.log('The "newsfeed" table does not exist, checking for similar tables...');
+        const { data: schema, error: schemaError } = await supabase.rpc('get_schema');
+        
+        if (schemaError) {
+          console.log('Could not get schema:', schemaError.message);
+        } else {
+          console.log('Schema information:', schema);
+        }
+      }
+      
+      throw new Error(`Supabase query error: ${newsError.message} (code: ${newsError.code})`);
     }
     
     if (!newsData || newsData.length === 0) {
-      console.log('Newsfeed table exists but has no data');
-      return NextResponse.json(fallbackData);
+      console.log('Newsfeed table exists but has no data, returning fallback data');
+      
+      // Even though we're returning fallback data, we'll add a special flag to indicate
+      // that the table connection worked but was empty
+      return NextResponse.json({
+        articles: FALLBACK_MESSAGES,
+        source: 'fallback',
+        databaseStatus: 'empty',
+        message: 'Supabase connection successful but newsfeed table is empty'
+      });
     }
 
-    // Log the actual data for debugging
-    console.log('First record in newsfeed:', newsData[0]);
+    // Log the actual data structure for debugging
+    console.log('First record structure:');
+    logObject('First record', newsData[0]);
+    
+    // Check if any required fields are missing
+    const missingFields = newsData.some(item => !item.content || !item.id || !item.timestamp);
+    if (missingFields) {
+      console.log('Warning: Some records are missing required fields');
+    }
     
     // Map to the format expected by the frontend
-    const articles = newsData.map((item) => ({
-      id: item.id?.toString() || `fallback-${Math.random()}`,
+    const articles = newsData.map((item, index) => ({
+      id: item.id?.toString() || `item-${index}`,
       content: item.content || 'No content available',
       author: item.author || 'Unknown',
       timestamp: item.timestamp || new Date().toISOString(),
       attachments: []
     }));
     
-    console.log(`Successfully mapped ${articles.length} news items for frontend`);
-    
-    // Return a successful response with the articles
+    // Return complete debug info alongside the articles
     return NextResponse.json({ 
       articles,
       source: 'supabase',
       count: articles.length,
-      message: 'Successfully retrieved news from newsfeed table.'
+      message: 'Successfully retrieved news from Supabase',
+      debug: {
+        firstRecord: newsData[0],
+        tableAccess: true,
+        connectionTime: new Date().toISOString()
+      }
     });
     
   } catch (error) {
     console.error('Error in Discord news API:', error);
+    
     return NextResponse.json({
-      ...fallbackData,
+      articles: FALLBACK_MESSAGES,
+      source: 'fallback',
+      databaseStatus: 'error',
       message: error instanceof Error ? error.message : 'Unknown error occurred',
-      detail: 'Server-side error in discord news API'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      errorTime: new Date().toISOString(),
+      stack: error instanceof Error ? error.stack : null
     });
   }
 } 
