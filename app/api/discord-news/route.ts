@@ -51,14 +51,27 @@ export async function GET() {
   
   let message = 'Operation started';
   try {
+    console.log('[API Route] Performing basic fetch test to Supabase base URL...');
+    const testResponse = await fetch(supabaseUrl, { method: 'HEAD' }); // Use HEAD to minimize data transfer
+    console.log(`[API Route] Basic fetch test status: ${testResponse.status}`);
+    if (!testResponse.ok) {
+        // Log more details if possible, without revealing sensitive info
+        console.error(`[API Route] Basic fetch test failed with status: ${testResponse.status} ${testResponse.statusText}`);
+        // Optionally read body if needed, but HEAD usually has no body
+        // const bodyText = await testResponse.text(); 
+        // console.error(`[API Route] Basic fetch test response body: ${bodyText.substring(0, 100)}...`);
+        throw new Error(`Basic network test to Supabase URL failed: ${testResponse.status}`);
+    }
+    console.log('[API Route] Basic fetch test successful.');
+    
     console.log('[API Route] Initializing Supabase client...');
     const supabase = createClient(supabaseUrl, supabaseKey);
     console.log('[API Route] Supabase client initialized.');
     
-    console.log('[API Route] Querying ONLY id from newsfeed table...');
+    console.log('[API Route] Querying newsfeed table (select *)...');
     const { data: articles, error } = await supabase
       .from('newsfeed')
-      .select('id')
+      .select('*')
       .order('timestamp', { ascending: false })
       .limit(50); 
     
@@ -69,27 +82,43 @@ export async function GET() {
     message = 'Using fallback data due to query error or no data';
 
     if (error) {
-      console.error('[API Route] Error querying newsfeed table (even with simplified query):', error?.message || error);
+      console.error('[API Route] Error querying newsfeed table:', error?.message || error);
       if (error.message.includes('permission denied') || error.code === '42501') {
           message = 'Supabase Row Level Security (RLS) likely preventing read access.';
       } else {
           message = `Supabase query error: ${error.message}`;
       }
     } else if (articles && articles.length > 0) {
-      console.log(`[API Route] Query successful (simplified), retrieved ${articles.length} items`);
-      source = 'database_simplified_query_ok'; 
-      message = `Simplified query OK (${articles.length} IDs found). Returning fallback for now.`;
-      finalArticles = fallbackArticles; 
+      console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
+      try {
+        const processedArticles = articles.map(article => {
+          if (article.urls && typeof article.urls === 'string') {
+            try { article.urls = JSON.parse(article.urls); } catch (e) { article.urls = []; }
+          }
+          if (!article.urls || article.urls.length === 0) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            article.urls = article.content ? article.content.match(urlRegex) || [] : [];
+          }
+          if (!Array.isArray(article.urls)) { article.urls = []; }
+          return article;
+        });
+        finalArticles = processedArticles;
+        source = 'database';
+        message = 'Retrieved from database';
+      } catch (processingError) {
+         console.error('[API Route] Error processing articles:', processingError);
+         message = `Error processing articles: ${processingError instanceof Error ? processingError.message : 'Unknown processing error'}`;
+      }
     } else {
-      console.log('[API Route] No items found in newsfeed table (simplified query)');
-      message = 'No items found in database (simplified query)';
+      console.log('[API Route] No items found in newsfeed table');
+      message = 'No items found in database';
     }
     
     console.log(`[API Route] Returning ${finalArticles.length} articles with source: ${source}`);
     return NextResponse.json({
       articles: finalArticles,
       source: source,
-      count: articles ? articles.length : 0,
+      count: finalArticles.length,
       message: message,
       timestamp: new Date().toISOString()
     });
@@ -97,8 +126,10 @@ export async function GET() {
   } catch (catchError) {
     console.error('[API Route] Unexpected error in API handler:', catchError);
     let errorMsg = 'Unknown error';
-    if (catchError instanceof TypeError && catchError.message.includes('fetch failed')) {
-        errorMsg = 'Network error connecting/querying database. Check Vercel env vars & Supabase connectivity/permissions.';
+    if (catchError instanceof Error && catchError.message.startsWith('Basic network test')) {
+        errorMsg = catchError.message; // Use the specific message from our test
+    } else if (catchError instanceof TypeError && catchError.message.includes('fetch failed')) {
+        errorMsg = 'Network error connecting/querying database (PostgREST/Client issue?). Check Vercel env vars & Supabase connectivity/permissions.';
     } else if (catchError instanceof Error) {
         errorMsg = catchError.message;
     }
