@@ -216,37 +216,6 @@ export default function DiscordNewsPage() {
   // Log state just before rendering
   console.log(`[RENDER] Rendering component - Loading: ${loading}, Error: ${error || 'none'}, News Count: ${news.length}`);
   
-  // Determine status message to display (only if not loading and no error)
-  let statusDisplay = null;
-  if (!loading && !error) {
-    if (source === 'fallback') {
-      statusDisplay = (
-        <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-4 mb-6">
-          <div className="flex items-center text-yellow-400 mb-2">
-            <AlertTriangle className="w-5 h-5 mr-2" />
-            <h3 className="font-semibold">Using Fallback Data</h3>
-          </div>
-          <p className="text-yellow-300">
-            Could not fetch live data. {statusMsg}. Displaying sample news.
-          </p>
-        </div>
-      );
-    } else if (news.length === 0 && source !== 'error') { // Don't show if there was an error
-      statusDisplay = (
-        <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-6 mb-8">
-          <div className="flex items-center text-blue-400 mb-2">
-            <AlertTriangle className="w-5 h-5 mr-2" />
-            <h3 className="font-semibold">No Recent News Found</h3>
-          </div>
-          <p className="text-blue-300">
-            No recent news articles found in the database.
-          </p>
-          {showDebugPanel && <pre className="mt-2 text-xs text-blue-400/50 overflow-auto max-h-20">Debug Info: {JSON.stringify(debugData, null, 2)}</pre>}
-        </div>
-      );
-    }
-  }
-
   return (
     <div className="min-h-screen bg-black text-white pt-24 p-8">
       <div className="max-w-5xl mx-auto">
@@ -309,31 +278,22 @@ export default function DiscordNewsPage() {
             </div>
           )}
           
-          {/* Error Message */}
-          {!loading && error && (
-            <div className="bg-red-900/20 border border-red-800 rounded-lg p-6 mb-8">
-              <div className="flex items-center text-red-400 mb-2">
+          {/* No News Found Message Block */}
+          {!loading && news.length === 0 && (
+            <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-6 mb-8">
+              <div className="flex items-center text-blue-400 mb-2">
                 <AlertTriangle className="w-5 h-5 mr-2" />
-                <h3 className="font-semibold">Error Loading Feed</h3>
+                <h3 className="font-semibold">No Recent News Found</h3>
               </div>
-              <p className="text-red-300 mb-3">{error}</p>
-              <Button 
-                variant="outline" size="sm"
-                onClick={fetchNews} 
-                className="bg-red-900/30 border-red-800/50 hover:bg-red-800/50"
-                id="tryAgainBtn" name="tryAgainBtn"
-              >
-                <RefreshCw className="w-4 h-4 mr-2" /> Try Again
-              </Button>
-              {showDebugPanel && <pre className="mt-4 p-3 bg-red-900/30 rounded border border-red-800/50 text-xs text-red-300 font-mono overflow-auto max-h-20">Debug Info: {JSON.stringify(debugData, null, 2)}</pre>}
+              <p className="text-blue-300">
+                No recent news articles are available at this time.
+              </p>
+              {showDebugPanel && <pre className="mt-2 text-xs text-blue-400/50 overflow-auto max-h-20">Debug Info: {JSON.stringify(debugData, null, 2)}</pre>}
             </div>
           )}
           
-          {/* Status Message (Fallback or No News) */}
-          {!loading && !error && statusDisplay}
-          
           {/* News Content */}
-          {!loading && !error && news.length > 0 && (
+          {!loading && news.length > 0 && (
             <div className="space-y-6">
               {news.map((item) => {
                 const { title, content } = formatNewsContent(item.content, item.urls);
