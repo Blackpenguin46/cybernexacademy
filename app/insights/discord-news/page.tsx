@@ -283,6 +283,8 @@ export default function DiscordNewsPage() {
               size="sm"
               onClick={() => setShowDebugPanel(!showDebugPanel)} 
               className="bg-gray-800 border-gray-700 hover:bg-gray-700"
+              id="toggleDebugBtn"
+              name="toggleDebugBtn"
             >
               {showDebugPanel ? 'Hide Debug' : 'Show Debug'}
             </Button>
@@ -292,6 +294,8 @@ export default function DiscordNewsPage() {
               onClick={fetchNews} 
               disabled={loading}
               className="bg-gray-800 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
+              id="refreshFeedBtn"
+              name="refreshFeedBtn"
             >
               <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
               {loading ? 'Refreshing...' : 'Refresh Feed'}
@@ -350,6 +354,8 @@ export default function DiscordNewsPage() {
                 size="sm"
                 onClick={fetchNews} 
                 className="bg-red-900/30 border-red-800/50 hover:bg-red-800/50"
+                id="tryAgainBtn"
+                name="tryAgainBtn"
               >
                 <RefreshCw className="w-4 h-4 mr-2" />
                 Try Again
