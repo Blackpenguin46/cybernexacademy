@@ -8,21 +8,24 @@ const fallbackArticles = [
     content: '[SECURITY ALERT] Microsoft has released patches for 147 vulnerabilities in their April 2024 Patch Tuesday update, including 5 actively exploited zero-days. https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html',
     author: 'SecurityBot',
     timestamp: '2024-04-09T16:30:00.000Z',
-    attachments: []
+    attachments: [],
+    urls: ['https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html']
   },
   {
     id: '2',
     content: '[THREAT INTEL] New LockBit ransomware variant detected with enhanced evasion capabilities. Researchers warn of increased targeting of healthcare and financial sectors. https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html',
     author: 'SecurityBot',
     timestamp: '2024-04-10T14:15:00.000Z',
-    attachments: []
+    attachments: [],
+    urls: ['https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html']
   },
   {
     id: '3',
     content: '[VULNERABILITY] Critical Adobe Acrobat zero-day vulnerability (CVE-2024-21412) being actively exploited. Update immediately! https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html',
     author: 'SecurityBot',
     timestamp: '2024-04-11T09:45:00.000Z',
-    attachments: []
+    attachments: [],
+    urls: ['https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html']
   }
 ];
 
@@ -58,7 +61,8 @@ export async function GET() {
     const { data: articles, error } = await supabase
       .from('newsfeed')
       .select('*')
-      .order('timestamp', { ascending: false });
+      .order('timestamp', { ascending: false })
+      .limit(50); // Limit to 50 most recent articles
     
     // Log query results for debugging
     if (error) {
@@ -73,17 +77,22 @@ export async function GET() {
       });
     }
     
-    console.log(`Query successful, retrieved ${articles?.length || 0} items`);
+    // Process database results or use fallback
+    let finalArticles = fallbackArticles;
+    let source = 'fallback';
+    let message = 'Using fallback data';
+    
+    // Only replace fallback if we have actual articles
     if (articles && articles.length > 0) {
+      console.log(`Query successful, retrieved ${articles.length} items`);
       console.log('Sample article:', articles[0]);
       console.log('Sample article timestamp:', articles[0].timestamp);
       console.log('Sample article author:', articles[0].author);
       console.log('Sample article content length:', articles[0].content?.length || 0);
       console.log('Sample article has urls?', Array.isArray(articles[0].urls));
-      console.log('Article array is empty?', articles.length === 0);
       
       try {
-        // Make sure any urls are parsed from JSON if stored as string
+        // Process articles to ensure proper URL handling
         const processedArticles = articles.map(article => {
           // Check if urls exists and needs parsing
           if (article.urls && typeof article.urls === 'string') {
@@ -95,47 +104,48 @@ export async function GET() {
             }
           }
           
+          // Extract URLs from content if not already present
+          if (!article.urls || article.urls.length === 0) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const contentUrls = article.content ? article.content.match(urlRegex) || [] : [];
+            article.urls = contentUrls;
+          }
+          
           // Ensure urls is always an array
-          if (!article.urls) {
+          if (!Array.isArray(article.urls)) {
             article.urls = [];
           }
           
           return article;
         });
         
-        // Return processed articles
-        console.log('Returning processed articles with urls');
-        return NextResponse.json({
-          articles: processedArticles,
-          source: 'database',
-          count: processedArticles.length,
-          timestamp: new Date().toISOString()
-        });
+        // Only use database results if processing was successful
+        finalArticles = processedArticles;
+        source = 'database';
+        message = 'Retrieved from database';
       } catch (err) {
         console.error('Error processing articles:', err);
-        return NextResponse.json({
-          articles: articles,
-          source: 'database',
-          count: articles.length,
-          timestamp: new Date().toISOString(),
-          processingError: err instanceof Error ? err.message : 'Unknown error'
-        });
+        message = `Error processing articles: ${err instanceof Error ? err.message : 'Unknown error'}`;
+        // Continue with fallback articles
       }
     } else {
-      console.log('No items found in newsfeed table, returning fallback data');
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'fallback',
-        message: 'No items found in database'
-      });
+      console.log('No items found in newsfeed table, using fallback data');
     }
+    
+    // Always return something, either database data or fallback
+    return NextResponse.json({
+      articles: finalArticles,
+      source: source,
+      count: finalArticles.length,
+      message: message,
+      timestamp: new Date().toISOString()
+    });
   } catch (error) {
     console.error('Unexpected error in Discord news API:', error);
     return NextResponse.json({
       articles: fallbackArticles,
       source: 'fallback',
       error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
       errorTime: new Date().toISOString()
     });
   }
