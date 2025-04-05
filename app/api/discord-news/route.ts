@@ -1,6 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
+// Explicitly force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+
 // Define fallback messages in case the API fails
 const fallbackArticles = [
   {
@@ -35,6 +38,8 @@ function logObject(label: string, obj: any) {
 }
 
 export async function GET() {
+  console.log('[API Route] *** GET function entered *** Timestamp:', new Date().toISOString());
+
   console.log('[API Route] Endpoint called at:', new Date().toISOString());
   
   // Use non-public, server-side environment variables
