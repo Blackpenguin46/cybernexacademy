@@ -35,51 +35,98 @@ function logObject(label: string, obj: any) {
 }
 
 export async function GET() {
-  console.log('[API Route - Connection Test] Endpoint called at:', new Date().toISOString());
-
+  console.log('[API Route] Endpoint called at:', new Date().toISOString());
+  
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-  console.log('[API Route - Connection Test] Read Supabase URL:', supabaseUrl ? supabaseUrl.substring(0, 20) + '...' : 'MISSING or Undefined');
-  console.log('[API Route - Connection Test] Read Supabase Key:', supabaseKey ? '******' + supabaseKey.slice(-6) : 'MISSING or Undefined');
-
+  
   if (!supabaseUrl || !supabaseKey) {
-    console.error('[API Route - Connection Test] Env vars MISSING');
-    return NextResponse.json({ message: "Error: Supabase environment variables missing in Vercel.", source: "error" }, { status: 500 });
-  }
-
-  try {
-    console.log('[API Route - Connection Test] Attempting to create Supabase client...');
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    console.log('[API Route - Connection Test] Supabase client *created* successfully (no immediate error).');
-
-    // Test a simple, non-data-intensive call if needed (optional)
-    // console.log('[API Route - Connection Test] Attempting a test list function call...');
-    // const { data, error } = await supabase.functions.list();
-    // if(error) throw error; // Rethrow if the test call failed
-    // console.log('[API Route - Connection Test] Test list function call successful.');
-
-    // If client creation (and optional test) succeeded, return success
-    // We still return fallback articles for now, just confirming connection
+    console.error('[API Route] Missing Supabase environment variables');
     return NextResponse.json({
-      message: "Success: Supabase client created (connection likely OK). Returning fallback for test.",
-      source: "connection_test_ok",
-      articles: fallbackArticles
+        articles: fallbackArticles,
+        source: 'fallback',
+        error: 'Missing Supabase environment variables'
+      });
+  }
+  
+  let message = 'Operation started';
+  try {
+    console.log('[API Route] Initializing Supabase client...');
+    const supabase = createClient(supabaseUrl, supabaseKey);
+    console.log('[API Route] Supabase client initialized.');
+    
+    console.log('[API Route] Querying newsfeed table...');
+    const { data: articles, error } = await supabase
+      .from('newsfeed')
+      .select('*')
+      .order('timestamp', { ascending: false })
+      .limit(50); 
+    
+    console.log('[API Route] Supabase query completed.');
+    
+    let finalArticles = fallbackArticles;
+    let source = 'fallback';
+    message = 'Using fallback data due to query error or no data';
+
+    if (error) {
+      console.error('[API Route] Error querying newsfeed table:', error);
+      // Check if it's an RLS error specifically
+      if (error.message.includes('permission denied') || error.code === '42501') {
+          message = 'Supabase Row Level Security (RLS) likely preventing read access.';
+      } else {
+          message = `Supabase query error: ${error.message}`;
+      }
+    } else if (articles && articles.length > 0) {
+      console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
+      try {
+        const processedArticles = articles.map(article => {
+          // ... (Keep URL processing logic) ...
+          if (article.urls && typeof article.urls === 'string') {
+            try { article.urls = JSON.parse(article.urls); } catch (e) { article.urls = []; }
+          }
+          if (!article.urls || article.urls.length === 0) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            article.urls = article.content ? article.content.match(urlRegex) || [] : [];
+          }
+          if (!Array.isArray(article.urls)) { article.urls = []; }
+          return article;
+        });
+        finalArticles = processedArticles;
+        source = 'database';
+        message = 'Retrieved from database';
+      } catch (processingError) {
+         console.error('[API Route] Error processing articles:', processingError);
+         message = `Error processing articles: ${processingError instanceof Error ? processingError.message : 'Unknown processing error'}`;
+      }
+    } else {
+      console.log('[API Route] No items found in newsfeed table, using fallback data');
+      message = 'No items found in database';
+    }
+    
+    console.log(`[API Route] Returning ${finalArticles.length} articles with source: ${source}`);
+    return NextResponse.json({
+      articles: finalArticles,
+      source: source,
+      count: finalArticles.length,
+      message: message,
+      timestamp: new Date().toISOString()
     });
 
-  } catch (error) {
-    console.error('[API Route - Connection Test] FAILED to create Supabase client or test call:', error);
-    let errorMsg = 'Unknown connection error';
-    if (error instanceof TypeError && error.message.includes('fetch failed')) {
-        errorMsg = 'Network-level fetch failed connecting to Supabase.';
-    } else if (error instanceof Error) {
-        errorMsg = error.message;
+  } catch (catchError) {
+    console.error('[API Route] Unexpected error in API handler:', catchError);
+    let errorMsg = 'Unknown error';
+    if (catchError instanceof TypeError && catchError.message.includes('fetch failed')) {
+        errorMsg = 'Network error connecting to database. Check Vercel env vars & Supabase connectivity.';
+    } else if (catchError instanceof Error) {
+        errorMsg = catchError.message;
     }
-    return NextResponse.json({ 
-        message: `Error: ${errorMsg}`, 
-        source: "error", 
-        details: error instanceof Error ? error.toString() : JSON.stringify(error),
-        articles: fallbackArticles 
-    }, { status: 500 });
+    
+    return NextResponse.json({
+      articles: fallbackArticles,
+      source: 'fallback',
+      error: `API Handler Error: ${errorMsg}`,
+      message: errorMsg,
+      errorTime: new Date().toISOString()
+    });
   }
 } 
