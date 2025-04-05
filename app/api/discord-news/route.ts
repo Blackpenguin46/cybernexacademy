@@ -55,85 +55,60 @@ export async function GET() {
   
   let message = 'Operation started';
   try {
-    // Basic fetch test (optional - can be kept or removed)
-    console.log('[API Route] Performing basic fetch test to Supabase base URL...');
-    const testResponse = await fetch(supabaseUrl, { method: 'HEAD' }); 
-    console.log(`[API Route] Basic fetch test status: ${testResponse.status}`);
-    if (!testResponse.ok) {
-        console.error(`[API Route] Basic fetch test failed: ${testResponse.status} ${testResponse.statusText}`);
-        throw new Error(`Basic network test to Supabase URL failed: ${testResponse.status}`);
+    // === Test 1: Basic Fetch to Base URL ===
+    console.log('[API Route] Test 1: Basic fetch to Supabase base URL...');
+    const testResponseBase = await fetch(supabaseUrl, { method: 'HEAD' }); 
+    console.log(`[API Route] Test 1 status: ${testResponseBase.status}`);
+    if (!testResponseBase.ok) {
+        console.error(`[API Route] Test 1 FAILED: ${testResponseBase.status} ${testResponseBase.statusText}`);
+        throw new Error(`Basic network test to Supabase URL failed: ${testResponseBase.status}`);
     }
-    console.log('[API Route] Basic fetch test successful.');
+    console.log('[API Route] Test 1 successful (Base URL reachable).');
     
-    console.log('[API Route] Initializing Supabase client with Service Key...');
-    // Initialize with Service Role Key
-    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
-        auth: { persistSession: false } // Recommended for server-side usage
+    // === Test 2: Manual Fetch to PostgREST Endpoint ===
+    console.log('[API Route] Test 2: Manual fetch to PostgREST endpoint (/rest/v1/newsfeed?select=id&limit=1)...');
+    const postgrestUrl = `${supabaseUrl}/rest/v1/newsfeed?select=id&limit=1`;
+    const testResponsePostgrest = await fetch(postgrestUrl, {
+        method: 'GET',
+        headers: {
+            'apikey': supabaseServiceKey, // Use service key as apikey for direct PostgREST
+            'Authorization': `Bearer ${supabaseServiceKey}`
+        }
     });
-    console.log('[API Route] Supabase client initialized.');
+    console.log(`[API Route] Test 2 status: ${testResponsePostgrest.status}`);
     
-    console.log('[API Route] Querying newsfeed table (select *)...');
-    const { data: articles, error } = await supabase
-      .from('newsfeed')
-      .select('*')
-      .order('timestamp', { ascending: false })
-      .limit(50); 
-    
-    console.log('[API Route] Supabase query completed.');
-    
-    let finalArticles = fallbackArticles;
-    let source = 'fallback';
-    message = 'Using fallback data due to query error or no data';
+    // Read body for more info if available, especially on error
+    let bodyText = await testResponsePostgrest.text();
+    console.log(`[API Route] Test 2 response body (first 100 chars): ${bodyText.substring(0, 100)}`);
 
-    if (error) {
-      console.error('[API Route] Error querying newsfeed table:', error?.message || error);
-      // No need to check for RLS error message specifically when using service key
-      message = `Supabase query error: ${error.message}`;
-    } else if (articles && articles.length > 0) {
-      console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
-      try {
-        const processedArticles = articles.map(article => {
-          if (article.urls && typeof article.urls === 'string') {
-            try { article.urls = JSON.parse(article.urls); } catch (e) { article.urls = []; }
-          }
-          if (!article.urls || article.urls.length === 0) {
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            article.urls = article.content ? article.content.match(urlRegex) || [] : [];
-          }
-          if (!Array.isArray(article.urls)) { article.urls = []; }
-          return article;
-        });
-        finalArticles = processedArticles;
-        source = 'database';
-        message = 'Retrieved from database';
-      } catch (processingError) {
-         console.error('[API Route] Error processing articles:', processingError);
-         message = `Error processing articles: ${processingError instanceof Error ? processingError.message : 'Unknown processing error'}`;
-      }
-    } else {
-      console.log('[API Route] No items found in newsfeed table');
-      message = 'No items found in database';
+    if (!testResponsePostgrest.ok) {
+        console.error(`[API Route] Test 2 FAILED: ${testResponsePostgrest.status} ${testResponsePostgrest.statusText}`);
+        throw new Error(`Manual PostgREST fetch test failed: ${testResponsePostgrest.status}. Body: ${bodyText.substring(0, 100)}`);
     }
+    console.log('[API Route] Test 2 successful (PostgREST endpoint reachable).');
     
-    console.log(`[API Route] Returning ${finalArticles.length} articles with source: ${source}`);
+    // Return success message - STILL return fallback for now
     return NextResponse.json({
-      articles: finalArticles,
-      source: source,
-      count: finalArticles.length,
-      message: message,
-      timestamp: new Date().toISOString()
+        message: "Success: Both basic fetch and manual PostgREST fetch worked. Issue might be Supabase client internal.",
+        source: "manual_postgrest_ok",
+        articles: fallbackArticles 
     });
 
   } catch (catchError) {
-    console.error('[API Route] Unexpected error in API handler:', catchError);
+    console.error('[API Route] ERROR during tests or execution:', catchError);
     let errorMsg = 'Unknown error';
+    // Prioritize reporting the specific test failure
     if (catchError instanceof Error && catchError.message.startsWith('Basic network test')) {
-        errorMsg = catchError.message; // Use the specific message from our test
+        errorMsg = catchError.message; 
+    } else if (catchError instanceof Error && catchError.message.startsWith('Manual PostgREST fetch test')) {
+        errorMsg = catchError.message;
     } else if (catchError instanceof TypeError && catchError.message.includes('fetch failed')) {
-        errorMsg = 'Network error connecting/querying database (PostgREST/Client issue?). Check Vercel env vars & Supabase connectivity/permissions.';
+        // This might still happen if the fetch call itself fails at OS level
+        errorMsg = 'Network error during fetch execution. Check Vercel outbound connectivity / DNS.';
     } else if (catchError instanceof Error) {
         errorMsg = catchError.message;
     }
+    
     return NextResponse.json({
       articles: fallbackArticles,
       source: 'fallback_catch_error',
