@@ -35,118 +35,51 @@ function logObject(label: string, obj: any) {
 }
 
 export async function GET() {
-  console.log('Discord news API endpoint called at:', new Date().toISOString());
-  
-  // Initialize Supabase client
+  console.log('[API Route - Connection Test] Endpoint called at:', new Date().toISOString());
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  
-  // Return fallback data if environment variables are missing
+
+  console.log('[API Route - Connection Test] Read Supabase URL:', supabaseUrl ? supabaseUrl.substring(0, 20) + '...' : 'MISSING or Undefined');
+  console.log('[API Route - Connection Test] Read Supabase Key:', supabaseKey ? '******' + supabaseKey.slice(-6) : 'MISSING or Undefined');
+
   if (!supabaseUrl || !supabaseKey) {
-    console.error('Missing Supabase environment variables');
-    return NextResponse.json({
-      articles: fallbackArticles,
-      source: 'fallback',
-      error: 'Missing Supabase environment variables'
-    });
+    console.error('[API Route - Connection Test] Env vars MISSING');
+    return NextResponse.json({ message: "Error: Supabase environment variables missing in Vercel.", source: "error" }, { status: 500 });
   }
-  
+
   try {
-    // Create Supabase client
-    console.log('Initializing Supabase client with URL:', supabaseUrl);
+    console.log('[API Route - Connection Test] Attempting to create Supabase client...');
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
-    // Directly query the newsfeed table
-    console.log('Querying newsfeed table...');
-    const { data: articles, error } = await supabase
-      .from('newsfeed')
-      .select('*')
-      .order('timestamp', { ascending: false })
-      .limit(50); // Limit to 50 most recent articles
-    
-    // Log query results for debugging
-    if (error) {
-      console.error('Error querying newsfeed table:', error);
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'fallback',
-        databaseStatus: 'error',
-        message: `Supabase query error: ${error.message}`,
-        error: error.message,
-        errorTime: new Date().toISOString()
-      });
-    }
-    
-    // Process database results or use fallback
-    let finalArticles = fallbackArticles;
-    let source = 'fallback';
-    let message = 'Using fallback data';
-    
-    // Only replace fallback if we have actual articles
-    if (articles && articles.length > 0) {
-      console.log(`Query successful, retrieved ${articles.length} items`);
-      console.log('Sample article:', articles[0]);
-      console.log('Sample article timestamp:', articles[0].timestamp);
-      console.log('Sample article author:', articles[0].author);
-      console.log('Sample article content length:', articles[0].content?.length || 0);
-      console.log('Sample article has urls?', Array.isArray(articles[0].urls));
-      
-      try {
-        // Process articles to ensure proper URL handling
-        const processedArticles = articles.map(article => {
-          // Check if urls exists and needs parsing
-          if (article.urls && typeof article.urls === 'string') {
-            try {
-              article.urls = JSON.parse(article.urls);
-            } catch (e) {
-              console.log('Error parsing urls JSON:', e);
-              article.urls = [];
-            }
-          }
-          
-          // Extract URLs from content if not already present
-          if (!article.urls || article.urls.length === 0) {
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            const contentUrls = article.content ? article.content.match(urlRegex) || [] : [];
-            article.urls = contentUrls;
-          }
-          
-          // Ensure urls is always an array
-          if (!Array.isArray(article.urls)) {
-            article.urls = [];
-          }
-          
-          return article;
-        });
-        
-        // Only use database results if processing was successful
-        finalArticles = processedArticles;
-        source = 'database';
-        message = 'Retrieved from database';
-      } catch (err) {
-        console.error('Error processing articles:', err);
-        message = `Error processing articles: ${err instanceof Error ? err.message : 'Unknown error'}`;
-        // Continue with fallback articles
-      }
-    } else {
-      console.log('No items found in newsfeed table, using fallback data');
-    }
-    
-    // Always return something, either database data or fallback
+    console.log('[API Route - Connection Test] Supabase client *created* successfully (no immediate error).');
+
+    // Test a simple, non-data-intensive call if needed (optional)
+    // console.log('[API Route - Connection Test] Attempting a test list function call...');
+    // const { data, error } = await supabase.functions.list();
+    // if(error) throw error; // Rethrow if the test call failed
+    // console.log('[API Route - Connection Test] Test list function call successful.');
+
+    // If client creation (and optional test) succeeded, return success
+    // We still return fallback articles for now, just confirming connection
     return NextResponse.json({
-      articles: finalArticles,
-      source: source,
-      count: finalArticles.length,
-      message: message,
-      timestamp: new Date().toISOString()
+      message: "Success: Supabase client created (connection likely OK). Returning fallback for test.",
+      source: "connection_test_ok",
+      articles: fallbackArticles
     });
+
   } catch (error) {
-    console.error('Unexpected error in Discord news API:', error);
-    return NextResponse.json({
-      articles: fallbackArticles,
-      source: 'fallback',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      errorTime: new Date().toISOString()
-    });
+    console.error('[API Route - Connection Test] FAILED to create Supabase client or test call:', error);
+    let errorMsg = 'Unknown connection error';
+    if (error instanceof TypeError && error.message.includes('fetch failed')) {
+        errorMsg = 'Network-level fetch failed connecting to Supabase.';
+    } else if (error instanceof Error) {
+        errorMsg = error.message;
+    }
+    return NextResponse.json({ 
+        message: `Error: ${errorMsg}`, 
+        source: "error", 
+        details: error instanceof Error ? error.toString() : JSON.stringify(error),
+        articles: fallbackArticles 
+    }, { status: 500 });
   }
 } 
