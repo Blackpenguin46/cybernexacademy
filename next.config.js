@@ -10,8 +10,37 @@ const nextConfig = {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   },
-  // REMOVED HEADERS CONFIGURATION FOR DEBUGGING
-  // async headers() { ... }, 
+  // Reinstating CSP headers now that conflicting meta tag is removed
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            // Secure CSP allowing necessary resources
+            value: `
+              default-src 'self'; 
+              script-src 'self' 'unsafe-inline' https://*.vercel.app; 
+              script-src-elem 'self' 'unsafe-inline' https://*.vercel.app; 
+              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+              style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+              img-src 'self' blob: data: https://*.googleusercontent.com https://*.supabase.co; 
+              font-src 'self' https://fonts.gstatic.com data:; 
+              connect-src 'self' https://*.supabase.co https://api.openai.com https://fonts.googleapis.com https://fonts.gstatic.com; 
+              frame-src 'self'; 
+              object-src 'none'; 
+              base-uri 'self'; 
+              form-action 'self'; 
+              frame-ancestors 'none'; 
+              block-all-mixed-content; 
+              upgrade-insecure-requests; 
+            `.replace(/\s{2,}/g, ' ').trim(),
+          },
+        ],
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
