@@ -79,14 +79,48 @@ export async function GET() {
       console.log('Sample article timestamp:', articles[0].timestamp);
       console.log('Sample article author:', articles[0].author);
       console.log('Sample article content length:', articles[0].content?.length || 0);
+      console.log('Sample article has urls?', Array.isArray(articles[0].urls));
       console.log('Article array is empty?', articles.length === 0);
       
-      return NextResponse.json({
-        articles: articles,
-        source: 'database',
-        count: articles.length,
-        timestamp: new Date().toISOString()
-      });
+      try {
+        // Make sure any urls are parsed from JSON if stored as string
+        const processedArticles = articles.map(article => {
+          // Check if urls exists and needs parsing
+          if (article.urls && typeof article.urls === 'string') {
+            try {
+              article.urls = JSON.parse(article.urls);
+            } catch (e) {
+              console.log('Error parsing urls JSON:', e);
+              article.urls = [];
+            }
+          }
+          
+          // Ensure urls is always an array
+          if (!article.urls) {
+            article.urls = [];
+          }
+          
+          return article;
+        });
+        
+        // Return processed articles
+        console.log('Returning processed articles with urls');
+        return NextResponse.json({
+          articles: processedArticles,
+          source: 'database',
+          count: processedArticles.length,
+          timestamp: new Date().toISOString()
+        });
+      } catch (err) {
+        console.error('Error processing articles:', err);
+        return NextResponse.json({
+          articles: articles,
+          source: 'database',
+          count: articles.length,
+          timestamp: new Date().toISOString(),
+          processingError: err instanceof Error ? err.message : 'Unknown error'
+        });
+      }
     } else {
       console.log('No items found in newsfeed table, returning fallback data');
       return NextResponse.json({

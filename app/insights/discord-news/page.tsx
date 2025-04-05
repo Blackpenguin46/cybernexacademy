@@ -102,6 +102,7 @@ export default function DiscordNewsPage() {
   const [statusMsg, setStatusMsg] = useState('');
   const [debug, setDebug] = useState<any>({});
   const [stateCounter, setStateCounter] = useState(0); // Counter to track state changes
+  const [showDebugPanel, setShowDebugPanel] = useState(true); // Debug panel visibility toggle
 
   // Wrap fetchNews in useCallback to prevent unnecessary recreation
   const fetchNews = useCallback(async () => {
@@ -111,10 +112,26 @@ export default function DiscordNewsPage() {
       setError(''); // Clear previous errors on fetch
       setStateCounter(prev => prev + 1); // Increment counter on state change
       console.log('Fetching Discord news...');
+      
+      // Add loading timeout safety net
+      const loadingTimeout = setTimeout(() => {
+        if (loading) {
+          console.log('Loading timeout reached, forcing loading state to false');
+          setLoading(false);
+          setStateCounter(prev => prev + 1);
+          if (news.length === 0) {
+            setError('Loading timed out. Please try refreshing.');
+          }
+        }
+      }, 10000); // 10 second timeout
+      
       const response = await fetch('/api/discord-news', {
         cache: 'no-store',
         next: { revalidate: 0 } // Ensure fresh data
       });
+      
+      // Clear timeout since we got a response
+      clearTimeout(loadingTimeout);
       
       const data = await response.json(); // Try parsing JSON regardless of status
       console.log('Received data from API (raw):', JSON.stringify(data, null, 2));
@@ -174,6 +191,7 @@ export default function DiscordNewsPage() {
       setSource('error'); // Set source to error
       setStateCounter(prev => prev + 1); // Increment counter on state change
     } finally {
+      // Ensure loading state is set to false in finally block
       console.log('Setting loading to false, news count:', news.length);
       setLoading(false);
       setStateCounter(prev => prev + 1); // Increment counter on state change
@@ -196,6 +214,18 @@ export default function DiscordNewsPage() {
     return () => clearInterval(intervalId);
   }, [fetchNews]); // Include fetchNews in dependency array
   
+  // Add useEffect to force loading state to false if stuck for too long
+  useEffect(() => {
+    const forceLoadingFalse = setTimeout(() => {
+      if (loading) {
+        console.log('Force setting loading to false due to stuck state');
+        setLoading(false);
+      }
+    }, 15000); // 15 seconds safety timeout
+    
+    return () => clearTimeout(forceLoadingFalse);
+  }, [loading]); // Only re-run when loading changes
+
   // Determine what message to show to the user
   let statusDisplay = null;
   if (source === 'fallback' && !loading) { // Only show if not loading
@@ -247,16 +277,26 @@ export default function DiscordNewsPage() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Insights
           </Link>
-          <Button 
-            variant="outline"
-            size="sm"
-            onClick={fetchNews} 
-            disabled={loading}
-            className="bg-gray-800 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-            {loading ? 'Refreshing...' : 'Refresh Feed'}
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              variant="outline"
+              size="sm"
+              onClick={() => setShowDebugPanel(!showDebugPanel)} 
+              className="bg-gray-800 border-gray-700 hover:bg-gray-700"
+            >
+              {showDebugPanel ? 'Hide Debug' : 'Show Debug'}
+            </Button>
+            <Button 
+              variant="outline"
+              size="sm"
+              onClick={fetchNews} 
+              disabled={loading}
+              className="bg-gray-800 border-gray-700 hover:bg-gray-700 disabled:opacity-50"
+            >
+              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              {loading ? 'Refreshing...' : 'Refresh Feed'}
+            </Button>
+          </div>
         </div>
         
         <h1 className="text-4xl font-bold mb-4">Cybersecurity News Feed</h1>
@@ -264,21 +304,23 @@ export default function DiscordNewsPage() {
           Real-time cybersecurity news and alerts, typically sourced from our Discord channel.
         </p>
         
-        {/* Debug panel */}
-        <div className="bg-gray-900/50 border border-gray-700 rounded-lg p-4 mb-6">
-          <div className="flex items-center text-gray-400 mb-2">
-            <h3 className="font-semibold">Debug Info</h3>
+        {/* Debug panel - conditionally shown */}
+        {showDebugPanel && (
+          <div className="bg-gray-900/50 border border-gray-700 rounded-lg p-4 mb-6">
+            <div className="flex items-center text-gray-400 mb-2">
+              <h3 className="font-semibold">Debug Info</h3>
+            </div>
+            <div className="text-xs text-gray-500 font-mono">
+              <p>Loading: {loading ? 'true' : 'false'}</p>
+              <p>Error: {error ? error : 'none'}</p>
+              <p>News Count: {news.length}</p>
+              <p>Source: {source}</p>
+              <p>Status Message: {statusMsg}</p>
+              <p>State Counter: {stateCounter}</p>
+              <p>Render Time: {new Date().toISOString()}</p>
+            </div>
           </div>
-          <div className="text-xs text-gray-500 font-mono">
-            <p>Loading: {loading ? 'true' : 'false'}</p>
-            <p>Error: {error ? error : 'none'}</p>
-            <p>News Count: {news.length}</p>
-            <p>Source: {source}</p>
-            <p>Status Message: {statusMsg}</p>
-            <p>State Counter: {stateCounter}</p>
-            <p>Render Time: {new Date().toISOString()}</p>
-          </div>
-        </div>
+        )}
         
         {/* Show fallback status message if applicable */}
         {statusDisplay}
