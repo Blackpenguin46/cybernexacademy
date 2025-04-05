@@ -5,3 +5,3598 @@
 [2025-04-05T00:41:27.784Z] No content extracted from message, nothing to save
 [2025-04-05T00:41:27.784Z] No content extracted from message, nothing to save
 [2025-04-05T00:43:22.140Z] Bot is online!
+[2025-04-05T00:48:52.571Z] Bot is online!
+[2025-04-05T00:49:17.647Z] Received message from blackpenguin0867
+[2025-04-05T00:49:17.647Z] Received message from blackpenguin0867
+[2025-04-05T00:49:17.649Z] No content extracted from message, nothing to save
+[2025-04-05T00:49:17.649Z] No content extracted from message, nothing to save
+[2025-04-05T00:49:17.650Z] Received message from blackpenguin0867
+[2025-04-05T00:49:17.650Z] Message type: 0
+[2025-04-05T00:49:17.650Z] Message content: ""
+[2025-04-05T00:49:17.651Z] Has embeds: false
+[2025-04-05T00:49:17.651Z] Has attachments: false
+[2025-04-05T00:49:17.651Z] Message details: {
+  "id": "1357879737598345356",
+  "content": "",
+  "type": 0,
+  "embeds": [],
+  "components": [],
+  "attachments": []
+}
+[2025-04-05T00:49:17.651Z] No content detected using standard methods, using fallback
+[2025-04-05T00:49:17.652Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357879737598345356
+[2025-04-05T00:49:17.652Z] Received message from blackpenguin0867
+[2025-04-05T00:49:17.652Z] Message type: 0
+[2025-04-05T00:49:17.652Z] Message content: ""
+[2025-04-05T00:49:17.653Z] Has embeds: false
+[2025-04-05T00:49:17.653Z] Has attachments: false
+[2025-04-05T00:49:17.653Z] Message details: {
+  "id": "1357879737598345356",
+  "content": "",
+  "type": 0,
+  "embeds": [],
+  "components": [],
+  "attachments": []
+}
+[2025-04-05T00:49:17.653Z] No content detected using standard methods, using fallback
+[2025-04-05T00:49:17.653Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357879737598345356
+[2025-04-05T00:49:17.908Z] Successfully saved to Supabase: null
+[2025-04-05T00:49:17.910Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:20.765Z] Bot is online!
+[2025-04-05T00:53:20.772Z] Fetching recent messages using REST API
+[2025-04-05T00:53:21.096Z] Fetched 50 messages via REST API
+[2025-04-05T00:53:21.096Z] Processing message 1357879737598345356 from REST API
+[2025-04-05T00:53:21.097Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-05T00:49:17.629000+00:00",
+  "edited_timestamp": null,
+  "flags": 16384,
+  "components": [],
+  "id": "1357879737598345356",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "message_reference": {
+    "type": 1,
+    "channel_id": "1299032261470978159",
+    "message_id": "1357877766573395988",
+    "guild_id": "1299032261470978152"
+  },
+  "position": 0,
+  "message_snapshots": [
+    {
+      "message": {
+        "type": 0,
+        "content": "",
+        "mentions": [],
+        "mention_roles": [],
+        "attachments": [],
+        "embeds": [
+          {
+            "type": "rich",
+            "url": "https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-operations-ransomware-attack",
+            "title": "Minnesota Tribe Struggles After Ransomware Attack",
+            "description": "Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.",
+            "color": 44678,
+            "timestamp": "2025-04-04T17:50:09+00:00",
+            "thumbnail": {
+              "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "width": 720,
+              "height": 113,
+              "flags": 0
+            }
+          }
+        ],
+        "timestamp": "2025-04-04T18:02:28.537000+00:00",
+        "edited_timestamp": null,
+        "flags": 0,
+        "components": []
+      }
+    }
+  ]
+}
+[2025-04-05T00:53:21.097Z] Processing message 1357879737598345356 from rest-api
+[2025-04-05T00:53:21.098Z] Message content: ""
+[2025-04-05T00:53:21.098Z] Has embeds: false
+[2025-04-05T00:53:21.098Z] No content detected using standard methods, trying raw approach
+[2025-04-05T00:53:21.098Z] All extraction methods failed, using fallback
+[2025-04-05T00:53:21.099Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357879737598345356
+[2025-04-05T00:53:21.276Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.276Z] Processing message 1357877766573395988 from REST API
+[2025-04-05T00:53:21.276Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-05T00:41:27.700000+00:00",
+  "edited_timestamp": null,
+  "flags": 16384,
+  "components": [],
+  "id": "1357877766573395988",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "message_reference": {
+    "type": 1,
+    "channel_id": "1299032261470978159",
+    "message_id": "1357876519091044383",
+    "guild_id": "1299032261470978152"
+  },
+  "position": 0,
+  "message_snapshots": [
+    {
+      "message": {
+        "type": 0,
+        "content": "",
+        "mentions": [],
+        "mention_roles": [],
+        "attachments": [],
+        "embeds": [
+          {
+            "type": "rich",
+            "url": "https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-operations-ransomware-attack",
+            "title": "Minnesota Tribe Struggles After Ransomware Attack",
+            "description": "Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.",
+            "color": 44678,
+            "timestamp": "2025-04-04T17:50:09+00:00",
+            "thumbnail": {
+              "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "width": 720,
+              "height": 113,
+              "flags": 0
+            }
+          }
+        ],
+        "timestamp": "2025-04-04T18:02:28.537000+00:00",
+        "edited_timestamp": null,
+        "flags": 0,
+        "components": []
+      }
+    }
+  ]
+}
+[2025-04-05T00:53:21.276Z] Processing message 1357877766573395988 from rest-api
+[2025-04-05T00:53:21.276Z] Message content: ""
+[2025-04-05T00:53:21.276Z] Has embeds: false
+[2025-04-05T00:53:21.276Z] No content detected using standard methods, trying raw approach
+[2025-04-05T00:53:21.277Z] All extraction methods failed, using fallback
+[2025-04-05T00:53:21.277Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357877766573395988
+[2025-04-05T00:53:21.360Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.360Z] Processing message 1357876519091044383 from REST API
+[2025-04-05T00:53:21.361Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-05T00:36:30.277000+00:00",
+  "edited_timestamp": null,
+  "flags": 16384,
+  "components": [],
+  "id": "1357876519091044383",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "message_reference": {
+    "type": 1,
+    "channel_id": "1299032261470978159",
+    "message_id": "1357874672066367488",
+    "guild_id": "1299032261470978152"
+  },
+  "position": 0,
+  "message_snapshots": [
+    {
+      "message": {
+        "type": 0,
+        "content": "",
+        "mentions": [],
+        "mention_roles": [],
+        "attachments": [],
+        "embeds": [
+          {
+            "type": "rich",
+            "url": "https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-operations-ransomware-attack",
+            "title": "Minnesota Tribe Struggles After Ransomware Attack",
+            "description": "Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.",
+            "color": 44678,
+            "timestamp": "2025-04-04T17:50:09+00:00",
+            "thumbnail": {
+              "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "width": 720,
+              "height": 113,
+              "flags": 0
+            }
+          }
+        ],
+        "timestamp": "2025-04-04T18:02:28.537000+00:00",
+        "edited_timestamp": null,
+        "flags": 0,
+        "components": []
+      }
+    }
+  ]
+}
+[2025-04-05T00:53:21.361Z] Processing message 1357876519091044383 from rest-api
+[2025-04-05T00:53:21.361Z] Message content: ""
+[2025-04-05T00:53:21.361Z] Has embeds: false
+[2025-04-05T00:53:21.361Z] No content detected using standard methods, trying raw approach
+[2025-04-05T00:53:21.361Z] All extraction methods failed, using fallback
+[2025-04-05T00:53:21.361Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357876519091044383
+[2025-04-05T00:53:21.439Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.440Z] Processing message 1357874672066367488 from REST API
+[2025-04-05T00:53:21.440Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-05T00:29:09.912000+00:00",
+  "edited_timestamp": null,
+  "flags": 16384,
+  "components": [],
+  "id": "1357874672066367488",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false,
+  "message_reference": {
+    "type": 1,
+    "channel_id": "1299032261470978159",
+    "message_id": "1357777358446395535",
+    "guild_id": "1299032261470978152"
+  },
+  "position": 0,
+  "message_snapshots": [
+    {
+      "message": {
+        "type": 0,
+        "content": "",
+        "mentions": [],
+        "mention_roles": [],
+        "attachments": [],
+        "embeds": [
+          {
+            "type": "rich",
+            "url": "https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-operations-ransomware-attack",
+            "title": "Minnesota Tribe Struggles After Ransomware Attack",
+            "description": "Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.",
+            "color": 44678,
+            "timestamp": "2025-04-04T17:50:09+00:00",
+            "thumbnail": {
+              "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+              "width": 720,
+              "height": 113,
+              "flags": 0
+            }
+          }
+        ],
+        "timestamp": "2025-04-04T18:02:28.537000+00:00",
+        "edited_timestamp": null,
+        "flags": 0,
+        "components": []
+      }
+    }
+  ]
+}
+[2025-04-05T00:53:21.440Z] Processing message 1357874672066367488 from rest-api
+[2025-04-05T00:53:21.440Z] Message content: ""
+[2025-04-05T00:53:21.440Z] Has embeds: false
+[2025-04-05T00:53:21.440Z] No content detected using standard methods, trying raw approach
+[2025-04-05T00:53:21.440Z] All extraction methods failed, using fallback
+[2025-04-05T00:53:21.440Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357874672066367488
+[2025-04-05T00:53:21.493Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.493Z] Processing message 1357867104639910020 from REST API
+[2025-04-05T00:53:21.494Z] Raw message from REST API: {
+  "type": 0,
+  "content": "!news",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:59:05.697000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357867104639910020",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.494Z] Processing message 1357867104639910020 from rest-api
+[2025-04-05T00:53:21.494Z] Message content: "!news"
+[2025-04-05T00:53:21.494Z] Has embeds: false
+[2025-04-05T00:53:21.494Z] Message has text content: !news
+[2025-04-05T00:53:21.494Z] Inserting content into Supabase: News Update
+
+!news
+[2025-04-05T00:53:21.544Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.545Z] Processing message 1357866215628083331 from REST API
+[2025-04-05T00:53:21.545Z] Raw message from REST API: {
+  "type": 0,
+  "content": "Fetching latest news...",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:55:33.740000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357866215628083331",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1357434531967270983",
+    "username": "newsbot",
+    "avatar": null,
+    "discriminator": "4688",
+    "public_flags": 0,
+    "flags": 0,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.545Z] Processing message 1357866215628083331 from rest-api
+[2025-04-05T00:53:21.545Z] Message content: "Fetching latest news..."
+[2025-04-05T00:53:21.545Z] Has embeds: false
+[2025-04-05T00:53:21.545Z] Message has text content: Fetching latest news...
+[2025-04-05T00:53:21.545Z] Inserting content into Supabase: News Update
+
+Fetching latest news...
+[2025-04-05T00:53:21.600Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.600Z] Processing message 1357866215246270634 from REST API
+[2025-04-05T00:53:21.600Z] Raw message from REST API: {
+  "type": 0,
+  "content": "!news",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:55:33.649000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357866215246270634",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.601Z] Processing message 1357866215246270634 from rest-api
+[2025-04-05T00:53:21.601Z] Message content: "!news"
+[2025-04-05T00:53:21.601Z] Has embeds: false
+[2025-04-05T00:53:21.601Z] Message has text content: !news
+[2025-04-05T00:53:21.601Z] Inserting content into Supabase: News Update
+
+!news
+[2025-04-05T00:53:21.667Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.675Z] Processing message 1357866186779529287 from REST API
+[2025-04-05T00:53:21.691Z] Raw message from REST API: {
+  "type": 0,
+  "content": "!test",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:55:26.862000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357866186779529287",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.697Z] Processing message 1357866186779529287 from rest-api
+[2025-04-05T00:53:21.697Z] Message content: "!test"
+[2025-04-05T00:53:21.698Z] Has embeds: false
+[2025-04-05T00:53:21.698Z] Message has text content: !test
+[2025-04-05T00:53:21.698Z] Inserting content into Supabase: News Update
+
+!test
+[2025-04-05T00:53:21.768Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.769Z] Processing message 1357863647665324123 from REST API
+[2025-04-05T00:53:21.769Z] Raw message from REST API: {
+  "type": 0,
+  "content": "Fetching latest news...",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:45:21.490000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863647665324123",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1357434531967270983",
+    "username": "newsbot",
+    "avatar": null,
+    "discriminator": "4688",
+    "public_flags": 0,
+    "flags": 0,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.769Z] Processing message 1357863647665324123 from rest-api
+[2025-04-05T00:53:21.769Z] Message content: "Fetching latest news..."
+[2025-04-05T00:53:21.769Z] Has embeds: false
+[2025-04-05T00:53:21.769Z] Message has text content: Fetching latest news...
+[2025-04-05T00:53:21.769Z] Inserting content into Supabase: News Update
+
+Fetching latest news...
+[2025-04-05T00:53:21.831Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.831Z] Processing message 1357863646876668016 from REST API
+[2025-04-05T00:53:21.831Z] Raw message from REST API: {
+  "type": 0,
+  "content": "!news",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:45:21.302000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863646876668016",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.831Z] Processing message 1357863646876668016 from rest-api
+[2025-04-05T00:53:21.831Z] Message content: "!news"
+[2025-04-05T00:53:21.832Z] Has embeds: false
+[2025-04-05T00:53:21.832Z] Message has text content: !news
+[2025-04-05T00:53:21.832Z] Inserting content into Supabase: News Update
+
+!news
+[2025-04-05T00:53:21.886Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.886Z] Processing message 1357863478404190280 from REST API
+[2025-04-05T00:53:21.886Z] Raw message from REST API: {
+  "type": 0,
+  "content": "I clearly didn't edit the permissions right cause u can still text",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:44:41.135000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863478404190280",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.886Z] Processing message 1357863478404190280 from rest-api
+[2025-04-05T00:53:21.887Z] Message content: "I clearly didn't edit the permissions right cause u can still text"
+[2025-04-05T00:53:21.887Z] Has embeds: false
+[2025-04-05T00:53:21.887Z] Message has text content: I clearly didn't edit the permissions right cause u can still text
+[2025-04-05T00:53:21.887Z] Inserting content into Supabase: News Update
+
+I clearly didn't edit the permissions right cause u can still text
+[2025-04-05T00:53:21.937Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:21.937Z] Processing message 1357863393796554853 from REST API
+[2025-04-05T00:53:21.937Z] Raw message from REST API: {
+  "type": 0,
+  "content": "I'm tryna use this bot to scrape all the news from the other bot and send it to the news feed on my websiute",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:44:20.963000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863393796554853",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:21.938Z] Processing message 1357863393796554853 from rest-api
+[2025-04-05T00:53:21.938Z] Message content: "I'm tryna use this bot to scrape all the news from the other bot and send it to the news feed on my websiute"
+[2025-04-05T00:53:21.938Z] Has embeds: false
+[2025-04-05T00:53:21.938Z] Message has text content: I'm tryna use this bot to scrape all the news from the other bot and send it to the news feed on my websiute
+[2025-04-05T00:53:21.938Z] Inserting content into Supabase: News Update
+
+I'm tryna use this bot to scrape all the news from the other bot and send it to the news feed on my websiute
+[2025-04-05T00:53:22.005Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.005Z] Processing message 1357863248921231382 from REST API
+[2025-04-05T00:53:22.005Z] Raw message from REST API: {
+  "type": 0,
+  "content": "You not doing too hot man",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:43:46.422000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863248921231382",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "490117803446239253",
+    "username": "maniraj365",
+    "avatar": null,
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Maniraj365",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.005Z] Processing message 1357863248921231382 from rest-api
+[2025-04-05T00:53:22.005Z] Message content: "You not doing too hot man"
+[2025-04-05T00:53:22.005Z] Has embeds: false
+[2025-04-05T00:53:22.005Z] Message has text content: You not doing too hot man
+[2025-04-05T00:53:22.006Z] Inserting content into Supabase: News Update
+
+You not doing too hot man
+[2025-04-05T00:53:22.069Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.069Z] Processing message 1357863193275400212 from REST API
+[2025-04-05T00:53:22.069Z] Raw message from REST API: {
+  "type": 0,
+  "content": "Fetching latest news...",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:43:33.155000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863193275400212",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1357434531967270983",
+    "username": "newsbot",
+    "avatar": null,
+    "discriminator": "4688",
+    "public_flags": 0,
+    "flags": 0,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.069Z] Processing message 1357863193275400212 from rest-api
+[2025-04-05T00:53:22.069Z] Message content: "Fetching latest news..."
+[2025-04-05T00:53:22.069Z] Has embeds: false
+[2025-04-05T00:53:22.069Z] Message has text content: Fetching latest news...
+[2025-04-05T00:53:22.069Z] Inserting content into Supabase: News Update
+
+Fetching latest news...
+[2025-04-05T00:53:22.130Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.131Z] Processing message 1357863192663031979 from REST API
+[2025-04-05T00:53:22.131Z] Raw message from REST API: {
+  "type": 0,
+  "content": "!news",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:43:33.009000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357863192663031979",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.131Z] Processing message 1357863192663031979 from rest-api
+[2025-04-05T00:53:22.131Z] Message content: "!news"
+[2025-04-05T00:53:22.131Z] Has embeds: false
+[2025-04-05T00:53:22.131Z] Message has text content: !news
+[2025-04-05T00:53:22.132Z] Inserting content into Supabase: News Update
+
+!news
+[2025-04-05T00:53:22.181Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.181Z] Processing message 1357862376254476379 from REST API
+[2025-04-05T00:53:22.181Z] Raw message from REST API: {
+  "type": 0,
+  "content": "Fetching latest news...",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:40:18.362000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357862376254476379",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1357434531967270983",
+    "username": "newsbot",
+    "avatar": null,
+    "discriminator": "4688",
+    "public_flags": 0,
+    "flags": 0,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.182Z] Processing message 1357862376254476379 from rest-api
+[2025-04-05T00:53:22.182Z] Message content: "Fetching latest news..."
+[2025-04-05T00:53:22.182Z] Has embeds: false
+[2025-04-05T00:53:22.182Z] Message has text content: Fetching latest news...
+[2025-04-05T00:53:22.182Z] Inserting content into Supabase: News Update
+
+Fetching latest news...
+[2025-04-05T00:53:22.242Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.242Z] Processing message 1357862375616806973 from REST API
+[2025-04-05T00:53:22.242Z] Raw message from REST API: {
+  "type": 0,
+  "content": "!news",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-04T23:40:18.210000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357862375616806973",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.242Z] Processing message 1357862375616806973 from rest-api
+[2025-04-05T00:53:22.242Z] Message content: "!news"
+[2025-04-05T00:53:22.242Z] Has embeds: false
+[2025-04-05T00:53:22.242Z] Message has text content: !news
+[2025-04-05T00:53:22.242Z] Inserting content into Supabase: News Update
+
+!news
+[2025-04-05T00:53:22.292Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.292Z] Processing message 1357777358446395535 from REST API
+[2025-04-05T00:53:22.292Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-operations-ransomware-attack",
+      "title": "Minnesota Tribe Struggles After Ransomware Attack",
+      "description": "Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.",
+      "color": 44678,
+      "timestamp": "2025-04-04T17:50:09+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T18:02:28.537000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357777358446395535",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.293Z] Processing message 1357777358446395535 from rest-api
+[2025-04-05T00:53:22.293Z] Message content: ""
+[2025-04-05T00:53:22.293Z] Has embeds: true
+[2025-04-05T00:53:22.293Z] Message has 1 embeds
+[2025-04-05T00:53:22.293Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-operations-ransomware-attack",
+  "title": "Minnesota Tribe Struggles After Ransomware Attack",
+  "description": "Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.",
+  "color": 44678,
+  "timestamp": "2025-04-04T17:50:09+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.293Z] Found embed title: Minnesota Tribe Struggles After Ransomware Attack
+[2025-04-05T00:53:22.293Z] Found embed description: Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.
+[2025-04-05T00:53:22.293Z] Inserting content into Supabase: Minnesota Tribe Struggles After Ransomware Attack
+
+Hotel and casino operations for the Lower Sioux Indians have been canceled or postponed, and the local health center is redirecting those needing medical or dental care.
+[2025-04-05T00:53:22.344Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.345Z] Processing message 1357739493775376384 from REST API
+[2025-04-05T00:53:22.345Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/flaw-in-verizon-call-record-requests-put-millions-of-americans-at-risk",
+      "title": "Flaw in Verizon call record requests put millions of Americans at risk",
+      "description": "A security researcher found a flaw in Verizon call record requests that may have put millions of Americans at risk",
+      "color": 2193615,
+      "timestamp": "2025-04-04T15:18:02+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T15:32:00.896000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357739493775376384",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.345Z] Processing message 1357739493775376384 from rest-api
+[2025-04-05T00:53:22.345Z] Message content: ""
+[2025-04-05T00:53:22.345Z] Has embeds: true
+[2025-04-05T00:53:22.345Z] Message has 1 embeds
+[2025-04-05T00:53:22.346Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/flaw-in-verizon-call-record-requests-put-millions-of-americans-at-risk",
+  "title": "Flaw in Verizon call record requests put millions of Americans at risk",
+  "description": "A security researcher found a flaw in Verizon call record requests that may have put millions of Americans at risk",
+  "color": 2193615,
+  "timestamp": "2025-04-04T15:18:02+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.346Z] Found embed title: Flaw in Verizon call record requests put millions of Americans at risk
+[2025-04-05T00:53:22.346Z] Found embed description: A security researcher found a flaw in Verizon call record requests that may have put millions of Americans at risk
+[2025-04-05T00:53:22.346Z] Inserting content into Supabase: Flaw in Verizon call record requests put millions of Americans at risk
+
+A security researcher found a flaw in Verizon call record requests that may have put millions of Americans at risk
+[2025-04-05T00:53:22.385Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.385Z] Processing message 1357735748077355218 from REST API
+[2025-04-05T00:53:22.385Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/threat-intelligence/medusa-momentum-ransomware-as-a-service-pivot",
+      "title": "Medusa Rides Momentum From Ransomware-as-a-Service Pivot",
+      "description": "Shifting to a RaaS business model has accelerated the group's growth, and targeting critical industries like healthcare, legal, and manufacturing hasn't hurt either.",
+      "color": 44678,
+      "timestamp": "2025-04-04T14:37:16+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T15:17:07.852000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357735748077355218",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.386Z] Processing message 1357735748077355218 from rest-api
+[2025-04-05T00:53:22.386Z] Message content: ""
+[2025-04-05T00:53:22.386Z] Has embeds: true
+[2025-04-05T00:53:22.386Z] Message has 1 embeds
+[2025-04-05T00:53:22.386Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/threat-intelligence/medusa-momentum-ransomware-as-a-service-pivot",
+  "title": "Medusa Rides Momentum From Ransomware-as-a-Service Pivot",
+  "description": "Shifting to a RaaS business model has accelerated the group's growth, and targeting critical industries like healthcare, legal, and manufacturing hasn't hurt either.",
+  "color": 44678,
+  "timestamp": "2025-04-04T14:37:16+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.386Z] Found embed title: Medusa Rides Momentum From Ransomware-as-a-Service Pivot
+[2025-04-05T00:53:22.386Z] Found embed description: Shifting to a RaaS business model has accelerated the group's growth, and targeting critical industries like healthcare, legal, and manufacturing hasn't hurt either.
+[2025-04-05T00:53:22.386Z] Inserting content into Supabase: Medusa Rides Momentum From Ransomware-as-a-Service Pivot
+
+Shifting to a RaaS business model has accelerated the group's growth, and targeting critical industries like healthcare, legal, and manufacturing hasn't hurt either.
+[2025-04-05T00:53:22.464Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.465Z] Processing message 1357724474350370998 from REST API
+[2025-04-05T00:53:22.465Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/cisa-layoffs-momentary-disruption-not-threat",
+      "title": "CISA Layoffs Are a Momentary Disruption, Not a Threat",
+      "description": "Layoffs may cause short-term disruptions, but they don't represent a catastrophic loss of cybersecurity capability — because the true cyber operations never resided solely within CISA to begin with.",
+      "color": 44678,
+      "timestamp": "2025-04-04T14:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T14:32:19.986000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357724474350370998",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.465Z] Processing message 1357724474350370998 from rest-api
+[2025-04-05T00:53:22.465Z] Message content: ""
+[2025-04-05T00:53:22.466Z] Has embeds: true
+[2025-04-05T00:53:22.466Z] Message has 1 embeds
+[2025-04-05T00:53:22.466Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/vulnerabilities-threats/cisa-layoffs-momentary-disruption-not-threat",
+  "title": "CISA Layoffs Are a Momentary Disruption, Not a Threat",
+  "description": "Layoffs may cause short-term disruptions, but they don't represent a catastrophic loss of cybersecurity capability — because the true cyber operations never resided solely within CISA to begin with.",
+  "color": 44678,
+  "timestamp": "2025-04-04T14:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.466Z] Found embed title: CISA Layoffs Are a Momentary Disruption, Not a Threat
+[2025-04-05T00:53:22.466Z] Found embed description: Layoffs may cause short-term disruptions, but they don't represent a catastrophic loss of cybersecurity capability — because the true cyber operations never resided solely within CISA to begin with.
+[2025-04-05T00:53:22.466Z] Inserting content into Supabase: CISA Layoffs Are a Momentary Disruption, Not a Threat
+
+Layoffs may cause short-term disruptions, but they don't represent a catastrophic loss of cybersecurity capability — because the true cyber operations never resided solely within CISA to begin with.
+[2025-04-05T00:53:22.532Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.532Z] Processing message 1357716968492240898 from REST API
+[2025-04-05T00:53:22.532Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/security-bugs-could-rain-out-solar-grids",
+      "title": "Rafts of Security Bugs Could Rain Out Solar Grids",
+      "description": "At least three major energy solution and renewable energy companies have nearly 50 vulnerabilities — many of them &quot;basic&quot; mistakes  — indicating a lack of developed cybersecurity safeguards.",
+      "color": 44678,
+      "timestamp": "2025-04-04T08:16:36+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T14:02:30.450000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357716968492240898",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.533Z] Processing message 1357716968492240898 from rest-api
+[2025-04-05T00:53:22.533Z] Message content: ""
+[2025-04-05T00:53:22.533Z] Has embeds: true
+[2025-04-05T00:53:22.533Z] Message has 1 embeds
+[2025-04-05T00:53:22.533Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/vulnerabilities-threats/security-bugs-could-rain-out-solar-grids",
+  "title": "Rafts of Security Bugs Could Rain Out Solar Grids",
+  "description": "At least three major energy solution and renewable energy companies have nearly 50 vulnerabilities — many of them &quot;basic&quot; mistakes  — indicating a lack of developed cybersecurity safeguards.",
+  "color": 44678,
+  "timestamp": "2025-04-04T08:16:36+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.533Z] Found embed title: Rafts of Security Bugs Could Rain Out Solar Grids
+[2025-04-05T00:53:22.533Z] Found embed description: At least three major energy solution and renewable energy companies have nearly 50 vulnerabilities — many of them &quot;basic&quot; mistakes  — indicating a lack of developed cybersecurity safeguards.
+[2025-04-05T00:53:22.533Z] Inserting content into Supabase: Rafts of Security Bugs Could Rain Out Solar Grids
+
+At least three major energy solution and renewable energy companies have nearly 50 vulnerabilities — many of them &quot;basic&quot; mistakes  — indicating a lack of developed cybersecurity safeguards.
+[2025-04-05T00:53:22.572Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.573Z] Processing message 1357705903708573817 from REST API
+[2025-04-05T00:53:22.573Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/spotbugs-access-token-theft-identified.html",
+      "title": "SpotBugs Access Token Theft Identified as Root Cause of GitHub Supply Chain Attack",
+      "description": "The cascading supply chain attack that initially targeted Coinbase before becoming more widespread to single out users of the \"tj-actions/changed-files\" GitHub Action has been traced further back to the theft of a personal access token (PAT) related to SpotBugs.\n\"The attackers obtained initial access by taking advantage of the GitHub Actions workflow of SpotBugs, a popular open-source tool for",
+      "color": 2639502,
+      "timestamp": "2025-04-04T12:28:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T13:18:32.400000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357705903708573817",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.573Z] Processing message 1357705903708573817 from rest-api
+[2025-04-05T00:53:22.573Z] Message content: ""
+[2025-04-05T00:53:22.573Z] Has embeds: true
+[2025-04-05T00:53:22.573Z] Message has 1 embeds
+[2025-04-05T00:53:22.573Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/spotbugs-access-token-theft-identified.html",
+  "title": "SpotBugs Access Token Theft Identified as Root Cause of GitHub Supply Chain Attack",
+  "description": "The cascading supply chain attack that initially targeted Coinbase before becoming more widespread to single out users of the \"tj-actions/changed-files\" GitHub Action has been traced further back to the theft of a personal access token (PAT) related to SpotBugs.\n\"The attackers obtained initial access by taking advantage of the GitHub Actions workflow of SpotBugs, a popular open-source tool for",
+  "color": 2639502,
+  "timestamp": "2025-04-04T12:28:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.573Z] Found embed title: SpotBugs Access Token Theft Identified as Root Cause of GitHub Supply Chain Attack
+[2025-04-05T00:53:22.573Z] Found embed description: The cascading supply chain attack that initially targeted Coinbase before becoming more widespread to single out users of the "tj-actions/changed-files" GitHub Action has been traced further back to the theft of a personal access token (PAT) related to SpotBugs.
+"The attackers obtained initial access by taking advantage of the GitHub Actions workflow of SpotBugs, a popular open-source tool for
+[2025-04-05T00:53:22.573Z] Inserting content into Supabase: SpotBugs Access Token Theft Identified as Root Cause of GitHub Supply Chain Attack
+
+The cascading supply chain attack that initially targeted Coinbase before becoming more widespread to single out users of the "tj-actions/changed-files" GitHub Action has been traced further back to the theft of a personal access token (PAT) related to SpotBugs.
+"The attackers obtained initial access by taking advantage of the GitHub Actions workflow of SpotBugs, a popular open-source tool for
+[2025-04-05T00:53:22.639Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.639Z] Processing message 1357701872806396217 from REST API
+[2025-04-05T00:53:22.639Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cloud-security/microsoft-boosts-email-sender-rules-outlook",
+      "title": "Microsoft Boosts Email Sender Rules for Outlook",
+      "description": "The tech giant will enforce new email authentication protocols for Outlook users who send large volumes of email beginning on May 5.",
+      "color": 44678,
+      "timestamp": "2025-04-03T22:21:46+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T13:02:31.358000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357701872806396217",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.639Z] Processing message 1357701872806396217 from rest-api
+[2025-04-05T00:53:22.639Z] Message content: ""
+[2025-04-05T00:53:22.639Z] Has embeds: true
+[2025-04-05T00:53:22.640Z] Message has 1 embeds
+[2025-04-05T00:53:22.640Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cloud-security/microsoft-boosts-email-sender-rules-outlook",
+  "title": "Microsoft Boosts Email Sender Rules for Outlook",
+  "description": "The tech giant will enforce new email authentication protocols for Outlook users who send large volumes of email beginning on May 5.",
+  "color": 44678,
+  "timestamp": "2025-04-03T22:21:46+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.640Z] Found embed title: Microsoft Boosts Email Sender Rules for Outlook
+[2025-04-05T00:53:22.640Z] Found embed description: The tech giant will enforce new email authentication protocols for Outlook users who send large volumes of email beginning on May 5.
+[2025-04-05T00:53:22.640Z] Inserting content into Supabase: Microsoft Boosts Email Sender Rules for Outlook
+
+The tech giant will enforce new email authentication protocols for Outlook users who send large volumes of email beginning on May 5.
+[2025-04-05T00:53:22.699Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.700Z] Processing message 1357686751556141096 from REST API
+[2025-04-05T00:53:22.700Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cybersecurity-operations/secure-communications-evolve-beyond-end-to-end-encryption",
+      "title": "Secure Communications Evolve Beyond End-to-End Encryption",
+      "description": "Signal, Wickr, WhatsApp, and Cape all have different approaches to security and privacy, yet most are finding ways to make secure communications more private.",
+      "color": 44678,
+      "timestamp": "2025-04-04T12:47:08+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T12:02:26.171000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357686751556141096",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.700Z] Processing message 1357686751556141096 from rest-api
+[2025-04-05T00:53:22.700Z] Message content: ""
+[2025-04-05T00:53:22.700Z] Has embeds: true
+[2025-04-05T00:53:22.700Z] Message has 1 embeds
+[2025-04-05T00:53:22.701Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cybersecurity-operations/secure-communications-evolve-beyond-end-to-end-encryption",
+  "title": "Secure Communications Evolve Beyond End-to-End Encryption",
+  "description": "Signal, Wickr, WhatsApp, and Cape all have different approaches to security and privacy, yet most are finding ways to make secure communications more private.",
+  "color": 44678,
+  "timestamp": "2025-04-04T12:47:08+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.701Z] Found embed title: Secure Communications Evolve Beyond End-to-End Encryption
+[2025-04-05T00:53:22.701Z] Found embed description: Signal, Wickr, WhatsApp, and Cape all have different approaches to security and privacy, yet most are finding ways to make secure communications more private.
+[2025-04-05T00:53:22.701Z] Inserting content into Supabase: Secure Communications Evolve Beyond End-to-End Encryption
+
+Signal, Wickr, WhatsApp, and Cape all have different approaches to security and privacy, yet most are finding ways to make secure communications more private.
+[2025-04-05T00:53:22.743Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.743Z] Processing message 1357675634322702336 from REST API
+[2025-04-05T00:53:22.743Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/have-we-reached-distroless-tipping-point.html",
+      "title": "Have We Reached a Distroless Tipping Point?",
+      "description": "There’s a virtuous cycle in technology that pushes the boundaries of what’s being built and how it’s being used. A new technology development emerges and captures the world's attention. People start experimenting and discover novel applications, use cases, and approaches to maximize the innovation's potential. These use cases generate significant value, fueling demand for the next iteration of",
+      "color": 2639502,
+      "timestamp": "2025-04-04T10:57:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T11:18:15.616000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357675634322702336",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.744Z] Processing message 1357675634322702336 from rest-api
+[2025-04-05T00:53:22.744Z] Message content: ""
+[2025-04-05T00:53:22.744Z] Has embeds: true
+[2025-04-05T00:53:22.744Z] Message has 1 embeds
+[2025-04-05T00:53:22.744Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/have-we-reached-distroless-tipping-point.html",
+  "title": "Have We Reached a Distroless Tipping Point?",
+  "description": "There’s a virtuous cycle in technology that pushes the boundaries of what’s being built and how it’s being used. A new technology development emerges and captures the world's attention. People start experimenting and discover novel applications, use cases, and approaches to maximize the innovation's potential. These use cases generate significant value, fueling demand for the next iteration of",
+  "color": 2639502,
+  "timestamp": "2025-04-04T10:57:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.744Z] Found embed title: Have We Reached a Distroless Tipping Point?
+[2025-04-05T00:53:22.744Z] Found embed description: There’s a virtuous cycle in technology that pushes the boundaries of what’s being built and how it’s being used. A new technology development emerges and captures the world's attention. People start experimenting and discover novel applications, use cases, and approaches to maximize the innovation's potential. These use cases generate significant value, fueling demand for the next iteration of
+[2025-04-05T00:53:22.745Z] Inserting content into Supabase: Have We Reached a Distroless Tipping Point?
+
+There’s a virtuous cycle in technology that pushes the boundaries of what’s being built and how it’s being used. A new technology development emerges and captures the world's attention. People start experimenting and discover novel applications, use cases, and approaches to maximize the innovation's potential. These use cases generate significant value, fueling demand for the next iteration of
+[2025-04-05T00:53:22.797Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.797Z] Processing message 1357668393897037996 from REST API
+[2025-04-05T00:53:22.797Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/opsec-failure-exposes-coquetttes.html",
+      "title": "OPSEC Failure Exposes Coquettte’s Malware Campaigns on Bulletproof Hosting Servers",
+      "description": "A novice cybercrime actor has been observed leveraging the services of a Russian bulletproof hosting (BPH) provider called Proton66 to facilitate their operations.\nThe findings come from DomainTools, which detected the activity after it discovered a phony website named cybersecureprotect[.]com hosted on Proton66 that masqueraded as an antivirus service.\nThe threat intelligence firm said it",
+      "color": 2639502,
+      "timestamp": "2025-04-04T06:06:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T10:49:29.364000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357668393897037996",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.798Z] Processing message 1357668393897037996 from rest-api
+[2025-04-05T00:53:22.798Z] Message content: ""
+[2025-04-05T00:53:22.798Z] Has embeds: true
+[2025-04-05T00:53:22.798Z] Message has 1 embeds
+[2025-04-05T00:53:22.798Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/opsec-failure-exposes-coquetttes.html",
+  "title": "OPSEC Failure Exposes Coquettte’s Malware Campaigns on Bulletproof Hosting Servers",
+  "description": "A novice cybercrime actor has been observed leveraging the services of a Russian bulletproof hosting (BPH) provider called Proton66 to facilitate their operations.\nThe findings come from DomainTools, which detected the activity after it discovered a phony website named cybersecureprotect[.]com hosted on Proton66 that masqueraded as an antivirus service.\nThe threat intelligence firm said it",
+  "color": 2639502,
+  "timestamp": "2025-04-04T06:06:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.798Z] Found embed title: OPSEC Failure Exposes Coquettte’s Malware Campaigns on Bulletproof Hosting Servers
+[2025-04-05T00:53:22.798Z] Found embed description: A novice cybercrime actor has been observed leveraging the services of a Russian bulletproof hosting (BPH) provider called Proton66 to facilitate their operations.
+The findings come from DomainTools, which detected the activity after it discovered a phony website named cybersecureprotect[.]com hosted on Proton66 that masqueraded as an antivirus service.
+The threat intelligence firm said it
+[2025-04-05T00:53:22.799Z] Inserting content into Supabase: OPSEC Failure Exposes Coquettte’s Malware Campaigns on Bulletproof Hosting Servers
+
+A novice cybercrime actor has been observed leveraging the services of a Russian bulletproof hosting (BPH) provider called Proton66 to facilitate their operations.
+The findings come from DomainTools, which detected the activity after it discovered a phony website named cybersecureprotect[.]com hosted on Proton66 that masqueraded as an antivirus service.
+The threat intelligence firm said it
+[2025-04-05T00:53:22.845Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.846Z] Processing message 1357603922864373902 from REST API
+[2025-04-05T00:53:22.846Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/critical-ivanti-flaw-actively-exploited.html",
+      "title": "Critical Ivanti Flaw Actively Exploited to Deploy TRAILBLAZE and BRUSHFIRE Malware",
+      "description": "Ivanti has disclosed details of a now-patched critical security vulnerability impacting its Connect Secure that has come under active exploitation in the wild.\nThe vulnerability, tracked as CVE-2025-22457 (CVSS score: 9.0), concerns a case of a stack-based buffer overflow that could be exploited to execute arbitrary code on affected systems.\n\"A stack-based buffer overflow in Ivanti Connect",
+      "color": 2639502,
+      "timestamp": "2025-04-04T06:07:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T06:33:18.272000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357603922864373902",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.846Z] Processing message 1357603922864373902 from rest-api
+[2025-04-05T00:53:22.846Z] Message content: ""
+[2025-04-05T00:53:22.846Z] Has embeds: true
+[2025-04-05T00:53:22.847Z] Message has 1 embeds
+[2025-04-05T00:53:22.847Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/critical-ivanti-flaw-actively-exploited.html",
+  "title": "Critical Ivanti Flaw Actively Exploited to Deploy TRAILBLAZE and BRUSHFIRE Malware",
+  "description": "Ivanti has disclosed details of a now-patched critical security vulnerability impacting its Connect Secure that has come under active exploitation in the wild.\nThe vulnerability, tracked as CVE-2025-22457 (CVSS score: 9.0), concerns a case of a stack-based buffer overflow that could be exploited to execute arbitrary code on affected systems.\n\"A stack-based buffer overflow in Ivanti Connect",
+  "color": 2639502,
+  "timestamp": "2025-04-04T06:07:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.847Z] Found embed title: Critical Ivanti Flaw Actively Exploited to Deploy TRAILBLAZE and BRUSHFIRE Malware
+[2025-04-05T00:53:22.847Z] Found embed description: Ivanti has disclosed details of a now-patched critical security vulnerability impacting its Connect Secure that has come under active exploitation in the wild.
+The vulnerability, tracked as CVE-2025-22457 (CVSS score: 9.0), concerns a case of a stack-based buffer overflow that could be exploited to execute arbitrary code on affected systems.
+"A stack-based buffer overflow in Ivanti Connect
+[2025-04-05T00:53:22.847Z] Inserting content into Supabase: Critical Ivanti Flaw Actively Exploited to Deploy TRAILBLAZE and BRUSHFIRE Malware
+
+Ivanti has disclosed details of a now-patched critical security vulnerability impacting its Connect Secure that has come under active exploitation in the wild.
+The vulnerability, tracked as CVE-2025-22457 (CVSS score: 9.0), concerns a case of a stack-based buffer overflow that could be exploited to execute arbitrary code on affected systems.
+"A stack-based buffer overflow in Ivanti Connect
+[2025-04-05T00:53:22.895Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.895Z] Processing message 1357585614811435009 from REST API
+[2025-04-05T00:53:22.896Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/cert-ua-reports-cyberattacks-targeting.html",
+      "title": "CERT-UA Reports Cyberattacks Targeting Ukrainian State Systems with WRECKSTEEL Malware",
+      "description": "The Computer Emergency Response Team of Ukraine (CERT-UA) has revealed that no less than three cyber attacks were recorded against state administration bodies and critical infrastructure facilities in the country with an aim to steal sensitive data.\nThe campaign, the agency said, involved the use of compromised email accounts to send phishing messages containing links pointing to legitimate",
+      "color": 2639502,
+      "timestamp": "2025-04-04T04:54:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/critical-flaw-in-apache-parquet-allows.html",
+      "title": "Critical Flaw in Apache Parquet Allows Remote Attackers to Execute Arbitrary Code",
+      "description": "A maximum severity security vulnerability has been disclosed in Apache Parquet's Java Library that, if successfully exploited, could allow a remote attacker to execute arbitrary code on susceptible instances.\nApache Parquet is a free and open-source columnar data file format that's designed for efficient data processing and retrieval, providing support for complex data, high-performance",
+      "color": 2639502,
+      "timestamp": "2025-04-04T03:38:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-04T05:20:33.292000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357585614811435009",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.896Z] Processing message 1357585614811435009 from rest-api
+[2025-04-05T00:53:22.896Z] Message content: ""
+[2025-04-05T00:53:22.896Z] Has embeds: true
+[2025-04-05T00:53:22.896Z] Message has 2 embeds
+[2025-04-05T00:53:22.896Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/cert-ua-reports-cyberattacks-targeting.html",
+  "title": "CERT-UA Reports Cyberattacks Targeting Ukrainian State Systems with WRECKSTEEL Malware",
+  "description": "The Computer Emergency Response Team of Ukraine (CERT-UA) has revealed that no less than three cyber attacks were recorded against state administration bodies and critical infrastructure facilities in the country with an aim to steal sensitive data.\nThe campaign, the agency said, involved the use of compromised email accounts to send phishing messages containing links pointing to legitimate",
+  "color": 2639502,
+  "timestamp": "2025-04-04T04:54:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.897Z] Found embed title: CERT-UA Reports Cyberattacks Targeting Ukrainian State Systems with WRECKSTEEL Malware
+[2025-04-05T00:53:22.897Z] Found embed description: The Computer Emergency Response Team of Ukraine (CERT-UA) has revealed that no less than three cyber attacks were recorded against state administration bodies and critical infrastructure facilities in the country with an aim to steal sensitive data.
+The campaign, the agency said, involved the use of compromised email accounts to send phishing messages containing links pointing to legitimate
+[2025-04-05T00:53:22.897Z] Inserting content into Supabase: CERT-UA Reports Cyberattacks Targeting Ukrainian State Systems with WRECKSTEEL Malware
+
+The Computer Emergency Response Team of Ukraine (CERT-UA) has revealed that no less than three cyber attacks were recorded against state administration bodies and critical infrastructure facilities in the country with an aim to steal sensitive data.
+The campaign, the agency said, involved the use of compromised email accounts to send phishing messages containing links pointing to legitimate
+[2025-04-05T00:53:22.942Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.942Z] Processing message 1357476159096361060 from REST API
+[2025-04-05T00:53:22.942Z] Raw message from REST API: {
+  "type": 0,
+  "content": "TEST",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [],
+  "timestamp": "2025-04-03T22:05:37.016000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357476159096361060",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1230859370494169141",
+    "username": "blackpenguin0867",
+    "avatar": "4dabd89e119b8584c9925a33ca020a4e",
+    "discriminator": "0",
+    "public_flags": 0,
+    "flags": 0,
+    "banner": null,
+    "accent_color": null,
+    "global_name": "Blackpenguin",
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.942Z] Processing message 1357476159096361060 from rest-api
+[2025-04-05T00:53:22.943Z] Message content: "TEST"
+[2025-04-05T00:53:22.943Z] Has embeds: false
+[2025-04-05T00:53:22.943Z] Message has text content: TEST
+[2025-04-05T00:53:22.943Z] Inserting content into Supabase: News Update
+
+TEST
+[2025-04-05T00:53:22.992Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:22.992Z] Processing message 1357452670461542571 from REST API
+[2025-04-05T00:53:22.992Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/china-linked-threat-group-exploits-ivanti-bug",
+      "title": "China-Linked Threat Group Exploits Ivanti Bug",
+      "description": "The vendor had originally assessed the flaw as low risk but now says it is a critical issue that enables remote code execution.",
+      "color": 44678,
+      "timestamp": "2025-04-03T20:14:04+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/disclosure-drama-clouds-crushftp-vulnerability-exploitation",
+      "title": "Disclosure Drama Clouds CrushFTP Vulnerability Exploitation",
+      "description": "CrushFTP CEO Ben Spink slammed several cybersecurity companies for creating confusion around a critical authentication bypass flaw that's currently under attack.",
+      "color": 44678,
+      "timestamp": "2025-04-03T19:51:25+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T20:32:16.889000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357452670461542571",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:22.992Z] Processing message 1357452670461542571 from rest-api
+[2025-04-05T00:53:22.992Z] Message content: ""
+[2025-04-05T00:53:22.992Z] Has embeds: true
+[2025-04-05T00:53:22.993Z] Message has 2 embeds
+[2025-04-05T00:53:22.993Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/vulnerabilities-threats/china-linked-threat-group-exploits-ivanti-bug",
+  "title": "China-Linked Threat Group Exploits Ivanti Bug",
+  "description": "The vendor had originally assessed the flaw as low risk but now says it is a critical issue that enables remote code execution.",
+  "color": 44678,
+  "timestamp": "2025-04-03T20:14:04+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:22.993Z] Found embed title: China-Linked Threat Group Exploits Ivanti Bug
+[2025-04-05T00:53:22.993Z] Found embed description: The vendor had originally assessed the flaw as low risk but now says it is a critical issue that enables remote code execution.
+[2025-04-05T00:53:22.993Z] Inserting content into Supabase: China-Linked Threat Group Exploits Ivanti Bug
+
+The vendor had originally assessed the flaw as low risk but now says it is a critical issue that enables remote code execution.
+[2025-04-05T00:53:23.044Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.045Z] Processing message 1357452635619459112 from REST API
+[2025-04-05T00:53:23.045Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/popular-vpns-are-routing-traffic-via-chinese-companies-including-one-with-link-to-military",
+      "title": "Popular VPNs are routing traffic via Chinese companies, including one with link to military",
+      "description": "Up to one in five of the most popular mobile VPNs are owned by Chinese companies that do their best to hide the fact.",
+      "color": 2193615,
+      "timestamp": "2025-04-03T19:58:31+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T20:32:08.582000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357452635619459112",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.045Z] Processing message 1357452635619459112 from rest-api
+[2025-04-05T00:53:23.045Z] Message content: ""
+[2025-04-05T00:53:23.045Z] Has embeds: true
+[2025-04-05T00:53:23.045Z] Message has 1 embeds
+[2025-04-05T00:53:23.045Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/popular-vpns-are-routing-traffic-via-chinese-companies-including-one-with-link-to-military",
+  "title": "Popular VPNs are routing traffic via Chinese companies, including one with link to military",
+  "description": "Up to one in five of the most popular mobile VPNs are owned by Chinese companies that do their best to hide the fact.",
+  "color": 2193615,
+  "timestamp": "2025-04-03T19:58:31+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.045Z] Found embed title: Popular VPNs are routing traffic via Chinese companies, including one with link to military
+[2025-04-05T00:53:23.046Z] Found embed description: Up to one in five of the most popular mobile VPNs are owned by Chinese companies that do their best to hide the fact.
+[2025-04-05T00:53:23.046Z] Inserting content into Supabase: Popular VPNs are routing traffic via Chinese companies, including one with link to military
+
+Up to one in five of the most popular mobile VPNs are owned by Chinese companies that do their best to hide the fact.
+[2025-04-05T00:53:23.098Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.098Z] Processing message 1357437644413468672 from REST API
+[2025-04-05T00:53:23.098Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/endpoint-security/counterfeit-phones-infected-triada-malware",
+      "title": "Counterfeit Phones Carrying Hidden Revamped Triada Malware",
+      "description": "The malware, first discovered in 2016, has been updated over the years, and the latest version is now hiding in the firmware of counterfeit mobile phones.",
+      "color": 44678,
+      "timestamp": "2025-04-03T16:17:45+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T19:32:34.400000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357437644413468672",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.098Z] Processing message 1357437644413468672 from rest-api
+[2025-04-05T00:53:23.098Z] Message content: ""
+[2025-04-05T00:53:23.099Z] Has embeds: true
+[2025-04-05T00:53:23.099Z] Message has 1 embeds
+[2025-04-05T00:53:23.099Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/endpoint-security/counterfeit-phones-infected-triada-malware",
+  "title": "Counterfeit Phones Carrying Hidden Revamped Triada Malware",
+  "description": "The malware, first discovered in 2016, has been updated over the years, and the latest version is now hiding in the firmware of counterfeit mobile phones.",
+  "color": 44678,
+  "timestamp": "2025-04-03T16:17:45+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.099Z] Found embed title: Counterfeit Phones Carrying Hidden Revamped Triada Malware
+[2025-04-05T00:53:23.099Z] Found embed description: The malware, first discovered in 2016, has been updated over the years, and the latest version is now hiding in the firmware of counterfeit mobile phones.
+[2025-04-05T00:53:23.099Z] Inserting content into Supabase: Counterfeit Phones Carrying Hidden Revamped Triada Malware
+
+The malware, first discovered in 2016, has been updated over the years, and the latest version is now hiding in the firmware of counterfeit mobile phones.
+[2025-04-05T00:53:23.158Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.158Z] Processing message 1357419054775926966 from REST API
+[2025-04-05T00:53:23.158Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/microsoft-warns-of-tax-themed-email.html",
+      "title": "Microsoft Warns of Tax-Themed Email Attacks Using PDFs and QR Codes to Deliver Malware",
+      "description": "Microsoft is warning of several phishing campaigns that are leveraging tax-related themes to deploy malware and steal credentials.\n\"These campaigns notably use redirection methods such as URL shorteners and QR codes contained in malicious attachments and abuse legitimate services like file-hosting services and business profile pages to avoid detection,\" Microsoft said in a report shared with The",
+      "color": 2639502,
+      "timestamp": "2025-04-03T17:39:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T18:18:42.285000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357419054775926966",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.158Z] Processing message 1357419054775926966 from rest-api
+[2025-04-05T00:53:23.158Z] Message content: ""
+[2025-04-05T00:53:23.159Z] Has embeds: true
+[2025-04-05T00:53:23.159Z] Message has 1 embeds
+[2025-04-05T00:53:23.159Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/microsoft-warns-of-tax-themed-email.html",
+  "title": "Microsoft Warns of Tax-Themed Email Attacks Using PDFs and QR Codes to Deliver Malware",
+  "description": "Microsoft is warning of several phishing campaigns that are leveraging tax-related themes to deploy malware and steal credentials.\n\"These campaigns notably use redirection methods such as URL shorteners and QR codes contained in malicious attachments and abuse legitimate services like file-hosting services and business profile pages to avoid detection,\" Microsoft said in a report shared with The",
+  "color": 2639502,
+  "timestamp": "2025-04-03T17:39:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.159Z] Found embed title: Microsoft Warns of Tax-Themed Email Attacks Using PDFs and QR Codes to Deliver Malware
+[2025-04-05T00:53:23.159Z] Found embed description: Microsoft is warning of several phishing campaigns that are leveraging tax-related themes to deploy malware and steal credentials.
+"These campaigns notably use redirection methods such as URL shorteners and QR codes contained in malicious attachments and abuse legitimate services like file-hosting services and business profile pages to avoid detection," Microsoft said in a report shared with The
+[2025-04-05T00:53:23.159Z] Inserting content into Supabase: Microsoft Warns of Tax-Themed Email Attacks Using PDFs and QR Codes to Deliver Malware
+
+Microsoft is warning of several phishing campaigns that are leveraging tax-related themes to deploy malware and steal credentials.
+"These campaigns notably use redirection methods such as URL shorteners and QR codes contained in malicious attachments and abuse legitimate services like file-hosting services and business profile pages to avoid detection," Microsoft said in a report shared with The
+[2025-04-05T00:53:23.210Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.210Z] Processing message 1357415077489152092 from REST API
+[2025-04-05T00:53:23.211Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/endpoint-security/runtime-ventures-launches-new-fund-for-seed-pre-seed-startups",
+      "title": "Runtime Ventures Launches New Fund for Seed, Pre-Seed Startups",
+      "description": "Co-founders Michael Sutton and David Endler raised $32 million to invest in early stage cybersecurity startups as well as to provide mentoring support.",
+      "color": 44678,
+      "timestamp": "2025-04-03T15:31:13+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T18:02:54.026000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357415077489152092",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.211Z] Processing message 1357415077489152092 from rest-api
+[2025-04-05T00:53:23.211Z] Message content: ""
+[2025-04-05T00:53:23.211Z] Has embeds: true
+[2025-04-05T00:53:23.211Z] Message has 1 embeds
+[2025-04-05T00:53:23.211Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/endpoint-security/runtime-ventures-launches-new-fund-for-seed-pre-seed-startups",
+  "title": "Runtime Ventures Launches New Fund for Seed, Pre-Seed Startups",
+  "description": "Co-founders Michael Sutton and David Endler raised $32 million to invest in early stage cybersecurity startups as well as to provide mentoring support.",
+  "color": 44678,
+  "timestamp": "2025-04-03T15:31:13+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.211Z] Found embed title: Runtime Ventures Launches New Fund for Seed, Pre-Seed Startups
+[2025-04-05T00:53:23.211Z] Found embed description: Co-founders Michael Sutton and David Endler raised $32 million to invest in early stage cybersecurity startups as well as to provide mentoring support.
+[2025-04-05T00:53:23.211Z] Inserting content into Supabase: Runtime Ventures Launches New Fund for Seed, Pre-Seed Startups
+
+Co-founders Michael Sutton and David Endler raised $32 million to invest in early stage cybersecurity startups as well as to provide mentoring support.
+[2025-04-05T00:53:23.276Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.276Z] Processing message 1357384682030764314 from REST API
+[2025-04-05T00:53:23.276Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/qr-codes-sent-in-attachments-are-the-new-favorite-for-phishers",
+      "title": "QR codes sent in attachments are the new favorite for phishers",
+      "description": "Phishers are putting QR codes as images in attachments because it helps them bypass email filters.",
+      "color": 2193615,
+      "timestamp": "2025-04-03T15:32:21+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T16:02:07.184000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357384682030764314",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.277Z] Processing message 1357384682030764314 from rest-api
+[2025-04-05T00:53:23.277Z] Message content: ""
+[2025-04-05T00:53:23.277Z] Has embeds: true
+[2025-04-05T00:53:23.277Z] Message has 1 embeds
+[2025-04-05T00:53:23.277Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/qr-codes-sent-in-attachments-are-the-new-favorite-for-phishers",
+  "title": "QR codes sent in attachments are the new favorite for phishers",
+  "description": "Phishers are putting QR codes as images in attachments because it helps them bypass email filters.",
+  "color": 2193615,
+  "timestamp": "2025-04-03T15:32:21+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.277Z] Found embed title: QR codes sent in attachments are the new favorite for phishers
+[2025-04-05T00:53:23.277Z] Found embed description: Phishers are putting QR codes as images in attachments because it helps them bypass email filters.
+[2025-04-05T00:53:23.277Z] Inserting content into Supabase: QR codes sent in attachments are the new favorite for phishers
+
+Phishers are putting QR codes as images in attachments because it helps them bypass email filters.
+[2025-04-05T00:53:23.329Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.329Z] Processing message 1357365879846731868 from REST API
+[2025-04-05T00:53:23.330Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/ics-ot-security/experts-discuss-current-and-emerging-ics-security-risks",
+      "title": "Emerging Risks Require IT/OT Collaboration to Secure Physical Systems",
+      "description": "With an increase in cyber-physical attacks that can cause significant disruptions, financial fallout and safety concerns for victim organizations, Renee Guttmann and Marc Sachs discuss why IT and OT security teams cannot keep working in silos.",
+      "color": 44678,
+      "timestamp": "2025-04-03T13:47:52+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T14:47:24.394000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357365879846731868",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.330Z] Processing message 1357365879846731868 from rest-api
+[2025-04-05T00:53:23.330Z] Message content: ""
+[2025-04-05T00:53:23.330Z] Has embeds: true
+[2025-04-05T00:53:23.330Z] Message has 1 embeds
+[2025-04-05T00:53:23.330Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/ics-ot-security/experts-discuss-current-and-emerging-ics-security-risks",
+  "title": "Emerging Risks Require IT/OT Collaboration to Secure Physical Systems",
+  "description": "With an increase in cyber-physical attacks that can cause significant disruptions, financial fallout and safety concerns for victim organizations, Renee Guttmann and Marc Sachs discuss why IT and OT security teams cannot keep working in silos.",
+  "color": 44678,
+  "timestamp": "2025-04-03T13:47:52+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.330Z] Found embed title: Emerging Risks Require IT/OT Collaboration to Secure Physical Systems
+[2025-04-05T00:53:23.330Z] Found embed description: With an increase in cyber-physical attacks that can cause significant disruptions, financial fallout and safety concerns for victim organizations, Renee Guttmann and Marc Sachs discuss why IT and OT security teams cannot keep working in silos.
+[2025-04-05T00:53:23.330Z] Inserting content into Supabase: Emerging Risks Require IT/OT Collaboration to Secure Physical Systems
+
+With an increase in cyber-physical attacks that can cause significant disruptions, financial fallout and safety concerns for victim organizations, Renee Guttmann and Marc Sachs discuss why IT and OT security teams cannot keep working in silos.
+[2025-04-05T00:53:23.372Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.373Z] Processing message 1357358337578107063 from REST API
+[2025-04-05T00:53:23.373Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/social-engineering-smarter",
+      "title": "Social Engineering Just Got Smarter",
+      "description": "Polices that forbid employees from divulging company details are worthless if the same information can be obtained from sources employees have no control over.",
+      "color": 44678,
+      "timestamp": "2025-04-03T14:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T14:17:26.177000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357358337578107063",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.373Z] Processing message 1357358337578107063 from rest-api
+[2025-04-05T00:53:23.373Z] Message content: ""
+[2025-04-05T00:53:23.373Z] Has embeds: true
+[2025-04-05T00:53:23.373Z] Message has 1 embeds
+[2025-04-05T00:53:23.373Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/vulnerabilities-threats/social-engineering-smarter",
+  "title": "Social Engineering Just Got Smarter",
+  "description": "Polices that forbid employees from divulging company details are worthless if the same information can be obtained from sources employees have no control over.",
+  "color": 44678,
+  "timestamp": "2025-04-03T14:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.374Z] Found embed title: Social Engineering Just Got Smarter
+[2025-04-05T00:53:23.374Z] Found embed description: Polices that forbid employees from divulging company details are worthless if the same information can be obtained from sources employees have no control over.
+[2025-04-05T00:53:23.374Z] Inserting content into Supabase: Social Engineering Just Got Smarter
+
+Polices that forbid employees from divulging company details are worthless if the same information can be obtained from sources employees have no control over.
+[2025-04-05T00:53:23.418Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.419Z] Processing message 1357354406445711491 from REST API
+[2025-04-05T00:53:23.420Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/location-name-and-photos-of-random-kids-shown-to-parents-in-child-tracker-mix-up",
+      "title": "Location, name, and photos of random kids shown to parents in child tracker mix up",
+      "description": "Worried parents tracking their children with T-Mobile SyncUP devices suddenly found that they were looking at the location of random other children. And could not locate their own.",
+      "color": 2193615,
+      "timestamp": "2025-04-03T13:36:57+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T14:01:48.922000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357354406445711491",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.420Z] Processing message 1357354406445711491 from rest-api
+[2025-04-05T00:53:23.420Z] Message content: ""
+[2025-04-05T00:53:23.420Z] Has embeds: true
+[2025-04-05T00:53:23.420Z] Message has 1 embeds
+[2025-04-05T00:53:23.420Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/location-name-and-photos-of-random-kids-shown-to-parents-in-child-tracker-mix-up",
+  "title": "Location, name, and photos of random kids shown to parents in child tracker mix up",
+  "description": "Worried parents tracking their children with T-Mobile SyncUP devices suddenly found that they were looking at the location of random other children. And could not locate their own.",
+  "color": 2193615,
+  "timestamp": "2025-04-03T13:36:57+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.420Z] Found embed title: Location, name, and photos of random kids shown to parents in child tracker mix up
+[2025-04-05T00:53:23.420Z] Found embed description: Worried parents tracking their children with T-Mobile SyncUP devices suddenly found that they were looking at the location of random other children. And could not locate their own.
+[2025-04-05T00:53:23.420Z] Inserting content into Supabase: Location, name, and photos of random kids shown to parents in child tracker mix up
+
+Worried parents tracking their children with T-Mobile SyncUP devices suddenly found that they were looking at the location of random other children. And could not locate their own.
+[2025-04-05T00:53:23.479Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.479Z] Processing message 1357347274723950622 from REST API
+[2025-04-05T00:53:23.480Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/lazarus-group-targets-job-seekers-with.html",
+      "title": "Lazarus Group Targets Job Seekers With ClickFix Tactic to Deploy GolangGhost Malware",
+      "description": "The North Korean threat actors behind Contagious Interview have adopted the increasingly popular ClickFix social engineering tactic to lure job seekers in the cryptocurrency sector to deliver a previously undocumented Go-based backdoor called GolangGhost on Windows and macOS systems.\nThe new activity, assessed to be a continuation of the campaign, has been codenamed ClickFake Interview by",
+      "color": 2639502,
+      "timestamp": "2025-04-03T12:22:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T13:33:28.587000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357347274723950622",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.480Z] Processing message 1357347274723950622 from rest-api
+[2025-04-05T00:53:23.480Z] Message content: ""
+[2025-04-05T00:53:23.480Z] Has embeds: true
+[2025-04-05T00:53:23.480Z] Message has 1 embeds
+[2025-04-05T00:53:23.480Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/lazarus-group-targets-job-seekers-with.html",
+  "title": "Lazarus Group Targets Job Seekers With ClickFix Tactic to Deploy GolangGhost Malware",
+  "description": "The North Korean threat actors behind Contagious Interview have adopted the increasingly popular ClickFix social engineering tactic to lure job seekers in the cryptocurrency sector to deliver a previously undocumented Go-based backdoor called GolangGhost on Windows and macOS systems.\nThe new activity, assessed to be a continuation of the campaign, has been codenamed ClickFake Interview by",
+  "color": 2639502,
+  "timestamp": "2025-04-03T12:22:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.481Z] Found embed title: Lazarus Group Targets Job Seekers With ClickFix Tactic to Deploy GolangGhost Malware
+[2025-04-05T00:53:23.481Z] Found embed description: The North Korean threat actors behind Contagious Interview have adopted the increasingly popular ClickFix social engineering tactic to lure job seekers in the cryptocurrency sector to deliver a previously undocumented Go-based backdoor called GolangGhost on Windows and macOS systems.
+The new activity, assessed to be a continuation of the campaign, has been codenamed ClickFake Interview by
+[2025-04-05T00:53:23.481Z] Inserting content into Supabase: Lazarus Group Targets Job Seekers With ClickFix Tactic to Deploy GolangGhost Malware
+
+The North Korean threat actors behind Contagious Interview have adopted the increasingly popular ClickFix social engineering tactic to lure job seekers in the cryptocurrency sector to deliver a previously undocumented Go-based backdoor called GolangGhost on Windows and macOS systems.
+The new activity, assessed to be a continuation of the campaign, has been codenamed ClickFake Interview by
+[2025-04-05T00:53:23.526Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.527Z] Processing message 1357347032741711995 from REST API
+[2025-04-05T00:53:23.527Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/application-security/google-quick-share-bug-bypasses-zero-click-file-transfer",
+      "title": "Google Quick Share Bug Bypasses Allow Zero-Click File Transfer",
+      "description": "Google addresses patch bypasses for CVE-2024-38272 and CVE-2024-38271, part of the previously announced &quot;QuickShell&quot; silent RCE attack chain against Windows users.",
+      "color": 44678,
+      "timestamp": "2025-04-03T10:24:26+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T13:32:30.894000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357347032741711995",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.527Z] Processing message 1357347032741711995 from rest-api
+[2025-04-05T00:53:23.527Z] Message content: ""
+[2025-04-05T00:53:23.527Z] Has embeds: true
+[2025-04-05T00:53:23.527Z] Message has 1 embeds
+[2025-04-05T00:53:23.527Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/application-security/google-quick-share-bug-bypasses-zero-click-file-transfer",
+  "title": "Google Quick Share Bug Bypasses Allow Zero-Click File Transfer",
+  "description": "Google addresses patch bypasses for CVE-2024-38272 and CVE-2024-38271, part of the previously announced &quot;QuickShell&quot; silent RCE attack chain against Windows users.",
+  "color": 44678,
+  "timestamp": "2025-04-03T10:24:26+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.527Z] Found embed title: Google Quick Share Bug Bypasses Allow Zero-Click File Transfer
+[2025-04-05T00:53:23.528Z] Found embed description: Google addresses patch bypasses for CVE-2024-38272 and CVE-2024-38271, part of the previously announced &quot;QuickShell&quot; silent RCE attack chain against Windows users.
+[2025-04-05T00:53:23.528Z] Inserting content into Supabase: Google Quick Share Bug Bypasses Allow Zero-Click File Transfer
+
+Google addresses patch bypasses for CVE-2024-38272 and CVE-2024-38271, part of the previously announced &quot;QuickShell&quot; silent RCE attack chain against Windows users.
+[2025-04-05T00:53:23.593Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.593Z] Processing message 1357328309897269339 from REST API
+[2025-04-05T00:53:23.594Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/ai-threats-are-evolving-fast-learn.html",
+      "title": "AI Threats Are Evolving Fast — Learn Practical Defense Tactics in this Expert Webinar",
+      "description": "The rules have changed. Again. Artificial intelligence is bringing powerful new tools to businesses. But it's also giving cybercriminals smarter ways to attack. They’re moving quicker, targeting more precisely, and slipping past old defenses without being noticed.\nAnd here's the harsh truth: If your security strategy hasn’t evolved with AI in mind, you’re already behind.\nBut you’re not alone—and",
+      "color": 2639502,
+      "timestamp": "2025-04-03T11:25:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T12:18:07.020000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357328309897269339",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.594Z] Processing message 1357328309897269339 from rest-api
+[2025-04-05T00:53:23.594Z] Message content: ""
+[2025-04-05T00:53:23.594Z] Has embeds: true
+[2025-04-05T00:53:23.594Z] Message has 1 embeds
+[2025-04-05T00:53:23.594Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/ai-threats-are-evolving-fast-learn.html",
+  "title": "AI Threats Are Evolving Fast — Learn Practical Defense Tactics in this Expert Webinar",
+  "description": "The rules have changed. Again. Artificial intelligence is bringing powerful new tools to businesses. But it's also giving cybercriminals smarter ways to attack. They’re moving quicker, targeting more precisely, and slipping past old defenses without being noticed.\nAnd here's the harsh truth: If your security strategy hasn’t evolved with AI in mind, you’re already behind.\nBut you’re not alone—and",
+  "color": 2639502,
+  "timestamp": "2025-04-03T11:25:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.595Z] Found embed title: AI Threats Are Evolving Fast — Learn Practical Defense Tactics in this Expert Webinar
+[2025-04-05T00:53:23.595Z] Found embed description: The rules have changed. Again. Artificial intelligence is bringing powerful new tools to businesses. But it's also giving cybercriminals smarter ways to attack. They’re moving quicker, targeting more precisely, and slipping past old defenses without being noticed.
+And here's the harsh truth: If your security strategy hasn’t evolved with AI in mind, you’re already behind.
+But you’re not alone—and
+[2025-04-05T00:53:23.595Z] Inserting content into Supabase: AI Threats Are Evolving Fast — Learn Practical Defense Tactics in this Expert Webinar
+
+The rules have changed. Again. Artificial intelligence is bringing powerful new tools to businesses. But it's also giving cybercriminals smarter ways to attack. They’re moving quicker, targeting more precisely, and slipping past old defenses without being noticed.
+And here's the harsh truth: If your security strategy hasn’t evolved with AI in mind, you’re already behind.
+But you’re not alone—and
+[2025-04-05T00:53:23.649Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.650Z] Processing message 1357328033681244203 from REST API
+[2025-04-05T00:53:23.650Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/solarwinds-adds-incident-management-tool-from-squadcast",
+      "title": "SolarWinds Adds Incident Management Tool From Squadcast",
+      "description": "The IT service management and observability tools company acquired Squadcast last month and is adding the automated incident response platform to the SolarWinds portfolio.",
+      "color": 44678,
+      "timestamp": "2025-04-02T21:45:46+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T12:17:01.165000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357328033681244203",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.651Z] Processing message 1357328033681244203 from rest-api
+[2025-04-05T00:53:23.651Z] Message content: ""
+[2025-04-05T00:53:23.651Z] Has embeds: true
+[2025-04-05T00:53:23.651Z] Message has 1 embeds
+[2025-04-05T00:53:23.651Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyberattacks-data-breaches/solarwinds-adds-incident-management-tool-from-squadcast",
+  "title": "SolarWinds Adds Incident Management Tool From Squadcast",
+  "description": "The IT service management and observability tools company acquired Squadcast last month and is adding the automated incident response platform to the SolarWinds portfolio.",
+  "color": 44678,
+  "timestamp": "2025-04-02T21:45:46+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.651Z] Found embed title: SolarWinds Adds Incident Management Tool From Squadcast
+[2025-04-05T00:53:23.652Z] Found embed description: The IT service management and observability tools company acquired Squadcast last month and is adding the automated incident response platform to the SolarWinds portfolio.
+[2025-04-05T00:53:23.652Z] Inserting content into Supabase: SolarWinds Adds Incident Management Tool From Squadcast
+
+The IT service management and observability tools company acquired Squadcast last month and is adding the automated incident response platform to the SolarWinds portfolio.
+[2025-04-05T00:53:23.697Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.698Z] Processing message 1357324376726569051 from REST API
+[2025-04-05T00:53:23.698Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyber-risk/new-pci-dss-rules-merchants-on-hook-compliance",
+      "title": "New PCI DSS Rules Say Merchants on Hook for Compliance, Not Providers",
+      "description": "Merchants and retailers will now face penalties for not being compliant with PCI DSS 4.0.1, and the increased security standards make it clear they cannot transfer compliance responsibility to third-party service providers.",
+      "color": 44678,
+      "timestamp": "2025-04-02T19:19:32+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T12:02:29.279000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357324376726569051",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.698Z] Processing message 1357324376726569051 from rest-api
+[2025-04-05T00:53:23.698Z] Message content: ""
+[2025-04-05T00:53:23.698Z] Has embeds: true
+[2025-04-05T00:53:23.698Z] Message has 1 embeds
+[2025-04-05T00:53:23.698Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyber-risk/new-pci-dss-rules-merchants-on-hook-compliance",
+  "title": "New PCI DSS Rules Say Merchants on Hook for Compliance, Not Providers",
+  "description": "Merchants and retailers will now face penalties for not being compliant with PCI DSS 4.0.1, and the increased security standards make it clear they cannot transfer compliance responsibility to third-party service providers.",
+  "color": 44678,
+  "timestamp": "2025-04-02T19:19:32+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.698Z] Found embed title: New PCI DSS Rules Say Merchants on Hook for Compliance, Not Providers
+[2025-04-05T00:53:23.698Z] Found embed description: Merchants and retailers will now face penalties for not being compliant with PCI DSS 4.0.1, and the increased security standards make it clear they cannot transfer compliance responsibility to third-party service providers.
+[2025-04-05T00:53:23.698Z] Inserting content into Supabase: New PCI DSS Rules Say Merchants on Hook for Compliance, Not Providers
+
+Merchants and retailers will now face penalties for not being compliant with PCI DSS 4.0.1, and the increased security standards make it clear they cannot transfer compliance responsibility to third-party service providers.
+[2025-04-05T00:53:23.761Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.761Z] Processing message 1357317125676470373 from REST API
+[2025-04-05T00:53:23.762Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/ai-adoption-in-enterprise-breaking.html",
+      "title": "AI Adoption in the Enterprise: Breaking Through the Security and Compliance Gridlock",
+      "description": "AI holds the promise to revolutionize all sectors of enterpriseーfrom fraud detection and content personalization to customer service and security operations. Yet, despite its potential, implementation often stalls behind a wall of security, legal, and compliance hurdles.\nImagine this all-too-familiar scenario: A CISO wants to deploy an AI-driven SOC to handle the overwhelming volume of security",
+      "color": 2639502,
+      "timestamp": "2025-04-03T10:34:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T11:33:40.494000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357317125676470373",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.762Z] Processing message 1357317125676470373 from rest-api
+[2025-04-05T00:53:23.762Z] Message content: ""
+[2025-04-05T00:53:23.762Z] Has embeds: true
+[2025-04-05T00:53:23.762Z] Message has 1 embeds
+[2025-04-05T00:53:23.762Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/ai-adoption-in-enterprise-breaking.html",
+  "title": "AI Adoption in the Enterprise: Breaking Through the Security and Compliance Gridlock",
+  "description": "AI holds the promise to revolutionize all sectors of enterpriseーfrom fraud detection and content personalization to customer service and security operations. Yet, despite its potential, implementation often stalls behind a wall of security, legal, and compliance hurdles.\nImagine this all-too-familiar scenario: A CISO wants to deploy an AI-driven SOC to handle the overwhelming volume of security",
+  "color": 2639502,
+  "timestamp": "2025-04-03T10:34:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.762Z] Found embed title: AI Adoption in the Enterprise: Breaking Through the Security and Compliance Gridlock
+[2025-04-05T00:53:23.762Z] Found embed description: AI holds the promise to revolutionize all sectors of enterpriseーfrom fraud detection and content personalization to customer service and security operations. Yet, despite its potential, implementation often stalls behind a wall of security, legal, and compliance hurdles.
+Imagine this all-too-familiar scenario: A CISO wants to deploy an AI-driven SOC to handle the overwhelming volume of security
+[2025-04-05T00:53:23.762Z] Inserting content into Supabase: AI Adoption in the Enterprise: Breaking Through the Security and Compliance Gridlock
+
+AI holds the promise to revolutionize all sectors of enterpriseーfrom fraud detection and content personalization to customer service and security operations. Yet, despite its potential, implementation often stalls behind a wall of security, legal, and compliance hurdles.
+Imagine this all-too-familiar scenario: A CISO wants to deploy an AI-driven SOC to handle the overwhelming volume of security
+[2025-04-05T00:53:23.804Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.804Z] Processing message 1357275591816249416 from REST API
+[2025-04-05T00:53:23.804Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/google-patches-quick-share.html",
+      "title": "Google Patches Quick Share Vulnerability Enabling Silent File Transfers Without Consent",
+      "description": "Cybersecurity researchers have disclosed details of a new vulnerability impacting Google's Quick Share data transfer utility for Windows that could be exploited to achieve a denial-of-service (DoS) or send arbitrary files to a target's device without their approval.\nThe flaw, tracked as CVE-2024-10668 (CVSS score: 5.9), is a bypass for two of the 10 shortcomings that were originally disclosed by",
+      "color": 2639502,
+      "timestamp": "2025-04-03T08:21:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T08:48:38.050000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357275591816249416",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.804Z] Processing message 1357275591816249416 from rest-api
+[2025-04-05T00:53:23.805Z] Message content: ""
+[2025-04-05T00:53:23.805Z] Has embeds: true
+[2025-04-05T00:53:23.805Z] Message has 1 embeds
+[2025-04-05T00:53:23.805Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/google-patches-quick-share.html",
+  "title": "Google Patches Quick Share Vulnerability Enabling Silent File Transfers Without Consent",
+  "description": "Cybersecurity researchers have disclosed details of a new vulnerability impacting Google's Quick Share data transfer utility for Windows that could be exploited to achieve a denial-of-service (DoS) or send arbitrary files to a target's device without their approval.\nThe flaw, tracked as CVE-2024-10668 (CVSS score: 5.9), is a bypass for two of the 10 shortcomings that were originally disclosed by",
+  "color": 2639502,
+  "timestamp": "2025-04-03T08:21:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.805Z] Found embed title: Google Patches Quick Share Vulnerability Enabling Silent File Transfers Without Consent
+[2025-04-05T00:53:23.805Z] Found embed description: Cybersecurity researchers have disclosed details of a new vulnerability impacting Google's Quick Share data transfer utility for Windows that could be exploited to achieve a denial-of-service (DoS) or send arbitrary files to a target's device without their approval.
+The flaw, tracked as CVE-2024-10668 (CVSS score: 5.9), is a bypass for two of the 10 shortcomings that were originally disclosed by
+[2025-04-05T00:53:23.805Z] Inserting content into Supabase: Google Patches Quick Share Vulnerability Enabling Silent File Transfers Without Consent
+
+Cybersecurity researchers have disclosed details of a new vulnerability impacting Google's Quick Share data transfer utility for Windows that could be exploited to achieve a denial-of-service (DoS) or send arbitrary files to a target's device without their approval.
+The flaw, tracked as CVE-2024-10668 (CVSS score: 5.9), is a bypass for two of the 10 shortcomings that were originally disclosed by
+[2025-04-05T00:53:23.870Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.871Z] Processing message 1357260557740408873 from REST API
+[2025-04-05T00:53:23.871Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/triada-malware-preloaded-on-counterfeit.html",
+      "title": "Triada Malware Preloaded on Counterfeit Android Phones Infects 2,600+ Devices",
+      "description": "Counterfeit versions of popular smartphone models that are sold at reduced prices have been found to be preloaded with a modified version of an Android malware called Triada.\n\"More than 2,600 users in different countries have encountered the new version of Triada, the majority in Russia,\" Kaspersky said in a report. The infections were recorded between March 13 and 27, 2025.&nbsp;\nTriada is the",
+      "color": 2639502,
+      "timestamp": "2025-04-03T07:34:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T07:48:53.647000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357260557740408873",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.872Z] Processing message 1357260557740408873 from rest-api
+[2025-04-05T00:53:23.872Z] Message content: ""
+[2025-04-05T00:53:23.872Z] Has embeds: true
+[2025-04-05T00:53:23.872Z] Message has 1 embeds
+[2025-04-05T00:53:23.872Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/triada-malware-preloaded-on-counterfeit.html",
+  "title": "Triada Malware Preloaded on Counterfeit Android Phones Infects 2,600+ Devices",
+  "description": "Counterfeit versions of popular smartphone models that are sold at reduced prices have been found to be preloaded with a modified version of an Android malware called Triada.\n\"More than 2,600 users in different countries have encountered the new version of Triada, the majority in Russia,\" Kaspersky said in a report. The infections were recorded between March 13 and 27, 2025.&nbsp;\nTriada is the",
+  "color": 2639502,
+  "timestamp": "2025-04-03T07:34:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.872Z] Found embed title: Triada Malware Preloaded on Counterfeit Android Phones Infects 2,600+ Devices
+[2025-04-05T00:53:23.872Z] Found embed description: Counterfeit versions of popular smartphone models that are sold at reduced prices have been found to be preloaded with a modified version of an Android malware called Triada.
+"More than 2,600 users in different countries have encountered the new version of Triada, the majority in Russia," Kaspersky said in a report. The infections were recorded between March 13 and 27, 2025.&nbsp;
+Triada is the
+[2025-04-05T00:53:23.873Z] Inserting content into Supabase: Triada Malware Preloaded on Counterfeit Android Phones Infects 2,600+ Devices
+
+Counterfeit versions of popular smartphone models that are sold at reduced prices have been found to be preloaded with a modified version of an Android malware called Triada.
+"More than 2,600 users in different countries have encountered the new version of Triada, the majority in Russia," Kaspersky said in a report. The infections were recorded between March 13 and 27, 2025.&nbsp;
+Triada is the
+[2025-04-05T00:53:23.933Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.933Z] Processing message 1357237487231172679 from REST API
+[2025-04-05T00:53:23.934Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/threat-intelligence/israel-stage-3-cyber-wars-with-iran-proxies",
+      "title": "Israel Enters 'Stage 3' of Cyber Wars With Iran Proxies",
+      "description": "While Israel and Iranian proxies fight it out IRL, their conflict in cyberspace has developed in parallel. These days attacks have decelerated, but advanced in sophistication.",
+      "color": 44678,
+      "timestamp": "2025-04-03T06:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T06:17:13.209000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357237487231172679",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.934Z] Processing message 1357237487231172679 from rest-api
+[2025-04-05T00:53:23.934Z] Message content: ""
+[2025-04-05T00:53:23.934Z] Has embeds: true
+[2025-04-05T00:53:23.934Z] Message has 1 embeds
+[2025-04-05T00:53:23.934Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/threat-intelligence/israel-stage-3-cyber-wars-with-iran-proxies",
+  "title": "Israel Enters 'Stage 3' of Cyber Wars With Iran Proxies",
+  "description": "While Israel and Iranian proxies fight it out IRL, their conflict in cyberspace has developed in parallel. These days attacks have decelerated, but advanced in sophistication.",
+  "color": 44678,
+  "timestamp": "2025-04-03T06:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.934Z] Found embed title: Israel Enters 'Stage 3' of Cyber Wars With Iran Proxies
+[2025-04-05T00:53:23.935Z] Found embed description: While Israel and Iranian proxies fight it out IRL, their conflict in cyberspace has developed in parallel. These days attacks have decelerated, but advanced in sophistication.
+[2025-04-05T00:53:23.935Z] Inserting content into Supabase: Israel Enters 'Stage 3' of Cyber Wars With Iran Proxies
+
+While Israel and Iranian proxies fight it out IRL, their conflict in cyberspace has developed in parallel. These days attacks have decelerated, but advanced in sophistication.
+[2025-04-05T00:53:23.983Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:23.984Z] Processing message 1357219525354848409 from REST API
+[2025-04-05T00:53:23.984Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/legacy-stripe-api-exploited-to-validate.html",
+      "title": "Legacy Stripe API Exploited to Validate Stolen Payment Cards in Web Skimmer Campaign",
+      "description": "Threat hunters are warning of a sophisticated web skimmer campaign that leverages a legacy application programming interface (API) from payment processor Stripe to validate stolen payment information prior to exfiltration.\n\"This tactic ensures that only valid card data is sent to the attackers, making the operation more efficient and potentially harder to detect,\" Jscrambler researchers Pedro",
+      "color": 2639502,
+      "timestamp": "2025-04-03T04:45:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/europol-dismantles-kidflix-with-72000.html",
+      "title": "Europol Dismantles Kidflix With 72,000 CSAM Videos Seized in Major Operation",
+      "description": "In one of the largest coordinated law enforcement operations, authorities have dismantled Kidflix, a streaming platform that offered child sexual abuse material (CSAM).\n\"A total of 1.8 million users worldwide logged on to the platform between April 2022 and March 2025,\" Europol said in a statement. \"On March 11, 2025, the server, which contained around 72,000 videos at the time, was seized by",
+      "color": 2639502,
+      "timestamp": "2025-04-03T03:58:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-03T05:05:50.764000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357219525354848409",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:23.984Z] Processing message 1357219525354848409 from rest-api
+[2025-04-05T00:53:23.984Z] Message content: ""
+[2025-04-05T00:53:23.984Z] Has embeds: true
+[2025-04-05T00:53:23.984Z] Message has 2 embeds
+[2025-04-05T00:53:23.985Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/legacy-stripe-api-exploited-to-validate.html",
+  "title": "Legacy Stripe API Exploited to Validate Stolen Payment Cards in Web Skimmer Campaign",
+  "description": "Threat hunters are warning of a sophisticated web skimmer campaign that leverages a legacy application programming interface (API) from payment processor Stripe to validate stolen payment information prior to exfiltration.\n\"This tactic ensures that only valid card data is sent to the attackers, making the operation more efficient and potentially harder to detect,\" Jscrambler researchers Pedro",
+  "color": 2639502,
+  "timestamp": "2025-04-03T04:45:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:23.985Z] Found embed title: Legacy Stripe API Exploited to Validate Stolen Payment Cards in Web Skimmer Campaign
+[2025-04-05T00:53:23.985Z] Found embed description: Threat hunters are warning of a sophisticated web skimmer campaign that leverages a legacy application programming interface (API) from payment processor Stripe to validate stolen payment information prior to exfiltration.
+"This tactic ensures that only valid card data is sent to the attackers, making the operation more efficient and potentially harder to detect," Jscrambler researchers Pedro
+[2025-04-05T00:53:23.985Z] Inserting content into Supabase: Legacy Stripe API Exploited to Validate Stolen Payment Cards in Web Skimmer Campaign
+
+Threat hunters are warning of a sophisticated web skimmer campaign that leverages a legacy application programming interface (API) from payment processor Stripe to validate stolen payment information prior to exfiltration.
+"This tactic ensures that only valid card data is sent to the attackers, making the operation more efficient and potentially harder to detect," Jscrambler researchers Pedro
+[2025-04-05T00:53:24.030Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:24.031Z] Processing message 1357116673328545862 from REST API
+[2025-04-05T00:53:24.031Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/threat-intelligence/dprk-it-workers-europe-employment",
+      "title": "DPRK 'IT Workers' Pivot to Europe for Employment Scams",
+      "description": "By using fake references and building connections with recruiters, some North Korean nationals are landing six-figure jobs that replenish DPRK coffers.",
+      "color": 44678,
+      "timestamp": "2025-04-02T21:48:13+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-02T22:17:08.930000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1357116673328545862",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-05T00:53:24.031Z] Processing message 1357116673328545862 from rest-api
+[2025-04-05T00:53:24.031Z] Message content: ""
+[2025-04-05T00:53:24.031Z] Has embeds: true
+[2025-04-05T00:53:24.031Z] Message has 1 embeds
+[2025-04-05T00:53:24.031Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/threat-intelligence/dprk-it-workers-europe-employment",
+  "title": "DPRK 'IT Workers' Pivot to Europe for Employment Scams",
+  "description": "By using fake references and building connections with recruiters, some North Korean nationals are landing six-figure jobs that replenish DPRK coffers.",
+  "color": 44678,
+  "timestamp": "2025-04-02T21:48:13+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "flags": 0
+  }
+}
+[2025-04-05T00:53:24.031Z] Found embed title: DPRK 'IT Workers' Pivot to Europe for Employment Scams
+[2025-04-05T00:53:24.031Z] Found embed description: By using fake references and building connections with recruiters, some North Korean nationals are landing six-figure jobs that replenish DPRK coffers.
+[2025-04-05T00:53:24.032Z] Inserting content into Supabase: DPRK 'IT Workers' Pivot to Europe for Employment Scams
+
+By using fake references and building connections with recruiters, some North Korean nationals are landing six-figure jobs that replenish DPRK coffers.
+[2025-04-05T00:53:24.075Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:24.075Z] Finished processing REST API messages
+[2025-04-05T00:53:42.743Z] Received message from blackpenguin0867
+[2025-04-05T00:53:42.745Z] Received message from blackpenguin0867
+[2025-04-05T00:53:42.745Z] Received message from blackpenguin0867
+[2025-04-05T00:53:42.744Z] Received message from blackpenguin0867
+[2025-04-05T00:53:42.746Z] No content extracted from message, nothing to save
+[2025-04-05T00:53:42.746Z] Message type: 0
+[2025-04-05T00:53:42.746Z] Message type: 0
+[2025-04-05T00:53:42.746Z] Message content: ""
+[2025-04-05T00:53:42.746Z] Has embeds: false
+[2025-04-05T00:53:42.746Z] Has attachments: false
+[2025-04-05T00:53:42.746Z] Message details: {
+  "id": "1357880849193894119",
+  "content": "",
+  "type": 0,
+  "embeds": [],
+  "components": [],
+  "attachments": []
+}
+[2025-04-05T00:53:42.746Z] No content detected using standard methods, using fallback
+[2025-04-05T00:53:42.746Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357880849193894119
+[2025-04-05T00:53:42.747Z] Received message from blackpenguin0867
+[2025-04-05T00:53:42.747Z] Message content: ""
+[2025-04-05T00:53:42.747Z] Has embeds: false
+[2025-04-05T00:53:42.747Z] Has attachments: false
+[2025-04-05T00:53:42.748Z] Message details: {
+  "id": "1357880849193894119",
+  "content": "",
+  "type": 0,
+  "embeds": [],
+  "components": [],
+  "attachments": []
+}
+[2025-04-05T00:53:42.748Z] No content detected using standard methods, using fallback
+[2025-04-05T00:53:42.748Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357880849193894119
+[2025-04-05T00:53:42.747Z] No content extracted from message, nothing to save
+[2025-04-05T00:53:42.750Z] Message via WebSocket: {
+  "channelId": "1299032261470978159",
+  "guildId": "1299032261470978152",
+  "id": "1357880849193894119",
+  "createdTimestamp": 1743814422654,
+  "type": 0,
+  "system": false,
+  "content": "",
+  "authorId": "1230859370494169141",
+  "pinned": false,
+  "tts": false,
+  "nonce": "1357880848271015936",
+  "embeds": [],
+  "components": [],
+  "attachments": [],
+  "stickers": [],
+  "position": 0,
+  "roleSubscriptionData": null,
+  "resolved": null,
+  "editedTimestamp": null,
+  "mentions": {
+    "everyone": false,
+    "users": [],
+    "roles": [],
+    "crosspostedChannels": [],
+    "repliedUser": null,
+    "members": [],
+    "channels": []
+  },
+  "webhookId": null,
+  "groupActivityApplicationId": null,
+  "applicationId": null,
+  "activity": null,
+  "flags": 16384,
+  "reference": {
+    "channelId": "1299032261470978159",
+    "guildId": "1299032261470978152",
+    "messageId": "1357879737598345356",
+    "type": 1
+  },
+  "interactionMetadata": null,
+  "interaction": null,
+  "poll": null,
+  "messageSnapshots": [
+    "1357879737598345356"
+  ],
+  "call": null,
+  "cleanContent": ""
+}
+[2025-04-05T00:53:42.754Z] Processing message 1357880849193894119 from websocket
+[2025-04-05T00:53:42.754Z] Message content: ""
+[2025-04-05T00:53:42.754Z] Has embeds: false
+[2025-04-05T00:53:42.755Z] No content detected using standard methods, trying raw approach
+[2025-04-05T00:53:42.755Z] All extraction methods failed, using fallback
+[2025-04-05T00:53:42.756Z] Inserting content into Supabase: News Update
+
+Unable to extract content from this message type. This appears to be a complex message that requires additional handling.
+
+Message ID: 1357880849193894119
+[2025-04-05T00:53:42.894Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:42.895Z] Successfully saved to Supabase: null
+[2025-04-05T00:53:42.905Z] Successfully saved to Supabase: null
+[2025-04-05T00:54:20.774Z] Fetching recent messages using REST API
+[2025-04-05T00:54:21.067Z] Fetched 50 messages via REST API
+[2025-04-05T00:54:21.068Z] Finished processing REST API messages
+[2025-04-05T00:55:20.776Z] Fetching recent messages using REST API
+[2025-04-05T00:55:21.050Z] Fetched 50 messages via REST API
+[2025-04-05T00:55:21.051Z] Finished processing REST API messages
