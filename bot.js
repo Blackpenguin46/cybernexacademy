@@ -56,6 +56,14 @@ function safeStringify(obj) {
   }, 2);
 }
 
+// Function to extract URLs from text content
+function extractUrls(text) {
+  if (!text) return [];
+  // Regular expression to find URLs in text
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.match(urlRegex) || [];
+}
+
 // Function to extract content from message
 async function extractAndSaveContent(message, source = 'websocket') {
   try {
@@ -74,6 +82,7 @@ async function extractAndSaveContent(message, source = 'websocket') {
     let newsTitle = '';
     let newsContent = '';
     let sourceInfo = '';
+    let urls = [];
     
     debugLog(`Message content: "${message.content}"`);
     debugLog(`Has embeds: ${message.embeds?.length > 0}`);
@@ -82,6 +91,13 @@ async function extractAndSaveContent(message, source = 'websocket') {
     if (message.content && message.content.trim() !== '') {
       debugLog(`Message has text content: ${message.content}`);
       newsContent = message.content;
+      
+      // Extract URLs from the content
+      const contentUrls = extractUrls(message.content);
+      if (contentUrls.length > 0) {
+        debugLog(`Found ${contentUrls.length} URLs in message content`);
+        urls = urls.concat(contentUrls);
+      }
     }
     
     // Check for embeds
@@ -95,12 +111,24 @@ async function extractAndSaveContent(message, source = 'websocket') {
       if (embed.title) {
         newsTitle = embed.title;
         debugLog(`Found embed title: ${newsTitle}`);
+        
+        // Extract URLs from title
+        const titleUrls = extractUrls(embed.title);
+        if (titleUrls.length > 0) {
+          urls = urls.concat(titleUrls);
+        }
       }
       
       // Extract description
       if (embed.description) {
         newsContent = embed.description;
         debugLog(`Found embed description: ${newsContent}`);
+        
+        // Extract URLs from description
+        const descriptionUrls = extractUrls(embed.description);
+        if (descriptionUrls.length > 0) {
+          urls = urls.concat(descriptionUrls);
+        }
       }
       
       // Check for fields
@@ -108,6 +136,14 @@ async function extractAndSaveContent(message, source = 'websocket') {
         debugLog(`Embed has ${embed.fields.length} fields`);
         embed.fields.forEach((field, index) => {
           debugLog(`Field ${index}: ${field.name} - ${field.value}`);
+          
+          // Extract URLs from field name and value
+          const fieldNameUrls = extractUrls(field.name);
+          const fieldValueUrls = extractUrls(field.value);
+          
+          if (fieldNameUrls.length > 0) urls = urls.concat(fieldNameUrls);
+          if (fieldValueUrls.length > 0) urls = urls.concat(fieldValueUrls);
+          
           if (!newsContent) {
             newsContent = `${field.name}: ${field.value}`;
           } else {
@@ -127,6 +163,12 @@ async function extractAndSaveContent(message, source = 'websocket') {
         debugLog(`Found embed footer: ${embed.footer.text}`);
         if (!sourceInfo) sourceInfo = embed.footer.text;
       }
+      
+      // Check for URL in the embed
+      if (embed.url) {
+        debugLog(`Found embed URL: ${embed.url}`);
+        urls.push(embed.url);
+      }
     }
     
     // Force a default title if we have content but no title
@@ -138,7 +180,31 @@ async function extractAndSaveContent(message, source = 'websocket') {
     let fullContent = '';
     if (newsTitle) fullContent += newsTitle + '\n\n';
     if (newsContent) fullContent += newsContent;
+    
+    // Add source info if available
     if (sourceInfo) fullContent += `\n\nSource: ${sourceInfo}`;
+    
+    // Add URLs if found and not already in the content
+    if (urls.length > 0) {
+      const urlList = [...new Set(urls)]; // Remove duplicates
+      debugLog(`Extracted unique URLs: ${urlList.join(', ')}`);
+      
+      // Only add URLs section if they're not already in the content
+      let urlsAlreadyInContent = true;
+      for (const url of urlList) {
+        if (!fullContent.includes(url)) {
+          urlsAlreadyInContent = false;
+          break;
+        }
+      }
+      
+      if (!urlsAlreadyInContent) {
+        fullContent += '\n\nLinks:';
+        urlList.forEach(url => {
+          fullContent += `\n${url}`;
+        });
+      }
+    }
     
     // Handle the case where we can't extract content normally
     if (fullContent.trim() === '') {
@@ -151,9 +217,16 @@ async function extractAndSaveContent(message, source = 'websocket') {
         // Look for content within the raw data using regex
         const titleRegex = /"title":"([^"]+)"/;
         const descRegex = /"description":"([^"]+)"/;
+        const urlRegex = /"url":"(https?:\/\/[^"]+)"/g;
         
         const titleMatch = rawData.match(titleRegex);
         const descMatch = rawData.match(descRegex);
+        
+        // Extract URLs from raw data
+        let urlMatch;
+        while ((urlMatch = urlRegex.exec(rawData)) !== null) {
+          urls.push(urlMatch[1]);
+        }
         
         if (titleMatch && titleMatch[1]) {
           newsTitle = titleMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"');
@@ -169,6 +242,14 @@ async function extractAndSaveContent(message, source = 'websocket') {
         fullContent = '';
         if (newsTitle) fullContent += newsTitle + '\n\n';
         if (newsContent) fullContent += newsContent;
+        
+        // Add URLs if found
+        if (urls.length > 0) {
+          fullContent += '\n\nLinks:';
+          [...new Set(urls)].forEach(url => {
+            fullContent += `\n${url}`;
+          });
+        }
       } catch (err) {
         debugLog(`Error in raw extraction: ${err.message}`);
       }
@@ -182,13 +263,15 @@ async function extractAndSaveContent(message, source = 'websocket') {
     
     // Insert into Supabase
     debugLog(`Inserting content into Supabase: ${fullContent}`);
+    debugLog(`URLs found: ${urls.length > 0 ? urls.join(', ') : 'None'}`);
     
     const { data, error } = await supabase
       .from('newsfeed')
       .insert([{ 
         author: message.author?.username || 'Discord Bot', 
         content: fullContent, 
-        timestamp: new Date() 
+        timestamp: new Date(),
+        urls: urls.length > 0 ? urls : null  // Store URLs as JSON array if found
       }]);
     
     if (error) {

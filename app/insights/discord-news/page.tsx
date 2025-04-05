@@ -11,6 +11,7 @@ interface DiscordMessage {
   author: string;
   timestamp: string;
   attachments: any[];
+  urls?: string[]; // Add optional urls array field
 }
 
 // Function to determine message type and color
@@ -60,7 +61,7 @@ function formatContentWithLinks(content: string) {
               rel="noopener noreferrer"
               className="text-purple-400 hover:underline break-all"
             >
-              {part}
+              {part} <ExternalLink className="inline w-3 h-3 mb-1" />
             </a>
           );
         }
