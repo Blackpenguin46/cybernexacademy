@@ -1,13 +1,8 @@
-import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { NextResponse } from 'next/server';
 
-// Initialize Supabase client
-const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDAxNjA0NjQsImV4cCI6MjA1NTczNjQ2NH0.ef0feqGxtWeB9C2SLtPwEk_lcW8pcVngo7fz1SsznDM';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-// Example message format for fallback when Supabase API fails
-const FALLBACK_MESSAGES = [
+// Define fallback messages in case the API fails
+const fallbackArticles = [
   {
     id: '1',
     content: '[SECURITY ALERT] Microsoft has released patches for 147 vulnerabilities in their April 2024 Patch Tuesday update, including 5 actively exploited zero-days. https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html',
@@ -31,130 +26,79 @@ const FALLBACK_MESSAGES = [
   }
 ];
 
-// Function to log detailed information about an object
-function logObject(name: string, obj: any) {
-  console.log(`${name}:`, {
-    type: typeof obj,
-    isNull: obj === null,
-    isUndefined: obj === undefined,
-    keys: obj ? Object.keys(obj) : 'N/A',
-    sample: obj && typeof obj === 'object' ? JSON.stringify(obj).substring(0, 200) + '...' : obj
-  });
+// Debug function to log objects safely
+function logObject(label: string, obj: any) {
+  console.log(`${label}: ${JSON.stringify(obj, null, 2)}`);
 }
 
 export async function GET() {
-  console.log('Starting API request to fetch Discord news');
+  console.log('Discord news API endpoint called at:', new Date().toISOString());
+  
+  // Initialize Supabase client
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  // Return fallback data if environment variables are missing
+  if (!supabaseUrl || !supabaseKey) {
+    console.error('Missing Supabase environment variables');
+    return NextResponse.json({
+      articles: fallbackArticles,
+      source: 'fallback',
+      error: 'Missing Supabase environment variables'
+    });
+  }
   
   try {
-    // 1. First just check Supabase health
-    console.log('Checking Supabase connection health...');
-    const { data: healthData, error: healthError } = await supabase.from('_tables').select('name').limit(1);
+    // Create Supabase client
+    console.log('Initializing Supabase client with URL:', supabaseUrl);
+    const supabase = createClient(supabaseUrl, supabaseKey);
     
-    // If we can't even get table metadata, the connection is definitely broken
-    if (healthError) {
-      console.error('Supabase health check failed:', healthError.message);
-      throw new Error(`Supabase connection error: ${healthError.message}`);
-    }
-    
-    console.log('Supabase health check successful:', { healthData });
-    
-    // 2. Try to list all tables for debugging
-    console.log('Fetching available tables...');
-    const { data: tables, error: tablesError } = await supabase.from('_tables').select('*');
-    
-    if (tablesError) {
-      console.log('Could not list tables (access restriction):', tablesError.message);
-    } else {
-      console.log('Available tables:', tables?.map(t => t.name).join(', ') || 'None found');
-    }
-    
-    // 3. Now query the newsfeed table
+    // Directly query the newsfeed table
     console.log('Querying newsfeed table...');
-    const { data: newsData, error: newsError } = await supabase
+    const { data: articles, error } = await supabase
       .from('newsfeed')
       .select('*')
-      .order('timestamp', { ascending: false })
-      .limit(10);
+      .order('created_at', { ascending: false });
     
-    console.log('Supabase query response:', { 
-      success: !newsError, 
-      errorCode: newsError?.code,
-      errorMessage: newsError?.message,
-      itemCount: newsData?.length || 0
-    });
-    
-    if (newsError) {
-      // If table doesn't exist, try listing all tables to find the right one
-      if (newsError.code === '42P01') { // PostgreSQL error code for "table does not exist"
-        console.log('The "newsfeed" table does not exist, checking for similar tables...');
-        const { data: schema, error: schemaError } = await supabase.rpc('get_schema');
-        
-        if (schemaError) {
-          console.log('Could not get schema:', schemaError.message);
-        } else {
-          console.log('Schema information:', schema);
-        }
-      }
-      
-      throw new Error(`Supabase query error: ${newsError.message} (code: ${newsError.code})`);
-    }
-    
-    if (!newsData || newsData.length === 0) {
-      console.log('Newsfeed table exists but has no data, returning fallback data');
-      
-      // Even though we're returning fallback data, we'll add a special flag to indicate
-      // that the table connection worked but was empty
+    // Log query results for debugging
+    if (error) {
+      console.error('Error querying newsfeed table:', error);
       return NextResponse.json({
-        articles: FALLBACK_MESSAGES,
+        articles: fallbackArticles,
         source: 'fallback',
-        databaseStatus: 'empty',
-        message: 'Supabase connection successful but newsfeed table is empty'
+        databaseStatus: 'error',
+        message: `Supabase query error: ${error.message}`,
+        error: error.message,
+        errorTime: new Date().toISOString()
       });
     }
-
-    // Log the actual data structure for debugging
-    console.log('First record structure:');
-    logObject('First record', newsData[0]);
     
-    // Check if any required fields are missing
-    const missingFields = newsData.some(item => !item.content || !item.id || !item.timestamp);
-    if (missingFields) {
-      console.log('Warning: Some records are missing required fields');
+    console.log(`Query successful, retrieved ${articles?.length || 0} items`);
+    if (articles && articles.length > 0) {
+      console.log('Sample article:', articles[0]);
+      
+      return NextResponse.json({
+        articles: articles,
+        source: 'database',
+        count: articles.length,
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      console.log('No items found in newsfeed table, returning fallback data');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'fallback',
+        message: 'No items found in database'
+      });
     }
-    
-    // Map to the format expected by the frontend
-    const articles = newsData.map((item, index) => ({
-      id: item.id?.toString() || `item-${index}`,
-      content: item.content || 'No content available',
-      author: item.author || 'Unknown',
-      timestamp: item.timestamp || new Date().toISOString(),
-      attachments: []
-    }));
-    
-    // Return complete debug info alongside the articles
-    return NextResponse.json({ 
-      articles,
-      source: 'supabase',
-      count: articles.length,
-      message: 'Successfully retrieved news from Supabase',
-      debug: {
-        firstRecord: newsData[0],
-        tableAccess: true,
-        connectionTime: new Date().toISOString()
-      }
-    });
-    
   } catch (error) {
-    console.error('Error in Discord news API:', error);
-    
+    console.error('Unexpected error in Discord news API:', error);
     return NextResponse.json({
-      articles: FALLBACK_MESSAGES,
+      articles: fallbackArticles,
       source: 'fallback',
-      databaseStatus: 'error',
-      message: error instanceof Error ? error.message : 'Unknown error occurred',
       error: error instanceof Error ? error.message : 'Unknown error',
-      errorTime: new Date().toISOString(),
-      stack: error instanceof Error ? error.stack : null
+      stack: error instanceof Error ? error.stack : undefined,
+      errorTime: new Date().toISOString()
     });
   }
 } 
