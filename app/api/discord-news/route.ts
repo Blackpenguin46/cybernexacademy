@@ -37,35 +37,39 @@ function logObject(label: string, obj: any) {
 export async function GET() {
   console.log('[API Route] Endpoint called at:', new Date().toISOString());
   
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  // Use non-public, server-side environment variables
+  const supabaseUrl = process.env.SUPABASE_URL; 
+  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY; // Use Service Role Key
   
-  if (!supabaseUrl || !supabaseKey) {
-    console.error('[API Route] Missing Supabase environment variables');
+  console.log('[API Route] Read SUPABASE_URL:', supabaseUrl ? supabaseUrl.substring(0, 20) + '...' : 'MISSING or Undefined');
+  console.log('[API Route] Read SUPABASE_SERVICE_KEY:', supabaseServiceKey ? '******' + supabaseServiceKey.slice(-6) : 'MISSING or Undefined');
+
+  if (!supabaseUrl || !supabaseServiceKey) {
+    console.error('[API Route] Missing SUPABASE_URL or SUPABASE_SERVICE_KEY env vars');
     return NextResponse.json({
         articles: fallbackArticles,
         source: 'fallback',
-        error: 'Missing Supabase environment variables'
+        error: 'Missing Supabase server environment variables in Vercel.'
       });
   }
   
   let message = 'Operation started';
   try {
+    // Basic fetch test (optional - can be kept or removed)
     console.log('[API Route] Performing basic fetch test to Supabase base URL...');
-    const testResponse = await fetch(supabaseUrl, { method: 'HEAD' }); // Use HEAD to minimize data transfer
+    const testResponse = await fetch(supabaseUrl, { method: 'HEAD' }); 
     console.log(`[API Route] Basic fetch test status: ${testResponse.status}`);
     if (!testResponse.ok) {
-        // Log more details if possible, without revealing sensitive info
-        console.error(`[API Route] Basic fetch test failed with status: ${testResponse.status} ${testResponse.statusText}`);
-        // Optionally read body if needed, but HEAD usually has no body
-        // const bodyText = await testResponse.text(); 
-        // console.error(`[API Route] Basic fetch test response body: ${bodyText.substring(0, 100)}...`);
+        console.error(`[API Route] Basic fetch test failed: ${testResponse.status} ${testResponse.statusText}`);
         throw new Error(`Basic network test to Supabase URL failed: ${testResponse.status}`);
     }
     console.log('[API Route] Basic fetch test successful.');
     
-    console.log('[API Route] Initializing Supabase client...');
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    console.log('[API Route] Initializing Supabase client with Service Key...');
+    // Initialize with Service Role Key
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+        auth: { persistSession: false } // Recommended for server-side usage
+    });
     console.log('[API Route] Supabase client initialized.');
     
     console.log('[API Route] Querying newsfeed table (select *)...');
@@ -83,11 +87,8 @@ export async function GET() {
 
     if (error) {
       console.error('[API Route] Error querying newsfeed table:', error?.message || error);
-      if (error.message.includes('permission denied') || error.code === '42501') {
-          message = 'Supabase Row Level Security (RLS) likely preventing read access.';
-      } else {
-          message = `Supabase query error: ${error.message}`;
-      }
+      // No need to check for RLS error message specifically when using service key
+      message = `Supabase query error: ${error.message}`;
     } else if (articles && articles.length > 0) {
       console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
       try {
