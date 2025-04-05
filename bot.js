@@ -16,7 +16,13 @@ const client = new Client({
 });
 
 // Setup REST API client
-const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_BOT_TOKEN);
+const rest = new REST({ version: '10' });
+if (process.env.DISCORD_BOT_TOKEN) {
+  rest.setToken(process.env.DISCORD_BOT_TOKEN);
+  debugLog('REST API token set successfully');
+} else {
+  debugLog('ERROR: DISCORD_BOT_TOKEN not found in environment');
+}
 
 // Setup Supabase client
 const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';

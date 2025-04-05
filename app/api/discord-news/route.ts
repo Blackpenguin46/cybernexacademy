@@ -58,7 +58,7 @@ export async function GET() {
     const { data: articles, error } = await supabase
       .from('newsfeed')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('timestamp', { ascending: false });
     
     // Log query results for debugging
     if (error) {
