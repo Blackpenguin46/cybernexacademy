@@ -14,8 +14,14 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
   const [source, setSource] = useState('initializing');
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState(new Date().toISOString());
+  const [currentDomain, setCurrentDomain] = useState<string>('');
 
   useEffect(() => {
+    // Get current domain for diagnostics
+    if (typeof window !== 'undefined') {
+      setCurrentDomain(window.location.hostname);
+    }
+
     // Client-side Supabase fetch
     async function fetchNewsFromSupabase() {
       try {
@@ -24,6 +30,10 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         // Create Supabase client in the browser
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
         const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        
+        // Log domain information for debugging
+        console.log(`Running on domain: ${window.location.hostname}`);
+        console.log(`Full URL: ${window.location.href}`);
         
         // Validate credentials
         if (!supabaseUrl || !supabaseKey) {
@@ -35,11 +45,17 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         
         // Log for debugging
         console.log('Client-side: Creating Supabase client with:', { 
-          url: supabaseUrl.substring(0, 15) + '...' 
+          url: supabaseUrl.substring(0, 15) + '...',
+          domain: window.location.hostname
         });
         
-        // Create client
-        const supabase = createClient(supabaseUrl, supabaseKey);
+        // Create client with more options for debugging
+        const supabase = createClient(supabaseUrl, supabaseKey, {
+          auth: {
+            autoRefreshToken: true,
+            persistSession: true
+          }
+        });
         
         // Fetch data
         console.log('Client-side: Fetching from newsfeed table');
@@ -50,6 +66,13 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
           .limit(20);
           
         if (fetchError) {
+          // Check if this is a CORS error
+          const errorMessage = fetchError.message || '';
+          if (errorMessage.includes('CORS') || 
+              errorMessage.includes('cross-origin') ||
+              errorMessage.includes('Access-Control')) {
+            throw new Error(`CORS error: This preview deployment (${window.location.hostname}) may not be allowed in Supabase settings. Error: ${errorMessage}`);
+          }
           throw new Error(`Supabase client error: ${fetchError.message}`);
         }
         
@@ -78,8 +101,15 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         
       } catch (fetchError: any) {
         console.error('Client-side fetch error:', fetchError);
-        setError(fetchError.message);
-        setSource('fallback_client_error');
+        
+        // Special handling for preview deployment errors
+        if (window.location.hostname.includes('vercel.app')) {
+          setError(`Preview deployment error: ${fetchError.message}. You may need to add this domain to Supabase allowed origins.`);
+          setSource('fallback_preview_error');
+        } else {
+          setError(fetchError.message);
+          setSource('fallback_client_error');
+        }
       } finally {
         setLoading(false);
         setLastUpdated(new Date().toISOString());
@@ -142,6 +172,13 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         <p>Articles: {news.length}</p>
         <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p>
         <p>Fetch mode: <span className="font-mono">client-side browser</span></p>
+        {currentDomain && <p>Current domain: <span className="font-mono">{currentDomain}</span></p>}
+        {currentDomain && currentDomain.includes('vercel.app') && (
+          <div className="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
+            <p className="font-medium">Preview deployment detected</p>
+            <p>You may need to add this preview domain to your Supabase project's allowed origins.</p>
+          </div>
+        )}
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
