@@ -1,67 +1,102 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link'
-import { 
-  Lightbulb, // For Hero
-  Newspaper, // For News quick link
-  // Removed Building
-  // Removed ExternalLink (no longer used)
-  // Removed TrendingUp
-  // Removed Shield
-  FileText, // For Reports quick link
-  Terminal, // For Tools quick link
-  // Removed LinkIcon
-  // Removed Target
-  MessageSquare,
-  Filter,
-  X,
-  Search
-} from 'lucide-react'
-import { Button } from '@/components/ui/button';
+import React from 'react';
+import Link from 'next/link';
+import { Lightbulb, Newspaper, Building, ShieldAlert, Target, TrendingUp, FileText } from 'lucide-react'; // Icons for Insights
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button'; // Keep Button
 
-export default function LearningForumsPage() {
-  // Add state later
+// Interface for Quick Links
+interface QuickLink {
+  href: string;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  color: string; // e.g., 'purple', 'blue', 'red' for accents
+}
 
-  // Add filtering logic later
+const quickLinks: QuickLink[] = [
+  {
+    href: '/insights/news',
+    title: 'Cybersecurity News',
+    description: 'Latest headlines, breaches, and vulnerability reports.',
+    icon: Newspaper,
+    color: 'blue'
+  },
+  {
+    href: '/insights/industry',
+    title: 'Industry Insights',
+    description: 'Analysis of market trends, business impacts, and strategies.',
+    icon: Building,
+    color: 'purple'
+  },
+  {
+    href: '/insights/threat-intel',
+    title: 'Threat Intelligence',
+    description: 'Actionable intelligence on active threats and adversaries.',
+    icon: ShieldAlert,
+    color: 'red'
+  },
+  {
+    href: '/insights/breaches',
+    title: 'Security Breaches',
+    description: 'Details and analysis of recent security incidents.',
+    icon: Target,
+    color: 'orange'
+  },
+  {
+    href: '/insights/trends',
+    title: 'Emerging Trends',
+    description: 'Exploring upcoming technologies and future security challenges.',
+    icon: TrendingUp,
+    color: 'cyan'
+  },
+  {
+    href: '/insights/research',
+    title: 'Research & Reports',
+    description: 'In-depth analysis, studies, and technical papers.',
+    icon: FileText,
+    color: 'green'
+  },
+];
 
-  // Updated Quick Links - Point reports to /research
-  const quickLinks = [
-    { title: "Cybersecurity News", href: "/insights/news", icon: Newspaper, description: "Latest headlines and curated sources" },
-    { title: "Research & Reports", href: "/insights/research", icon: FileText, description: "Industry analysis and key reports" }, 
-    { title: "Security Tools & Resources", href: "/insights/tools", icon: Terminal, description: "Curated tools and technical resources" } 
-  ];
-
+export default function InsightsPage() {
   return (
     <div className="min-h-screen bg-gray-950 pb-20">
-      {/* Placeholder for Hero (Cyan Theme) */}
-      <div className="bg-gradient-to-b from-cyan-950 via-cyan-900/30 to-gray-950 pt-24 pb-16 text-center border-b border-cyan-800/30 shadow-lg">
+      {/* Hero Section (Purple Theme for Insights) */}
+      <div className="bg-gradient-to-b from-purple-950 via-purple-900/30 to-gray-950 pt-24 pb-16 text-center border-b border-purple-800/30 shadow-lg">
         <div className="container mx-auto px-4">
-            <MessageSquare className="w-16 h-16 text-cyan-400 mx-auto mb-4" />
+            <Lightbulb className="w-16 h-16 text-purple-400 mx-auto mb-4" />
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
-                Learning Forums & Communities
+                Cybersecurity Insights
             </h1>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
-                Connect with others, ask questions, and share knowledge in these online communities.
+                Stay informed with the latest news, research, threat intelligence, and analysis from the cybersecurity world.
             </p>
         </div>
       </div>
 
-      {/* Placeholder for Filters & Content */}
-      <div className="container mx-auto px-4 mt-12">
-         <p className="text-center text-gray-500">[Filter UI and Forum Links will go here]</p>
-      </div>
-
-      {/* Quick Links Section (Kept & Updated) */}
-      <div className="container mx-auto px-4 -mt-8 mb-16 relative z-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Quick Links Section */}
+      <div className="container mx-auto px-4 mt-16">
+        <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-10">
+          Explore Insights Sections
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {quickLinks.map((link) => (
-            <Link href={link.href} key={link.href} className="group block bg-gray-800/50 backdrop-blur-sm border border-cyan-800/30 rounded-lg p-4 hover:bg-gray-700/70 hover:border-cyan-700/50 transition-all duration-300">
-              <div className="flex items-center">
-                <link.icon className="w-6 h-6 text-cyan-400 mr-3 flex-shrink-0" />
-                <div>
-                  <h3 className="text-lg font-semibold text-white group-hover:text-cyan-300">{link.title}</h3>
-                  <p className="text-sm text-gray-400 group-hover:text-gray-300">{link.description}</p>
+            <Link href={link.href} key={link.title} className="block group">
+              <div className={`bg-gray-900 border border-gray-800 rounded-lg p-6 h-full flex flex-col transition-all duration-300 group-hover:border-${link.color}-500/50 group-hover:shadow-xl group-hover:shadow-${link.color}-900/30`}>
+                <div className={`mb-4 text-${link.color}-400`}>
+                  <link.icon className="w-10 h-10" />
+                </div>
+                <h3 className={`text-xl font-semibold text-white mb-2 group-hover:text-${link.color}-300 transition-colors`}>
+                  {link.title}
+                </h3>
+                <p className="text-gray-400 text-sm mb-5 flex-grow">
+                  {link.description}
+                </p>
+                <div className={`mt-auto text-sm font-medium text-${link.color}-400 group-hover:text-${link.color}-300 flex items-center transition-colors`}>
+                  Go to {link.title}
+                  <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
                 </div>
               </div>
             </Link>
@@ -69,5 +104,5 @@ export default function LearningForumsPage() {
         </div>
       </div>
     </div>
-  )
+  );
 } 

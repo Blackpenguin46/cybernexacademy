@@ -2,64 +2,82 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { BookOpen, GraduationCap, Code, Youtube, PenTool, FileText, ExternalLink } from 'lucide-react'
+import { BookOpen, GraduationCap, Code, Youtube, PenTool, FileText, ExternalLink, Book, Sheet, MessageSquare, Wrench, BookText as GlossaryIcon, Search } from 'lucide-react'
 import { Button } from "@/components/ui/button"
+import { ArrowRight } from 'lucide-react'
 
-const academySections = [
+interface AcademySection {
+    title: string;
+    description: string;
+    icon: React.ElementType;
+    link: string;
+    color: string;
+}
+
+const academySections: AcademySection[] = [
   {
     title: "Learning Paths",
-    description: "Structured learning journeys for different skill levels",
+    description: "Structured journeys for different skill levels.",
     icon: GraduationCap,
     link: "/academy/paths",
-    color: "from-green-500/20 to-green-600/5",
-    borderColor: "border-green-500/30",
-    hoverColor: "group-hover:border-green-500/60"
+    color: "purple", 
   },
   {
     title: "Tutorials",
-    description: "Step-by-step guides for specific cybersecurity skills",
+    description: "Step-by-step guides for specific skills.",
     icon: PenTool,
     link: "/academy/tutorials",
-    color: "from-emerald-500/20 to-emerald-600/5",
-    borderColor: "border-emerald-500/30",
-    hoverColor: "group-hover:border-emerald-500/60"
+    color: "orange", 
   },
   {
     title: "Labs & Exercises",
-    description: "Hands-on practice environments for real-world scenarios",
+    description: "Hands-on practice in realistic environments.",
     icon: Code,
     link: "/academy/labs",
-    color: "from-teal-500/20 to-teal-600/5",
-    borderColor: "border-teal-500/30",
-    hoverColor: "group-hover:border-teal-500/60"
+    color: "red", 
   },
   {
     title: "YouTube Resources",
-    description: "Curated video content from top cybersecurity experts",
+    description: "Curated video content from cybersecurity experts.",
     icon: Youtube,
     link: "/academy/youtube",
-    color: "from-lime-500/20 to-lime-600/5",
-    borderColor: "border-lime-500/30",
-    hoverColor: "group-hover:border-lime-500/60"
+    color: "purple",
   },
   {
     title: "Documentation",
-    description: "Comprehensive guides and reference materials",
-    icon: FileText,
+    description: "Comprehensive guides and reference materials.",
+    icon: Book,
     link: "/academy/docs",
-    color: "from-cyan-500/20 to-cyan-600/5",
-    borderColor: "border-cyan-500/30",
-    hoverColor: "group-hover:border-cyan-500/60"
+    color: "green", 
   },
   {
     title: "Cheatsheets",
-    description: "Quick reference guides for tools and techniques",
-    icon: BookOpen,
+    description: "Quick reference guides for tools and techniques.",
+    icon: Sheet,
     link: "/academy/cheatsheets",
-    color: "from-green-500/20 to-green-600/5",
-    borderColor: "border-green-500/30",
-    hoverColor: "group-hover:border-green-500/60"
-  }
+    color: "yellow", 
+  },
+  {
+    title: "Glossary",
+    description: "Definitions for common cybersecurity terms.",
+    icon: GlossaryIcon,
+    link: "/academy/glossary",
+    color: "blue", 
+  },
+  {
+    title: "Learning Forums",
+    description: "Connect, ask questions, and share knowledge.",
+    icon: MessageSquare,
+    link: "/academy/forums",
+    color: "cyan", 
+  },
+  {
+    title: "Security Tools",
+    description: "Curated list of essential security tools.",
+    icon: Wrench,
+    link: "/academy/tools",
+    color: "teal", 
+  },
 ];
 
 export default function AcademyPage() {
@@ -90,98 +108,29 @@ export default function AcademyPage() {
       </div>
       
       <div className="container mx-auto px-4 mt-16">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {academySections.map((section, index) => (
-              <Link href={section.link} key={index} className="group transform transition-all hover:scale-105">
-                <div className={`h-full rounded-lg border ${section.borderColor} ${section.hoverColor} bg-gradient-to-br ${section.color} p-6 transition-all duration-300 shadow-lg hover:shadow-green-500/20`}>
-                  <div className="flex justify-center mb-4">
-                    <section.icon className="w-10 h-10 text-green-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2 text-center">{section.title}</h3>
-                  <p className="text-gray-300 text-center">{section.description}</p>
-                  <div className="mt-4 flex items-center justify-center text-green-400 text-sm group-hover:underline">
-                    Explore <ExternalLink className="w-3 h-3 ml-1" />
-                  </div>
+        <h2 className="text-2xl md:text-3xl font-semibold text-white text-center mb-10">
+          Explore Academy Sections
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {academySections.map((section) => (
+            <Link href={section.link} key={section.title} className="block group">
+              <div className={`bg-gray-900 border border-gray-800 rounded-lg p-6 h-full flex flex-col transition-all duration-300 group-hover:border-${section.color}-500/50 group-hover:shadow-xl group-hover:shadow-${section.color}-900/30`}>
+                <div className={`mb-4 text-${section.color}-400`}>
+                  <section.icon className="w-10 h-10" />
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-      
-      <div className="container mx-auto px-4 mt-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 bg-gray-900/30 border border-green-500/20 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-              <GraduationCap className="w-5 h-5 text-green-400 mr-2" />
-              Featured Learning Paths
-            </h2>
-            <div className="space-y-6">
-              <div className="bg-gray-900/50 p-4 rounded-lg border border-green-500/10">
-                <div className="flex gap-3">
-                  <div className="bg-green-900/30 text-green-400 rounded-full px-3 py-1 text-xs font-medium flex items-center">
-                    <BookOpen className="w-3 h-3 mr-1" /> Beginner
-                  </div>
-                  <div className="text-xs text-gray-400">12 Modules</div>
+                <h3 className={`text-xl font-semibold text-white mb-2 group-hover:text-${section.color}-300 transition-colors`}>
+                  {section.title}
+                </h3>
+                <p className="text-gray-400 text-sm mb-5 flex-grow">
+                  {section.description}
+                </p>
+                <div className={`mt-auto text-sm font-medium text-${section.color}-400 group-hover:text-${section.color}-300 flex items-center transition-colors`}>
+                  Go to {section.title}
+                  <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-200 group-hover:translate-x-1" />
                 </div>
-                <h3 className="text-lg font-semibold text-white mt-2">Cybersecurity Fundamentals</h3>
-                <p className="text-gray-300 text-sm mt-1">Build a solid foundation in cybersecurity principles, threat models, and basic defensive strategies.</p>
-                <Link href="/academy/paths" className="text-green-400 text-sm mt-2 inline-flex items-center hover:underline">
-                  Start learning <ExternalLink className="w-3 h-3 ml-1" />
-                </Link>
               </div>
-              <div className="bg-gray-900/50 p-4 rounded-lg border border-green-500/10">
-                <div className="flex gap-3">
-                  <div className="bg-teal-900/30 text-teal-400 rounded-full px-3 py-1 text-xs font-medium flex items-center">
-                    <Code className="w-3 h-3 mr-1" /> Intermediate
-                  </div>
-                  <div className="text-xs text-gray-400">8 Modules</div>
-                </div>
-                <h3 className="text-lg font-semibold text-white mt-2">Ethical Hacking Essentials</h3>
-                <p className="text-gray-300 text-sm mt-1">Learn practical penetration testing skills and ethical hacking methodologies to identify security vulnerabilities.</p>
-                <Link href="/academy/paths" className="text-green-400 text-sm mt-2 inline-flex items-center hover:underline">
-                  Start learning <ExternalLink className="w-3 h-3 ml-1" />
-                </Link>
-              </div>
-            </div>
-            <div className="mt-6 text-center">
-              <Link href="/academy/paths">
-                <Button variant="outline" className="border-green-400 text-green-400 hover:bg-green-500/10">
-                  View All Learning Paths
-                </Button>
-              </Link>
-            </div>
-          </div>
-          
-          <div className="bg-gray-900/30 border border-green-500/20 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-              <PenTool className="w-5 h-5 text-green-400 mr-2" />
-              Trending Resources
-            </h2>
-            <div className="space-y-4">
-              <Link href="/academy/tutorials" className="bg-gray-900/50 p-3 rounded-lg border border-green-500/10 flex items-center hover:border-green-500/30 transition-colors">
-                <PenTool className="w-5 h-5 text-green-400 mr-3" />
-                <span className="text-gray-300">Web App Security Testing</span>
-              </Link>
-              <Link href="/academy/cheatsheets" className="bg-gray-900/50 p-3 rounded-lg border border-green-500/10 flex items-center hover:border-green-500/30 transition-colors">
-                <BookOpen className="w-5 h-5 text-green-400 mr-3" />
-                <span className="text-gray-300">Linux Command Cheatsheet</span>
-              </Link>
-              <Link href="/academy/youtube" className="bg-gray-900/50 p-3 rounded-lg border border-green-500/10 flex items-center hover:border-green-500/30 transition-colors">
-                <Youtube className="w-5 h-5 text-green-400 mr-3" />
-                <span className="text-gray-300">Quantum Computing Basics</span>
-              </Link>
-              <Link href="/academy/labs" className="bg-gray-900/50 p-3 rounded-lg border border-green-500/10 flex items-center hover:border-green-500/30 transition-colors">
-                <Code className="w-5 h-5 text-green-400 mr-3" />
-                <span className="text-gray-300">Network Traffic Analysis Lab</span>
-              </Link>
-              <Link href="/academy/docs" className="bg-gray-900/50 p-3 rounded-lg border border-green-500/10 flex items-center hover:border-green-500/30 transition-colors">
-                <FileText className="w-5 h-5 text-green-400 mr-3" />
-                <span className="text-gray-300">OWASP Top 10 Documentation</span>
-              </Link>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
