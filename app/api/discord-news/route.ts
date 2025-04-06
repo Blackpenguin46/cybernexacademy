@@ -1,10 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Remove Edge Runtime since it's causing DNS resolution issues
-// export const runtime = 'edge';
-
-// Explicitly force dynamic rendering for this route
+// Always use server-side rendering so we can access server environment variables
 export const dynamic = 'force-dynamic';
 
 // Define fallback messages in case the API fails
@@ -35,50 +32,6 @@ const fallbackArticles = [
   }
 ];
 
-// New simulated database items to make the UI more interesting
-const mockDatabaseArticles = [
-  {
-    id: 'db1',
-    content: '[BREAKING] Security researchers discover critical vulnerability in popular IoT devices affecting over 2 million homes. Manufacturers rushing to deploy patches. https://example.com/iot-vulnerability',
-    author: 'ThreatAlert',
-    timestamp: new Date().toISOString(), // Current time
-    attachments: [],
-    urls: ['https://example.com/iot-vulnerability']
-  },
-  {
-    id: 'db2',
-    content: '[RANSOMWARE] Major hospital chain hit with sophisticated ransomware attack affecting patient systems across 12 states. FBI investigating. https://example.com/hospital-attack',
-    author: 'CyberNewsBot',
-    timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
-    attachments: [],
-    urls: ['https://example.com/hospital-attack']
-  },
-  {
-    id: 'db3',
-    content: '[ADVISORY] CISA issues emergency directive for federal agencies to patch Exchange Server vulnerabilities being actively exploited. Patch within 48 hours. https://example.com/cisa-directive',
-    author: 'SecurityFeed',
-    timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
-    attachments: [],
-    urls: ['https://example.com/cisa-directive']
-  },
-  {
-    id: 'db4',
-    content: '[PHISHING] Sophisticated phishing campaign targeting financial institutions detected. Uses lookalike domains and stolen certificates. Check your security controls. https://example.com/finance-phishing',
-    author: 'PhishDetector',
-    timestamp: new Date(Date.now() - 10800000).toISOString(), // 3 hours ago
-    attachments: [],
-    urls: ['https://example.com/finance-phishing']
-  },
-  {
-    id: 'db5',
-    content: '[MALWARE] New Android malware steals banking credentials and bypasses 2FA via SMS interception. Over 30,000 devices infected so far. https://example.com/android-malware',
-    author: 'MalwareHunter',
-    timestamp: new Date(Date.now() - 14400000).toISOString(), // 4 hours ago
-    attachments: [],
-    urls: ['https://example.com/android-malware']
-  }
-];
-
 // Check if we're in a Vercel environment
 const isVercelEnv = process.env.VERCEL === '1' || process.env.VERCEL_ENV !== undefined;
 
@@ -90,21 +43,91 @@ function logWithEnv(message: string, ...args: any[]) {
 export async function GET() {
   logWithEnv('Discord news API route called');
   
-  // Due to persistent connectivity issues with Supabase from Vercel
-  // we're returning simulated "database" entries that would typically
-  // come from Supabase
-  
-  logWithEnv('Returning simulated database entries due to connectivity issues');
-  
-  return NextResponse.json(
-    { 
-      articles: mockDatabaseArticles, 
-      source: 'simulated_database', 
-      message: 'Retrieved from simulated database due to Vercel-Supabase connectivity issues',
-      time: new Date().toISOString(),
-      env: isVercelEnv ? 'vercel' : 'local',
-      note: 'Supabase connectivity from Vercel encountering DNS resolution issues (error 1016)'
-    }, 
-    { status: 200 }
-  );
+  try {
+    // Get Supabase environment variables
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+    
+    // Log info about our connection
+    logWithEnv('Using Supabase URL:', supabaseUrl ? '[SET]' : '[MISSING]');
+    logWithEnv('Using Service Key:', supabaseServiceKey ? '[SET]' : '[MISSING]');
+    
+    if (!supabaseUrl || !supabaseServiceKey) {
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'fallback',
+        message: 'Missing Supabase environment variables',
+        time: new Date().toISOString()
+      });
+    }
+    
+    // Direct REST API call to bypass client issues
+    logWithEnv('Making direct REST API call to Supabase...');
+    
+    // Construct the URL for the REST API
+    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=timestamp.desc&limit=50`;
+    
+    // Set headers for authorization
+    const headers = {
+      'Content-Type': 'application/json',
+      'apikey': supabaseServiceKey,
+      'Authorization': `Bearer ${supabaseServiceKey}`,
+      'Prefer': 'return=representation'
+    };
+    
+    // Fetch the data
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: headers,
+      next: { revalidate: 3600 } // Cache for 1 hour
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      logWithEnv(`Supabase REST API error: ${response.status} - ${errorText}`);
+      
+      // Return fallback data
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'fallback_error',
+        message: `Supabase REST API error: ${response.status} - ${errorText}`,
+        time: new Date().toISOString()
+      });
+    }
+    
+    // Parse the JSON response
+    const articles = await response.json();
+    
+    // If no articles, return fallback
+    if (!articles || articles.length === 0) {
+      logWithEnv('No articles found in Supabase');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'fallback_empty',
+        message: 'No articles found in database',
+        time: new Date().toISOString()
+      });
+    }
+    
+    // Return the articles
+    logWithEnv(`Successfully retrieved ${articles.length} articles from Supabase`);
+    return NextResponse.json({
+      articles: articles,
+      source: 'database',
+      message: 'Retrieved from database',
+      time: new Date().toISOString()
+    });
+  } catch (error) {
+    // Log the error
+    console.error('[API] Error fetching news:', error);
+    
+    // Return fallback data
+    return NextResponse.json({
+      articles: fallbackArticles,
+      source: 'fallback_error',
+      message: `Error fetching news: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      error: error instanceof Error ? error.message : 'Unknown error',
+      time: new Date().toISOString()
+    });
+  }
 } 
