@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
 // Explicitly force dynamic rendering for this route
 export const dynamic = 'force-dynamic';
@@ -123,116 +123,91 @@ async function testSupabaseREST(supabaseUrl: string, apiKey: string): Promise<Di
 }
 
 export async function GET() {
-  console.log('[API Route] *** GET function entered *** Timestamp:', new Date().toISOString());
+  console.log('[API] Discord news API route called');
   
-  const diagnostics: Record<string, any> = {};
-
-  console.log('[API Route] Endpoint called at:', new Date().toISOString());
-  
-  // Use non-public, server-side environment variables
-  const supabaseUrl = process.env.SUPABASE_URL; 
-  const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY; 
-  
-  console.log('[API Route] Read SUPABASE_URL:', supabaseUrl ? supabaseUrl.substring(0, 20) + '...' : 'MISSING or Undefined');
-  console.log('[API Route] Read SUPABASE_SERVICE_KEY:', supabaseServiceKey ? '******' + supabaseServiceKey.slice(-6) : 'MISSING or Undefined');
-
-  if (!supabaseUrl || !supabaseServiceKey) {
-    console.error('[API Route] Missing SUPABASE_URL or SUPABASE_SERVICE_KEY env vars');
-    return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'fallback',
-        error: 'Missing Supabase server environment variables in Vercel.'
-      });
-  }
-
-  // Run diagnostics
-  console.log('[DIAGNOSTIC] Running connectivity diagnostics tests...');
-  
-  // Test basic fetch capability to a public API
-  diagnostics.httpBinTest = await testExternalFetch('https://httpbin.org/get');
-  console.log('[DIAGNOSTIC] HTTP Bin Test Result:', 
-    diagnostics.httpBinTest.success ? 'SUCCESS' : 'FAILED', 
-    `(${diagnostics.httpBinTest.timing}ms)`
-  );
-  
-  // Test connectivity to Supabase base URL
-  const supabaseBaseUrl = supabaseUrl.replace(/\/$/, '');
-  diagnostics.supabaseBaseTest = await testExternalFetch(supabaseBaseUrl);
-  console.log('[DIAGNOSTIC] Supabase Base URL Test Result:', 
-    diagnostics.supabaseBaseTest.success ? 'SUCCESS' : 'FAILED', 
-    `(${diagnostics.supabaseBaseTest.timing}ms)`
-  );
-  
-  // Test direct REST API
-  diagnostics.supabaseRestTest = await testSupabaseREST(supabaseBaseUrl, supabaseServiceKey);
-  console.log('[DIAGNOSTIC] Supabase REST API Test Result:', 
-    diagnostics.supabaseRestTest.success ? 'SUCCESS' : 'FAILED', 
-    `(${diagnostics.supabaseRestTest.timing}ms)`
-  );
-  
-  let message = 'Operation started';
   try {
-    console.log('[API Route] Initializing Supabase client with Service Key...');
-    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
-        auth: { persistSession: false } 
-    });
-    console.log('[API Route] Supabase client initialized.');
+    // Initialize Supabase client with service role key
+    const supabaseUrl = process.env.SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
     
-    console.log('[API Route] Querying newsfeed table (select *)...');
+    console.log('[API] Using Supabase URL:', supabaseUrl);
+    console.log('[API] Supabase Service Key exists:', !!supabaseServiceKey);
+    
+    if (!supabaseServiceKey) {
+      console.error('[API] Missing Supabase service key');
+      return NextResponse.json(
+        { 
+          articles: fallbackArticles, 
+          source: 'fallback', 
+          message: 'Missing Supabase credentials, using fallback data',
+          time: new Date().toISOString()
+        }, 
+        { status: 200 }
+      );
+    }
+    
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    
+    // Query the newsfeed table
+    console.log('[API] Querying newsfeed table...');
     const { data: articles, error } = await supabase
       .from('newsfeed')
       .select('*')
       .order('timestamp', { ascending: false })
-      .limit(50); 
+      .limit(50);
     
-    console.log('[API Route] Supabase query completed.');
-    
-    let finalArticles = fallbackArticles;
-    let source = 'fallback';
-    message = 'Using fallback data due to query error or no data';
-
     if (error) {
-      console.error('[API Route] Error querying newsfeed table:', error?.message || error);
-      message = `Supabase query error: ${error.message}`;
-    } else if (articles && articles.length > 0) {
-      console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
-      try {
-        // Process articles if needed
-        finalArticles = articles;
-        source = 'database';
-        message = 'Retrieved from database';
-      } catch (processingError) {
-         console.error('[API Route] Error processing articles:', processingError);
-         message = `Error processing articles: ${processingError instanceof Error ? processingError.message : 'Unknown processing error'}`;
-      }
-    } else {
-      console.log('[API Route] No items found in newsfeed table');
-      message = 'No items found in database';
+      console.error('[API] Supabase query error:', error);
+      return NextResponse.json(
+        { 
+          articles: fallbackArticles, 
+          source: 'fallback_error', 
+          message: `Supabase query error: ${error.message}`,
+          error: error.message,
+          time: new Date().toISOString()
+        }, 
+        { status: 200 }
+      );
     }
     
-    console.log(`[API Route] Returning ${finalArticles.length} articles with source: ${source}`);
-    return NextResponse.json({
-      articles: finalArticles,
-      source: source,
-      message: message,
-      diagnostics: diagnostics
-    });
-
-  } catch (catchError) {
-    console.error('[API Route] Unexpected error in API handler:', catchError);
-    let errorMsg = 'Unknown error';
-    if (catchError instanceof TypeError && catchError.message.includes('fetch failed')) {
-        errorMsg = 'Network error connecting/querying database. Check Vercel env vars & Supabase connectivity/permissions.';
-    } else if (catchError instanceof Error) {
-        errorMsg = catchError.message;
+    // Empty results - return fallback
+    if (!articles || articles.length === 0) {
+      console.log('[API] No items found in database, using fallback');
+      return NextResponse.json(
+        { 
+          articles: fallbackArticles, 
+          source: 'fallback_empty', 
+          message: 'No items found in database, using fallback data',
+          time: new Date().toISOString()
+        }, 
+        { status: 200 }
+      );
     }
-    return NextResponse.json({
-      articles: fallbackArticles,
-      source: 'fallback_catch_error',
-      error: `API Handler Error: ${errorMsg}`,
-      message: errorMsg,
-      errorTime: new Date().toISOString(),
-      diagnostics: diagnostics
-    });
+    
+    // Success - return actual data
+    console.log(`[API] Success: Retrieved ${articles.length} items from database`);
+    return NextResponse.json(
+      { 
+        articles, 
+        source: 'database', 
+        message: 'Retrieved from database',
+        time: new Date().toISOString()
+      }, 
+      { status: 200 }
+    );
+    
+  } catch (error) {
+    console.error('[API] Unexpected error:', error);
+    // Return fallback data with error info
+    return NextResponse.json(
+      {
+        articles: fallbackArticles,
+        source: 'fallback_error',
+        message: `Unexpected error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        time: new Date().toISOString()
+      },
+      { status: 200 }
+    );
   }
 } 

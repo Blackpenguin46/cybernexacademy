@@ -167,7 +167,7 @@ export default function DiscordNewsPage() {
     setShowDebugPanel(prev => !prev);
   };
   
-  // Fetch news data directly from Supabase
+  // Fetch news data via local API
   const fetchNews = useCallback(async () => {
     console.log('==========================================');
     console.log('[FETCH] FETCH FUNCTION CALLED');
@@ -191,7 +191,7 @@ export default function DiscordNewsPage() {
     loadingRef.current = true;
     setError(''); // Clear previous errors
     
-    console.log('[FETCH] Starting direct Supabase fetch...');
+    console.log('[FETCH] Starting API fetch...');
     
     const loadingTimeout = setTimeout(() => {
       if (loadingRef.current) {
@@ -208,81 +208,46 @@ export default function DiscordNewsPage() {
     }, 10000); // 10 seconds timeout
     
     try {
-      // Log all environment variables for debugging
-      console.log('[FETCH] Environment variables check:');
-      console.log('[FETCH] NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
-      console.log('[FETCH] NEXT_PUBLIC_SUPABASE_ANON_KEY exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+      // Call our local API route instead of Supabase directly
+      console.log('[FETCH] Fetching from local API route...');
+      const apiUrl = '/api/discord-news';
       
-      // SIMPLIFIED: Use a direct approach using the hardcoded credentials
-      const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
-      const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
-      
-      console.log('[FETCH] Using hardcoded Supabase URL:', supabaseUrl);
-      console.log('[FETCH] Using hardcoded Supabase Anon Key:', supabaseAnonKey.substring(0, 10) + '...');
-      
-      // Skip network test - it's failing due to CSP restrictions
-      console.log('[FETCH] Skipping network test due to CSP restrictions');
-      
-      // Use the Supabase client instead of direct fetch as it may handle CORS better
-      console.log('[FETCH] Creating Supabase client...');
-      const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-        auth: {
-          persistSession: false,
-          autoRefreshToken: false,
-          detectSessionInUrl: false
-        }
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        cache: 'no-store' // Prevent caching
       });
       
-      console.log('[FETCH] Querying newsfeed table with Supabase client...');
-      const { data: articles, error: supabaseError } = await supabase
-        .from('newsfeed')
-        .select('*')
-        .order('timestamp', { ascending: false })
-        .limit(50);
-      
-      if (supabaseError) {
-        console.error('[FETCH] Supabase query error:', supabaseError);
-        throw new Error(`Supabase query error: ${supabaseError.message}`);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('[FETCH] API route error:', response.status, errorText);
+        throw new Error(`API route error: ${response.status} - ${errorText || 'Unknown error'}`);
       }
       
-      console.log('[FETCH] Supabase query successful:', articles?.length);
+      const apiData = await response.json();
+      console.log('[FETCH] API Response:', apiData);
       
       clearTimeout(loadingTimeout); // Clear timeout if fetch completes
       
-      const fetchedData = {
-        articles: articles || [],
-        source: articles && articles.length > 0 ? 'database' : 'empty',
-        message: articles && articles.length > 0 ? 'Retrieved from database' : 'No items found in database'
-      };
+      setDebugData(apiData); // Store the full API response data
       
-      console.log('[FETCH] Supabase Response Data:', fetchedData);
-      
-      setDebugData({ // Update debug info
-        articles: fetchedData.articles,
-        source: fetchedData.source,
-        message: fetchedData.message,
-        time: new Date().toISOString(),
-        supabaseClient: true
-      });
-
-      if (!articles || articles.length === 0) {
+      if (!apiData.articles || apiData.articles.length === 0) {
         // No error, but no data either - use fallback
-        console.log('[FETCH] No data found in database, using fallback');
+        console.log('[FETCH] No data returned from API, using fallback');
         currentNews = fallbackArticles;
         currentSource = 'fallback';
-        currentStatusMsg = 'No items found in database, using fallback data';
+        currentStatusMsg = 'No data returned from API, using fallback';
       } else {
-        console.log(`[FETCH] Success: Retrieved ${articles.length} items from database`);
-        currentNews = articles;
-        currentSource = 'database';
-        currentStatusMsg = 'Retrieved from database';
+        console.log(`[FETCH] Success: Retrieved ${apiData.articles.length} items from API`);
+        currentNews = apiData.articles;
+        currentSource = apiData.source || 'api';
+        currentStatusMsg = apiData.message || 'Retrieved from API';
       }
       
       newsRef.current = currentNews;
-      currentError = ''; // Clear error on success
+      currentError = apiData.error || ''; // Use error from API if provided
       
     } catch (err) {
-      console.error('[FETCH] Error loading news directly from Supabase:', err);
+      console.error('[FETCH] Error fetching from API:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       currentError = `Failed to load news. ${errorMessage}`;
       setDebugData((prev: any) => ({ ...prev, error: errorMessage, time: new Date().toISOString() }));
