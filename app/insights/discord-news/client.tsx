@@ -297,6 +297,47 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
     }
   }
 
+  // Determine channel based on item.channel or content
+  function determineChannel(channelName?: string): string {
+    if (channelName) return channelName.toLowerCase();
+    
+    // Default fallback channel
+    return 'general';
+  }
+  
+  // Get style for a given channel
+  function getStyleForChannel(channel: string): { bg: string, text: string } {
+    const channelStyles: Record<string, { bg: string, text: string }> = {
+      'security-alerts': { bg: 'bg-red-900', text: 'text-red-100' },
+      'vulnerability-alerts': { bg: 'bg-yellow-900', text: 'text-yellow-100' },
+      'threat-intel': { bg: 'bg-orange-900', text: 'text-orange-100' },
+      'events': { bg: 'bg-blue-900', text: 'text-blue-100' },
+      'resources': { bg: 'bg-green-900', text: 'text-green-100' },
+      'discussions': { bg: 'bg-purple-900', text: 'text-purple-100' },
+      'general': { bg: 'bg-gray-700', text: 'text-gray-100' }
+    };
+    
+    return channelStyles[channel] || channelStyles.general;
+  }
+  
+  // Format content with clickable links
+  function formatContentWithLinks(content: string): string {
+    if (!content) return '<p class="text-gray-400 italic">No content available</p>';
+    
+    // Regular expression to find URLs in text
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    
+    // Replace URLs with HTML link tags
+    const htmlContent = content.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline">$1</a>');
+    
+    // Wrap in paragraph tags if not already HTML
+    if (!htmlContent.includes('<p>')) {
+      return `<p>${htmlContent}</p>`;
+    }
+    
+    return htmlContent;
+  }
+
   // Render time filter buttons
   const renderTimeFilters = () => {
     return (
@@ -428,24 +469,17 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {news.map((item: DiscordMessage) => {
+                const channel = determineChannel(item.channel);
+                const style = getStyleForChannel(channel);
                 const date = new Date(item.created_at);
-                const channel = item.channel || determineChannelFromContent(item.content);
-                const formattedTitle = item.title || formatTitleFromContent(item.content);
-                const formattedContent = formatContentForDisplay(item.content);
                 
-                // Determine card style based on channel
-                const channelStyles: Record<string, { bg: string, text: string, border: string }> = {
-                  alerts: { bg: 'bg-red-100 dark:bg-red-900', text: 'text-red-800 dark:text-red-100', border: 'border-red-200 dark:border-red-800' },
-                  vulnerabilities: { bg: 'bg-amber-100 dark:bg-amber-900', text: 'text-amber-800 dark:text-amber-100', border: 'border-amber-200 dark:border-amber-800' },
-                  updates: { bg: 'bg-blue-100 dark:bg-blue-900', text: 'text-blue-800 dark:text-blue-100', border: 'border-blue-200 dark:border-blue-800' },
-                  threats: { bg: 'bg-purple-100 dark:bg-purple-900', text: 'text-purple-800 dark:text-purple-100', border: 'border-purple-200 dark:border-purple-800' },
-                  advisories: { bg: 'bg-teal-100 dark:bg-teal-900', text: 'text-teal-800 dark:text-teal-100', border: 'border-teal-200 dark:border-teal-800' },
-                  malware: { bg: 'bg-pink-100 dark:bg-pink-900', text: 'text-pink-800 dark:text-pink-100', border: 'border-pink-200 dark:border-pink-800' },
-                  security: { bg: 'bg-indigo-100 dark:bg-indigo-900', text: 'text-indigo-800 dark:text-indigo-100', border: 'border-indigo-200 dark:border-indigo-800' },
-                  general: { bg: 'bg-gray-100 dark:bg-gray-700', text: 'text-gray-800 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-600' }
-                };
+                // Format title, defaulting to first sentence of content if no title
+                const formattedTitle = item.title || formatTitleFromContent(item.content || 'Unknown Post');
                 
-                const style = channelStyles[channel] || channelStyles.general;
+                // Format content with links
+                const formattedContent = item.content 
+                  ? formatContentWithLinks(item.content)
+                  : '<p class="text-gray-400 italic">No content available</p>';
                 
                 return (
                   <div key={item.id} className="bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-700 hover:shadow-lg transition-shadow">

@@ -8,27 +8,57 @@ export const dynamic = 'force-dynamic';
 const fallbackArticles = [
   {
     id: '1',
-    content: '[SECURITY ALERT] Microsoft has released patches for 147 vulnerabilities in their April 2024 Patch Tuesday update, including 5 actively exploited zero-days. https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html',
-    author: 'SecurityBot',
-    timestamp: '2024-04-09T16:30:00.000Z',
+    title: 'Critical vulnerability found in popular VPN software',
+    content: 'Researchers have discovered a critical remote code execution vulnerability in a widely-used VPN application affecting over 10 million users. The vulnerability (CVE-2024-1234) allows attackers to execute malicious code with system privileges. Vendor has released a patch - update immediately!',
+    author: 'SecurityResearcher',
+    timestamp: '2024-04-05T10:52:00.000Z',
     attachments: [],
-    urls: ['https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html']
+    urls: ['https://thehackernews.com/sample/vpn-vulnerability']
   },
   {
     id: '2',
-    content: '[THREAT INTEL] New LockBit ransomware variant detected with enhanced evasion capabilities. Researchers warn of increased targeting of healthcare and financial sectors. https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html',
-    author: 'SecurityBot',
-    timestamp: '2024-04-10T14:15:00.000Z',
+    title: 'Ransomware attacks increase by 40% in healthcare sector',
+    content: 'New report from CyberInsight reveals a 40% increase in ransomware attacks targeting healthcare organizations in Q1 2024. Attackers are specifically exploiting outdated remote access infrastructure and phishing campaigns directed at medical staff. Implement MFA and conduct security awareness training immediately.',
+    author: 'ThreatIntelTeam',
+    timestamp: '2024-04-05T10:52:00.000Z',
     attachments: [],
-    urls: ['https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html']
+    urls: ['https://www.healthcybersecurity.org/report/q1-2024']
   },
   {
     id: '3',
-    content: '[VULNERABILITY] Critical Adobe Acrobat zero-day vulnerability (CVE-2024-21412) being actively exploited. Update immediately! https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html',
-    author: 'SecurityBot',
-    timestamp: '2024-04-11T09:45:00.000Z',
+    title: 'New AI-powered security platform launches',
+    content: 'CyberNex Security has announced a new AI-powered threat detection platform that reduces false positives by 75%. The platform uses machine learning algorithms to identify patterns of malicious behavior across network traffic, user activity, and endpoint data. Early access program now open for enterprise security teams.',
+    author: 'TechReporter',
+    timestamp: '2024-04-05T10:52:00.000Z',
     attachments: [],
-    urls: ['https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html']
+    urls: ['https://cybernexsecurity.io/ai-platform-launch']
+  },
+  {
+    id: '4',
+    title: 'Government introduces new cybersecurity regulations',
+    content: 'The Department of Homeland Security has announced new cybersecurity regulations for critical infrastructure. Organizations will be required to implement zero-trust architecture, conduct regular penetration testing, and report security incidents within 72 hours. Compliance deadline set for January 2025.',
+    author: 'PolicyAnnouncer',
+    timestamp: '2024-04-05T10:52:00.000Z',
+    attachments: [],
+    urls: ['https://www.dhs.gov/cybersecurity/new-regulations-2024']
+  },
+  {
+    id: '5',
+    title: 'Major data breach affects millions of customers',
+    content: 'A major e-commerce platform has disclosed a data breach affecting approximately 7.2 million customer records. Compromised data includes names, email addresses, phone numbers, and partial payment information. The breach was caused by an unsecured API endpoint. Affected users should change passwords immediately.',
+    author: 'BreachAnalyst',
+    timestamp: '2024-04-05T10:52:00.000Z',
+    attachments: [],
+    urls: ['https://www.databreachregistry.com/ecommerce-breach-april2024']
+  },
+  {
+    id: '6',
+    title: 'International Cybersecurity Conference announces keynote speakers',
+    content: 'The annual International Cybersecurity Conference (ICyCon 2024) has announced its keynote speakers, including renowned security researchers, industry leaders, and government officials. Topics will focus on zero-trust architecture, cloud security, AI-based threats, and ransomware evolution. Registration now open for the June event.',
+    author: 'EventCoordinator',
+    timestamp: '2024-04-05T10:52:00.000Z',
+    attachments: [],
+    urls: ['https://icycon2024.org/speakers']
   }
 ];
 
