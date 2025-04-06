@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase, Filter, X, HardDrive, Cloud, Wrench, FileDigit, Bug, TerminalSquare, User } from "lucide-react"
+import { Shield, ExternalLink, ThumbsUp, Users, MessageSquare, BookOpen, Target, Code, Server, Lock, AlertTriangle, Monitor, Flame, Award, Briefcase, Filter, X, HardDrive, Wrench, FileDigit, Bug, TerminalSquare, User } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '@/app/components/CategoryFilter'
@@ -17,8 +17,8 @@ interface Category {
 export default function DiscordPage() {
   const [selectedCategory, setSelectedCategory] = useState('All')
   
-  // Categories for filtering
-  const categories: Category[] = [
+  // Restore original categories (minus cloud)
+  const categories = [
     { id: 'All', name: 'All Servers', icon: Users },
     { id: 'learning', name: 'Learning', icon: BookOpen },
     { id: 'ctf', name: 'CTF & Challenges', icon: Target },
@@ -27,7 +27,6 @@ export default function DiscordPage() {
     { id: 'career', name: 'Career & Certifications', icon: Briefcase },
     { id: 'community', name: 'General Community', icon: MessageSquare },
     { id: 'technical', name: 'Technical Deep Dives', icon: TerminalSquare },
-    { id: 'cloud', name: 'Cloud Security', icon: Cloud },
     { id: 'hardware', name: 'Hardware Hacking', icon: Wrench },
     { id: 'forensics', name: 'Digital Forensics', icon: FileDigit },
     { id: 'malware', name: 'Malware Analysis', icon: Bug },

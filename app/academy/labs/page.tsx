@@ -1,43 +1,35 @@
 "use client"
 
-import { useState } from 'react'
-import { Terminal, Code, Network, Shield, Server, Lock, ExternalLink, Target, Flame, Brain, Wrench, Bug, Database, Flag, Play, FileText, Users } from "lucide-react"
+import React, { useState } from 'react'
+import { Terminal, Code, Network, Shield, Server, Lock, ExternalLink, Target, Flame, Brain, Wrench, Bug, Database, Flag, Play, FileText, Users, FlaskConical, Filter, X, Search, Globe, LinkIcon, GraduationCap, Layers, BarChart, DollarSign, CheckCircle, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import CategoryFilter from '../../components/CategoryFilter'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
 
-interface Resource {
+interface Category {
+  id: string
   name: string
-  description: string
-  url: string
-  type: string
-  category?: string
+  icon: React.ElementType
 }
 
-interface ResourceWithFree extends Resource {
-  free: boolean
-}
-
-interface ResourceWithAuthor extends Resource {
-  author: string
-}
-
-interface ResourceCategory {
+interface LabResource {
   title: string
-  icon: any
-  resources: (Resource | ResourceWithFree | ResourceWithAuthor)[]
-}
-
-function hasAuthor(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithAuthor {
-  return 'author' in resource;
-}
-
-function hasFree(resource: Resource | ResourceWithFree | ResourceWithAuthor): resource is ResourceWithFree {
-  return 'free' in resource;
+  url: string
+  description: string
+  category: 'Web Security' | 'Network Security' | 'Malware Analysis' | 'Digital Forensics' | 'Cloud Security' | 'Cryptography' | 'Reverse Engineering' | 'CTF Platform' | 'Pentesting Platform' | 'General'
+  difficulty: 'Beginner' | 'Intermediate' | 'Advanced' | 'Varies'
+  isFree: boolean
+  type: 'Lab' | 'Platform' | 'Challenge Set' | 'OS Distribution'
 }
 
 export default function LabsPage() {
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedDifficulty, setSelectedDifficulty] = useState('all')
+  const [freeOnly, setFreeOnly] = useState(false)
+  const [activeFilterDimension, setActiveFilterDimension] = useState('category')
 
   const categories = [
     { id: 'all', name: 'All Labs', icon: Terminal },
@@ -52,597 +44,264 @@ export default function LabsPage() {
     { id: 'pentesting-platform', name: 'Pentesting Platforms', icon: Play }
   ]
 
-  const resourceCategories: ResourceCategory[] = [
-    {
-      title: "Web Security Labs",
-      icon: Code,
-      resources: [
-        {
-          name: "OWASP Juice Shop",
-          description: "Modern web application security training environment with real vulnerabilities",
-          url: "https://owasp.org/www-project-juice-shop/",
-          type: "Web Lab",
-          category: "web-security",
-          free: true
-        },
-        {
-          name: "WebGoat",
-          description: "Deliberately insecure web application for learning web security",
-          url: "https://owasp.org/www-project-webgoat/",
-          type: "Web Lab",
-          category: "web-security",
-          free: true
-        },
-        {
-          name: "Damn Vulnerable Web Application",
-          description: "PHP/MySQL web application that is damn vulnerable",
-          url: "https://dvwa.co.uk/",
-          type: "Web Lab",
-          category: "web-security",
-          free: true
-        }
-      ]
-    },
-    {
-      title: "Network Security Labs",
-      icon: Network,
-      resources: [
-        {
-          name: "Security Onion",
-          description: "Linux distribution for intrusion detection and network security monitoring",
-          url: "https://securityonionsolutions.com/",
-          type: "Network Lab",
-          category: "network",
-          free: true
-        },
-        {
-          name: "Packet Tracer Labs",
-          description: "Network simulation tool with security scenarios",
-          url: "https://www.netacad.com/courses/packet-tracer",
-          type: "Network Lab",
-          category: "network",
-          free: true
-        }
-      ]
-    },
-    {
-      title: "Malware Analysis Labs",
-      icon: Bug,
-      resources: [
-        {
-          name: "REMnux",
-          description: "Linux toolkit for reverse-engineering and analyzing malware",
-          url: "https://remnux.org/",
-          type: "Malware Lab",
-          category: "malware",
-          free: true
-        },
-        {
-          name: "Any.Run",
-          description: "Interactive online malware analysis service",
-          url: "https://any.run/",
-          type: "Malware Lab",
-          category: "malware",
-          free: false
-        }
-      ]
-    },
-    {
-      title: "Digital Forensics Labs",
-      icon: Target,
-      resources: [
-        {
-          name: "DFRWS Challenge",
-          description: "Digital forensics challenges and training materials",
-          url: "https://www.dfrws.org/",
-          type: "Forensics Lab",
-          category: "forensics",
-          free: true
-        },
-        {
-          name: "Autopsy Digital Forensics",
-          description: "Digital forensics platform with training cases",
-          url: "https://www.autopsy.com/",
-          type: "Forensics Lab",
-          category: "forensics",
-          free: true
-        }
-      ]
-    },
-    {
-      title: "Cloud Security Labs",
-      icon: Server,
-      resources: [
-        {
-          name: "CloudGoat",
-          description: "Vulnerable by Design AWS deployment tool",
-          url: "https://github.com/RhinoSecurityLabs/cloudgoat",
-          type: "Cloud Lab",
-          category: "cloud",
-          free: true
-        },
-        {
-          name: "AWS Security Labs",
-          description: "Official AWS security workshops and labs",
-          url: "https://awssecworkshops.com/",
-          type: "Cloud Lab",
-          category: "cloud",
-          free: true
-        }
-      ]
-    },
-    {
-      title: "Cryptography Labs",
-      icon: Lock,
-      resources: [
-        {
-          name: "CryptoHack",
-          description: "Fun platform for learning cryptography",
-          url: "https://cryptohack.org/",
-          type: "Crypto Lab",
-          category: "cryptography",
-          free: true
-        },
-        {
-          name: "Cryptopals Challenges",
-          description: "Set of cryptography challenges from basics to advanced",
-          url: "https://cryptopals.com/",
-          type: "Crypto Lab",
-          category: "cryptography",
-          free: true
-        }
-      ]
-    },
-    {
-      title: "Reverse Engineering Labs",
-      icon: Wrench,
-      resources: [
-        {
-          name: "Reverse Engineering Challenges",
-          description: "Collection of reverse engineering challenges",
-          url: "https://challenges.re/",
-          type: "RE Lab",
-          category: "reverse",
-          free: true
-        },
-        {
-          name: "Ghidra Training",
-          description: "NSA's reverse engineering tool with training materials",
-          url: "https://ghidra-sre.org/",
-          type: "RE Lab",
-          category: "reverse",
-          free: true
-        }
-      ]
-    },
-    {
-      title: "Pentesting Platforms",
-      icon: Play,
-      resources: [
-        {
-          name: "TryHackMe Labs",
-          description: "Gamified platform for learning cybersecurity through hands-on labs.",
-          url: "https://tryhackme.com",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Freemium model
-        },
-        {
-          name: "Hack The Box Labs",
-          description: "Online platform providing virtual labs to improve penetration testing skills.",
-          url: "https://app.hackthebox.com",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Freemium model
-        },
-        {
-          name: "Attack-Defense Labs",
-          description: "Online lab environment focused on practical cybersecurity skills.",
-          url: "https://attackdefense.com/",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Paid
-        },
-        {
-          name: "RangeForce Platform",
-          description: "Cybersecurity training platform with hands-on modules and cyber ranges.",
-          url: "https://www.rangeforce.com/",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Enterprise focus
-        },
-        {
-          name: "CyberSecLabs Labs",
-          description: "Online labs environment for practicing penetration testing against Windows/Linux boxes.",
-          url: "https://www.cyberseclabs.co.uk/",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Paid
-        },
-        {
-          name: "LetsDefend Platform",
-          description: "Blue team focused platform with SOC simulation and incident response training.",
-          url: "https://letsdefend.io/",
-          type: "Platform",
-          category: "pentesting-platform", // Fits here somewhat, also Blue Team
-          free: false // Paid
-        },
-        {
-          name: "Immersive Labs",
-          description: "Skills development platform covering various cybersecurity domains with labs.",
-          url: "https://www.immersivelabs.com/",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Enterprise focus
-        },
-        {
-          name: "VulnHub VMs",
-          description: "Repository of vulnerable virtual machines for offline practice.",
-          url: "https://www.vulnhub.com/",
-          type: "VM Repository",
-          category: "pentesting-platform",
-          free: true
-        },
-        {
-          name: "Hackbox by Black Hills InfoSec",
-          description: "Potentially a lab/resource offered by BHIS (link might need verification).",
-          url: "https://www.blackhillsinfosec.com/",
-          type: "Resource",
-          category: "pentesting-platform",
-          free: true // Assuming free resources/labs
-        },
-        {
-          name: "Metasploitable2 VM",
-          description: "Intentionally vulnerable Linux VM designed for practicing with Metasploit.",
-          url: "https://docs.rapid7.com/metasploit/metasploitable-2/",
-          type: "VM",
-          category: "pentesting-platform",
-          free: true
-        },
-        {
-          name: "TryHackMe AttackBox",
-          description: "Browser-based Kali Linux machine for use on the TryHackMe platform.",
-          url: "https://tryhackme.com/attackbox",
-          type: "Tool / Environment",
-          category: "pentesting-platform",
-          free: false // Part of THM subscription
-        },
-        {
-          name: "Sektor7 Offensive Labs",
-          description: "Labs focused on malware development and offensive techniques.",
-          url: "https://institute.sektor7.net/",
-          type: "Labs",
-          category: "pentesting-platform",
-          free: false // Paid training
-        },
-        {
-          name: "Pentester Academy Labs",
-          description: "Platform offering extensive labs covering various penetration testing topics.",
-          url: "https://www.pentesteracademy.com/",
-          type: "Platform",
-          category: "pentesting-platform",
-          free: false // Paid
-        },
-        {
-          name: "HackMyVM",
-          description: "Platform hosting vulnerable virtual machines for practice.",
-          url: "https://www.hackmyvm.eu/",
-          type: "Platform / VMs",
-          category: "pentesting-platform",
-          free: true // Primarily free VMs
-        },
-        {
-          name: "Hack The Box Academy Labs",
-          description: "Interactive modules and labs within the HTB Academy platform.",
-          url: "https://academy.hackthebox.com/",
-          type: "Platform / Modules",
-          category: "pentesting-platform",
-          free: false // Freemium/Paid
-        },
-        {
-          name: "Red Team Labs - TCM",
-          description: "Labs associated with TCM Security's ethical hacking courses.",
-          url: "https://academy.tcm-sec.com/",
-          type: "Labs",
-          category: "pentesting-platform",
-          free: false // Part of paid courses
-        },
-        {
-          name: "Cyber Ranges by National CyberWatch",
-          description: "Information about cyber range environments, potentially for academic/institutional use.",
-          url: "https://www.nationalcyberwatch.org/",
-          type: "Resource / Program",
-          category: "pentesting-platform",
-          free: false // Likely institutional access
-        }
-      ]
-    },
-    {
-      title: "CTF & Challenges",
-      icon: Flag,
-      resources: [
-        {
-          name: "PicoCTF Challenges",
-          description: "Free computer security education program with CTF challenges for beginners.",
-          url: "https://picoctf.org/",
-          type: "CTF Platform",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "OverTheWire Wargames",
-          description: "Wargames designed to teach security concepts through practical challenges.",
-          url: "https://overthewire.org/wargames/",
-          type: "Wargames",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Root Me Labs",
-          description: "Platform offering challenges and virtual environments across various security topics.",
-          url: "https://www.root-me.org/",
-          type: "Platform / Challenges",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "CyberDefenders Labs",
-          description: "Platform offering blue team and digital forensics challenges.",
-          url: "https://cyberdefenders.org/labs",
-          type: "Platform / Challenges",
-          category: "ctf-challenge",
-          free: false // Freemium
-        },
-        {
-          name: "Blue Team Labs Online",
-          description: "Platform focused on defensive security labs and challenges.",
-          url: "https://blueteamlabs.online/",
-          type: "Platform / Challenges",
-          category: "ctf-challenge",
-          free: false // Freemium
-        },
-        {
-          name: "CyberPatriot Practice",
-          description: "National youth cyber education program including practice challenges.",
-          url: "https://www.uscyberpatriot.org/",
-          type: "Competition / Program",
-          category: "ctf-challenge",
-          free: true // For participants
-        },
-        {
-          name: "SANS NetWars",
-          description: "Suite of hands-on, interactive learning scenarios for cybersecurity skills.",
-          url: "https://www.sans.org/netwars/",
-          type: "Competition / Training",
-          category: "ctf-challenge",
-          free: false // Paid SANS training component
-        },
-        {
-          name: "CTF Learn",
-          description: "Online platform hosting user-submitted CTF challenges.",
-          url: "https://ctflearn.com/",
-          type: "CTF Platform",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "HackThisSite Missions",
-          description: "Platform offering hacking challenges (missions) across various categories.",
-          url: "https://www.hackthissite.org/",
-          type: "Platform / Challenges",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Hack The Box Starting Point",
-          description: "Guided introductory labs on the Hack The Box platform.",
-          url: "https://app.hackthebox.com/starting-point",
-          type: "Labs",
-          category: "ctf-challenge",
-          free: true // Starting Point is free
-        },
-        {
-          name: "Cyber Range by MITRE",
-          description: "Likely refers to ATT&CK Evaluations or similar MITRE resources, not a public lab.",
-          url: "https://attackevals.mitre-engenuity.org/",
-          type: "Research / Evaluation",
-          category: "ctf-challenge", // Categorization is loose here
-          free: true
-        },
-        {
-          name: "HackerOne CTF",
-          description: "CTF challenges hosted by HackerOne, often related to bug bounty hunting.",
-          url: "https://www.hacker101.com/", // Hacker101 hosts the CTF
-          type: "CTF Platform",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Exploit Exercises",
-          description: "Virtual machines designed to teach exploit development techniques.",
-          url: "https://exploit-exercises.lains.space/",
-          type: "VMs / Challenges",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Security Shepherd",
-          description: "OWASP project providing a web and mobile application security training platform.",
-          url: "https://owasp.org/www-project-security-shepherd/",
-          type: "Training Platform",
-          category: "web-security", // Also fits CTF/Challenges
-          free: true
-        },
-        {
-          name: "picoCTF VM Download",
-          description: "Option to download PicoCTF challenges for offline play.",
-          url: "https://github.com/picoCTF/picoCTF",
-          type: "Resource / VM",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Cybersecurity Lab by NOVA",
-          description: "Interactive online lab introducing basic cybersecurity concepts.",
-          url: "https://www.pbs.org/wgbh/nova/labs/lab/cyber/",
-          type: "Interactive Lab",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "CTFtime – Event Archives",
-          description: "Archive of past CTF events, often linking to challenges or writeups.",
-          url: "https://ctftime.org/event/list/upcoming",
-          type: "Resource / Archive",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Hackademic Challenges",
-          description: "Possibly outdated or refers to specific academic challenges (link needs check).",
-          url: "https://github.com/infoslack/awesome-webshell", // Link is for webshells, not challenges
-          type: "Resource",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "Flare-On Reverse Engineering Challenges",
-          description: "Annual reverse engineering challenge hosted by Mandiant (FireEye). Archives available.",
-          url: "https://www.fireeye.com/flareon",
-          type: "Competition / Archive",
-          category: "reverse", // Also fits CTF/Challenges
-          free: true
-        },
-        {
-          name: "Online CTF Practice Platform (HackThis)",
-          description: "Platform offering hacking challenges and articles.",
-          url: "https://www.hackthis.co.uk/",
-          type: "Platform / Challenges",
-          category: "ctf-challenge",
-          free: true
-        },
-        {
-          name: "CSAW CTF Archive",
-          description: "Archive of challenges from the CSAW CTF competition.",
-          url: "https://ctf.csaw.io/",
-          type: "Archive / Challenges",
-          category: "ctf-challenge",
-          free: true
-        }
-      ]
-    }
+  const labResources: LabResource[] = [
+    { title: "OWASP Juice Shop", url: "https://owasp.org/www-project-juice-shop/", description: "Modern web app security training environment with real vulnerabilities.", category: "Web Security", difficulty: "Varies", isFree: true, type: 'Lab' },
+    { title: "WebGoat", url: "https://owasp.org/www-project-webgoat/", description: "Deliberately insecure web application for learning web security.", category: "Web Security", difficulty: "Beginner", isFree: true, type: 'Lab' },
+    { title: "Damn Vulnerable Web App (DVWA)", url: "https://dvwa.co.uk/", description: "PHP/MySQL web application that is damn vulnerable.", category: "Web Security", difficulty: "Beginner", isFree: true, type: 'Lab' },
+    { title: "PortSwigger Web Security Academy", url: "https://portswigger.net/web-security", description: "Comprehensive free online labs and tutorials for web security.", category: "Web Security", difficulty: "Varies", isFree: true, type: 'Platform' },
+    { title: "PentesterLab Exercises", url: "https://pentesterlab.com/exercises", description: "Hands-on exercises teaching web penetration testing techniques (Free & Paid).", category: "Web Security", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "Security Onion", url: "https://securityonionsolutions.com/", description: "Linux distribution for intrusion detection and network security monitoring.", category: "Network Security", difficulty: "Intermediate", isFree: true, type: 'OS Distribution' },
+    { title: "Packet Tracer Labs (NetAcad)", url: "https://www.netacad.com/courses/packet-tracer", description: "Network simulation tool with security scenarios.", category: "Network Security", difficulty: "Beginner", isFree: true, type: 'Lab' },
+    { title: "REMnux", url: "https://remnux.org/", description: "Linux toolkit for reverse-engineering and analyzing malware.", category: "Malware Analysis", difficulty: "Intermediate", isFree: true, type: 'OS Distribution' },
+    { title: "Any.Run Sandbox", url: "https://any.run/", description: "Interactive online malware analysis service (Free tier available).", category: "Malware Analysis", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "DFRWS Challenges", url: "https://www.dfrws.org/conferences/challenges", description: "Digital forensics challenges and training materials from past conferences.", category: "Digital Forensics", difficulty: "Varies", isFree: true, type: 'Challenge Set' },
+    { title: "Autopsy Training Cases", url: "https://www.autopsy.com/support/training/", description: "Digital forensics platform with downloadable training case data.", category: "Digital Forensics", difficulty: "Intermediate", isFree: true, type: 'Lab' },
+    { title: "Blue Team Labs Online (BTLO)", url: "https://blueteamlabs.online/", description: "Hands-on labs for defensive security, including forensics scenarios.", category: "Digital Forensics", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "CloudGoat", url: "https://github.com/RhinoSecurityLabs/cloudgoat", description: "Vulnerable by Design AWS deployment tool for practicing cloud pentesting.", category: "Cloud Security", difficulty: "Intermediate", isFree: true, type: 'Lab' },
+    { title: "AWS Security Workshops", url: "https://awssecworkshops.com/", description: "Official AWS security workshops and hands-on labs.", category: "Cloud Security", difficulty: "Varies", isFree: true, type: 'Lab' },
+    { title: "GCP Security Labs (Qwiklabs)", url: "https://www.cloudskillsboost.google/journeys/16", description: "Hands-on labs covering Google Cloud Platform security concepts.", category: "Cloud Security", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "CryptoHack", url: "https://cryptohack.org/", description: "Fun platform for learning modern cryptography through challenges.", category: "Cryptography", difficulty: "Varies", isFree: true, type: 'Platform' },
+    { title: "Cryptopals Challenges", url: "https://cryptopals.com/", description: "Set of classic cryptography challenges from basics to advanced concepts.", category: "Cryptography", difficulty: "Advanced", isFree: true, type: 'Challenge Set' },
+    { title: "Reverse Engineering Challenges (challenges.re)", url: "https://challenges.re/", description: "Collection of reverse engineering challenges of varying difficulty.", category: "Reverse Engineering", difficulty: "Varies", isFree: true, type: 'Challenge Set' },
+    { title: "Ghidra Official Training", url: "https://ghidra-sre.org/courses/", description: "NSA's reverse engineering tool with official training materials.", category: "Reverse Engineering", difficulty: "Intermediate", isFree: true, type: 'Lab' },
+    { title: "TryHackMe", url: "https://tryhackme.com", description: "Gamified platform for learning cybersecurity through hands-on labs and CTFs.", category: "Pentesting Platform", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "Hack The Box", url: "https://app.hackthebox.com", description: "Online platform providing virtual labs to improve penetration testing skills.", category: "Pentesting Platform", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "VulnHub", url: "https://www.vulnhub.com/", description: "Repository of vulnerable virtual machines for practice.", category: "Pentesting Platform", difficulty: "Varies", isFree: true, type: 'Lab' },
+    { title: "PicoCTF", url: "https://play.picoctf.org/practice", description: "Educational CTF platform with challenges for beginners and beyond.", category: "CTF Platform", difficulty: "Beginner", isFree: true, type: 'Platform' },
+    { title: "OverTheWire Wargames", url: "https://overthewire.org/wargames/", description: "Series of wargames designed to teach security concepts via terminal challenges.", category: "CTF Platform", difficulty: "Varies", isFree: true, type: 'Challenge Set' },
+    { title: "Root Me", url: "https://www.root-me.org/", description: "Platform offering hacking challenges across various categories.", category: "CTF Platform", difficulty: "Varies", isFree: true, type: 'Platform' },
+    { title: "Attack-Defense Labs", url: "https://attackdefense.com/", description: "Online lab environment focused on practical offensive/defensive cybersecurity skills.", category: "Pentesting Platform", difficulty: "Varies", isFree: false, type: 'Platform' },
+    { title: "Immersive Labs", url: "https://www.immersivelabs.com/", description: "Platform offering gamified cyber skills development labs (Enterprise/Edu focus).", category: "Pentesting Platform", difficulty: "Varies", isFree: false, type: 'Platform' },
   ]
 
-  // Filter resources based on selected category
-  const filteredCategories = selectedCategory === 'all'
-    ? resourceCategories
-    : resourceCategories.map(category => ({
-        ...category,
-        resources: category.resources.filter(resource => resource.category === selectedCategory)
-      })).filter(category => category.resources.length > 0)
+  const filteredLabs = labResources.filter(lab =>
+    (selectedCategory === 'all' || lab.category === selectedCategory) &&
+    (selectedDifficulty === 'all' || lab.difficulty === selectedDifficulty) &&
+    (!freeOnly || lab.isFree)
+  )
+
+  const categoryFilters: Category[] = [
+    { id: 'all', name: 'All Categories', icon: Globe },
+    { id: 'Web Security', name: 'Web Security', icon: Code },
+    { id: 'Network Security', name: 'Network Security', icon: Network },
+    { id: 'Malware Analysis', name: 'Malware Analysis', icon: Bug },
+    { id: 'Digital Forensics', name: 'Digital Forensics', icon: Target },
+    { id: 'Cloud Security', name: 'Cloud Security', icon: Server },
+    { id: 'Cryptography', name: 'Cryptography', icon: Lock },
+    { id: 'Reverse Engineering', name: 'Reverse Engineering', icon: Wrench },
+    { id: 'CTF Platform', name: 'CTF Platforms', icon: Flag },
+    { id: 'Pentesting Platform', name: 'Pentesting Platforms', icon: Play },
+    { id: 'General', name: 'General Practice', icon: FlaskConical }
+  ]
+
+  const difficultyFilters: Category[] = [
+    { id: 'all', name: 'All Difficulties', icon: Globe },
+    { id: 'Beginner', name: 'Beginner', icon: GraduationCap },
+    { id: 'Intermediate', name: 'Intermediate', icon: Layers },
+    { id: 'Advanced', name: 'Advanced', icon: BarChart },
+    { id: 'Varies', name: 'Varies', icon: Users },
+  ]
 
   return (
-    <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
-        <div className="container relative z-20">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center justify-center p-2 bg-blue-600/10 rounded-xl mb-4">
-              <Terminal className="w-5 h-5 text-blue-500 mr-2" />
-              <span className="text-blue-500 font-medium">Hands-on Learning</span>
+    <div className="min-h-screen bg-gray-950 pb-20">
+      <div className="relative bg-gradient-to-b from-black via-red-900/40 to-gray-950 pt-24 pb-12">
+        <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(220,38,38,0.15),transparent_55%)] opacity-70"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="flex flex-col items-center text-center mb-8">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium mb-4">
+              <FlaskConical className="w-4 h-4 mr-2" />
+              Academy
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Projects & Labs
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Labs & Exercises
             </h1>
-            <p className="text-xl text-gray-400 mb-8">
-              Practice your cybersecurity skills with hands-on projects and interactive labs across various domains.
+            <p className="text-xl text-gray-400 max-w-3xl">
+              Get hands-on practice in simulated environments. Explore CTFs, pentesting platforms, and topic-specific labs.
             </p>
+            <Link href="/academy" className="mt-6 text-red-400 hover:text-red-300 flex items-center text-sm">
+              <ArrowLeft className="w-4 h-4 mr-1" /> Back to Academy Overview
+            </Link>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Filter Section */}
-      <section className="py-8 border-b border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <CategoryFilter 
-              categories={categories}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              accentColor="blue"
-            />
+      <div className="container mx-auto px-4 mt-12">
+        <div className="sticky top-0 bg-gray-950/90 backdrop-blur-sm py-2 z-20 border-b border-gray-800 mb-4">
+          <div className="flex flex-col md:flex-row gap-3 items-center">
+            <div className="w-full md:w-auto md:min-w-[160px]">
+              <Select
+                value={activeFilterDimension}
+                onValueChange={(value: string) => setActiveFilterDimension(value)}
+              >
+                <SelectTrigger className="w-full bg-gray-800 border-gray-700 text-white h-9 text-sm">
+                  <SelectValue placeholder="Filter by..." />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                  <SelectItem value="category">Category</SelectItem>
+                  <SelectItem value="difficulty">Difficulty</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex-grow w-full flex items-center gap-2">
+              {activeFilterDimension === 'category' && (
+                <CategoryFilter
+                  categories={categoryFilters}
+                  selectedCategory={selectedCategory}
+                  setSelectedCategory={setSelectedCategory}
+                  accentColor="red"
+                />
+              )}
+              {activeFilterDimension === 'difficulty' && (
+                <CategoryFilter
+                  categories={difficultyFilters}
+                  selectedCategory={selectedDifficulty}
+                  setSelectedCategory={setSelectedDifficulty}
+                  accentColor="red"
+                />
+              )}
+              {(selectedCategory !== 'all' || selectedDifficulty !== 'all') && (
+                 <Button
+                   variant="ghost"
+                   size="sm"
+                   onClick={() => {
+                     if (activeFilterDimension === 'category') setSelectedCategory('all');
+                     if (activeFilterDimension === 'difficulty') setSelectedDifficulty('all');
+                   }}
+                   className="text-red-400 hover:text-red-300 hover:bg-red-900/20 px-2 h-9 whitespace-nowrap"
+                   title={`Clear selected ${activeFilterDimension}`}
+                 >
+                   <X className="w-3 h-3 mr-1" /> Clear
+                 </Button>
+              )}
+            </div>
+
+            <div className="flex items-center space-x-2 w-full md:w-auto justify-end md:pt-0">
+                <Switch
+                    id="free-only-toggle"
+                    checked={freeOnly}
+                    onCheckedChange={setFreeOnly}
+                    className="data-[state=checked]:bg-red-600"
+                 />
+                <Label htmlFor="free-only-toggle" className="text-sm font-medium text-gray-300 whitespace-nowrap">
+                    Free Only
+                </Label>
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* Labs Grid Section */}
-      {filteredCategories.length > 0 ? (
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-6xl mx-auto">
-              {filteredCategories.map((category, index) => (
-                <div key={index} className="mb-12">
-                  <div className="flex items-center gap-2 mb-6">
-                    <category.icon className="h-6 w-6 text-blue-500" />
-                    <h2 className="text-2xl font-bold text-white">{category.title}</h2>
-                  </div>
-                  <div className="grid gap-6">
-                    {category.resources.map((resource, resourceIndex) => (
-                      <div key={resourceIndex} className="bg-gray-900/50 border border-gray-800 rounded-lg p-6 hover:border-blue-500/50 transition-colors">
-                        <div className="flex flex-col md:flex-row md:items-start gap-4">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="text-sm font-medium px-2 py-1 rounded bg-blue-900/50 text-blue-400 border border-blue-800/50">
-                                {resource.type}
-                              </span>
-                              {hasFree(resource) && (
-                                <span className={`text-sm font-medium px-2 py-1 rounded ${resource.free ? 'bg-green-900/50 text-green-400 border border-green-800/50' : 'bg-red-900/50 text-red-400 border border-red-800/50'}`}>
-                                  {resource.free ? 'Free' : 'Paid'}
+        <p className="text-gray-400 text-sm mb-6">
+          Showing {filteredLabs.length} lab resource{filteredLabs.length !== 1 ? 's' : ''}.
+          {selectedCategory !== 'all' && 
+            <span className='ml-2 inline-flex items-center px-2 py-0.5 rounded bg-red-900/50 text-red-300 text-xs'>
+              Category: {categoryFilters.find(c => c.id === selectedCategory)?.name}
+              <button onClick={() => setSelectedCategory('all')} className='ml-1 opacity-70 hover:opacity-100'><X size={12}/></button>
+            </span>
+          }
+          {selectedDifficulty !== 'all' && 
+            <span className='ml-2 inline-flex items-center px-2 py-0.5 rounded bg-red-900/50 text-red-300 text-xs'>
+              Difficulty: {difficultyFilters.find(c => c.id === selectedDifficulty)?.name}
+              <button onClick={() => setSelectedDifficulty('all')} className='ml-1 opacity-70 hover:opacity-100'><X size={12}/></button>
+            </span>
+          }
+           {freeOnly && 
+            <span className='ml-2 inline-flex items-center px-2 py-0.5 rounded bg-green-900/50 text-green-300 text-xs'>
+              <CheckCircle size={12} className='mr-1'/> Free Only
+               <button onClick={() => setFreeOnly(false)} className='ml-1 opacity-70 hover:opacity-100'><X size={12}/></button>
+            </span>
+          }
+        </p>
+
+        {filteredLabs.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredLabs.map((lab, index) => {
+                const CategoryIcon = categoryFilters.find(c => c.id === lab.category)?.icon || FlaskConical;
+                return (
+                    <div key={index} className="bg-gray-900 border border-gray-800 rounded-lg p-5 flex flex-col hover:border-red-500/50 transition-colors">
+                        <div className="mb-3">
+                            <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-red-300">
+                                {lab.title}
+                            </h3>
+                            <div className="flex flex-wrap items-center gap-1.5 text-xs mb-2">
+                                <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded ${lab.isFree ? 'bg-green-900/50 text-green-400' : 'bg-gray-700/60 text-gray-300'}`}>
+                                    {lab.isFree ? <CheckCircle className="w-3 h-3 mr-1" /> : <DollarSign className="w-3 h-3 mr-1" />} {lab.isFree ? 'Free' : 'Paid/Freemium'}
                                 </span>
-                              )}
+                                <span className={`inline-flex items-center font-medium px-2 py-0.5 rounded bg-red-900/50 text-red-300`}>
+                                    <DifficultyIndicator difficulty={lab.difficulty} />
+                                    {lab.difficulty}
+                                </span>
+                                <span className="inline-flex items-center bg-gray-700/70 text-gray-300 px-2 py-0.5 rounded">
+                                    <CategoryIcon className="w-3 h-3 mr-1.5 opacity-80" />
+                                    {lab.category}
+                                </span>
+                                 <span className="inline-flex items-center bg-gray-700/70 text-gray-300 px-2 py-0.5 rounded">
+                                    <FormatIcon format={lab.type} />
+                                    {lab.type}
+                                </span>
                             </div>
-                            <h3 className="text-xl font-semibold text-white mb-2">{resource.name}</h3>
-                            <p className="text-gray-400 mb-4">{resource.description}</p>
-                          </div>
-                          <div className="flex-shrink-0">
-                            <Button asChild>
-                              <Link href={resource.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                                Start Lab
-                                <ExternalLink className="h-4 w-4" />
-                              </Link>
-                            </Button>
-                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+
+                        <p className="text-sm text-gray-300 mb-4 line-clamp-4 flex-grow">
+                            {lab.description}
+                        </p>
+
+                        <div className="mt-auto pt-3 border-t border-gray-700/50 text-center">
+                            <Button 
+                               asChild
+                               disabled={lab.url === '#'}
+                               className={`w-full ${lab.url === '#' ? 'bg-gray-600 cursor-not-allowed' : 'bg-red-600 hover:bg-red-700 text-white'}`}
+                            >
+                               <Link 
+                                 href={lab.url} 
+                                 target="_blank" 
+                                 rel="noopener noreferrer"
+                                 title={lab.url === '#' ? 'Link unavailable' : 'Go to Lab/Platform'}
+                               >
+                                  {lab.url === '#' ? 'Link Unavailable' : 'Start Lab'}
+                                  {lab.url !== '#' && <ExternalLink className="w-4 h-4 ml-2" />}
+                               </Link>
+                            </Button>
+                        </div>
+                    </div>
+                );
+            })}
           </div>
-        </section>
-      ) : (
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-                <Terminal className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                <h3 className="text-xl font-medium text-white mb-2">No labs match your filter</h3>
-                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setSelectedCategory('all')}
-                  className="flex items-center gap-2"
-                >
-                  Clear filters
-                </Button>
-              </div>
-            </div>
+        ) : (
+          <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mt-8">
+            <div className="text-red-500 mx-auto mb-4"><Search className="w-12 h-12" /></div>
+            <h3 className="text-xl font-medium text-white mb-2">No Labs Found</h3>
+            <p className="text-gray-400 mb-6">Try adjusting the category, difficulty, or free filters.</p>
+            <Button
+              variant="outline"
+              onClick={() => { setSelectedCategory('all'); setSelectedDifficulty('all'); setFreeOnly(false); setActiveFilterDimension('category'); }}
+              className="text-red-400 border-red-600 hover:bg-red-900/30 hover:text-red-300"
+            >
+              <X className="w-4 h-4 mr-2" /> Clear All Filters
+            </Button>
           </div>
-        </section>
-      )}
+        )}
+      </div>
     </div>
   )
+}
+
+const FormatIcon = ({ format }: { format: LabResource['type'] }) => {
+  switch (format) {
+    case 'Lab': return <FlaskConical className="w-3 h-3 mr-1.5 opacity-80" />;
+    case 'Platform': return <Play className="w-3 h-3 mr-1.5 opacity-80" />;
+    case 'Challenge Set': return <Flag className="w-3 h-3 mr-1.5 opacity-80" />;
+    case 'OS Distribution': return <Terminal className="w-3 h-3 mr-1.5 opacity-80" />;
+    default: return <LinkIcon className="w-3 h-3 mr-1.5 opacity-80" />;
+  }
+};
+
+const DifficultyIndicator = ({ difficulty }: { difficulty: LabResource['difficulty'] }) => {
+    let icon = GraduationCap;
+    let color = "text-green-400";
+    if (difficulty === 'Intermediate') { icon = Layers; color = "text-yellow-400"; }
+    if (difficulty === 'Advanced') { icon = BarChart; color = "text-red-400"; }
+    if (difficulty === 'Varies') { icon = Users; color = "text-blue-400"; }
+    const IconComponent = icon;
+    return <IconComponent className={`w-3 h-3 mr-1 ${color}`} />;
 } 

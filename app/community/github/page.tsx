@@ -86,7 +86,7 @@ export default function GitHubPage() {
   ]
   
   // Featured repositories organized by category
-  const featuredRepositories: GithubRepo[] = [
+  const allRepositories: GithubRepo[] = [
     // Web Security
     {
       name: "OWASP ModSecurity Core Rule Set",
@@ -613,11 +613,18 @@ export default function GitHubPage() {
       tags: ["payloads", "web-security", "pentesting"]
     }
   ]
+
+  // Filter repositories based on selected category
+  const filteredRepositories = selectedCategory === 'All'
+    ? allRepositories
+    : allRepositories.filter(repo => repo.category === selectedCategory);
+
+  // Featured repos - display first few based on filter
+  const featuredCount = 4; // Number of repos to show in the main featured grid
+  const featuredToDisplay = filteredRepositories.slice(0, featuredCount);
   
-  // Simple direct filtering 
-  const filteredRepositories = selectedCategory === 'All' 
-    ? featuredRepositories 
-    : featuredRepositories.filter(repo => repo.category === selectedCategory);
+  // Additional repos - display the rest if any
+  const additionalToDisplay = filteredRepositories.slice(featuredCount);
 
   // Group filtered repositories by category for display
   const groupedRepositories = filteredRepositories.reduce<Record<string, GithubRepo[]>>((acc, repo) => {
@@ -633,7 +640,7 @@ export default function GitHubPage() {
   const getCategoryById = (id: string) => categories.find(c => c.id === id);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gray-950 pb-20">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-900/20 to-black/20 z-10"></div>
@@ -654,161 +661,154 @@ export default function GitHubPage() {
         </div>
       </section>
 
-      {/* Categories Filter */}
-      <CategoryFilter 
+      {/* Category Filter Component - Uses handleCategorySelection */}
+      <CategoryFilter
         categories={categories}
         selectedCategory={selectedCategory}
-        setSelectedCategory={handleCategorySelection}
-        accentColor="blue"
+        setSelectedCategory={handleCategorySelection} // Use the direct handler
+        accentColor="purple"
       />
       
-      {/* User Interests */}
-      {userInterests.length > 0 && (
-        <section className="py-8">
-          <div className="container">
-            <div className="max-w-6xl mx-auto">
-              <div className="p-4 bg-blue-900/20 border border-blue-900/30 rounded-lg">
-                <h3 className="text-xl font-semibold text-white mb-2">Personalized Recommendations</h3>
-                <p className="text-gray-300">
-                  We're highlighting repositories that match your interests in: {" "}
-                  <span className="text-blue-400">
-                    {userInterests.map(i => i.replace('_', ' ')).join(', ')}
-                  </span>
-                </p>
-              </div>
+      {/* Resources Count - Updated to use filteredRepositories */}
+      <div className="container mx-auto px-4 py-4">
+        <div className="max-w-6xl mx-auto">
+          <p className="text-gray-400 text-sm">
+            Showing {filteredRepositories.length} {filteredRepositories.length === 1 ? 'repository' : 'repositories'}
+            {selectedCategory !== 'All' ? ` in category: ${categories.find(c => c.id === selectedCategory)?.name || selectedCategory}` : ''}
+          </p>
+        </div>
+      </div>
+      
+      {/* Main Content */}
+      <div className="container mx-auto px-4 mt-8">
+        {/* Featured Repositories - Render from filtered list */} 
+        {featuredToDisplay.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center mb-6">
+              <Code className="w-5 h-5 text-purple-500 mr-2" />
+              <h2 className="text-xl font-bold text-white">
+                {filteredRepositories.length > featuredCount ? "Featured Repositories" : "Repositories"}
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Map over featuredToDisplay */} 
+              {featuredToDisplay.map((repo, index) => (
+                <div 
+                  key={index}
+                  className="bg-gray-900 border border-gray-800 rounded-lg overflow-hidden hover:border-purple-500/50 transition-colors flex flex-col"
+                >
+                  <div className="p-5 flex-grow">
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {repo.name}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm mb-3 line-clamp-3">
+                      {repo.description}
+                    </p>
+                    
+                    <div className="flex items-center text-gray-500 text-sm mb-3">
+                      <Star className="w-4 h-4 mr-1 text-yellow-500" /> {repo.stars.toLocaleString()}
+                      <GitFork className="w-4 h-4 ml-3 mr-1 text-gray-600" /> {repo.forks.toLocaleString()}
+                      {repo.language && (
+                        <span className="ml-auto text-xs bg-gray-800 px-2 py-0.5 rounded">{repo.language}</span>
+                      )}
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-1 mb-4">
+                      {repo.tags.slice(0, 3).map((tag, tagIndex) => (
+                        <span 
+                          key={tagIndex}
+                          className="bg-purple-900/30 text-purple-400 text-xs px-2 py-1 rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 border-t border-gray-800 mt-auto">
+                    <a 
+                      href={repo.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center w-full py-2 px-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded transition-colors"
+                    >
+                      View on GitHub
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    </a>
+                   </div>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
-      )}
-      
-      {/* Repositories */}
-      <section className="py-16">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            {Object.keys(groupedRepositories).length > 0 ? (
-              <div className="space-y-12">
-                {Object.entries(groupedRepositories).map(([categoryName, repos]) => {
-                  // Find the category object to get the icon
-                  const category = categories.find(c => c.name === categoryName);
-                  const IconComponent = category?.icon || Code; // Default to Code icon if not found
+        )}
 
-                  return (
-                    <div key={categoryName}>
-                      {selectedCategory === 'All' && (
-                        <div className="flex items-center gap-2 mb-6">
-                           <IconComponent className="h-6 w-6 text-blue-500" />
-                           <h2 className="text-2xl font-bold text-white">{categoryName}</h2>
-                        </div>
-                      )}
-                      <div className="grid gap-6 md:grid-cols-2">
-                        {repos.map((repo) => (
-                          <div 
-                            key={repo.fullName}
-                            className={`border rounded-lg p-6 transition-all hover:border-blue-500/50 ${
-                              userInterests.includes(repo.category) 
-                                ? 'bg-blue-900/10 border-blue-900/30' 
-                                : 'bg-gray-900/50 border-gray-800'
-                            }`}
-                          >
-                            <div className="flex justify-between items-start mb-4">
-                              <h3 className="text-xl font-semibold text-white">
-                                <Link href={repo.url} target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors flex items-center">
-                                  {repo.name}
-                                  <ExternalLink className="w-4 h-4 ml-2" />
-                                </Link>
-                              </h3>
-                              <div className="flex items-center space-x-3 text-gray-400">
-                                <div className="flex items-center">
-                                  <Star className="w-4 h-4 text-yellow-500 mr-1" />
-                                  <span className="text-sm">{repo.stars.toLocaleString()}</span>
-                                </div>
-                                <div className="flex items-center">
-                                  <GitFork className="w-4 h-4 mr-1" />
-                                  <span className="text-sm">{repo.forks.toLocaleString()}</span>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <p className="text-gray-300 mb-4">{repo.description}</p>
-                            
-                            <div className="flex flex-wrap items-center gap-2 mb-4">
-                              {repo.language && (
-                                <span className="bg-gray-800 text-gray-300 text-xs px-2 py-1 rounded-full">
-                                  {repo.language}
-                                </span>
-                              )}
-                              {repo.tags.map((tag, index) => (
-                                <span key={index} className="bg-gray-800 text-blue-400 text-xs px-2 py-1 rounded-full">
-                                  {tag}
-                                </span>
-                              ))}
-                            </div>
-                            
-                            <a 
-                              href={repo.url}
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition-colors"
-                            >
-                              View Repository
-                              <ExternalLink className="w-4 h-4 ml-2" />
-                            </a>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
-                <Filter className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-                <h3 className="text-xl font-medium text-white mb-2">No repositories match your filter</h3>
-                <p className="text-gray-400 mb-6">Try selecting a different category or clear your filter</p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => handleCategorySelection('All')}
-                  className="flex items-center gap-2"
+        {/* Additional Repositories - Render from filtered list */}
+        {additionalToDisplay.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center mb-6">
+              <Code className="w-5 h-5 text-purple-500 mr-2" />
+              <h2 className="text-xl font-bold text-white">More Repositories</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Map over additionalToDisplay */} 
+              {additionalToDisplay.map((repo, index) => (
+                <div 
+                  key={index}
+                  className="bg-gray-900/50 border border-gray-800 rounded-lg p-4 hover:border-purple-500/50 transition-colors flex items-start justify-between"
                 >
-                  <X className="h-4 w-4" /> Clear filters
-                </Button>
-              </div>
-            )}
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">
+                      {repo.name}
+                    </h3>
+                    
+                    <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                      {repo.description}
+                    </p>
+                    
+                    <div className="flex items-center text-gray-500 text-sm mt-2">
+                      <Star className="w-4 h-4 mr-1 text-yellow-500" /> {repo.stars.toLocaleString()}
+                      <GitFork className="w-4 h-4 ml-3 mr-1 text-gray-600" /> {repo.forks.toLocaleString()}
+                      {repo.language && (
+                        <span className="ml-4 text-xs bg-gray-800 px-2 py-0.5 rounded">{repo.language}</span>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <a 
+                    href={repo.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="ml-4 flex-shrink-0 flex items-center justify-center py-2 px-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded transition-colors whitespace-nowrap"
+                  >
+                    View
+                    <ExternalLink className="w-3 h-3 ml-1" />
+                  </a>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-      
-      {/* Guidelines Section */}
-      <section className="py-16 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-2xl font-bold mb-6 text-white">GitHub Security Tips</h2>
-            <ul className="space-y-4">
-              <li className="flex gap-3">
-                <Shield className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-                <div>
-                  <p className="text-white font-medium">Check activity and maintenance</p>
-                  <p className="text-gray-400">Look for repositories with recent commits and active maintenance.</p>
-                </div>
-              </li>
-              <li className="flex gap-3">
-                <Star className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-                <div>
-                  <p className="text-white font-medium">Review stars and forks</p>
-                  <p className="text-gray-400">Higher numbers often indicate more reliable and well-tested tools.</p>
-                </div>
-              </li>
-              <li className="flex gap-3">
-                <Code className="h-6 w-6 flex-shrink-0 text-blue-500 mt-1" />
-                <div>
-                  <p className="text-white font-medium">Examine documentation</p>
-                  <p className="text-gray-400">Good security tools have clear documentation and usage examples.</p>
-                </div>
-              </li>
-            </ul>
+        )}
+
+        {/* No Results Message */}
+        {filteredRepositories.length === 0 && (
+          <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mb-12">
+            <Code className="h-12 w-12 text-gray-500 mx-auto mb-4" />
+            <h3 className="text-xl font-medium text-white mb-2">No repositories found</h3>
+            <p className="text-gray-400 mb-6">No repositories match the selected category: {categories.find(c => c.id === selectedCategory)?.name || selectedCategory}</p>
+            <Button 
+              onClick={() => handleCategorySelection('All')}
+              className="flex items-center gap-2"
+            >
+              Clear filter
+              <Filter className="w-4 h-4" />
+            </Button>
           </div>
-        </div>
-      </section>
+        )}
+
+      </div>
     </div>
   )
 } 
