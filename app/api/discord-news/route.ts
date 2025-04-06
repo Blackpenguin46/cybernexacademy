@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
+// Tell Next.js to use the Edge Runtime
+export const runtime = 'edge';
+
 // Explicitly force dynamic rendering for this route
 export const dynamic = 'force-dynamic';
 
