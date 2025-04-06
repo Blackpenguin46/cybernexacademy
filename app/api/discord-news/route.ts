@@ -100,80 +100,54 @@ async function tryWithKey(
   try {
     console.log(`[DISCORD-NEWS-API] Testing with ${keyType} key`);
     
-    // Try multiple path formats to handle Supabase's specifics
+    // Try to access the actual API endpoint for the newsfeed table
     const apiUrl = `${url}/rest/v1/newsfeed?select=*&limit=10`;
     console.log(`[DISCORD-NEWS-API] Trying to access: ${apiUrl}`);
     
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': key,
-        'Authorization': `Bearer ${key}`,
-      },
-      cache: 'no-store'
-    });
-    
-    if (!response.ok) {
+    try {
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': key,
+          'Authorization': `Bearer ${key}`,
+        },
+        cache: 'no-store'
+      });
+      
       const responseText = await response.text();
-      console.error(`[DISCORD-NEWS-API] ${keyType} key error: ${response.status} - ${responseText}`);
       
       // Check for the specific "requested path is invalid" error
       if (responseText.includes("requested path is invalid")) {
-        // Try multiple alternative endpoint formats
+        // Try one alternative endpoint format with the schema prefix
         try {
-          console.log(`[DISCORD-NEWS-API] First attempt failed with 'invalid path'. Trying alternatives...`);
+          console.log(`[DISCORD-NEWS-API] First attempt failed with 'invalid path'. Trying with schema prefix...`);
+          const alternativeUrl = `${url}/rest/v1/public/newsfeed?select=*&limit=10`;
+          console.log(`[DISCORD-NEWS-API] Trying alternative URL: ${alternativeUrl}`);
           
-          // List of URL patterns to try
-          const alternativeUrls = [
-            // 1. With schema prefix
-            `${url}/rest/v1/public/newsfeed?select=*&limit=10`,
-            
-            // 2. With explicit casting to handle case sensitivity
-            `${url}/rest/v1/newsfeed?select=*&limit=10&apikey=${encodeURIComponent(key)}`,
-            
-            // 3. Using database name directly for edge cases
-            `${url}/rest/v1/"newsfeed"?select=*&limit=10`,
-            
-            // 4. Try the table name with capitalized first letter
-            `${url}/rest/v1/Newsfeed?select=*&limit=10`
-          ];
+          const alternativeResponse = await fetch(alternativeUrl, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'apikey': key,
+              'Authorization': `Bearer ${key}`,
+            },
+            cache: 'no-store'
+          });
           
-          // Try each alternative URL
-          for (const alternativeUrl of alternativeUrls) {
-            console.log(`[DISCORD-NEWS-API] Trying alternative URL: ${alternativeUrl}`);
+          if (alternativeResponse.ok) {
+            const data = await alternativeResponse.json();
+            console.log(`[DISCORD-NEWS-API] Alternative path successful! Fetched data with ${keyType} key:`, data);
             
-            try {
-              const alternativeResponse = await fetch(alternativeUrl, {
-                method: 'GET',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'apikey': key,
-                  'Authorization': `Bearer ${key}`,
-                },
-                cache: 'no-store'
-              });
-              
-              if (alternativeResponse.ok) {
-                const data = await alternativeResponse.json();
-                console.log(`[DISCORD-NEWS-API] Alternative path successful! Fetched data with ${keyType} key:`, data);
-                
-                return NextResponse.json({
-                  articles: data.length > 0 ? data : fallbackArticles,
-                  source: 'database_success_alt_path',
-                  message: `Retrieved ${data.length} articles using ${keyType} key and alternative path`,
-                  key_used: keyType,
-                  alt_path_used: alternativeUrl,
-                  time: new Date().toISOString(),
-                  count: data.length
-                });
-              } else {
-                const errText = await alternativeResponse.text();
-                console.log(`[DISCORD-NEWS-API] Alternative path failed: ${alternativeResponse.status} - ${errText}`);
-              }
-            } catch (pathError) {
-              console.error(`[DISCORD-NEWS-API] Error trying alternative path: ${alternativeUrl}`, pathError);
-            }
+            return NextResponse.json({
+              articles: data.length > 0 ? data : fallbackArticles,
+              source: 'database_success_alt_path',
+              message: `Retrieved ${data.length} articles using ${keyType} key and alternative path`,
+              key_used: keyType,
+              time: new Date().toISOString(),
+              count: data.length,
+              note: "Used alternative URL format with schema prefix"
+            });
           }
         } catch (altError) {
           console.error(`[DISCORD-NEWS-API] Alternative path also failed:`, altError);
@@ -199,23 +173,49 @@ async function tryWithKey(
         });
       }
       
-      return null;
+      // Handle successful response
+      if (response.ok) {
+        const data = JSON.parse(responseText);
+        return NextResponse.json({
+          articles: data.length > 0 ? data : fallbackArticles,
+          source: 'database_success',
+          message: `Retrieved ${data.length} articles using ${keyType} key`,
+          key_used: keyType,
+          time: new Date().toISOString(),
+          count: data.length
+        });
+      } else {
+        // Handle other response errors
+        return NextResponse.json({
+          articles: fallbackArticles,
+          source: 'response_error',
+          message: 'Failed to fetch data from the newsfeed table.',
+          error_details: {
+            type: 'ResponseError',
+            response: responseText,
+            suggestions: [
+              'Check the API endpoint and parameters',
+              'Ensure the API key is valid and has access rights'
+            ]
+          },
+          time: new Date().toISOString()
+        });
+      }
+    } catch (error) {
+      console.error(`[DISCORD-NEWS-API] Fetch error:`, error);
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'fetch_error',
+        message: 'An error occurred while fetching data.',
+        error_details: {
+          type: 'FetchError',
+          error: error instanceof Error ? error.message : String(error)
+        },
+        time: new Date().toISOString()
+      });
     }
-    
-    const data = await response.json();
-    console.log(`[DISCORD-NEWS-API] Successfully fetched data with ${keyType} key:`, data);
-    
-    // Success! Return the actual data
-    return NextResponse.json({
-      articles: data.length > 0 ? data : fallbackArticles,
-      source: data.length > 0 ? 'database_success' : 'database_empty',
-      message: data.length > 0 ? `Retrieved ${data.length} articles using ${keyType} key` : 'Database is empty',
-      key_used: keyType,
-      time: new Date().toISOString(),
-      count: data.length
-    });
-  } catch (error) {
-    console.error(`[DISCORD-NEWS-API] Error with ${keyType} key:`, error);
+  } catch (outerError) {
+    console.error(`[DISCORD-NEWS-API] Unexpected error with ${keyType} key:`, outerError);
     return null;
   }
 }
