@@ -130,27 +130,60 @@ async function getDiscordNews() {
   try {
     console.log('Server-side: Fetching Discord news...');
 
-    // Call our enhanced diagnostic API instead of directly using Supabase
-    const apiResponse = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/discord-news`, {
+    try {
+      // Method 1: Try with absolute URL construction first
+      const baseUrl = process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : 'http://localhost:3000';
+      
+      console.log('Server-side: Trying absolute URL:', baseUrl);
+      
+      const apiResponse = await fetch(`${baseUrl}/api/discord-news`, {
+        cache: 'no-store', // Don't cache this request
+        next: { revalidate: 0 } // Don't revalidate in Next.js
+      });
+
+      if (apiResponse.ok) {
+        const apiData = await apiResponse.json();
+        console.log('Server-side: API response received (absolute URL):', apiData.source);
+
+        return {
+          news: apiData.articles,
+          error: apiData.message && apiData.message.includes('error') ? apiData.message : null,
+          source: apiData.source,
+          debug: apiData.debug || {}
+        };
+      }
+      
+      console.log('Server-side: Absolute URL approach failed, status:', apiResponse.status);
+      // Fall through to the next approach if this fails
+    } catch (absoluteUrlError) {
+      console.error('Server-side: Error with absolute URL approach:', absoluteUrlError);
+      // Fall through to the next approach
+    }
+    
+    // Method 2: Try with relative URL as fallback
+    console.log('Server-side: Trying relative URL approach');
+    const relativeApiResponse = await fetch('/api/discord-news', {
       cache: 'no-store', // Don't cache this request
       next: { revalidate: 0 } // Don't revalidate in Next.js
     });
 
-    if (!apiResponse.ok) {
-      console.error('Server-side: API route error:', apiResponse.status);
+    if (!relativeApiResponse.ok) {
+      console.error('Server-side: API route error (relative URL):', relativeApiResponse.status);
       return { 
         news: fallbackArticles, 
-        error: `API route error: ${apiResponse.status}`,
+        error: `API route error: ${relativeApiResponse.status}`,
         source: 'fallback_error' 
       };
     }
 
-    const apiData = await apiResponse.json();
-    console.log('Server-side: API response received:', apiData.source);
+    const apiData = await relativeApiResponse.json();
+    console.log('Server-side: API response received (relative URL):', apiData.source);
 
     return {
       news: apiData.articles,
-      error: apiData.message.includes('error') ? apiData.message : null,
+      error: apiData.message && apiData.message.includes('error') ? apiData.message : null,
       source: apiData.source,
       debug: apiData.debug || {}
     };
