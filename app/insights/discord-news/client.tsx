@@ -3,7 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { DiscordMessage } from './page';
-import { Clock } from 'lucide-react';
+import { Clock, Filter } from 'lucide-react';
+
+// Define time filter options
+type TimeFilter = 'all' | 'hour' | 'day' | 'week' | 'month' | 'year';
 
 interface NewsClientProps {
   fallbackNews: DiscordMessage[];
@@ -12,6 +15,7 @@ interface NewsClientProps {
 }
 
 export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey }: NewsClientProps) {
+  const [allNews, setAllNews] = useState<DiscordMessage[]>(fallbackNews);
   const [news, setNews] = useState<DiscordMessage[]>(fallbackNews);
   const [loading, setLoading] = useState(true);
   const [source, setSource] = useState('initializing');
@@ -19,6 +23,51 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
   const [lastUpdated, setLastUpdated] = useState(new Date().toISOString());
   const [currentDomain, setCurrentDomain] = useState<string>('');
   const [envDebug, setEnvDebug] = useState<string>('Checking...');
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>('all');
+
+  // Apply time filter to news items
+  useEffect(() => {
+    if (!allNews.length) return;
+    
+    let filteredNews = [...allNews];
+    const now = new Date();
+    
+    // Filter based on selected time range
+    if (timeFilter !== 'all') {
+      filteredNews = allNews.filter(item => {
+        const itemDate = new Date(item.created_at);
+        const timeDiff = now.getTime() - itemDate.getTime();
+        const hoursDiff = timeDiff / (1000 * 60 * 60);
+        
+        switch(timeFilter) {
+          case 'hour':
+            return hoursDiff <= 1;
+          case 'day':
+            return hoursDiff <= 24;
+          case 'week':
+            return hoursDiff <= 24 * 7;
+          case 'month':
+            return hoursDiff <= 24 * 30;
+          case 'year':
+            return hoursDiff <= 24 * 365;
+          default:
+            return true;
+        }
+      });
+    }
+    
+    setNews(filteredNews);
+  }, [timeFilter, allNews]);
+
+  // Filter label mapping for display
+  const filterLabels: Record<TimeFilter, string> = {
+    all: 'All Time',
+    hour: 'Last Hour',
+    day: 'Last 24 Hours',
+    week: 'Last Week',
+    month: 'Last Month',
+    year: 'Last Year'
+  };
 
   useEffect(() => {
     // Get current domain for diagnostics
@@ -80,6 +129,9 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
               channel: determineChannelFromContent(item.content)
             }));
             
+            // Store the complete dataset
+            setAllNews(formattedData);
+            // Initialize with all news (filter effect will handle filtering)
             setNews(formattedData);
             setSource('simple_api_success');
             setError(null);
@@ -325,12 +377,42 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           <h3 className="font-medium">Feed Information</h3>
           {loading && <span className="text-blue-500 animate-pulse">Loading...</span>}
         </div>
-        <p>Source: <span className="font-mono">{source}</span></p>
-        {error && <p>Error: <span className="font-mono text-red-500">{error}</span></p>}
-        <p>Articles: {news.length}</p>
-        <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p>
-        <p>Fetch mode: <span className="font-mono">client-side browser</span></p>
-        {currentDomain && <p>Current domain: <span className="font-mono">{currentDomain}</span></p>}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div>
+            <p>Source: <span className="font-mono">{source}</span></p>
+            {error && <p>Error: <span className="font-mono text-red-500">{error}</span></p>}
+            <p>
+              Articles: <span className="font-medium">{news.length}</span>
+              {allNews.length > news.length && (
+                <span className="text-gray-500 text-xs ml-2">
+                  (filtered from {allNews.length} total)
+                </span>
+              )}
+            </p>
+            <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p>
+          </div>
+          
+          {/* Time filters */}
+          <div className="flex flex-wrap items-center gap-2 mt-2 md:mt-0">
+            <div className="text-gray-500 flex items-center gap-1">
+              <Filter size={14} />
+              <span>Filter:</span>
+            </div>
+            {(Object.keys(filterLabels) as TimeFilter[]).map(filter => (
+              <button
+                key={filter}
+                className={`px-3 py-1 text-xs rounded-full transition-colors ${
+                  timeFilter === filter 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+                }`}
+                onClick={() => setTimeFilter(filter)}
+              >
+                {filterLabels[filter]}
+              </button>
+            ))}
+          </div>
+        </div>
         
         {/* Only show debug info if there's an error */}
         {error && (
@@ -366,54 +448,66 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
         )}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {news.map((item: DiscordMessage) => {
-          const date = new Date(item.created_at);
-          const channel = item.channel || determineChannelFromContent(item.content);
-          const formattedTitle = item.title || formatTitleFromContent(item.content);
-          const formattedContent = formatContentForDisplay(item.content);
-          
-          // Determine card style based on channel
-          const channelStyles: Record<string, { bg: string, text: string, border: string }> = {
-            alerts: { bg: 'bg-red-100 dark:bg-red-900', text: 'text-red-800 dark:text-red-100', border: 'border-red-200 dark:border-red-800' },
-            vulnerabilities: { bg: 'bg-amber-100 dark:bg-amber-900', text: 'text-amber-800 dark:text-amber-100', border: 'border-amber-200 dark:border-amber-800' },
-            updates: { bg: 'bg-blue-100 dark:bg-blue-900', text: 'text-blue-800 dark:text-blue-100', border: 'border-blue-200 dark:border-blue-800' },
-            threats: { bg: 'bg-purple-100 dark:bg-purple-900', text: 'text-purple-800 dark:text-purple-100', border: 'border-purple-200 dark:border-purple-800' },
-            advisories: { bg: 'bg-teal-100 dark:bg-teal-900', text: 'text-teal-800 dark:text-teal-100', border: 'border-teal-200 dark:border-teal-800' },
-            malware: { bg: 'bg-pink-100 dark:bg-pink-900', text: 'text-pink-800 dark:text-pink-100', border: 'border-pink-200 dark:border-pink-800' },
-            security: { bg: 'bg-indigo-100 dark:bg-indigo-900', text: 'text-indigo-800 dark:text-indigo-100', border: 'border-indigo-200 dark:border-indigo-800' },
-            general: { bg: 'bg-gray-100 dark:bg-gray-700', text: 'text-gray-800 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-600' }
-          };
-          
-          const style = channelStyles[channel] || channelStyles.general;
-          
-          return (
-            <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
-              <div className="p-6">
-                <div className={`flex justify-between items-start mb-4 gap-2`}>
-                  <h2 className="text-xl font-semibold mb-2">{formattedTitle}</h2>
-                  <span className={`px-2 py-1 rounded-full whitespace-nowrap text-xs ${style.bg} ${style.text}`}>
-                    {channel}
-                  </span>
-                </div>
-                
-                <div 
-                  className="text-gray-600 dark:text-gray-300 mb-4 max-h-36 overflow-y-auto prose prose-sm" 
-                  dangerouslySetInnerHTML={{ __html: formattedContent }}
-                />
-                
-                <div className="flex justify-between items-center text-sm text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-700">
-                  <span className="font-medium">{item.author || 'Unknown'}</span>
-                  <time dateTime={date.toISOString()} className="flex items-center gap-1">
-                    <Clock size={14} />
-                    {date.toLocaleDateString()} {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </time>
+      {news.length === 0 ? (
+        <div className="p-12 text-center bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <p className="text-lg text-gray-500 dark:text-gray-400">No articles found for the selected time period.</p>
+          <button 
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+            onClick={() => setTimeFilter('all')}
+          >
+            Show All Articles
+          </button>
+        </div>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {news.map((item: DiscordMessage) => {
+            const date = new Date(item.created_at);
+            const channel = item.channel || determineChannelFromContent(item.content);
+            const formattedTitle = item.title || formatTitleFromContent(item.content);
+            const formattedContent = formatContentForDisplay(item.content);
+            
+            // Determine card style based on channel
+            const channelStyles: Record<string, { bg: string, text: string, border: string }> = {
+              alerts: { bg: 'bg-red-100 dark:bg-red-900', text: 'text-red-800 dark:text-red-100', border: 'border-red-200 dark:border-red-800' },
+              vulnerabilities: { bg: 'bg-amber-100 dark:bg-amber-900', text: 'text-amber-800 dark:text-amber-100', border: 'border-amber-200 dark:border-amber-800' },
+              updates: { bg: 'bg-blue-100 dark:bg-blue-900', text: 'text-blue-800 dark:text-blue-100', border: 'border-blue-200 dark:border-blue-800' },
+              threats: { bg: 'bg-purple-100 dark:bg-purple-900', text: 'text-purple-800 dark:text-purple-100', border: 'border-purple-200 dark:border-purple-800' },
+              advisories: { bg: 'bg-teal-100 dark:bg-teal-900', text: 'text-teal-800 dark:text-teal-100', border: 'border-teal-200 dark:border-teal-800' },
+              malware: { bg: 'bg-pink-100 dark:bg-pink-900', text: 'text-pink-800 dark:text-pink-100', border: 'border-pink-200 dark:border-pink-800' },
+              security: { bg: 'bg-indigo-100 dark:bg-indigo-900', text: 'text-indigo-800 dark:text-indigo-100', border: 'border-indigo-200 dark:border-indigo-800' },
+              general: { bg: 'bg-gray-100 dark:bg-gray-700', text: 'text-gray-800 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-600' }
+            };
+            
+            const style = channelStyles[channel] || channelStyles.general;
+            
+            return (
+              <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+                <div className="p-6">
+                  <div className={`flex justify-between items-start mb-4 gap-2`}>
+                    <h2 className="text-xl font-semibold mb-2">{formattedTitle}</h2>
+                    <span className={`px-2 py-1 rounded-full whitespace-nowrap text-xs ${style.bg} ${style.text}`}>
+                      {channel}
+                    </span>
+                  </div>
+                  
+                  <div 
+                    className="text-gray-600 dark:text-gray-300 mb-4 max-h-36 overflow-y-auto prose prose-sm" 
+                    dangerouslySetInnerHTML={{ __html: formattedContent }}
+                  />
+                  
+                  <div className="flex justify-between items-center text-sm text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-700">
+                    <span className="font-medium">{item.author || 'Unknown'}</span>
+                    <time dateTime={date.toISOString()} className="flex items-center gap-1">
+                      <Clock size={14} />
+                      {date.toLocaleDateString()} {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </time>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
       
       {loading && (
         <div className="fixed top-0 right-0 m-4 bg-blue-500 text-white px-3 py-1 rounded-md text-sm">

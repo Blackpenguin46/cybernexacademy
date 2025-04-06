@@ -11,7 +11,8 @@ export async function GET() {
     console.log('Simple news API: Starting fetch');
     
     // Use precise URL with more parameters for better results
-    const apiUrl = `${SUPABASE_URL}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=50`;
+    // Increased limit to 200 to provide more data for time-based filtering
+    const apiUrl = `${SUPABASE_URL}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=200`;
     
     // Make the fetch request with more complete headers
     const response = await fetch(apiUrl, {
