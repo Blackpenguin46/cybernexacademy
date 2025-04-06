@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
 
-// Always use server-side rendering so we can access server environment variables
+// Always use server-side rendering
 export const dynamic = 'force-dynamic';
 
 // Define fallback messages in case the API fails
@@ -309,42 +310,107 @@ export async function GET(request: Request) {
   console.log('[DISCORD-NEWS-API] Route called at ' + new Date().toISOString());
   
   try {
-    // Use hardcoded values for testing - replace with your actual values in production
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
-                       'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+    // Get Supabase credentials from environment variables
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
     
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
-                   process.env.SUPABASE_ANON_KEY || 
-                   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIwNDIyMTksImV4cCI6MjAyNzYxODIxOX0.SIGnZrmilJzgADnN1kVjBXo_hJ_-i5nZi79BXYvUbmI'; 
+    console.log('[DISCORD-NEWS-API] Credentials:', { 
+      supabaseUrl: supabaseUrl ? '✓ Present' : '✗ Missing',
+      supabaseKey: supabaseKey ? '✓ Present' : '✗ Missing'
+    });
     
-    // Try first with anon key
-    console.log('[DISCORD-NEWS-API] Attempting with anon key');
-    const anonResult = await tryWithKey(supabaseUrl, anonKey, 'anon');
-    if (anonResult) return anonResult;
-    
-    // If anon key fails, try with service role key if available
-    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
-    
-    if (serviceRoleKey) {
-      console.log('[DISCORD-NEWS-API] Anon key failed, trying with service role key');
-      const serviceResult = await tryWithKey(supabaseUrl, serviceRoleKey, 'service_role');
-      if (serviceResult) return serviceResult;
+    // Check if we have the necessary credentials
+    if (!supabaseUrl || !supabaseKey) {
+      console.error('[DISCORD-NEWS-API] Missing Supabase credentials');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'missing_credentials',
+        message: 'Supabase credentials are missing from environment variables',
+        missing: {
+          url: !supabaseUrl,
+          key: !supabaseKey
+        },
+        time: new Date().toISOString()
+      });
     }
     
-    // If we get here, all attempts failed
-    return NextResponse.json({
-      articles: fallbackArticles,
-      source: 'all_attempts_failed',
-      message: 'All attempts to connect to the database failed',
-      suggestions: [
-        'Check the browser console for detailed error logs',
-        'Verify your Supabase project is active',
-        'Confirm your API keys are correct and have proper permissions',
-        'Check that the "newsfeed" table exists with the proper columns',
-        'If using environment variables, ensure they are correctly set'
-      ],
-      time: new Date().toISOString()
+    // Create Supabase client with proper options
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        persistSession: false, // Don't persist session
+        autoRefreshToken: false // Don't auto-refresh token
+      },
+      global: {
+        fetch: fetch // Use the global fetch
+      }
     });
+    
+    console.log('[DISCORD-NEWS-API] Attempting to fetch newsfeed data');
+    
+    // Execute the query with proper error handling
+    const { data, error } = await supabase
+      .from('newsfeed')
+      .select('*')
+      .order('timestamp', { ascending: false });
+    
+    // Log the result for debugging
+    if (error) {
+      console.error('[DISCORD-NEWS-API] Supabase error:', error);
+      
+      // Try to get available tables to help troubleshoot
+      const { data: tables, error: tablesError } = await supabase
+        .from('information_schema.tables')
+        .select('table_name')
+        .eq('table_schema', 'public');
+      
+      let availableTables = [];
+      if (!tablesError && tables) {
+        availableTables = tables.map(t => t.table_name);
+        console.log('[DISCORD-NEWS-API] Available tables:', availableTables);
+      }
+      
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'database_error',
+        message: `Database error: ${error.message}`,
+        error_details: {
+          code: error.code,
+          message: error.message,
+          hint: error.hint || 'No hint provided',
+          details: error.details || 'No details provided',
+          available_tables: availableTables,
+          troubleshooting: [
+            'Check if RLS policies are blocking access',
+            'Verify the table exists with correct name (case-sensitive)',
+            'Ensure your API key has the necessary permissions',
+            'Try using the Supabase web interface to query the table directly'
+          ]
+        },
+        time: new Date().toISOString()
+      });
+    }
+    
+    if (!data || data.length === 0) {
+      console.log('[DISCORD-NEWS-API] No data found in table');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'empty_table',
+        message: 'No data found in the newsfeed table',
+        time: new Date().toISOString()
+      });
+    }
+    
+    console.log(`[DISCORD-NEWS-API] Successfully retrieved ${data.length} articles`);
+    
+    // Return the data
+    return NextResponse.json({
+      articles: data,
+      source: 'database_success',
+      message: `Retrieved ${data.length} articles from Supabase`,
+      time: new Date().toISOString(),
+      count: data.length
+    });
+    
   } catch (error) {
     console.error('[DISCORD-NEWS-API] Unexpected error:', error);
     
