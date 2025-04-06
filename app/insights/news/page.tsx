@@ -1,9 +1,10 @@
 "use client"
 
 import React from 'react'
-import { Newspaper, ExternalLink, ArrowLeft } from "lucide-react"
+import { Newspaper, ExternalLink, ArrowLeft, Rss } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import LiveNewsFeed from "@/app/components/LiveNewsFeed"
 
 export default function NewsPage() {
 
@@ -335,6 +336,23 @@ export default function NewsPage() {
           </div>
         </div>
       </section>
+
+      {/* Live News Feed Section */}
+      <section className="py-12 bg-gray-900/50">
+        <div className="container px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="flex items-center mb-6">
+              <Rss className="w-5 h-5 text-orange-500 mr-2" />
+              <h2 className="text-2xl font-semibold text-white">Live News Feed</h2>
+            </div>
+            <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-800 rounded-lg p-6">
+              <LiveNewsFeed />
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <div className="my-8 border-t border-gray-800"></div>
 
       {/* News Sources Section */}
       <section className="py-16 border-t border-gray-800">

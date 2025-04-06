@@ -37,7 +37,7 @@ export default function Navbar() {
       href: "/insights",
       icon: Zap,
       featured: [
-        { title: "Latest News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
+        { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
         { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats" },
         { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry" }
       ],
