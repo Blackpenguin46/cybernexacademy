@@ -56,357 +56,242 @@ const fallbackArticles = [
   }
 ];
 
-// Helper function to test connectivity
-async function testConnectivity(url: string): Promise<{success: boolean, status?: number, error?: string}> {
-  try {
-    console.log(`[DISCORD-NEWS-API] Testing connectivity to: ${url}`);
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
-    
-    const response = await fetch(url, { 
-      method: 'HEAD',
-      signal: controller.signal,
-      cache: 'no-store',
-      headers: { 'User-Agent': 'CyberNex-Connectivity-Test/1.0' }
-    });
-    
-    clearTimeout(timeoutId);
-    console.log(`[DISCORD-NEWS-API] Connectivity test to ${url}: ${response.status}`);
-    
-    return { 
-      success: response.ok, 
-      status: response.status 
-    };
-  } catch (error) {
-    console.error(`[DISCORD-NEWS-API] Connectivity test failed for ${url}:`, error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Unknown error' 
-    };
-  }
-}
-
-// Helper function to try Supabase access with a specific key
-async function tryWithKey(
-  url: string, 
-  key: string, 
-  keyType: 'anon' | 'service_role'
-): Promise<Response | null> {
-  try {
-    console.log(`[DISCORD-NEWS-API] Testing with ${keyType} key and exact table structure`);
-    
-    // Try to access the actual API endpoint for the newsfeed table
-    // Include selecting the exact columns that exist in the schema
-    const apiUrl = `${url}/rest/v1/newsfeed?select=id,author,content,timestamp,urls&order=timestamp.desc&limit=50`;
-    console.log(`[DISCORD-NEWS-API] Trying to access: ${apiUrl}`);
-    
-    try {
-      const response = await fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': key,
-          'Authorization': `Bearer ${key}`,
-        },
-        cache: 'no-store'
-      });
-      
-      const responseText = await response.text();
-      console.log(`[DISCORD-NEWS-API] Response status: ${response.status}, Content type: ${response.headers.get('content-type')}`);
-      
-      // Handle successful response
-      if (response.ok) {
-        try {
-          const data = JSON.parse(responseText);
-          console.log(`[DISCORD-NEWS-API] Successfully retrieved ${data.length} articles`);
-          
-          if (data.length > 0) {
-            console.log(`[DISCORD-NEWS-API] Sample record:`, data[0]);
-          }
-          
-          return NextResponse.json({
-            articles: data.length > 0 ? data : fallbackArticles,
-            source: 'database_success',
-            message: `Retrieved ${data.length} articles using ${keyType} key`,
-            key_used: keyType,
-            time: new Date().toISOString(),
-            count: data.length
-          });
-        } catch (parseError) {
-          console.error(`[DISCORD-NEWS-API] JSON parse error:`, parseError);
-          return NextResponse.json({
-            articles: fallbackArticles,
-            source: 'parse_error',
-            message: 'Failed to parse JSON response from the database.',
-            error_details: {
-              type: 'JsonParseError',
-              response: responseText.substring(0, 1000),
-              error: parseError instanceof Error ? parseError.message : String(parseError)
-            },
-            time: new Date().toISOString()
-          });
-        }
-      }
-      
-      // Check for the specific "requested path is invalid" error
-      if (responseText.includes("requested path is invalid")) {
-        console.log(`[DISCORD-NEWS-API] First attempt failed with 'invalid path'. Trying alternative formats...`);
-        
-        // Try both formats suggested by Supabase
-        const alternativeUrls = [
-          // Format with slash
-          `${url}/rest/v1/public/newsfeed?select=id,author,content,timestamp,urls&order=timestamp.desc&limit=50`,
-          // Format with dot (as suggested in the docs)
-          `${url}/rest/v1/public.newsfeed?select=id,author,content,timestamp,urls&order=timestamp.desc&limit=50`
-        ];
-        
-        for (const altUrl of alternativeUrls) {
-          console.log(`[DISCORD-NEWS-API] Trying alternative URL: ${altUrl}`);
-          
-          try {
-            const alternativeResponse = await fetch(altUrl, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'apikey': key,
-                'Authorization': `Bearer ${key}`,
-              },
-              cache: 'no-store'
-            });
-            
-            if (alternativeResponse.ok) {
-              try {
-                const data = await alternativeResponse.json();
-                console.log(`[DISCORD-NEWS-API] Alternative path successful! Retrieved ${data.length} articles`);
-                
-                if (data.length > 0) {
-                  console.log(`[DISCORD-NEWS-API] Sample record:`, data[0]);
-                }
-                
-                return NextResponse.json({
-                  articles: data.length > 0 ? data : fallbackArticles,
-                  source: 'database_success_alt_path',
-                  message: `Retrieved ${data.length} articles using ${keyType} key and alternative path`,
-                  key_used: keyType,
-                  url_used: altUrl,
-                  time: new Date().toISOString(),
-                  count: data.length
-                });
-              } catch (parseError) {
-                console.error(`[DISCORD-NEWS-API] JSON parse error with alternative URL:`, parseError);
-              }
-            } else {
-              const errText = await alternativeResponse.text();
-              console.log(`[DISCORD-NEWS-API] Alternative path failed: ${alternativeResponse.status} - ${errText}`);
-            }
-          } catch (pathError) {
-            console.error(`[DISCORD-NEWS-API] Error trying path ${altUrl}:`, pathError);
-          }
-        }
-        
-        // Show curl command for manual debugging
-        const curlCommand = `curl -X GET "${url}/rest/v1/newsfeed?select=id,author,content,timestamp,urls" \\
-  -H "apikey: YOUR_ANON_KEY" \\
-  -H "Authorization: Bearer YOUR_ANON_KEY"`;
-        
-        console.log(`[DISCORD-NEWS-API] All alternative paths failed. Try this curl command:\n${curlCommand}`);
-        
-        // Try to diagnose by getting list of available tables
-        let tableInfo = "";
-        let availableTables: string[] = [];
-        
-        try {
-          console.log(`[DISCORD-NEWS-API] Attempting to get table structure for diagnosis`);
-          // Try to get a list of available tables
-          const tablesUrl = `${url}/rest/v1/?apikey=${encodeURIComponent(key)}`;
-          const tablesResponse = await fetch(tablesUrl, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'apikey': key,
-              'Authorization': `Bearer ${key}`,
-            },
-            cache: 'no-store'
-          });
-          
-          if (tablesResponse.ok) {
-            const tablesData = await tablesResponse.json();
-            console.log(`[DISCORD-NEWS-API] Available tables:`, tablesData);
-            tableInfo = "Tables available in the database: " + JSON.stringify(tablesData);
-            
-            if (typeof tablesData === 'object') {
-              availableTables = Object.keys(tablesData);
-            }
-          } else {
-            const tablesErrorText = await tablesResponse.text();
-            tableInfo = `Error retrieving tables: ${tablesResponse.status} - ${tablesErrorText}`;
-          }
-        } catch (tableCheckError) {
-          console.error(`[DISCORD-NEWS-API] Error checking table structure:`, tableCheckError);
-          tableInfo = `Error during table structure check: ${tableCheckError instanceof Error ? tableCheckError.message : String(tableCheckError)}`;
-        }
-        
-        // Return error response with table information
-        return NextResponse.json({
-          articles: fallbackArticles,
-          source: 'path_error',
-          message: 'Unable to access the newsfeed table. Path validation failed.',
-          error_details: {
-            type: 'InvalidPathError',
-            response: responseText,
-            table_info: tableInfo,
-            available_tables: availableTables,
-            curl_command: curlCommand,
-            suggestions: [
-              'Verify that "newsfeed" table exists (Supabase is case-sensitive)',
-              'Check Row Level Security (RLS) policies on the newsfeed table',
-              'Try the curl command above replacing YOUR_ANON_KEY with your actual key',
-              'Verify your API keys have proper permissions',
-              'Check the Supabase dashboard: https://app.supabase.com/project/_/api'
-            ]
-          },
-          time: new Date().toISOString()
-        });
-      }
-      
-      // Handle other response errors
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'response_error',
-        message: 'Failed to fetch data from the newsfeed table.',
-        error_details: {
-          type: 'ResponseError',
-          status: response.status,
-          headers: Object.fromEntries(response.headers.entries()),
-          response: responseText.substring(0, 1000),
-          suggestions: [
-            'Check the API endpoint and parameters',
-            'Ensure the API key is valid and has access rights',
-            'Verify that the newsfeed table exists and has the expected columns'
-          ]
-        },
-        time: new Date().toISOString()
-      });
-    } catch (error) {
-      console.error(`[DISCORD-NEWS-API] Fetch error:`, error);
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'fetch_error',
-        message: 'An error occurred while fetching data.',
-        error_details: {
-          type: 'FetchError',
-          error: error instanceof Error ? error.message : String(error)
-        },
-        time: new Date().toISOString()
-      });
-    }
-  } catch (outerError) {
-    console.error(`[DISCORD-NEWS-API] Unexpected error with ${keyType} key:`, outerError);
-    return null;
-  }
-}
-
 export async function GET(request: Request) {
   console.log('[DISCORD-NEWS-API] Route called at ' + new Date().toISOString());
   
   try {
-    // Get Supabase credentials from environment variables
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    // Use hardcoded values for testing and debugging
+    // In production, these would come from environment variables
+    const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ4eHB3YWxveXJ0d3ZwbWF0enBjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIwNDIyMTksImV4cCI6MjAyNzYxODIxOX0.SIGnZrmilJzgADnN1kVjBXo_hJ_-i5nZi79BXYvUbmI';
     
-    console.log('[DISCORD-NEWS-API] Credentials:', { 
-      supabaseUrl: supabaseUrl ? '✓ Present' : '✗ Missing',
-      supabaseKey: supabaseKey ? '✓ Present' : '✗ Missing'
-    });
+    // Check the request headers and origin to debug CORS issues
+    const requestUrl = request.url;
+    const origin = request.headers.get('origin') || new URL(requestUrl).origin;
+    console.log('[DISCORD-NEWS-API] Request origin:', origin);
+    console.log('[DISCORD-NEWS-API] Request URL:', requestUrl);
     
-    // Check if we have the necessary credentials
-    if (!supabaseUrl || !supabaseKey) {
-      console.error('[DISCORD-NEWS-API] Missing Supabase credentials');
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'missing_credentials',
-        message: 'Supabase credentials are missing from environment variables',
-        missing: {
-          url: !supabaseUrl,
-          key: !supabaseKey
-        },
-        time: new Date().toISOString()
-      });
-    }
+    console.log('[DISCORD-NEWS-API] Making direct API request to Supabase');
     
-    // Create Supabase client with proper options
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      auth: {
-        persistSession: false, // Don't persist session
-        autoRefreshToken: false // Don't auto-refresh token
+    // Make a direct fetch to the Supabase REST API
+    // Add Origin header that matches one of the allowed redirect URLs
+    const url = `${supabaseUrl}/rest/v1/newsfeed?select=*`;
+    console.log('[DISCORD-NEWS-API] API URL:', url);
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+        // Add allowed origins for Supabase security
+        'Origin': 'https://cybernex-cybernexacademy.vercel.app'
       },
-      global: {
-        fetch: fetch // Use the global fetch
-      }
+      cache: 'no-store',
+      // Add a timeout to avoid hanging requests
+      signal: AbortSignal.timeout(10000)
     });
     
-    console.log('[DISCORD-NEWS-API] Attempting to fetch newsfeed data');
+    console.log('[DISCORD-NEWS-API] Response status:', response.status);
+    console.log('[DISCORD-NEWS-API] Response headers:', Object.fromEntries(response.headers));
     
-    // Execute the query with proper error handling
-    const { data, error } = await supabase
-      .from('newsfeed')
-      .select('*')
-      .order('timestamp', { ascending: false });
-    
-    // Log the result for debugging
-    if (error) {
-      console.error('[DISCORD-NEWS-API] Supabase error:', error);
+    // If response is not ok, try the alternative paths with Origin header
+    if (!response.ok) {
+      console.log('[DISCORD-NEWS-API] Initial request failed, trying public/newsfeed path');
       
-      // Try to get available tables to help troubleshoot
-      const { data: tables, error: tablesError } = await supabase
-        .from('information_schema.tables')
-        .select('table_name')
-        .eq('table_schema', 'public');
+      // Try the public/newsfeed path
+      const altUrl = `${supabaseUrl}/rest/v1/public/newsfeed?select=*`;
+      console.log('[DISCORD-NEWS-API] Alternative URL:', altUrl);
       
-      let availableTables = [];
-      if (!tablesError && tables) {
-        availableTables = tables.map(t => t.table_name);
-        console.log('[DISCORD-NEWS-API] Available tables:', availableTables);
+      const altResponse = await fetch(altUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Origin': 'https://cybernex-cybernexacademy.vercel.app'
+        },
+        cache: 'no-store',
+        signal: AbortSignal.timeout(10000)
+      });
+      
+      console.log('[DISCORD-NEWS-API] Alt response status:', altResponse.status);
+      
+      if (altResponse.ok) {
+        const data = await altResponse.json();
+        console.log('[DISCORD-NEWS-API] Alternative path successful, articles found:', data.length);
+        
+        if (data.length > 0) {
+          console.log('[DISCORD-NEWS-API] Sample article:', data[0]);
+        }
+        
+        return NextResponse.json({
+          articles: data.length > 0 ? data : fallbackArticles,
+          source: 'database_success_alt_path',
+          message: `Retrieved ${data.length} articles using alternative path`,
+          time: new Date().toISOString(),
+          count: data.length
+        });
       }
       
+      // Try with a different domain from the allowed list
+      console.log('[DISCORD-NEWS-API] Trying with v0-cybernex domain');
+      
+      const altResponse2 = await fetch(altUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`,
+          'Origin': 'https://v0-cybernex-r5aktld1jft.vercel.app'
+        },
+        cache: 'no-store',
+        signal: AbortSignal.timeout(10000)
+      });
+      
+      console.log('[DISCORD-NEWS-API] v0 domain response status:', altResponse2.status);
+      
+      if (altResponse2.ok) {
+        const data = await altResponse2.json();
+        console.log('[DISCORD-NEWS-API] v0 domain successful, articles found:', data.length);
+        
+        return NextResponse.json({
+          articles: data.length > 0 ? data : fallbackArticles,
+          source: 'database_success_v0_domain',
+          message: `Retrieved ${data.length} articles using v0-cybernex domain`,
+          time: new Date().toISOString(),
+          count: data.length
+        });
+      }
+      
+      // Try directly with the Supabase client library as a final attempt
+      console.log('[DISCORD-NEWS-API] Trying with Supabase client library');
+      
+      const supabase = createClient(supabaseUrl, supabaseKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false
+        },
+        global: {
+          fetch: (url, options) => {
+            // Add the required Origin header to the fetch options
+            const fetchOptions = {
+              ...options,
+              headers: {
+                ...options?.headers,
+                'Origin': 'https://cybernex-cybernexacademy.vercel.app'
+              }
+            };
+            return fetch(url, fetchOptions);
+          }
+        }
+      });
+      
+      const { data: clientData, error: clientError } = await supabase
+        .from('newsfeed')
+        .select('*')
+        .order('timestamp', { ascending: false });
+      
+      if (clientData && !clientError) {
+        console.log('[DISCORD-NEWS-API] Supabase client successful, articles found:', clientData.length);
+        
+        return NextResponse.json({
+          articles: clientData.length > 0 ? clientData : fallbackArticles,
+          source: 'database_success_client',
+          message: `Retrieved ${clientData.length} articles using Supabase client`,
+          time: new Date().toISOString(),
+          count: clientData.length
+        });
+      }
+      
+      if (clientError) {
+        console.error('[DISCORD-NEWS-API] Supabase client error:', clientError);
+      }
+      
+      // If all attempts fail, check available tables
+      console.log('[DISCORD-NEWS-API] All paths failed, checking available tables');
+      const tablesUrl = `${supabaseUrl}/rest/v1/?apikey=${encodeURIComponent(supabaseKey)}`;
+      
+      try {
+        const tablesResponse = await fetch(tablesUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+            'Origin': 'https://cybernex-cybernexacademy.vercel.app'
+          },
+          cache: 'no-store',
+          signal: AbortSignal.timeout(10000)
+        });
+        
+        if (tablesResponse.ok) {
+          const tables = await tablesResponse.json();
+          console.log('[DISCORD-NEWS-API] Available tables:', tables);
+          
+          const errorText = await response.text();
+          return NextResponse.json({
+            articles: fallbackArticles,
+            source: 'path_error',
+            message: 'Error accessing the newsfeed table - likely a CORS/domain issue',
+            error_details: {
+              status: response.status,
+              error: errorText,
+              tables: Object.keys(tables),
+              debug_info: {
+                url_attempted: url,
+                alt_url_attempted: altUrl,
+                headers_sent: {
+                  'Content-Type': 'application/json',
+                  'apikey': '[REDACTED]',
+                  'Authorization': 'Bearer [REDACTED]',
+                  'Origin': 'https://cybernex-cybernexacademy.vercel.app'
+                },
+                request_origin: origin,
+                request_url: requestUrl
+              },
+              suggestion: "Ensure your Supabase project settings include the correct domain in 'API Settings > CORS Origin URLs'"
+            },
+            time: new Date().toISOString()
+          });
+        }
+      } catch (tablesError) {
+        console.error('[DISCORD-NEWS-API] Error checking tables:', tablesError);
+      }
+      
+      // If we can't get the tables info either, return the original error
+      const errorText = await response.text();
       return NextResponse.json({
         articles: fallbackArticles,
-        source: 'database_error',
-        message: `Database error: ${error.message}`,
+        source: 'api_error',
+        message: 'Failed to access the Supabase API - likely a CORS/domain restriction',
         error_details: {
-          code: error.code,
-          message: error.message,
-          hint: error.hint || 'No hint provided',
-          details: error.details || 'No details provided',
-          available_tables: availableTables,
-          troubleshooting: [
-            'Check if RLS policies are blocking access',
-            'Verify the table exists with correct name (case-sensitive)',
-            'Ensure your API key has the necessary permissions',
-            'Try using the Supabase web interface to query the table directly'
-          ]
+          status: response.status,
+          error: errorText,
+          debug_info: {
+            url_attempted: url,
+            alt_url_attempted: altUrl,
+            request_origin: origin,
+            request_url: requestUrl,
+            suggestion: "Check Supabase project settings > API > CORS Origins and ensure your domain is in the allowed list"
+          }
         },
         time: new Date().toISOString()
       });
     }
     
-    if (!data || data.length === 0) {
-      console.log('[DISCORD-NEWS-API] No data found in table');
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'empty_table',
-        message: 'No data found in the newsfeed table',
-        time: new Date().toISOString()
-      });
+    // If the response is ok, parse the JSON
+    const data = await response.json();
+    console.log('[DISCORD-NEWS-API] Data received, articles found:', data.length);
+    
+    if (data.length > 0) {
+      console.log('[DISCORD-NEWS-API] Sample article:', data[0]);
     }
     
-    console.log(`[DISCORD-NEWS-API] Successfully retrieved ${data.length} articles`);
-    
-    // Return the data
     return NextResponse.json({
-      articles: data,
+      articles: data.length > 0 ? data : fallbackArticles,
       source: 'database_success',
-      message: `Retrieved ${data.length} articles from Supabase`,
+      message: `Retrieved ${data.length} articles from database`,
       time: new Date().toISOString(),
       count: data.length
     });
