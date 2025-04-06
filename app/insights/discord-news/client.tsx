@@ -470,6 +470,24 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                 </p>
               </div>
             )}
+
+            {source === 'network_error' && (
+              <div className="mt-4 p-3 bg-red-900 border border-red-700 rounded text-sm">
+                <p className="font-medium text-red-200">🔌 Network Connectivity Error</p>
+                <p className="text-red-300 text-xs mt-1">
+                  The server cannot connect to the Supabase database due to network restrictions.
+                </p>
+                <div className="mt-2 p-2 bg-red-950 rounded border border-red-800">
+                  <p className="text-xs text-red-300 font-medium">Troubleshooting suggestions:</p>
+                  <ul className="list-disc list-inside text-xs text-red-300 mt-1 space-y-1">
+                    <li>Check if your server has internet access</li>
+                    <li>Verify your hosting provider allows external API calls</li>
+                    <li>Try running the app on a different network</li>
+                    <li>Test with a local database instead</li>
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
 
           {news.length === 0 ? (
