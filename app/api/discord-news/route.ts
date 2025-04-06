@@ -119,13 +119,64 @@ async function tryWithKey(
       
       // Check for the specific "requested path is invalid" error
       if (responseText.includes("requested path is invalid")) {
-        // Try one alternative endpoint format with the schema prefix
-        try {
-          console.log(`[DISCORD-NEWS-API] First attempt failed with 'invalid path'. Trying with schema prefix...`);
-          const alternativeUrl = `${url}/rest/v1/public/newsfeed?select=*&limit=10`;
-          console.log(`[DISCORD-NEWS-API] Trying alternative URL: ${alternativeUrl}`);
+        console.log(`[DISCORD-NEWS-API] First attempt failed with 'invalid path'. Trying alternative formats...`);
+        
+        // Try both formats suggested by Supabase
+        const alternativeUrls = [
+          // Format with slash
+          `${url}/rest/v1/public/newsfeed?select=*&limit=10`,
+          // Format with dot (as suggested in the docs)
+          `${url}/rest/v1/public.newsfeed?select=*&limit=10`
+        ];
+        
+        for (const altUrl of alternativeUrls) {
+          console.log(`[DISCORD-NEWS-API] Trying alternative URL: ${altUrl}`);
           
-          const alternativeResponse = await fetch(alternativeUrl, {
+          try {
+            const alternativeResponse = await fetch(altUrl, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'apikey': key,
+                'Authorization': `Bearer ${key}`,
+              },
+              cache: 'no-store'
+            });
+            
+            if (alternativeResponse.ok) {
+              const data = await alternativeResponse.json();
+              console.log(`[DISCORD-NEWS-API] Alternative path successful with ${altUrl}! Fetched data with ${keyType} key:`, data);
+              
+              return NextResponse.json({
+                articles: data.length > 0 ? data : fallbackArticles,
+                source: 'database_success_alt_path',
+                message: `Retrieved ${data.length} articles using ${keyType} key and alternative path`,
+                key_used: keyType,
+                url_used: altUrl,
+                time: new Date().toISOString(),
+                count: data.length,
+                note: "Used alternative URL format"
+              });
+            } else {
+              const errText = await alternativeResponse.text();
+              console.log(`[DISCORD-NEWS-API] Alternative path failed for ${altUrl}: ${alternativeResponse.status} - ${errText}`);
+            }
+          } catch (pathError) {
+            console.error(`[DISCORD-NEWS-API] Error trying path ${altUrl}:`, pathError);
+          }
+        }
+        
+        console.log(`[DISCORD-NEWS-API] All alternative paths failed`);
+        
+        // Get diagnostic information about available tables
+        let tableInfo = "Could not retrieve table info";
+        let availableTables: string[] = [];
+        
+        try {
+          console.log(`[DISCORD-NEWS-API] Attempting to get table structure for diagnosis`);
+          // Try to get a list of available tables
+          const tablesUrl = `${url}/rest/v1/?apikey=${encodeURIComponent(key)}`;
+          const tablesResponse = await fetch(tablesUrl, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -135,25 +186,24 @@ async function tryWithKey(
             cache: 'no-store'
           });
           
-          if (alternativeResponse.ok) {
-            const data = await alternativeResponse.json();
-            console.log(`[DISCORD-NEWS-API] Alternative path successful! Fetched data with ${keyType} key:`, data);
+          if (tablesResponse.ok) {
+            const tablesData = await tablesResponse.json();
+            console.log(`[DISCORD-NEWS-API] Available tables:`, tablesData);
+            tableInfo = "Tables available in the database: " + JSON.stringify(tablesData);
             
-            return NextResponse.json({
-              articles: data.length > 0 ? data : fallbackArticles,
-              source: 'database_success_alt_path',
-              message: `Retrieved ${data.length} articles using ${keyType} key and alternative path`,
-              key_used: keyType,
-              time: new Date().toISOString(),
-              count: data.length,
-              note: "Used alternative URL format with schema prefix"
-            });
+            if (typeof tablesData === 'object') {
+              availableTables = Object.keys(tablesData);
+            }
+          } else {
+            const tablesErrorText = await tablesResponse.text();
+            tableInfo = `Error retrieving tables: ${tablesResponse.status} - ${tablesErrorText}`;
           }
-        } catch (altError) {
-          console.error(`[DISCORD-NEWS-API] Alternative path also failed:`, altError);
+        } catch (tableCheckError) {
+          console.error(`[DISCORD-NEWS-API] Error checking table structure:`, tableCheckError);
+          tableInfo = `Error during table structure check: ${tableCheckError instanceof Error ? tableCheckError.message : String(tableCheckError)}`;
         }
         
-        // If alternative also failed, return original error with auth suggestions
+        // If all alternative paths failed, return original error with auth suggestions
         return NextResponse.json({
           articles: fallbackArticles,
           source: 'path_error',
@@ -161,6 +211,8 @@ async function tryWithKey(
           error_details: {
             type: 'InvalidPathError',
             response: responseText,
+            table_info: tableInfo,
+            available_tables: availableTables,
             suggestions: [
               'Verify your API keys have proper permissions to access the table',
               'Your table exists but the API keys might not have access rights',

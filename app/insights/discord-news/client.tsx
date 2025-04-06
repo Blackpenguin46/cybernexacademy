@@ -625,6 +625,22 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                       <span className="mr-1">🔑</span> Get Service Role Key
                     </a>
                   </div>
+                  
+                  <div className="mt-3 pt-2 border-t border-indigo-800">
+                    <p className="text-xs text-indigo-300 font-medium mb-2">Test with cURL:</p>
+                    <pre className="bg-black rounded p-2 text-xs overflow-x-auto text-green-300 font-mono">
+                      {`curl -X GET \\
+"https://vxxpwaloyrtwvpmatzpc.supabase.co/rest/v1/newsfeed?select=*&limit=10" \\
+-H "apikey: YOUR_ANON_KEY" \\
+-H "Authorization: Bearer YOUR_ANON_KEY"`}
+                    </pre>
+                    <p className="text-xs text-indigo-300 mt-2">
+                      Replace YOUR_ANON_KEY with your key from the Supabase dashboard
+                    </p>
+                    <p className="text-xs text-indigo-300 mt-1">
+                      You can also try with format: <code className="bg-black px-1 rounded">public.newsfeed</code> instead of <code className="bg-black px-1 rounded">newsfeed</code>
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
