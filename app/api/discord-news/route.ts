@@ -64,7 +64,8 @@ function getEnvironmentInfo() {
     urlPrefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 15) + '...',
     envKeys: Object.keys(process.env).filter(key => key.includes('SUPABASE')).join(', '),
     serverUrlExists: !!process.env.SUPABASE_URL,
-    serverKeyExists: !!process.env.SUPABASE_ANON_KEY
+    serverKeyExists: !!process.env.SUPABASE_ANON_KEY,
+    serviceKeyExists: !!process.env.SUPABASE_SERVICE_KEY
   };
 }
 
@@ -76,14 +77,19 @@ export async function GET(request: Request) {
     const envInfo = getEnvironmentInfo();
     console.log('[DISCORD-NEWS-API] Environment info:', envInfo);
     
-    // Get Supabase credentials - checking all possible environment variable names
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
-                        process.env.SUPABASE_URL || 
-                        'https://hpfpuljthcngnswwfkrb.supabase.co'; // Replace with your project URL
+    // Get Supabase URL - checking all possible environment variable names
+    // Try server-side URL first (no NEXT_PUBLIC prefix)
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
     
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
-                        process.env.SUPABASE_ANON_KEY || 
-                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY'; // Replace with your project key
+    // For API routes, we should use the service key which has higher privileges
+    const serviceKey = process.env.SUPABASE_SERVICE_KEY;
+    
+    // Fallback to the anon key if no service key is found
+    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    
+    // Determine which key to use - prefer service key for server operations
+    const useServiceKey = !!serviceKey;
+    const apiKey = serviceKey || anonKey;
     
     // Check the request headers and origin
     const requestUrl = request.url;
@@ -91,14 +97,25 @@ export async function GET(request: Request) {
     console.log('[DISCORD-NEWS-API] Request origin:', origin);
     console.log('[DISCORD-NEWS-API] Request URL:', requestUrl);
     
-    // Use the Supabase client instead of direct fetch
-    console.log('[DISCORD-NEWS-API] Creating Supabase client with:', { 
-      url: supabaseUrl.substring(0, 15) + '...',
-      keyLength: supabaseKey.length
-    });
+    // Log which key we're using (without exposing the actual key)
+    console.log('[DISCORD-NEWS-API] Using', useServiceKey ? 'SERVICE_KEY' : 'ANON_KEY', 'for Supabase with URL:', supabaseUrl);
+    
+    if (!apiKey) {
+      console.error('[DISCORD-NEWS-API] No valid API key found in environment variables');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'missing_api_key',
+        message: 'No API key available in environment variables',
+        debug_info: {
+          environment: envInfo,
+          suggestion: "Check that SUPABASE_SERVICE_KEY and NEXT_PUBLIC_SUPABASE_ANON_KEY are correctly set in Vercel"
+        },
+        time: new Date().toISOString()
+      });
+    }
     
     // Create Supabase client with proper options
-    const supabase = createClient(supabaseUrl, supabaseKey, {
+    const supabase = createClient(supabaseUrl, apiKey, {
       auth: {
         persistSession: false,
         autoRefreshToken: false
@@ -106,7 +123,7 @@ export async function GET(request: Request) {
     });
     
     // Execute the query
-    console.log('[DISCORD-NEWS-API] Querying newsfeed table');
+    console.log('[DISCORD-NEWS-API] Querying newsfeed table using', useServiceKey ? 'service key' : 'anon key');
     const { data, error } = await supabase
       .from('newsfeed')
       .select()
@@ -125,6 +142,7 @@ export async function GET(request: Request) {
           message: error.message,
           hint: error.hint,
           details: error.details,
+          using_service_key: useServiceKey,
           environment: envInfo,
           request_origin: origin
         },
@@ -134,7 +152,7 @@ export async function GET(request: Request) {
     
     // Handle success
     if (data && data.length > 0) {
-      console.log(`[DISCORD-NEWS-API] Successfully retrieved ${data.length} articles`);
+      console.log(`[DISCORD-NEWS-API] Successfully retrieved ${data.length} articles using ${useServiceKey ? 'SERVICE_KEY' : 'ANON_KEY'}`);
       console.log('[DISCORD-NEWS-API] Sample article:', data[0]);
       
       return NextResponse.json({
