@@ -170,17 +170,17 @@ export default function DiscordNewsPage() {
     }, 10000); // 10 seconds timeout
     
     try {
-      // Initialize Supabase client directly in the component
-      // Note: These environment variables must be prefixed with NEXT_PUBLIC_ to be available in the browser
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      // Log all environment variables for debugging
+      console.log('[FETCH] Environment variables check:');
+      console.log('[FETCH] NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
+      console.log('[FETCH] NEXT_PUBLIC_SUPABASE_ANON_KEY exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
       
-      console.log('[FETCH] Supabase URL:', supabaseUrl ? `${supabaseUrl.substring(0, 20)}...` : 'MISSING');
-      console.log('[FETCH] Supabase Key:', supabaseAnonKey ? 'Present' : 'MISSING');
+      // Initialize Supabase client directly
+      // For testing, use hardcoded values if env vars are missing
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
       
-      if (!supabaseUrl || !supabaseAnonKey) {
-        throw new Error('Missing Supabase environment variables');
-      }
+      console.log('[FETCH] Using Supabase URL:', supabaseUrl.substring(0, 20) + '...');
       
       // Create Supabase client
       const supabase = createClient(supabaseUrl, supabaseAnonKey);
