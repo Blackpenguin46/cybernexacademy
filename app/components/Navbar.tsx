@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -12,6 +12,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const navRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   
   // Main navigation sections with dropdown content
   const navSections = [
@@ -21,15 +22,13 @@ export default function Navbar() {
       href: "/community",
       icon: User,
       description: "Connect with cybersecurity professionals and enthusiasts through our community platforms.",
-      featured: [
-        { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord" },
-        { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github" },
-        { title: "Substack", desc: "Subscribe to our cybersecurity newsletter", icon: Terminal, href: "/community/substack" }
-      ],
-      links: [
-        { name: "LinkedIn", href: "/community/linkedin" },
-        { name: "Skool", href: "/community/skool" },
-        { name: "Forums", href: "/community/forums" }
+      items: [
+        { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord", featured: true },
+        { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github", featured: true },
+        { title: "Substack", desc: "Subscribe to our cybersecurity newsletter", icon: Terminal, href: "/community/substack", featured: true },
+        { title: "LinkedIn", desc: "Connect with professionals in the industry", href: "/community/linkedin", featured: false },
+        { title: "Skool", desc: "Join our learning community", href: "/community/skool", featured: false },
+        { title: "Forums", desc: "Discuss cybersecurity topics", href: "/community/forums", featured: false }
       ]
     },
     {
@@ -38,15 +37,13 @@ export default function Navbar() {
       href: "/insights",
       icon: Zap,
       description: "Explore the latest cybersecurity news, threats, and industry trends to stay informed.",
-      featured: [
-        { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
-        { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats" },
-        { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry" }
-      ],
-      links: [
-        { name: "Research", href: "/insights/research" },
-        { name: "Cases", href: "/insights/cases" },
-        { name: "Practices", href: "/insights/practices" }
+      items: [
+        { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news", featured: true },
+        { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats", featured: true },
+        { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry", featured: true },
+        { title: "Research", desc: "Latest cybersecurity research findings", href: "/insights/research", featured: false },
+        { title: "Cases", desc: "Real-world cybersecurity incident analyses", href: "/insights/cases", featured: false },
+        { title: "Practices", desc: "Best practices for security", href: "/insights/practices", featured: false }
       ]
     },
     {
@@ -55,15 +52,13 @@ export default function Navbar() {
       href: "/academy",
       icon: Terminal,
       description: "Build your cybersecurity skills with structured learning paths, courses, and certifications.",
-      featured: [
-        { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner" },
-        { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced" },
-        { title: "Certifications", desc: "Prepare for industry certifications", icon: Award, href: "/academy/certifications" }
-      ],
-      links: [
-        { name: "Courses", href: "/academy/courses" },
-        { name: "Labs", href: "/academy/labs" },
-        { name: "YouTube", href: "/academy/youtube" }
+      items: [
+        { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner", featured: true },
+        { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced", featured: true },
+        { title: "Certifications", desc: "Prepare for industry certifications", icon: Award, href: "/academy/certifications", featured: true },
+        { title: "Courses", desc: "Focused cybersecurity learning modules", href: "/academy/courses", featured: false },
+        { title: "Labs", desc: "Hands-on practical environments", href: "/academy/labs", featured: false },
+        { title: "YouTube", desc: "Free educational video content", href: "/academy/youtube", featured: false }
       ]
     }
   ];
@@ -119,6 +114,17 @@ export default function Navbar() {
     setActiveDropdown(null);
   };
 
+  // Function to determine dropdown position
+  const getDropdownPosition = (sectionId: string) => {
+    const index = navSections.findIndex(section => section.id === sectionId);
+    const totalSections = navSections.length;
+    
+    // Left, center, or right position based on index
+    if (index === 0) return "left-0";
+    if (index === totalSections - 1) return "right-0";
+    return "left-1/2 transform -translate-x-1/2";
+  };
+
   // Add custom animation
   const globalStyles = `
   @keyframes blink {
@@ -139,9 +145,9 @@ export default function Navbar() {
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-80"></div>
         
         <div className="max-w-[1200px] mx-auto">
-          <div className="flex items-center h-16 px-0">
-            {/* Logo - ensure it's at the very left edge with no margin */}
-            <div className="flex-none ml-0">
+          <div className="flex items-center h-16 px-4">
+            {/* Logo */}
+            <div className="flex-none">
               <Link href="/" className="text-2xl font-bold text-white flex items-center gap-2">
                 <div className="relative">
                   <Terminal className="w-6 h-6 text-blue-400" />
@@ -152,14 +158,15 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Desktop navbar links - absolutely centered on the page */}
-            <div className="hidden lg:flex items-center absolute left-1/2 transform -translate-x-1/2 space-x-16">
+            {/* Desktop navbar links - centered on the page */}
+            <div className="hidden lg:flex items-center justify-center mx-auto space-x-10 lg:space-x-16">
               {navSections.map((section) => (
                 <div 
                   key={section.id} 
                   className="relative"
                   onMouseEnter={() => handleMouseEnter(section.id)}
                   onMouseLeave={handleMouseLeave}
+                  ref={el => navRefs.current[section.id] = el}
                 >
                   <Link 
                     href={section.href}
@@ -171,7 +178,7 @@ export default function Navbar() {
                     <span>{section.title}</span>
                   </Link>
 
-                  {/* Desktop Dropdown Menu - New Horizontal Layout */}
+                  {/* Desktop Dropdown Menu - Position-aware */}
                   <AnimatePresence>
                     {activeDropdown === section.id && (
                       <motion.div
@@ -179,11 +186,11 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[800px] max-w-[calc(100vw-40px)] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50"
+                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[700px] max-w-[calc(100vw-40px)] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
                       >
-                        <div className="flex">
-                          {/* Section overview - left side */}
-                          <div className="w-1/3 p-6 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-r border-blue-500/10">
+                        <div className="flex flex-col md:flex-row">
+                          {/* Section overview */}
+                          <div className="w-full md:w-1/3 p-6 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-b md:border-b-0 md:border-r border-blue-500/10">
                             <div className="flex items-center gap-2 mb-3">
                               <section.icon className="w-5 h-5 text-blue-400" />
                               <h3 className="text-lg font-semibold text-white">{section.title}</h3>
@@ -198,37 +205,31 @@ export default function Navbar() {
                             </Link>
                           </div>
                           
-                          {/* Subsections - right side */}
-                          <div className="w-2/3 p-6">
-                            <div className="grid grid-cols-2 gap-4 mb-4">
-                              {section.featured.map((item) => (
+                          {/* Unified links grid */}
+                          <div className="w-full md:w-2/3 p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {section.items.map((item) => (
                                 <Link
                                   key={item.title}
                                   href={item.href}
-                                  className="flex items-start p-3 rounded-md hover:bg-blue-500/10 transition-colors group"
+                                  className={`flex items-start p-3 rounded-md transition-colors group
+                                    ${item.featured 
+                                      ? 'bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10' 
+                                      : 'hover:bg-gray-800/70'}`}
                                 >
-                                  <item.icon className="w-5 h-5 text-blue-400 group-hover:text-blue-300 mr-3 mt-0.5" />
+                                  <div className="flex-shrink-0 w-8 h-8 mr-3 flex items-center justify-center">
+                                    {item.icon ? (
+                                      <item.icon className="w-5 h-5 text-blue-400 group-hover:text-blue-300" />
+                                    ) : (
+                                      <div className="w-2 h-2 rounded-full bg-blue-400/50 group-hover:bg-blue-300/60"></div>
+                                    )}
+                                  </div>
                                   <div>
                                     <div className="text-sm font-medium text-white group-hover:text-blue-300">{item.title}</div>
                                     <div className="text-xs text-gray-400 group-hover:text-gray-300">{item.desc}</div>
                                   </div>
                                 </Link>
                               ))}
-                            </div>
-                            
-                            <div className="border-t border-blue-500/20 pt-4">
-                              <h4 className="text-xs font-medium text-gray-500 uppercase mb-2 ml-2">Related Links</h4>
-                              <div className="grid grid-cols-3 gap-2">
-                                {section.links.map((link) => (
-                                  <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className="text-sm text-gray-300 hover:text-white px-3 py-2 rounded-md hover:bg-blue-500/10 transition-colors"
-                                  >
-                                    {link.name}
-                                  </Link>
-                                ))}
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -240,7 +241,7 @@ export default function Navbar() {
             </div>
 
             {/* Right actions section */}
-            <div className="flex-none flex items-center ml-auto mr-4 lg:mr-8 space-x-4">
+            <div className="flex-none flex items-center ml-auto space-x-4">
               {/* Donate button */}
               <Link 
                 href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
@@ -265,7 +266,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile menu - keeping the same implementation */}
+          {/* Mobile menu */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div 
@@ -314,29 +315,24 @@ export default function Navbar() {
                           >
                             <p className="px-3 py-2 text-sm text-gray-400">{section.description}</p>
                             
-                            {section.featured.map((item) => (
+                            {section.items.map((item) => (
                               <Link
                                 key={item.title}
                                 href={item.href}
-                                className="flex items-start p-2 rounded-md hover:bg-blue-500/10"
+                                className={`flex items-start p-2 rounded-md ${item.featured ? 'bg-blue-500/5 border border-blue-500/10' : ''} hover:bg-blue-500/10`}
                                 onClick={() => setMobileMenuOpen(false)}
                               >
-                                <item.icon className="w-5 h-5 text-blue-400 mr-3" />
+                                <div className="flex-shrink-0 w-8 h-8 mr-3 flex items-center justify-center">
+                                  {item.icon ? (
+                                    <item.icon className="w-5 h-5 text-blue-400" />
+                                  ) : (
+                                    <div className="w-2 h-2 rounded-full bg-blue-400/50"></div>
+                                  )}
+                                </div>
                                 <div>
                                   <div className="text-sm font-medium text-white">{item.title}</div>
                                   <div className="text-xs text-gray-400">{item.desc}</div>
                                 </div>
-                              </Link>
-                            ))}
-                            
-                            {section.links.map((link) => (
-                              <Link
-                                key={link.name}
-                                href={link.href}
-                                className="block px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-blue-500/10 rounded-md"
-                                onClick={() => setMobileMenuOpen(false)}
-                              >
-                                {link.name}
                               </Link>
                             ))}
                           </motion.div>
