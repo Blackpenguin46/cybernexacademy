@@ -175,17 +175,42 @@ export default function DiscordNewsPage() {
       console.log('[FETCH] NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
       console.log('[FETCH] NEXT_PUBLIC_SUPABASE_ANON_KEY exists:', !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
       
-      // Initialize Supabase client directly
-      // For testing, use hardcoded values if env vars are missing
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
-      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+      // SIMPLIFIED: Use a direct approach using the hardcoded credentials
+      const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
+      const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
       
-      console.log('[FETCH] Using Supabase URL:', supabaseUrl.substring(0, 20) + '...');
+      console.log('[FETCH] Using hardcoded Supabase URL:', supabaseUrl);
+      console.log('[FETCH] Using hardcoded Supabase Anon Key:', supabaseAnonKey.substring(0, 10) + '...');
       
-      // Create Supabase client
-      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      // Create Supabase client with explicit options for debugging
+      const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        },
+        global: {
+          headers: {
+            'X-Client-Info': 'nextjs-app-insights',
+          },
+        }
+      });
       
-      // Fetch data directly from Supabase
+      // Test the connection first with a simple query
+      console.log('[FETCH] Testing Supabase connection...');
+      const { data: testData, error: testError } = await supabase
+        .from('newsfeed')
+        .select('count')
+        .limit(1);
+        
+      if (testError) {
+        console.error('[FETCH] Supabase connection test failed:', testError);
+        throw new Error(`Supabase connection test failed: ${testError.message}`);
+      }
+      
+      console.log('[FETCH] Supabase connection test successful:', testData);
+      
+      // Proceed with the actual query
       console.log('[FETCH] Querying newsfeed table...');
       const { data: articles, error: supabaseError } = await supabase
         .from('newsfeed')
