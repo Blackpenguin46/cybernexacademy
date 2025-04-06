@@ -592,6 +592,42 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                 </div>
               </div>
             )}
+
+            {source === 'path_error' && (
+              <div className="mt-4 p-3 bg-indigo-900 border border-indigo-700 rounded text-sm">
+                <p className="font-medium text-indigo-200">🔒 Table Access Permission Error</p>
+                <p className="text-indigo-300 text-xs mt-1">
+                  Your server can connect to Supabase and the table exists, but API access is being denied.
+                </p>
+                <div className="mt-2 p-2 bg-indigo-950 rounded border border-indigo-800">
+                  <p className="text-xs text-indigo-300 font-medium">Troubleshooting suggestions:</p>
+                  <ul className="list-disc list-inside text-xs text-indigo-300 mt-1 space-y-1">
+                    <li>Verify your API keys have permission to access the table</li>
+                    <li>Check Row Level Security (RLS) policies on the table</li>
+                    <li>Try using a service_role key which can bypass RLS</li>
+                    <li>Make sure the table name case is exactly "newsfeed"</li>
+                  </ul>
+                  <div className="mt-3 pt-2 border-t border-indigo-800 flex justify-between">
+                    <a 
+                      href="https://app.supabase.com/project/_/auth/policies" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-blue-300 text-xs hover:text-blue-200 flex items-center"
+                    >
+                      <span className="mr-1">🔒</span> Check RLS Policies
+                    </a>
+                    <a 
+                      href="https://app.supabase.com/project/_/settings/api" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-blue-300 text-xs hover:text-blue-200 flex items-center"
+                    >
+                      <span className="mr-1">🔑</span> Get Service Role Key
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Add after this a collapsible connectivity report section */}

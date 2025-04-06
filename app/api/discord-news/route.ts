@@ -100,8 +100,9 @@ async function tryWithKey(
   try {
     console.log(`[DISCORD-NEWS-API] Testing with ${keyType} key`);
     
-    // Try to access the actual API endpoint for the newsfeed table
+    // Try multiple path formats to handle Supabase's specifics
     const apiUrl = `${url}/rest/v1/newsfeed?select=*&limit=10`;
+    console.log(`[DISCORD-NEWS-API] Trying to access: ${apiUrl}`);
     
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -116,6 +117,88 @@ async function tryWithKey(
     if (!response.ok) {
       const responseText = await response.text();
       console.error(`[DISCORD-NEWS-API] ${keyType} key error: ${response.status} - ${responseText}`);
+      
+      // Check for the specific "requested path is invalid" error
+      if (responseText.includes("requested path is invalid")) {
+        // Try multiple alternative endpoint formats
+        try {
+          console.log(`[DISCORD-NEWS-API] First attempt failed with 'invalid path'. Trying alternatives...`);
+          
+          // List of URL patterns to try
+          const alternativeUrls = [
+            // 1. With schema prefix
+            `${url}/rest/v1/public/newsfeed?select=*&limit=10`,
+            
+            // 2. With explicit casting to handle case sensitivity
+            `${url}/rest/v1/newsfeed?select=*&limit=10&apikey=${encodeURIComponent(key)}`,
+            
+            // 3. Using database name directly for edge cases
+            `${url}/rest/v1/"newsfeed"?select=*&limit=10`,
+            
+            // 4. Try the table name with capitalized first letter
+            `${url}/rest/v1/Newsfeed?select=*&limit=10`
+          ];
+          
+          // Try each alternative URL
+          for (const alternativeUrl of alternativeUrls) {
+            console.log(`[DISCORD-NEWS-API] Trying alternative URL: ${alternativeUrl}`);
+            
+            try {
+              const alternativeResponse = await fetch(alternativeUrl, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'apikey': key,
+                  'Authorization': `Bearer ${key}`,
+                },
+                cache: 'no-store'
+              });
+              
+              if (alternativeResponse.ok) {
+                const data = await alternativeResponse.json();
+                console.log(`[DISCORD-NEWS-API] Alternative path successful! Fetched data with ${keyType} key:`, data);
+                
+                return NextResponse.json({
+                  articles: data.length > 0 ? data : fallbackArticles,
+                  source: 'database_success_alt_path',
+                  message: `Retrieved ${data.length} articles using ${keyType} key and alternative path`,
+                  key_used: keyType,
+                  alt_path_used: alternativeUrl,
+                  time: new Date().toISOString(),
+                  count: data.length
+                });
+              } else {
+                const errText = await alternativeResponse.text();
+                console.log(`[DISCORD-NEWS-API] Alternative path failed: ${alternativeResponse.status} - ${errText}`);
+              }
+            } catch (pathError) {
+              console.error(`[DISCORD-NEWS-API] Error trying alternative path: ${alternativeUrl}`, pathError);
+            }
+          }
+        } catch (altError) {
+          console.error(`[DISCORD-NEWS-API] Alternative path also failed:`, altError);
+        }
+        
+        // If alternative also failed, return original error with auth suggestions
+        return NextResponse.json({
+          articles: fallbackArticles,
+          source: 'path_error',
+          message: 'Unable to access the newsfeed table. Path validation failed.',
+          error_details: {
+            type: 'InvalidPathError',
+            response: responseText,
+            suggestions: [
+              'Verify your API keys have proper permissions to access the table',
+              'Your table exists but the API keys might not have access rights',
+              'Check Row Level Security (RLS) policies on the newsfeed table',
+              'Try using the service_role key which can bypass RLS policies',
+              'Verify that the case of "newsfeed" matches exactly (Supabase is case-sensitive)'
+            ]
+          },
+          time: new Date().toISOString()
+        });
+      }
+      
       return null;
     }
     
