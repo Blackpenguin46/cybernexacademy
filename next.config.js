@@ -24,8 +24,26 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: cspValue,
           },
+          {
+            key: 'Cross-Origin-Resource-Policy',
+            value: 'same-site',
+          },
+          {
+            key: 'Cross-Origin-Embedder-Policy',
+            value: 'credentialless',
+          },
         ],
       },
+      {
+        // Add specific headers for static files like feedback.js
+        source: '/:path*.js',
+        headers: [
+          {
+            key: 'Cross-Origin-Resource-Policy',
+            value: 'same-site',
+          }
+        ],
+      }
     ];
   },
 };
