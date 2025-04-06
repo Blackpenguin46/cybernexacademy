@@ -9,17 +9,14 @@ export function middleware(request: NextRequest) {
   // Add security headers
   const securityHeaders = new Headers(response.headers);
   
-  // Content Security Policy - Updated to allow necessary resources
+  // Content Security Policy - Updated to allow necessary resources including animations
   securityHeaders.set(
     'Content-Security-Policy',
     "default-src 'self'; " +
     "img-src 'self' data: https:; " +
-    // Removed 'strict-dynamic', relying on 'unsafe-inline' for now
-    "script-src 'self' 'unsafe-inline' https:; " + 
-    // Added Google Fonts to style-src
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " + // Added 'unsafe-eval' for framer-motion
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "connect-src 'self' https://*.vercel.app https://*.supabase.co wss://*.supabase.co; " +
-    // Added Google Fonts to font-src 
     "font-src 'self' data: https://fonts.gstatic.com; " +
     "frame-ancestors 'none'; " +
     "base-uri 'self'; " +
@@ -54,8 +51,8 @@ export function middleware(request: NextRequest) {
   // Cross-Origin Opener Policy
   securityHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
 
-  // Cross-Origin Embedder Policy
-  securityHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
+  // Removing Cross-Origin Embedder Policy as it may be preventing dropdowns from functioning
+  // securityHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
   
   // Return response with security headers
   return NextResponse.next({
