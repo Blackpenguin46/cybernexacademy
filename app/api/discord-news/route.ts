@@ -71,55 +71,42 @@ function logWithEnv(message: string, ...args: any[]) {
 }
 
 export async function GET() {
-  logWithEnv('Discord news API route called');
+  console.log('Discord news API route called');
   
   try {
-    // Get environment variables for Supabase connection
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+    // IMPORTANT: Using direct REST API approach to bypass client-side issues
+    const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
     
-    logWithEnv(`Using Supabase URL: ${supabaseUrl.substring(0, 15)}...`);
-    logWithEnv(`Using Supabase Key: ${supabaseKey.substring(0, 10)}...`);
-
-    // Create Supabase client with more lenient timeout
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false
+    console.log('Attempting direct REST API call to Supabase');
+    
+    // Based on screenshot, the table appears to be called 'newsfeed' with specific fields
+    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=timestamp.desc`;
+    console.log(`API URL: ${apiUrl}`);
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
       },
-      global: {
-        fetch: (url, options) => {
-          return fetch(url, { 
-            ...options, 
-            signal: AbortSignal.timeout(10000) // 10 second timeout
-          });
-        }
-      }
+      next: { revalidate: 0 }, // Disable caching
+      cache: 'no-store'
     });
-
-    // Simple straightforward query to get all articles
-    logWithEnv('Querying newsfeed table in Supabase...');
-    const { data: articles, error } = await supabase
-      .from('newsfeed')
-      .select('*')
-      .order('timestamp', { ascending: false });
     
-    // Handle query error
-    if (error) {
-      logWithEnv(`Supabase query error: ${error.message}`);
-      logWithEnv(`Error details: ${JSON.stringify(error)}`);
-      return NextResponse.json({
-        articles: fallbackArticles,
-        source: 'database_error',
-        message: `Database query error: ${error.message}`,
-        time: new Date().toISOString(),
-        debug: { error: error.message }
-      });
+    if (!response.ok) {
+      const responseText = await response.text();
+      console.error(`API error: ${response.status} - ${responseText}`);
+      throw new Error(`API error ${response.status}: ${responseText}`);
     }
     
-    // Handle no data returned
-    if (!articles || articles.length === 0) {
-      logWithEnv('No articles found in database');
+    const data = await response.json();
+    console.log(`Fetched ${data.length} records from database`);
+    
+    // No articles found, return fallback
+    if (!data || data.length === 0) {
+      console.log('No articles found in database');
       return NextResponse.json({
         articles: fallbackArticles,
         source: 'database_empty',
@@ -128,35 +115,28 @@ export async function GET() {
       });
     }
     
-    // Success - return the articles
-    logWithEnv(`Successfully retrieved ${articles.length} articles from database`);
+    // Success - log a sample of the data to verify structure
+    if (data.length > 0) {
+      console.log('Sample record:', JSON.stringify(data[0]));
+    }
+    
+    // Return the full dataset
     return NextResponse.json({
-      articles: articles,
+      articles: data,
       source: 'database_success',
-      message: `Retrieved ${articles.length} articles from database`,
+      message: `Retrieved ${data.length} articles from database`,
       time: new Date().toISOString(),
-      debug: {
-        count: articles.length
-      }
+      count: data.length
     });
     
   } catch (error) {
-    // Catch-all for any unexpected errors
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    const errorStack = error instanceof Error ? error.stack : '';
-    
-    logWithEnv(`Unexpected error: ${errorMessage}`);
-    logWithEnv(`Error stack: ${errorStack}`);
+    console.error('Error fetching from database:', error);
     
     return NextResponse.json({
       articles: fallbackArticles,
-      source: 'fetch_error',
-      message: `Error connecting to database: ${errorMessage}`,
-      time: new Date().toISOString(),
-      debug: {
-        error: errorMessage,
-        stack: errorStack
-      }
+      source: 'api_error',
+      message: error instanceof Error ? error.message : 'Unknown database error',
+      time: new Date().toISOString()
     });
   }
 } 

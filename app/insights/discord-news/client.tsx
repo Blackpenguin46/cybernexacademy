@@ -127,19 +127,26 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           }
           
           const data = await response.json();
+          console.log("API response:", data);
           
           if (data.articles && data.articles.length > 0) {
             console.log(`API successful, fetched ${data.articles.length} items from database`);
             
-            // Process and format data from the actual database
-            const formattedData: DiscordMessage[] = data.articles.map((item: any) => ({
-              id: item.id || `gen-${Math.random().toString(36).substr(2, 9)}`,
-              title: item.title || item.content?.substring(0, 80) || 'News Update',
-              content: item.content || '',
-              author: item.author || 'CyberSecurity Bot',
-              created_at: item.timestamp || item.created_at || new Date().toISOString(),
-              channel: determineChannelFromContent(item.content || '')
-            }));
+            // Process and format data from the actual database based on screenshot structure
+            const formattedData: DiscordMessage[] = data.articles.map((item: any) => {
+              console.log("Processing article:", item);
+              return {
+                id: item.id || `gen-${Math.random().toString(36).substr(2, 9)}`,
+                // Title is either directly from item.title or use the content
+                title: item.title || item.content || 'News Update',
+                content: item.content || '',
+                author: item.author || 'CyberSecurity Bot', 
+                created_at: item.timestamp || item.created_at || new Date().toISOString(),
+                channel: determineChannelFromContent(item.content || '')
+              };
+            });
+            
+            console.log("Formatted data:", formattedData.length, "articles");
             
             // Store the complete dataset and update display
             setAllNews(formattedData);
@@ -147,7 +154,7 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
             setSource(data.source || 'database_success');
             setLastUpdated(data.time || new Date().toISOString());
             setError(null);
-            console.log('Updated with real database data:', formattedData.length, 'articles');
+            
           } else {
             console.warn('API returned empty data array');
             setAllNews(minimalFallback);
