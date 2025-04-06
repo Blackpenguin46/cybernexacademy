@@ -119,7 +119,7 @@ export default function Navbar() {
     const index = navSections.findIndex(section => section.id === sectionId);
     
     if (index === 0) return "left-0";
-    if (index === 1) return "left-[15%]";
+    if (index === 1) return "left-1/2 transform -translate-x-1/2";
     if (index === 2) return "right-0";
     
     return "left-0";
@@ -186,38 +186,38 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[900px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
+                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[850px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
                       >
                         <div className="flex">
-                          {/* Section overview - left side */}
-                          <div className="w-1/4 p-4 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-r border-blue-500/10">
+                          {/* Section overview - left side (increased padding) */}
+                          <div className="w-1/4 p-6 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-r border-blue-500/10">
                             <div className="flex items-center gap-2 mb-2">
                               <section.icon className="w-5 h-5 text-blue-400" />
                               <h3 className="text-lg font-semibold text-white">{section.title}</h3>
                             </div>
-                            <p className="text-xs text-gray-300 mb-3">{section.description}</p>
+                            <p className="text-sm text-gray-300 mb-3">{section.description}</p>
                             <Link 
                               href={section.href} 
-                              className="inline-flex items-center text-xs text-blue-400 hover:text-blue-300 group"
+                              className="inline-flex items-center text-sm text-blue-400 hover:text-blue-300 group"
                             >
                               Explore all {section.title.toLowerCase()}
-                              <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
+                              <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                             </Link>
                           </div>
                           
-                          {/* Unified links grid - right side */}
-                          <div className="w-3/4 p-3">
-                            <div className="grid grid-cols-3 gap-2">
+                          {/* Unified links grid - right side (increased padding) */}
+                          <div className="w-3/4 p-5">
+                            <div className="grid grid-cols-3 gap-3">
                               {section.items.map((item) => (
                                 <Link
                                   key={item.title}
                                   href={item.href}
-                                  className="flex items-center p-2 rounded-md hover:bg-blue-500/10 transition-colors group"
+                                  className="flex items-center p-3 rounded-md hover:bg-blue-500/10 transition-colors group"
                                 >
                                   <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
-                                    <item.icon className="w-4 h-4 text-blue-400 group-hover:text-blue-300" />
+                                    <item.icon className="w-5 h-5 text-blue-400 group-hover:text-blue-300" />
                                   </div>
-                                  <span className="text-xs font-medium text-white group-hover:text-blue-300">{item.title}</span>
+                                  <span className="text-sm font-medium text-white group-hover:text-blue-300">{item.title}</span>
                                 </Link>
                               ))}
                             </div>
@@ -314,9 +314,9 @@ export default function Navbar() {
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
-                                    <item.icon className="w-4 h-4 text-blue-400" />
+                                    <item.icon className="w-5 h-5 text-blue-400" />
                                   </div>
-                                  <span className="text-xs font-medium text-white">{item.title}</span>
+                                  <span className="text-sm font-medium text-white">{item.title}</span>
                                 </Link>
                               ))}
                             </div>
