@@ -15,11 +15,28 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState(new Date().toISOString());
   const [currentDomain, setCurrentDomain] = useState<string>('');
+  const [envDebug, setEnvDebug] = useState<string>('Checking...');
 
   useEffect(() => {
     // Get current domain for diagnostics
     if (typeof window !== 'undefined') {
       setCurrentDomain(window.location.hostname);
+      
+      // Debug environment variables - safely check if they exist
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      
+      const debugInfo = {
+        urlExists: !!supabaseUrl,
+        keyExists: !!supabaseKey,
+        urlPrefix: supabaseUrl ? supabaseUrl.substring(0, 8) + '...' : 'undefined',
+        envKeys: Object.keys(process.env)
+          .filter(key => key.startsWith('NEXT_PUBLIC_'))
+          .join(', ')
+      };
+      
+      setEnvDebug(JSON.stringify(debugInfo, null, 2));
+      console.log('Environment Debug:', debugInfo);
     }
 
     // Client-side Supabase fetch
@@ -34,11 +51,15 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         // Log domain information for debugging
         console.log(`Running on domain: ${window.location.hostname}`);
         console.log(`Full URL: ${window.location.href}`);
+        console.log('Environment variables:', { 
+          urlExists: !!supabaseUrl,
+          keyExists: !!supabaseKey
+        });
         
         // Validate credentials
         if (!supabaseUrl || !supabaseKey) {
           console.error('Missing Supabase credentials in client');
-          setError('Missing Supabase credentials');
+          setError(`Missing Supabase credentials. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your Vercel environment variables.`);
           setSource('fallback_missing_credentials_client');
           return;
         }
@@ -173,10 +194,20 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p>
         <p>Fetch mode: <span className="font-mono">client-side browser</span></p>
         {currentDomain && <p>Current domain: <span className="font-mono">{currentDomain}</span></p>}
+        
+        {/* Environment debugging section */}
+        <div className="mt-4 border-t border-gray-200 dark:border-gray-700 pt-2">
+          <p className="font-medium">Environment Debug:</p>
+          <pre className="bg-gray-100 dark:bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto">
+            {envDebug}
+          </pre>
+        </div>
+        
         {currentDomain && currentDomain.includes('vercel.app') && (
           <div className="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
             <p className="font-medium">Preview deployment detected</p>
-            <p>You may need to add this preview domain to your Supabase project's allowed origins.</p>
+            <p>1. Add this preview domain to your Supabase project's allowed origins</p>
+            <p>2. Ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in Vercel environment variables</p>
           </div>
         )}
       </div>
