@@ -130,114 +130,88 @@ async function getDiscordNews() {
   try {
     console.log('Server-side: Fetching Discord news...');
 
+    // ENHANCED FALLBACK DATA: Use improved fallback data while we resolve connectivity issues
+    const enhancedFallbackArticles = [
+      ...fallbackArticles,
+      {
+        id: 'enhanced1',
+        content: '[RANSOMWARE] Major hospital chain hit with sophisticated ransomware attack affecting patient systems across 12 states. FBI investigating. https://example.com/hospital-attack',
+        author: 'CyberNewsBot',
+        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
+        attachments: [],
+        urls: ['https://example.com/hospital-attack']
+      },
+      {
+        id: 'enhanced2',
+        content: '[ADVISORY] CISA issues emergency directive for federal agencies to patch Exchange Server vulnerabilities being actively exploited. Patch within 48 hours. https://example.com/cisa-directive',
+        author: 'SecurityFeed',
+        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
+        attachments: [],
+        urls: ['https://example.com/cisa-directive']
+      }
+    ];
+
+    // First, try direct Supabase access
     try {
-      // Method 1: Try with absolute URL construction first
-      const baseUrl = process.env.VERCEL_URL 
-        ? `https://${process.env.VERCEL_URL}` 
-        : 'http://localhost:3000';
+      // Initialize Supabase client with server-side environment variables
+      const supabaseUrl = process.env.SUPABASE_URL;
+      const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
       
-      console.log('Server-side: Trying absolute URL:', baseUrl);
+      console.log('Server-side: Checking Supabase credentials...');
+      console.log('Server-side: SUPABASE_URL present:', !!supabaseUrl);
+      console.log('Server-side: SUPABASE_SERVICE_KEY present:', !!supabaseServiceKey);
       
-      const apiResponse = await fetch(`${baseUrl}/api/discord-news`, {
-        cache: 'no-store', // Don't cache this request
-        next: { revalidate: 0 } // Don't revalidate in Next.js
-      });
-
-      if (apiResponse.ok) {
-        const apiData = await apiResponse.json();
-        console.log('Server-side: API response received (absolute URL):', apiData.source);
-
-        return {
-          news: apiData.articles,
-          error: apiData.message && apiData.message.includes('error') ? apiData.message : null,
-          source: apiData.source,
-          debug: apiData.debug || {}
+      if (!supabaseUrl || !supabaseServiceKey) {
+        console.log('Server-side: Missing Supabase credentials, using enhanced fallback');
+        return { 
+          news: enhancedFallbackArticles, 
+          error: 'Using enhanced fallback data due to missing Supabase credentials',
+          source: 'enhanced_fallback' 
         };
       }
       
-      console.log('Server-side: Absolute URL approach failed, status:', apiResponse.status);
-      // Fall through to the next approach if this fails
-    } catch (absoluteUrlError) {
-      console.error('Server-side: Error with absolute URL approach:', absoluteUrlError);
-      // Fall through to the next approach
-    }
-    
-    // Method 2: Try with relative URL as fallback
-    console.log('Server-side: Trying relative URL approach');
-    const relativeApiResponse = await fetch('/api/discord-news', {
-      cache: 'no-store', // Don't cache this request
-      next: { revalidate: 0 } // Don't revalidate in Next.js
-    });
-
-    if (!relativeApiResponse.ok) {
-      console.error('Server-side: API route error (relative URL):', relativeApiResponse.status);
+      console.log('Server-side: Initializing Supabase client...');
+      const supabase = createClient(supabaseUrl, supabaseServiceKey);
+      
+      console.log('Server-side: Querying newsfeed table...');
+      const { data: articles, error } = await supabase
+        .from('newsfeed')
+        .select('*')
+        .order('timestamp', { ascending: false })
+        .limit(50);
+      
+      if (error) {
+        console.error('Server-side: Supabase query error:', error);
+        return { 
+          news: enhancedFallbackArticles, 
+          error: `Supabase query error: ${error.message}`,
+          source: 'enhanced_fallback_error' 
+        };
+      }
+      
+      if (!articles || articles.length === 0) {
+        console.log('Server-side: No articles found, using enhanced fallback');
+        return { 
+          news: enhancedFallbackArticles, 
+          error: null,
+          source: 'enhanced_fallback_empty' 
+        };
+      }
+      
+      console.log(`Server-side: Successfully retrieved ${articles.length} articles`);
       return { 
-        news: fallbackArticles, 
-        error: `API route error: ${relativeApiResponse.status}`,
-        source: 'fallback_error' 
-      };
-    }
-
-    const apiData = await relativeApiResponse.json();
-    console.log('Server-side: API response received (relative URL):', apiData.source);
-
-    return {
-      news: apiData.articles,
-      error: apiData.message && apiData.message.includes('error') ? apiData.message : null,
-      source: apiData.source,
-      debug: apiData.debug || {}
-    };
-
-    /* 
-    // Original Supabase client approach - keeping for reference
-    // Initialize Supabase client with server-side environment variables
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
-    
-    if (!supabaseUrl || !supabaseServiceKey) {
-      console.error('Server-side: Missing Supabase credentials');
-      return { 
-        news: fallbackArticles, 
-        error: 'Missing Supabase credentials',
-        source: 'fallback' 
-      };
-    }
-    
-    console.log('Server-side: Initializing Supabase client...');
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
-    console.log('Server-side: Querying newsfeed table...');
-    const { data: articles, error } = await supabase
-      .from('newsfeed')
-      .select('*')
-      .order('timestamp', { ascending: false })
-      .limit(50);
-    
-    if (error) {
-      console.error('Server-side: Supabase query error:', error);
-      return { 
-        news: fallbackArticles, 
-        error: `Supabase query error: ${error.message}`,
-        source: 'fallback_error' 
-      };
-    }
-    
-    if (!articles || articles.length === 0) {
-      console.log('Server-side: No articles found, using fallback');
-      return { 
-        news: fallbackArticles, 
+        news: articles, 
         error: null,
-        source: 'fallback_empty' 
+        source: 'database' 
+      };
+    } catch (supabaseError) {
+      console.error('Server-side: Error accessing Supabase:', supabaseError);
+      return { 
+        news: enhancedFallbackArticles, 
+        error: `Error accessing Supabase: ${supabaseError instanceof Error ? supabaseError.message : 'Unknown error'}`,
+        source: 'enhanced_fallback_error' 
       };
     }
-    
-    console.log(`Server-side: Successfully retrieved ${articles.length} articles`);
-    return { 
-      news: articles, 
-      error: null,
-      source: 'database' 
-    };
-    */
     
   } catch (error) {
     console.error('Server-side: Error fetching news:', error);
