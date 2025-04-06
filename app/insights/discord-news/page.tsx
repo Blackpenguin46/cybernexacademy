@@ -220,71 +220,62 @@ export default function DiscordNewsPage() {
       console.log('[FETCH] Using hardcoded Supabase URL:', supabaseUrl);
       console.log('[FETCH] Using hardcoded Supabase Anon Key:', supabaseAnonKey.substring(0, 10) + '...');
       
-      // First try a simple network test to Google to check general connectivity
-      console.log('[FETCH] TESTING BASIC NETWORK CONNECTIVITY...');
-      try {
-        const networkTestResponse = await fetch('https://www.google.com/generate_204');
-        console.log('[FETCH] Network test status:', networkTestResponse.status);
-      } catch (networkErr) {
-        console.error('[FETCH] NETWORK TEST FAILED!', networkErr);
-        throw new Error(`Network connectivity test failed: ${networkErr instanceof Error ? networkErr.message : String(networkErr)}`);
-      }
+      // Skip network test - it's failing due to CSP restrictions
+      console.log('[FETCH] Skipping network test due to CSP restrictions');
       
-      // Try direct REST API call to Supabase
-      console.log('[FETCH] TRYING DIRECT SUPABASE API CALL...');
-      const restApiUrl = `${supabaseUrl}/rest/v1/newsfeed`;
-      console.log('[FETCH] REST API URL:', restApiUrl);
-      
-      // Use simple fetch with no frills
-      const restResponse = await fetch(restApiUrl, {
-        method: 'GET',
-        headers: {
-          'apikey': supabaseAnonKey,
-          'Authorization': `Bearer ${supabaseAnonKey}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=representation'
-        },
-        // Add cache: 'no-store' to prevent caching issues
-        cache: 'no-store'
+      // Use the Supabase client instead of direct fetch as it may handle CORS better
+      console.log('[FETCH] Creating Supabase client...');
+      const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
       });
       
-      if (!restResponse.ok) {
-        console.error('[FETCH] Direct REST API call failed:', restResponse.status, await restResponse.text());
-        throw new Error(`Direct REST API call failed with status: ${restResponse.status}`);
+      console.log('[FETCH] Querying newsfeed table with Supabase client...');
+      const { data: articles, error: supabaseError } = await supabase
+        .from('newsfeed')
+        .select('*')
+        .order('timestamp', { ascending: false })
+        .limit(50);
+      
+      if (supabaseError) {
+        console.error('[FETCH] Supabase query error:', supabaseError);
+        throw new Error(`Supabase query error: ${supabaseError.message}`);
       }
       
-      const articles = await restResponse.json();
-      console.log('[FETCH] Direct REST API call successful:', articles.length);
+      console.log('[FETCH] Supabase query successful:', articles?.length);
       
       clearTimeout(loadingTimeout); // Clear timeout if fetch completes
       
       const fetchedData = {
         articles: articles || [],
-        source: articles && articles.length > 0 ? 'rest_api' : 'empty',
-        message: articles && articles.length > 0 ? 'Retrieved via REST API' : 'No items found via REST API'
+        source: articles && articles.length > 0 ? 'database' : 'empty',
+        message: articles && articles.length > 0 ? 'Retrieved from database' : 'No items found in database'
       };
       
-      console.log('[FETCH] REST API Response Data:', fetchedData);
+      console.log('[FETCH] Supabase Response Data:', fetchedData);
       
       setDebugData({ // Update debug info
         articles: fetchedData.articles,
         source: fetchedData.source,
         message: fetchedData.message,
         time: new Date().toISOString(),
-        directRestApi: true
+        supabaseClient: true
       });
 
       if (!articles || articles.length === 0) {
         // No error, but no data either - use fallback
-        console.log('[FETCH] No data found via REST API, using fallback');
+        console.log('[FETCH] No data found in database, using fallback');
         currentNews = fallbackArticles;
         currentSource = 'fallback';
-        currentStatusMsg = 'No items found via REST API, using fallback data';
+        currentStatusMsg = 'No items found in database, using fallback data';
       } else {
-        console.log(`[FETCH] Success: Retrieved ${articles.length} items via REST API`);
+        console.log(`[FETCH] Success: Retrieved ${articles.length} items from database`);
         currentNews = articles;
-        currentSource = 'rest_api';
-        currentStatusMsg = 'Retrieved via REST API';
+        currentSource = 'database';
+        currentStatusMsg = 'Retrieved from database';
       }
       
       newsRef.current = currentNews;
