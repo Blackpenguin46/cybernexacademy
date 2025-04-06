@@ -11,7 +11,7 @@ export default function AboutPage() {
     {
       name: "Sam Oakes",
       role: "Founder & CEO",
-      bio: "Cybersecurity enthusiast and educator with a passion for Governance, Risk, and Compliance (GRC). Conducted research on risk management in emerging technologies and presented on quantum computing business integration to a Fortune 500 company. Founded Cybernex Academy in 2024 to help others navigate the cybersecurity field more efficiently.",
+      bio: "Cybersecurity enthusiast and educator with a passion for Governance, Risk, and Compliance (GRC). Conducted research on risk management in emerging technologies and presented on quantum computing business integration to a Fortune 500 company. Founded Cybernex Academy in 2025 to help others navigate the cybersecurity field more efficiently.",
       image: "/images/team/sam.jpeg"
     }
   ]
@@ -107,7 +107,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-white mb-8 text-center">Our Story</h2>
             <div className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800">
               <p className="text-gray-300 mb-4">
-                Cybernex Academy was founded in 2024 by Sam Oakes. As a college student navigating the field of cybersecurity, Sam spent a great deal of time trying to find the resources necessary to excel in the field.
+                Cybernex Academy was founded in 2025 by Sam Oakes. As a college student navigating the field of cybersecurity, Sam spent a great deal of time trying to find the resources necessary to excel in the field.
               </p>
               <p className="text-gray-300 mb-4">
                 By the time he was a junior, he had built up a good set of resources and was starting to excel in cybersecurity. He felt that he had wasted two years though finding all the right places to help him learn and wished there was a resource that could provide everything necessary to get started or continue learning cybersecurity.
@@ -140,38 +140,21 @@ export default function AboutPage() {
         </div>
       </section>
       
-      {/* Team Section with avatars and roles - Keep light to improve readability */}
+      {/* Team Section - Updated to display bio */}
       <section className="py-16 border-t border-gray-800">
         <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-10 text-white">Our Leadership Team</h2>
-          <div className="max-w-md mx-auto text-center">
-            <p className="text-xl text-gray-300 mb-4">Sam Oakes - Founder & Lead Developer</p>
-          </div>
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="py-16 border-t border-gray-800">
-        <div className="container">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-white mb-6">Join Our Community</h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-              Access our curated cybersecurity resources and accelerate your learning journey with Cybernex Academy today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
-                href="/auth/signup" 
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-              >
-                Create Free Account
-              </Link>
-              <Link 
-                href="/contact" 
-                className="px-6 py-3 bg-transparent hover:bg-gray-800 text-white border border-gray-700 hover:border-gray-600 rounded-lg font-medium transition-colors"
-              >
-                Contact Us
-              </Link>
-            </div>
+          <h2 className="text-3xl font-bold text-center mb-12 text-white">Our Leadership Team</h2>
+          {/* Map over team members to display info */}
+          <div className="max-w-2xl mx-auto">
+            {teamMembers.map((member, index) => (
+              <div key={index} className="bg-gray-900/50 backdrop-blur-sm p-8 rounded-lg border border-gray-800 text-center">
+                {/* Removed Image Display */}
+                <h3 className="text-2xl font-semibold text-white mt-4">{member.name}</h3>
+                <p className="text-lg text-blue-400 mb-4">{member.role}</p>
+                <p className="text-gray-300 text-left md:text-center">{member.bio}</p> 
+              </div>
+            ))}
+            {/* Add more team members here by expanding the teamMembers array */}
           </div>
         </div>
       </section>
