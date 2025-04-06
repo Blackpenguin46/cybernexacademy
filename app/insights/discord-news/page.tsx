@@ -5,8 +5,11 @@ import { Button } from '@/components/ui/button';
 import { createClient } from '@supabase/supabase-js';
 import { RefreshButton } from './RefreshButton';
 
-// Add static generation with frequent revalidation
-export const revalidate = 300; // revalidate every 5 minutes
+// Add Edge runtime directive to bypass Node.js network restrictions
+export const runtime = 'edge';
+
+// Just keep the revalidation
+export const revalidate = 60; // revalidate more frequently
 
 // Define fallback data in case of errors
 const fallbackArticles = [
@@ -170,119 +173,114 @@ function formatDate(dateString: string) {
   }
 }
 
+// Use direct API fetch instead of relying on Supabase client
 async function getDiscordNews(): Promise<{ news: DiscordMessage[], source: string, error?: string, lastUpdated: string }> {
-  console.log("Starting getDiscordNews function");
+  console.log("Starting getDiscordNews function (Edge runtime)");
   
-  // Try multiple approaches to get the environment variables
-  // 1. Standard Next.js public env vars
-  let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  let supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  // Get Supabase credentials - use hardcoded as a guaranteed fallback
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
   
-  // 2. If those aren't available, try server-side vars
-  if (!supabaseUrl) supabaseUrl = process.env.SUPABASE_URL;
-  if (!supabaseAnonKey) supabaseAnonKey = process.env.SUPABASE_SERVICE_KEY;
-  
-  // Log what we found
-  console.log(`Environment Variable Check:
-    NEXT_PUBLIC_SUPABASE_URL: ${supabaseUrl ? 'Found' : 'Not found'}
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: ${supabaseAnonKey ? 'Found' : 'Not found'}
-    SUPABASE_URL: ${process.env.SUPABASE_URL ? 'Found' : 'Not found'}
-    SUPABASE_SERVICE_KEY: ${process.env.SUPABASE_SERVICE_KEY ? 'Found' : 'Not found'}
-  `);
-  
-  // Hardcoded values as absolute last resort - for testing only
-  // In production, these should come from environment variables
-  if (!supabaseUrl || !supabaseAnonKey) {
-    supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
-    supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
-    
-    console.log("Using hardcoded credentials as fallback (for testing only)");
-  }
-
   try {
-    // Create client with specific fetch options
-    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
+    // Direct REST API call to Supabase (bypassing the client library)
+    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=20`;
+    
+    console.log("Making direct REST API call to:", apiUrl);
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`
       },
-      global: {
-        fetch: (url, options) => {
-          console.log(`Fetching from: ${url}`);
-          return fetch(url, {
-            ...options,
-            cache: 'no-store',
-            next: { revalidate: 0 },
-          });
-        }
-      }
+      // Ensure we don't use any caching
+      cache: 'no-store'
     });
-
-    // Perform a simple test query to check connectivity
-    console.log("Testing Supabase connection...");
-    try {
-      const { data: testData, error: testError } = await supabase
-        .from('newsfeed')
-        .select('count')
-        .limit(1);
-      
-      if (testError) {
-        throw new Error(`Supabase test connection failed: ${testError.message}`);
-      }
-      console.log("Supabase connection test successful:", testData);
-    } catch (testError: any) {
-      console.error("Supabase connection test error:", testError.message || testError);
-      return {
-        news: enhancedFallbackArticles,
-        source: "fallback_connection_test_failed",
-        error: testError.message || "Unknown connection error",
-        lastUpdated: new Date().toISOString()
-      };
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Supabase API error: ${response.status} - ${errorText}`);
     }
-
-    // Main query
-    console.log("Querying newsfeed table...");
-    const { data, error } = await supabase
-      .from('newsfeed')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(20);
-
-    if (error) {
-      console.error("Supabase query error:", error);
-      return {
-        news: enhancedFallbackArticles,
-        source: "fallback_query_error",
-        error: error.message,
-        lastUpdated: new Date().toISOString()
-      };
-    }
-
+    
+    const data = await response.json();
+    console.log(`Successfully fetched ${data.length} articles from Supabase`);
+    
     if (!data || data.length === 0) {
-      console.log("No news articles found in database");
       return {
         news: enhancedFallbackArticles,
-        source: "fallback_no_data",
-        error: "No news articles found",
+        source: "fallback_empty_data",
+        error: "No data found in database",
         lastUpdated: new Date().toISOString()
       };
     }
-
-    console.log(`Found ${data.length} news articles`);
+    
+    // Map the API response to our DiscordMessage format
+    const formattedData: DiscordMessage[] = data.map((item: any) => ({
+      id: item.id,
+      title: item.title || formatTitleFromContent(item.content),
+      content: item.content,
+      author: item.author || 'Unknown',
+      created_at: item.created_at || item.timestamp || new Date().toISOString(),
+      channel: item.channel || determineChannelFromContent(item.content)
+    }));
+    
     return {
-      news: data as DiscordMessage[],
-      source: "supabase",
+      news: formattedData,
+      source: "supabase_direct_api",
       lastUpdated: new Date().toISOString()
     };
   } catch (error: any) {
-    console.error("Error fetching news:", error);
+    console.error("Error fetching from Supabase:", error);
+    
     return {
       news: enhancedFallbackArticles,
-      source: "fallback_error",
-      error: error.message || "Unknown error",
+      source: "fallback_api_error",
+      error: error.message,
       lastUpdated: new Date().toISOString()
     };
   }
+}
+
+// Extract a title from content if none is provided
+function formatTitleFromContent(content: string): string {
+  if (!content) return 'News Update';
+  
+  // Try to extract a title from the first line or bracket contents
+  const firstLine = content.split('\n')[0];
+  
+  // Check for [CATEGORY] pattern
+  const bracketMatch = firstLine.match(/\[(.*?)\]/);
+  if (bracketMatch) {
+    return firstLine.trim();
+  }
+  
+  // If first line is short enough, use it as title
+  if (firstLine.length < 60) {
+    return firstLine.trim();
+  }
+  
+  // Otherwise use generic title
+  return 'Security Update';
+}
+
+// Determine channel from content if none is provided
+function determineChannelFromContent(content: string): string {
+  if (!content) return 'general';
+  
+  if (content.includes('[ALERT]') || content.includes('[CRITICAL]')) {
+    return 'alerts';
+  } else if (content.includes('[UPDATE]')) {
+    return 'updates';
+  } else if (content.includes('[VULNERABILITY]') || content.includes('CVE-')) {
+    return 'vulnerabilities';
+  } else if (content.includes('[ADVISORY]')) {
+    return 'advisories';
+  } else if (content.includes('[THREAT]')) {
+    return 'threats';
+  }
+  
+  return 'general';
 }
 
 // Format the news content for display - this will parse titles and content from Supabase format
