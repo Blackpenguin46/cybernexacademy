@@ -218,12 +218,12 @@ export default function Navbar() {
                                     {item.icon ? (
                                       <item.icon className="w-4 h-4 text-blue-400 group-hover:text-blue-300" />
                                     ) : (
-                                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60 group-hover:bg-blue-300/70"></div>
+                                      <div className="w-4 h-4 flex items-center justify-center rounded-sm bg-blue-500/20 group-hover:bg-blue-500/30">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 group-hover:bg-blue-300"></div>
+                                      </div>
                                     )}
                                   </div>
-                                  <div>
-                                    <div className="text-xs font-medium text-white group-hover:text-blue-300">{item.title}</div>
-                                  </div>
+                                  <span className="text-xs font-medium text-white group-hover:text-blue-300">{item.title}</span>
                                 </Link>
                               ))}
                             </div>
@@ -323,10 +323,12 @@ export default function Navbar() {
                                     {item.icon ? (
                                       <item.icon className="w-4 h-4 text-blue-400" />
                                     ) : (
-                                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60"></div>
+                                      <div className="w-4 h-4 flex items-center justify-center rounded-sm bg-blue-500/20">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                                      </div>
                                     )}
                                   </div>
-                                  <div className="text-xs font-medium text-white">{item.title}</div>
+                                  <span className="text-xs font-medium text-white">{item.title}</span>
                                 </Link>
                               ))}
                             </div>
