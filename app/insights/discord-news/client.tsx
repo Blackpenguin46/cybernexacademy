@@ -43,10 +43,57 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
       console.log('Environment Debug:', debugInfo);
     }
 
-    // Client-side Supabase fetch
-    async function fetchNewsFromSupabase() {
+    // Client-side data fetch function
+    async function fetchNewsData() {
       try {
         setLoading(true);
+        
+        // APPROACH 1: Try our server-side proxy first - this avoids CORS issues
+        try {
+          console.log("Attempting to fetch data through server-side API proxy");
+          
+          // This is a server-side API route in the same Next.js app
+          const proxyResponse = await fetch('/api/news-proxy', { 
+            cache: 'no-store',
+          });
+          
+          if (proxyResponse.ok) {
+            const proxyData = await proxyResponse.json();
+            
+            if (proxyData.error) {
+              console.error("Server proxy returned error:", proxyData.error);
+              throw new Error(proxyData.error);
+            }
+            
+            if (proxyData.news && proxyData.news.length > 0) {
+              console.log(`Server-side proxy successful, fetched ${proxyData.news.length} items`);
+              
+              // Map the API response to our DiscordMessage format
+              const formattedData: DiscordMessage[] = proxyData.news.map((item: any) => ({
+                id: item.id,
+                title: formatTitleFromContent(item.content),
+                content: item.content,
+                author: item.author || 'Unknown',
+                created_at: item.created_at || item.timestamp || new Date().toISOString(),
+                channel: determineChannelFromContent(item.content)
+              }));
+              
+              setNews(formattedData);
+              setSource('server_proxy_success');
+              setError(null);
+              setLastUpdated(proxyData.timestamp || new Date().toISOString());
+              return;
+            }
+          } else {
+            console.error("Proxy API failed with status:", proxyResponse.status);
+            throw new Error(`Server proxy error: ${proxyResponse.status}`);
+          }
+        } catch (proxyError: any) {
+          console.error("Server proxy error:", proxyError);
+        }
+        
+        // APPROACH 2: Try client-side Supabase fetch if server proxy fails
+        console.log("Server proxy failed, trying direct Supabase client approach");
         
         // Try using client-side env vars first, then server-provided values, then hardcoded defaults
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
@@ -126,7 +173,7 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
         setError(null);
         
       } catch (fetchError: any) {
-        console.error('Client-side fetch error:', fetchError);
+        console.error('Data fetch error:', fetchError);
         
         // Special handling for preview deployment errors
         if (window.location.hostname.includes('vercel.app')) {
@@ -142,7 +189,7 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
       }
     }
 
-    fetchNewsFromSupabase();
+    fetchNewsData();
   }, [fallbackNews, serverSupabaseUrl, serverSupabaseKey]);
   
   // Helper functions
