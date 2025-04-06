@@ -1,8 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
 
-// Singleton pattern for the Supabase client
-let supabase: any = null;
+// Supabase connection details
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
@@ -10,34 +9,32 @@ if (!supabaseUrl || !supabaseServiceKey) {
   console.warn('Supabase URL or Key not found. Using placeholder values.');
 }
 
-// Create a single supabase client for the entire application
-const getSupabase = () => {
-  if (!supabase) {
-    supabase = createClient<Database>(
-      supabaseUrl || 'https://placeholder.supabase.co',
-      supabaseServiceKey || 'placeholder-key',
-      {
-        auth: {
-          autoRefreshToken: true,
-          persistSession: true,
-          detectSessionInUrl: true,
-          flowType: 'pkce', // Use PKCE flow for enhanced security
-        },
-        global: {
-          headers: {
-            'X-Client-Info': 'cybernex-web',
-          },
-        },
-        db: {
-          schema: 'public',
-        },
-      }
-    );
+// Create the Supabase client instance
+export const supabase = createClient<Database>(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseServiceKey || 'placeholder-key',
+  {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+      flowType: 'pkce', // Use PKCE flow for enhanced security
+    },
+    global: {
+      headers: {
+        'X-Client-Info': 'cybernex-web',
+      },
+    },
+    db: {
+      schema: 'public',
+    },
   }
-  return supabase;
-};
+);
 
-export default getSupabase;
+// Also export as a default for those who want the singleton pattern
+export default function getSupabase() {
+  return supabase;
+}
 
 // Export a mock version for build/testing environments
 export const mockSupabase = {

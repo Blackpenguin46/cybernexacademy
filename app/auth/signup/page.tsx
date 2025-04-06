@@ -3,17 +3,12 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
 import { Shield, User, Mail, Lock, AtSign } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import CyberBackground from '@/app/components/CyberBackground'
+import { supabase } from '@/lib/supabase'
 
-// Use environment variables for Supabase configuration
-const supabaseUrl = process.env.SUPABASE_URL || '';
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || '';
-
-// Initialize the Supabase client
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+// No need to initialize supabase client here, we're importing it from lib/supabase
 
 export default function SignupPage() {
   const router = useRouter()
