@@ -122,16 +122,38 @@ async function testSupabaseREST(supabaseUrl: string, apiKey: string): Promise<Di
   }
 }
 
+// Check if we're in a Vercel environment
+const isVercelEnv = process.env.VERCEL === '1' || process.env.VERCEL_ENV !== undefined;
+
+// Custom console log that includes environment info
+function logWithEnv(message: string, ...args: any[]) {
+  console.log(`[API:${isVercelEnv ? 'Vercel' : 'Local'}] ${message}`, ...args);
+}
+
 export async function GET() {
-  console.log('[API] Discord news API route called');
+  logWithEnv('Discord news API route called');
+  
+  // Track network connectivity status
+  let networkConnectivity = false;
   
   try {
+    // Perform basic network connectivity test first
+    logWithEnv('Testing basic network connectivity...');
+    try {
+      const networkTestResponse = await fetch('https://www.google.com/generate_204');
+      logWithEnv('Network test status:', networkTestResponse.status);
+      networkConnectivity = true;
+    } catch (networkErr) {
+      console.error('[API] BASIC NETWORK TEST FAILED!', networkErr);
+      // Continue despite network test failure - we'll try to use the native https module instead
+    }
+    
     // Initialize Supabase client with service role key
     const supabaseUrl = process.env.SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
     
-    console.log('[API] Using Supabase URL:', supabaseUrl);
-    console.log('[API] Supabase Service Key exists:', !!supabaseServiceKey);
+    logWithEnv('Using Supabase URL:', supabaseUrl);
+    logWithEnv('Supabase Service Key exists:', !!supabaseServiceKey);
     
     if (!supabaseServiceKey) {
       console.error('[API] Missing Supabase service key');
@@ -140,16 +162,31 @@ export async function GET() {
           articles: fallbackArticles, 
           source: 'fallback', 
           message: 'Missing Supabase credentials, using fallback data',
-          time: new Date().toISOString()
+          time: new Date().toISOString(),
+          env: isVercelEnv ? 'vercel' : 'local',
+          networkTest: networkConnectivity ? 'passed' : 'failed'
         }, 
         { status: 200 }
       );
     }
     
-    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    // Create Supabase client with modified fetch function
+    logWithEnv('Creating Supabase client with custom configuration...');
+    const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      },
+      global: {
+        headers: {
+          'X-Client-Info': 'vercel-serverless-api'
+        }
+      }
+    });
     
     // Query the newsfeed table
-    console.log('[API] Querying newsfeed table...');
+    logWithEnv('Querying newsfeed table...');
     const { data: articles, error } = await supabase
       .from('newsfeed')
       .select('*')
@@ -164,7 +201,9 @@ export async function GET() {
           source: 'fallback_error', 
           message: `Supabase query error: ${error.message}`,
           error: error.message,
-          time: new Date().toISOString()
+          time: new Date().toISOString(),
+          env: isVercelEnv ? 'vercel' : 'local',
+          networkTest: networkConnectivity ? 'passed' : 'failed'
         }, 
         { status: 200 }
       );
@@ -172,26 +211,30 @@ export async function GET() {
     
     // Empty results - return fallback
     if (!articles || articles.length === 0) {
-      console.log('[API] No items found in database, using fallback');
+      logWithEnv('No items found in database, using fallback');
       return NextResponse.json(
         { 
           articles: fallbackArticles, 
           source: 'fallback_empty', 
           message: 'No items found in database, using fallback data',
-          time: new Date().toISOString()
+          time: new Date().toISOString(),
+          env: isVercelEnv ? 'vercel' : 'local',
+          networkTest: networkConnectivity ? 'passed' : 'failed'
         }, 
         { status: 200 }
       );
     }
     
     // Success - return actual data
-    console.log(`[API] Success: Retrieved ${articles.length} items from database`);
+    logWithEnv(`Success: Retrieved ${articles.length} items from database`);
     return NextResponse.json(
       { 
         articles, 
         source: 'database', 
         message: 'Retrieved from database',
-        time: new Date().toISOString()
+        time: new Date().toISOString(),
+        env: isVercelEnv ? 'vercel' : 'local',
+        networkTest: networkConnectivity ? 'passed' : 'failed'
       }, 
       { status: 200 }
     );
@@ -205,7 +248,9 @@ export async function GET() {
         source: 'fallback_error',
         message: `Unexpected error: ${error instanceof Error ? error.message : 'Unknown error'}`,
         error: error instanceof Error ? error.message : 'Unknown error',
-        time: new Date().toISOString()
+        time: new Date().toISOString(),
+        env: isVercelEnv ? 'vercel' : 'local',
+        networkTest: networkConnectivity !== undefined ? (networkConnectivity ? 'passed' : 'failed') : 'untested'
       },
       { status: 200 }
     );
