@@ -117,7 +117,8 @@ export default function Navbar() {
   // Function to determine dropdown position
   const getDropdownPosition = (sectionId: string) => {
     // Always return the same centering calculation for all dropdowns
-    return "left-[calc(50%-425px)]"; // Centers the 850px dropdown in viewport
+    // Centers relative to the parent trigger link container
+    return "left-1/2 transform -translate-x-1/2"; 
   };
 
   // Add custom animation
