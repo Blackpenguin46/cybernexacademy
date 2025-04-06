@@ -524,6 +524,25 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                     <li>Check if your hosting provider blocks certain domains</li>
                     <li>Try using a different database service</li>
                   </ul>
+                  <div className="mt-3 pt-2 border-t border-orange-800 flex items-center justify-between">
+                    <a 
+                      href="https://vxxpwaloyrtwvpmatzpc.supabase.co"
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-yellow-300 text-xs hover:text-yellow-200 flex items-center"
+                    >
+                      <span className="mr-1">🔄</span> Test Supabase Connection Directly
+                    </a>
+                    <span className="text-orange-400 text-xs">|</span>
+                    <a 
+                      href="https://app.supabase.com" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-yellow-300 text-xs hover:text-yellow-200 flex items-center"
+                    >
+                      <span className="mr-1">🔑</span> Supabase Dashboard
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
@@ -560,6 +579,16 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                     <li>Check for expired keys</li>
                     <li>Ensure Row Level Security policies allow access</li>
                   </ul>
+                  <div className="mt-3 pt-2 border-t border-purple-800">
+                    <a 
+                      href="https://app.supabase.com/project/_/settings/api" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-pink-300 text-xs hover:text-pink-200 flex items-center"
+                    >
+                      <span className="mr-1">🔑</span> Get your API keys from Supabase Dashboard
+                    </a>
+                  </div>
                 </div>
               </div>
             )}

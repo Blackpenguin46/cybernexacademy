@@ -147,7 +147,7 @@ export async function GET(request: Request) {
       'https://google.com',
       'https://cloudflare.com',
       'https://api.github.com',
-      'https://hpfpuljthcngnswwfkrb.supabase.co'
+      'https://vxxpwaloyrtwvpmatzpc.supabase.co'
     ];
     
     console.log('[DISCORD-NEWS-API] Running connectivity tests to various sites');
@@ -211,13 +211,18 @@ export async function GET(request: Request) {
     if (supabaseResult && supabaseResult.success) {
       console.log('[DISCORD-NEWS-API] Can reach Supabase, trying to access data');
       
-      const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
+      const supabaseUrl = 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
       
-      // Define both keys to try - anon key and service role key (if available)
-      const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+      // Use environment variables if available, otherwise fall back to a placeholder
+      const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
+                     process.env.SUPABASE_ANON_KEY || 
+                     // This is just a placeholder - you'll need to get the actual key from your Supabase dashboard
+                     'REPLACE_WITH_YOUR_ANON_KEY';
       
-      // Try to get service role key from environment variables if available
-      const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+      // Try to get service role key from any relevant environment variable
+      const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 
+                           process.env.SUPABASE_SERVICE_KEY || 
+                           '';
       
       console.log('[DISCORD-NEWS-API] Will attempt with both anon key and service role key if available');
       
