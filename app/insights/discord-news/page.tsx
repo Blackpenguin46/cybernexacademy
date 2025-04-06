@@ -130,38 +130,33 @@ async function getDiscordNews() {
   try {
     console.log('Server-side: Fetching Discord news...');
 
-    // TEMPORARY: Due to persistent connectivity issues between Vercel and Supabase,
-    // we'll use enhanced fallback data to provide a good user experience.
-    // This can be removed once the connectivity issues are resolved.
-    const enhancedFallbackArticles = [
-      ...fallbackArticles,
-      {
-        id: 'enhanced1',
-        content: '[RANSOMWARE] Major hospital chain hit with sophisticated ransomware attack affecting patient systems across 12 states. FBI investigating. https://example.com/hospital-attack',
-        author: 'CyberNewsBot',
-        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
-        attachments: [],
-        urls: ['https://example.com/hospital-attack']
-      },
-      {
-        id: 'enhanced2',
-        content: '[ADVISORY] CISA issues emergency directive for federal agencies to patch Exchange Server vulnerabilities being actively exploited. Patch within 48 hours. https://example.com/cisa-directive',
-        author: 'SecurityFeed',
-        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
-        attachments: [],
-        urls: ['https://example.com/cisa-directive']
-      },
-    ];
+    // Call our enhanced diagnostic API instead of directly using Supabase
+    const apiResponse = await fetch(`${process.env.VERCEL_URL || 'http://localhost:3000'}/api/discord-news`, {
+      cache: 'no-store', // Don't cache this request
+      next: { revalidate: 0 } // Don't revalidate in Next.js
+    });
 
-    // Return enhanced fallback data with a special source indicator
-    console.log('Server-side: Using enhanced fallback data due to connectivity issues');
-    return { 
-      news: enhancedFallbackArticles, 
-      error: 'Using enhanced fallback data due to Vercel-Supabase connectivity issues',
-      source: 'enhanced_fallback' 
+    if (!apiResponse.ok) {
+      console.error('Server-side: API route error:', apiResponse.status);
+      return { 
+        news: fallbackArticles, 
+        error: `API route error: ${apiResponse.status}`,
+        source: 'fallback_error' 
+      };
+    }
+
+    const apiData = await apiResponse.json();
+    console.log('Server-side: API response received:', apiData.source);
+
+    return {
+      news: apiData.articles,
+      error: apiData.message.includes('error') ? apiData.message : null,
+      source: apiData.source,
+      debug: apiData.debug || {}
     };
 
-    /* DISABLED FOR NOW - Will be re-enabled once connectivity issues are resolved
+    /* 
+    // Original Supabase client approach - keeping for reference
     // Initialize Supabase client with server-side environment variables
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
@@ -305,7 +300,7 @@ export default async function DiscordNewsPage() {
           {/* News Content */}
           {news.length > 0 && (
             <div className="space-y-6">
-              {news.map((item) => {
+              {news.map((item: DiscordMessage) => {
                 const { title, content } = formatNewsContent(item.content, item.urls);
                 const messageType = getMessageType(content);
                 
