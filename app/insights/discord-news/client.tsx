@@ -6,9 +6,11 @@ import { DiscordMessage } from './page';
 
 interface NewsClientProps {
   fallbackNews: DiscordMessage[];
+  serverSupabaseUrl?: string;
+  serverSupabaseKey?: string;
 }
 
-export function NewsClient({ fallbackNews }: NewsClientProps) {
+export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey }: NewsClientProps) {
   const [news, setNews] = useState<DiscordMessage[]>(fallbackNews);
   const [loading, setLoading] = useState(true);
   const [source, setSource] = useState('initializing');
@@ -32,7 +34,9 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         urlPrefix: supabaseUrl ? supabaseUrl.substring(0, 8) + '...' : 'undefined',
         envKeys: Object.keys(process.env)
           .filter(key => key.startsWith('NEXT_PUBLIC_'))
-          .join(', ')
+          .join(', '),
+        serverUrlExists: !!serverSupabaseUrl,
+        serverKeyExists: !!serverSupabaseKey,
       };
       
       setEnvDebug(JSON.stringify(debugInfo, null, 2));
@@ -44,30 +48,31 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
       try {
         setLoading(true);
         
-        // Create Supabase client in the browser
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        // Try using client-side env vars first, then server-provided values, then hardcoded defaults
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                            serverSupabaseUrl || 
+                            'https://hpfpuljthcngnswwfkrb.supabase.co';
+                            
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 
+                            serverSupabaseKey || 
+                            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
         
         // Log domain information for debugging
         console.log(`Running on domain: ${window.location.hostname}`);
         console.log(`Full URL: ${window.location.href}`);
         console.log('Environment variables:', { 
-          urlExists: !!supabaseUrl,
-          keyExists: !!supabaseKey
+          urlExists: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+          keyExists: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+          usingServerVars: !process.env.NEXT_PUBLIC_SUPABASE_URL && !!serverSupabaseUrl,
+          usingHardcodedVars: !process.env.NEXT_PUBLIC_SUPABASE_URL && !serverSupabaseUrl
         });
         
-        // Validate credentials
-        if (!supabaseUrl || !supabaseKey) {
-          console.error('Missing Supabase credentials in client');
-          setError(`Missing Supabase credentials. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY to your Vercel environment variables.`);
-          setSource('fallback_missing_credentials_client');
-          return;
-        }
-        
-        // Log for debugging
+        // Log which values we're using
         console.log('Client-side: Creating Supabase client with:', { 
           url: supabaseUrl.substring(0, 15) + '...',
-          domain: window.location.hostname
+          domain: window.location.hostname,
+          source: process.env.NEXT_PUBLIC_SUPABASE_URL ? 'client_env' : 
+                 serverSupabaseUrl ? 'server_props' : 'hardcoded'
         });
         
         // Create client with more options for debugging
@@ -138,7 +143,7 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
     }
 
     fetchNewsFromSupabase();
-  }, [fallbackNews]);
+  }, [fallbackNews, serverSupabaseUrl, serverSupabaseKey]);
   
   // Helper functions
   function formatTitleFromContent(content: string): string {

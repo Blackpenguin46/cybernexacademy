@@ -7,8 +7,8 @@ import { RefreshButton } from './RefreshButton';
 import { NewsClient } from './client';
 import { EnvTest } from './env-test';
 
-// Add Edge runtime directive to bypass Node.js network restrictions
-export const runtime = 'edge';
+// Remove Edge runtime directive as it's causing environment variable issues
+// export const runtime = 'edge';
 
 // Just keep the revalidation
 export const revalidate = 60; // revalidate more frequently
@@ -400,9 +400,9 @@ function formatNewsContent(content: string, urls?: string[]) {
 // Server component that provides fallback data to the client component
 export default async function DiscordNewsPage() {
   // Static environment check - this is server-side only
-  const hasServerEnvVars = 
-    process.env.NEXT_PUBLIC_SUPABASE_URL && 
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const hasServerEnvVars = !!supabaseUrl && !!supabaseKey;
 
   // We'll always use the fallback data initially, then client will try to fetch fresh data
   return (
@@ -420,13 +420,22 @@ export default async function DiscordNewsPage() {
         <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-4 text-blue-700">
           <p className="font-medium">Server-side Environment Check:</p>
           <p>NEXT_PUBLIC_SUPABASE_URL: {hasServerEnvVars ? 'Available' : 'Missing'}</p>
+          {hasServerEnvVars && (
+            <p className="mt-2 text-green-600 font-medium">
+              Found environment variables on server side!
+            </p>
+          )}
         </div>
         
         {/* Environment Test Component */}
         <EnvTest />
         
-        {/* Use our client-side component */}
-        <NewsClient fallbackNews={enhancedFallbackArticles} />
+        {/* Use our client-side component with server-side props */}
+        <NewsClient 
+          fallbackNews={enhancedFallbackArticles} 
+          serverSupabaseUrl={supabaseUrl}
+          serverSupabaseKey={supabaseKey}
+        />
       </div>
     </div>
   );
