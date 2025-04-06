@@ -143,23 +143,9 @@ export default function AboutPage() {
       {/* Team Section with avatars and roles - Keep light to improve readability */}
       <section className="py-16 border-t border-gray-800">
         <div className="container">
-          <h2 className="text-3xl font-bold text-white mb-12 text-center">Our Leadership Team</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="mx-auto w-32 h-32 mb-4 overflow-hidden rounded-full border-4 border-gray-200 shadow-md">
-                <Image 
-                  src="/images/team/founder.jpg" 
-                  alt="Sam Oakes - Founder & Lead Developer" 
-                  width={128}
-                  height={128}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-xl font-bold text-gray-800">Sam Oakes</h3>
-              <p className="text-gray-600">Founder & Lead Developer</p>
-            </div>
-            
-            {/* ... other team members ... */}
+          <h2 className="text-3xl font-bold text-center mb-10 text-white">Our Leadership Team</h2>
+          <div className="max-w-md mx-auto text-center">
+            <p className="text-xl text-gray-300 mb-4">Sam Oakes - Founder & Lead Developer</p>
           </div>
         </div>
       </section>
