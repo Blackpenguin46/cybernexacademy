@@ -138,6 +138,16 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           setSource(data.source || 'unknown_source');
           setLastUpdated(data.time || new Date().toISOString());
           
+          // Add this to store connectivity tests
+          // Store connectivity test results if available
+          if (data.connectivity_tests) {
+            console.log('Connectivity test results:', data.connectivity_tests);
+            setEnvDebug(prev => 
+              prev + '\n\nConnectivity Tests:\n' + 
+              JSON.stringify(data.connectivity_tests, null, 2)
+            );
+          }
+          
           // Check for detailed error information
           if (data.error_details) {
             console.log('Error details from API:', data.error_details);
@@ -440,7 +450,7 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
               </div>
             )}
             
-            {!error && source !== 'api_error' && (
+            {!error && source !== 'api_error' && source !== 'network_error' && (
               <div className={`mt-4 p-3 rounded text-sm ${
                 source === 'server_verified_fallback' ? 'bg-yellow-900 border border-yellow-700' : 'bg-green-900 border border-green-700'
               }`}>
@@ -488,7 +498,67 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                 </div>
               </div>
             )}
+
+            {source === 'supabase_specific_error' && (
+              <div className="mt-4 p-3 bg-orange-900 border border-orange-700 rounded text-sm">
+                <p className="font-medium text-orange-200">🚫 Supabase Connection Blocked</p>
+                <p className="text-orange-300 text-xs mt-1">
+                  Your server can connect to some external sites but not to Supabase specifically.
+                </p>
+                <div className="mt-2 p-2 bg-orange-950 rounded border border-orange-800">
+                  <p className="text-xs text-orange-300 font-medium">Troubleshooting suggestions:</p>
+                  <ul className="list-disc list-inside text-xs text-orange-300 mt-1 space-y-1">
+                    <li>Your network may be blocking Supabase specifically</li>
+                    <li>Try accessing Supabase from a different network or VPN</li>
+                    <li>Check if your hosting provider blocks certain domains</li>
+                    <li>Try using a different database service</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {source === 'supabase_auth_error' && (
+              <div className="mt-4 p-3 bg-yellow-900 border border-yellow-700 rounded text-sm">
+                <p className="font-medium text-yellow-200">🔑 Supabase Authentication Error</p>
+                <p className="text-yellow-300 text-xs mt-1">
+                  Your server can connect to Supabase, but the authentication or table access failed.
+                </p>
+                <div className="mt-2 p-2 bg-yellow-950 rounded border border-yellow-800">
+                  <p className="text-xs text-yellow-300 font-medium">Troubleshooting suggestions:</p>
+                  <ul className="list-disc list-inside text-xs text-yellow-300 mt-1 space-y-1">
+                    <li>Check your Supabase API key permissions</li>
+                    <li>Verify the "newsfeed" table exists in your project</li>
+                    <li>Check Row Level Security settings for the table</li>
+                    <li>Confirm your Supabase project is active</li>
+                  </ul>
+                </div>
+              </div>
+            )}
           </div>
+
+          {/* Add after this a collapsible connectivity report section */}
+          {envDebug && envDebug.includes('Connectivity Tests') && (
+            <div className="mt-4 border-t border-gray-600 pt-4">
+              <details className="group">
+                <summary className="flex cursor-pointer items-center text-sm font-medium text-blue-400 hover:text-blue-300">
+                  <span className="mr-2">👁️</span> View Network Connectivity Details
+                  <span className="ml-auto text-xs text-gray-500 group-open:hidden">Click to expand</span>
+                  <span className="ml-auto hidden text-xs text-gray-500 group-open:inline">Click to collapse</span>
+                </summary>
+                <div className="mt-3 bg-gray-900 rounded-md border border-gray-700 p-3">
+                  <p className="text-xs text-gray-400 mb-2">
+                    These tests check if your server can connect to various sites:
+                  </p>
+                  <pre className="bg-black p-2 rounded text-xs overflow-x-auto max-h-36 text-green-300 font-mono">
+                    {envDebug.split('Connectivity Tests:')[1]}
+                  </pre>
+                  <p className="text-xs text-gray-400 mt-2">
+                    ✅ = Site is reachable | ❌ = Site is blocked or unreachable
+                  </p>
+                </div>
+              </details>
+            </div>
+          )}
 
           {news.length === 0 ? (
             <div className="p-12 text-center bg-gray-800 rounded-lg border border-gray-700">

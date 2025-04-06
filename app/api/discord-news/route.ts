@@ -61,120 +61,215 @@ const fallbackArticles = [
   }
 ];
 
+// Helper function to test connectivity
+async function testConnectivity(url: string): Promise<{success: boolean, status?: number, error?: string}> {
+  try {
+    console.log(`[DISCORD-NEWS-API] Testing connectivity to: ${url}`);
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+    
+    const response = await fetch(url, { 
+      method: 'HEAD',
+      signal: controller.signal,
+      cache: 'no-store',
+      headers: { 'User-Agent': 'CyberNex-Connectivity-Test/1.0' }
+    });
+    
+    clearTimeout(timeoutId);
+    console.log(`[DISCORD-NEWS-API] Connectivity test to ${url}: ${response.status}`);
+    
+    return { 
+      success: response.ok, 
+      status: response.status 
+    };
+  } catch (error) {
+    console.error(`[DISCORD-NEWS-API] Connectivity test failed for ${url}:`, error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    };
+  }
+}
+
 export async function GET(request: Request) {
   console.log('[DISCORD-NEWS-API] Route called at ' + new Date().toISOString());
   
-  // Return the fallback data with a clear network error message
-  return NextResponse.json({
-    articles: fallbackArticles,
-    source: 'network_error',
-    message: 'Cannot connect to the Supabase database due to network issues. Using fallback data.',
-    error_details: {
-      type: 'NetworkError',
-      suggestions: [
-        'The server running this application cannot access external networks',
-        'Check if your server can connect to external URLs (ping test)',
-        'Your hosting provider may be blocking outbound connections',
-        'Try accessing Supabase from a different network'
-      ],
-      debug_info: 'The previous error was a Node.js network-level failure with "fetch failed" message'
-    },
-    time: new Date().toISOString()
-  });
-  
-  // The code below is intentionally commented out since network calls are failing
-  /* 
   try {
-    // Test if the Supabase table exists by making a direct fetch to the REST API
-    console.log('[DISCORD-NEWS-API] Attempting to test Supabase table');
+    // Test connectivity to multiple sites to see if it's only Supabase that's failing
+    // or if all external connections are blocked
+    const testSites = [
+      'https://google.com',
+      'https://cloudflare.com',
+      'https://api.github.com',
+      'https://hpfpuljthcngnswwfkrb.supabase.co'
+    ];
     
-    const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
-    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+    console.log('[DISCORD-NEWS-API] Running connectivity tests to various sites');
+    const connectivityResults = await Promise.all(testSites.map(site => testConnectivity(site)));
     
-    // Step 1: Simply test if the table exists with a count query
-    const testUrl = `${supabaseUrl}/rest/v1/newsfeed?select=count`;
-    console.log(`[DISCORD-NEWS-API] Testing table with URL: ${testUrl}`);
+    const connectivityReport = testSites.map((site, index) => ({
+      site,
+      ...connectivityResults[index]
+    }));
     
-    const testResponse = await fetch(testUrl, {
-      method: 'HEAD',
-      headers: {
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`,
-      },
-      cache: 'no-store'
-    });
+    console.log('[DISCORD-NEWS-API] Connectivity test results:', connectivityReport);
     
-    console.log(`[DISCORD-NEWS-API] Table test response status: ${testResponse.status}`);
+    // Check if any external sites are reachable
+    const canReachExternal = connectivityResults.some(result => result.success);
     
-    if (testResponse.status === 404) {
-      throw new Error('Table "newsfeed" not found. The table may not exist in your Supabase project.');
-    }
-    
-    if (!testResponse.ok) {
-      const errorText = await testResponse.text();
-      console.error(`[DISCORD-NEWS-API] Table test failed: ${testResponse.status} - ${errorText}`);
-      throw new Error(`Could not connect to database table: ${testResponse.status}`);
-    }
-    
-    // If we reach here, table exists, so fetch the actual data
-    console.log('[DISCORD-NEWS-API] Table exists, fetching data');
-    
-    // Step 2: Fetch the actual data with full details
-    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc`;
-    
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`,
-      },
-      cache: 'no-store'
-    });
-    
-    if (!response.ok) {
-      const responseText = await response.text();
-      console.error(`[DISCORD-NEWS-API] Data fetch error: ${response.status} - ${responseText}`);
-      throw new Error(`Database error: ${response.status} - ${responseText.substring(0, 100)}`);
-    }
-    
-    const data = await response.json();
-    console.log(`[DISCORD-NEWS-API] Successfully fetched ${data.length} records from database`);
-    
-    // No articles found, return notification with fallback
-    if (!data || !Array.isArray(data) || data.length === 0) {
-      console.log('[DISCORD-NEWS-API] No articles found in database, using fallback');
+    // Special handling for network connectivity issues
+    if (!canReachExternal) {
+      console.log('[DISCORD-NEWS-API] No external sites are reachable - network is fully blocked');
       return NextResponse.json({
         articles: fallbackArticles,
-        source: 'database_empty',
-        message: 'Database connection successful but no articles found',
-        time: new Date().toISOString(),
-        count: 0
+        source: 'network_error',
+        message: 'Cannot connect to any external sites. The server appears to be completely isolated from the internet.',
+        error_details: {
+          type: 'CompleteNetworkIsolation',
+          connectivity_tests: connectivityReport,
+          suggestions: [
+            'This server has no internet access at all',
+            'Check your hosting provider settings - outbound connections are blocked',
+            'If using a cloud service, check network/firewall settings',
+            'Consider setting up a proxy server or using environment-specific configuration'
+          ]
+        },
+        time: new Date().toISOString()
       });
     }
     
-    // Success - log a sample record to verify structure
-    if (data.length > 0) {
-      console.log('[DISCORD-NEWS-API] Sample record:', JSON.stringify(data[0]));
+    // Check if only Supabase is unreachable
+    const supabaseResult = connectivityReport.find(r => r.site.includes('supabase.co'));
+    if (canReachExternal && supabaseResult && !supabaseResult.success) {
+      console.log('[DISCORD-NEWS-API] Can reach some sites but not Supabase specifically');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'supabase_specific_error',
+        message: 'Can connect to some external sites but not to Supabase specifically.',
+        error_details: {
+          type: 'SupabaseSpecificBlockage',
+          connectivity_tests: connectivityReport,
+          suggestions: [
+            'Your network may be blocking Supabase specifically',
+            'Check if Supabase is accessible from your region',
+            'Try using a different Supabase project or region',
+            'Consider using a different database solution'
+          ]
+        },
+        time: new Date().toISOString()
+      });
     }
     
-    // Return the actual data from the database
+    // If we can reach Supabase but previous attempts to fetch data failed,
+    // then it's likely an authentication or table access issue
+    if (supabaseResult && supabaseResult.success) {
+      console.log('[DISCORD-NEWS-API] Can reach Supabase, trying to access data');
+      
+      const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+      
+      try {
+        // Try to access the actual API endpoint for the newsfeed table
+        const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&limit=1`;
+        
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': supabaseKey,
+            'Authorization': `Bearer ${supabaseKey}`,
+          },
+          cache: 'no-store'
+        });
+        
+        if (!response.ok) {
+          const responseText = await response.text();
+          console.error(`[DISCORD-NEWS-API] Supabase API error: ${response.status} - ${responseText}`);
+          
+          return NextResponse.json({
+            articles: fallbackArticles,
+            source: 'supabase_auth_error',
+            message: `Supabase is reachable but returned error: ${response.status}`,
+            error_details: {
+              type: 'SupabaseAuthenticationError',
+              status: response.status,
+              response: responseText.substring(0, 500),
+              connectivity_tests: connectivityReport,
+              suggestions: [
+                'Check your Supabase API key permissions',
+                'Verify the "newsfeed" table exists and is accessible',
+                'Check Row Level Security settings',
+                'Confirm your Supabase project is active'
+              ]
+            },
+            time: new Date().toISOString()
+          });
+        }
+        
+        const data = await response.json();
+        console.log(`[DISCORD-NEWS-API] Successfully fetched data from Supabase:`, data);
+        
+        // Success! We can return the actual data
+        return NextResponse.json({
+          articles: data.length > 0 ? data : fallbackArticles,
+          source: data.length > 0 ? 'database_success' : 'database_empty',
+          message: data.length > 0 ? `Retrieved ${data.length} articles from database` : 'Database is empty',
+          connectivity_tests: connectivityReport,
+          time: new Date().toISOString(),
+          count: data.length
+        });
+        
+      } catch (error) {
+        console.error('[DISCORD-NEWS-API] Error fetching data from Supabase:', error);
+        
+        return NextResponse.json({
+          articles: fallbackArticles,
+          source: 'supabase_fetch_error',
+          message: error instanceof Error ? error.message : 'Unknown error fetching data',
+          error_details: {
+            type: 'SupabaseFetchError',
+            error: error instanceof Error ? {
+              name: error.name,
+              message: error.message,
+              stack: error.stack?.split('\n').slice(0, 3).join('\n')
+            } : 'Unknown error object',
+            connectivity_tests: connectivityReport,
+            suggestions: [
+              'There may be an issue with the database table structure',
+              'Check for errors in your Supabase logs',
+              'Verify the API key has the necessary permissions',
+              'Try using the Supabase client library instead of direct REST'
+            ]
+          },
+          time: new Date().toISOString()
+        });
+      }
+    }
+    
+    // Fallback response if we reached this point but don't have specific diagnosis
     return NextResponse.json({
-      articles: data,
-      source: 'database_success',
-      message: `Retrieved ${data.length} articles from database`,
-      time: new Date().toISOString(),
-      count: data.length
+      articles: fallbackArticles,
+      source: 'unknown_connectivity_issue',
+      message: 'Connectivity tests complete, but could not determine the exact issue',
+      error_details: {
+        connectivity_tests: connectivityReport,
+        suggestions: [
+          'Check all network and firewall settings',
+          'Verify Supabase project status',
+          'Check browser console for more detailed errors'
+        ]
+      },
+      time: new Date().toISOString()
     });
     
   } catch (error) {
-    console.error('[DISCORD-NEWS-API] Error:', error);
+    console.error('[DISCORD-NEWS-API] Error running connectivity tests:', error);
     
-    // Include error details in the response
+    // Final fallback for any unexpected errors
     return NextResponse.json({
       articles: fallbackArticles,
       source: 'api_error',
-      message: error instanceof Error ? error.message : 'Unknown database error',
+      message: error instanceof Error ? error.message : 'Unknown error during connectivity tests',
       error_details: error instanceof Error ? {
         name: error.name,
         message: error.message,
@@ -183,5 +278,4 @@ export async function GET(request: Request) {
       time: new Date().toISOString()
     });
   }
-  */
 } 
