@@ -198,7 +198,7 @@ export function NewsClient({ fallbackNews }: NewsClientProps) {
         {/* Environment debugging section */}
         <div className="mt-4 border-t border-gray-200 dark:border-gray-700 pt-2">
           <p className="font-medium">Environment Debug:</p>
-          <pre className="bg-gray-100 dark:bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto">
+          <pre className="bg-gray-800 dark:bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto text-white font-mono">
             {envDebug}
           </pre>
         </div>
