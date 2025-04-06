@@ -10,28 +10,34 @@ export async function GET() {
     // Log the attempt
     console.log('Simple news API: Starting fetch');
     
-    // Use minimal URL to avoid any parsing issues
-    const apiUrl = `${SUPABASE_URL}/rest/v1/newsfeed`;
+    // Use precise URL with more parameters for better results
+    const apiUrl = `${SUPABASE_URL}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=50`;
     
-    // Make the simplest possible fetch request
+    // Make the fetch request with more complete headers
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Prefer': 'return=representation'
       }
     });
     
     // Check response
     if (!response.ok) {
+      const errorText = await response.text();
       return NextResponse.json({
-        error: `API error: ${response.status}`,
+        error: `API error: ${response.status} - ${errorText}`,
         timestamp: new Date().toISOString()
       });
     }
     
     // Parse data
     const data = await response.json();
+    
+    // Log success
+    console.log(`Fetched ${data.length} items from Supabase`);
     
     // Return success
     return NextResponse.json({
@@ -42,6 +48,7 @@ export async function GET() {
     });
     
   } catch (error) {
+    console.error('News API error:', error);
     // Return any errors
     return NextResponse.json({
       error: error.message || 'Unknown error',

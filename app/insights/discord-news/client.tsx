@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import { DiscordMessage } from './page';
+import { Clock } from 'lucide-react';
 
 interface NewsClientProps {
   fallbackNews: DiscordMessage[];
@@ -239,36 +240,78 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
     if (!content) return 'News Update';
     
     // Try to extract a title from the first line or bracket contents
-    const firstLine = content.split('\n')[0];
+    const firstLine = content.split('\n')[0].trim();
     
     // Check for [CATEGORY] pattern
     const bracketMatch = firstLine.match(/\[(.*?)\]/);
     if (bracketMatch) {
-      return firstLine.trim();
+      // Return full first line that contains the bracketed category
+      return firstLine;
     }
     
     // If first line is short enough, use it as title
     if (firstLine.length < 60) {
-      return firstLine.trim();
+      return firstLine;
+    }
+    
+    // If it's a long line, try to find a reasonable break point
+    const endOfSentence = firstLine.match(/[.!?](\s|$)/);
+    if (endOfSentence && endOfSentence.index && endOfSentence.index < 80) {
+      return firstLine.substring(0, endOfSentence.index + 1);
+    }
+    
+    // If very long, truncate with ellipsis
+    if (firstLine.length > 80) {
+      return firstLine.substring(0, 77) + '...';
     }
     
     // Otherwise use generic title
     return 'Security Update';
   }
   
+  function formatContentForDisplay(content: string): string {
+    if (!content) return '';
+    
+    // Remove any leading brackets from the first line since we show that as title
+    let processedContent = content;
+    const firstLine = content.split('\n')[0].trim();
+    const hasBracket = firstLine.match(/^\[.*?\]/);
+    
+    if (hasBracket) {
+      // Remove the first line if it's just a category marker
+      if (firstLine.length < 30) {
+        processedContent = content.substring(firstLine.length).trim();
+      }
+    }
+    
+    // Convert URLs to clickable links for the card display
+    processedContent = processedContent.replace(
+      /(https?:\/\/[^\s]+)/g, 
+      '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-500 underline">$1</a>'
+    );
+    
+    return processedContent;
+  }
+  
   function determineChannelFromContent(content: string): string {
     if (!content) return 'general';
     
-    if (content.includes('[ALERT]') || content.includes('[CRITICAL]')) {
+    const contentLower = content.toLowerCase();
+    
+    if (contentLower.includes('[alert]') || contentLower.includes('[critical]') || contentLower.includes('critical')) {
       return 'alerts';
-    } else if (content.includes('[UPDATE]')) {
+    } else if (contentLower.includes('[update]') || contentLower.includes('update')) {
       return 'updates';
-    } else if (content.includes('[VULNERABILITY]') || content.includes('CVE-')) {
+    } else if (contentLower.includes('[vulnerability]') || contentLower.includes('cve-') || contentLower.includes('vulnerability')) {
       return 'vulnerabilities';
-    } else if (content.includes('[ADVISORY]')) {
+    } else if (contentLower.includes('[advisory]') || contentLower.includes('advisory')) {
       return 'advisories';
-    } else if (content.includes('[THREAT]')) {
+    } else if (contentLower.includes('[threat]') || contentLower.includes('threat')) {
       return 'threats';
+    } else if (contentLower.includes('[malware]') || contentLower.includes('malware') || contentLower.includes('ransomware')) {
+      return 'malware';
+    } else if (contentLower.includes('[security]') || contentLower.includes('security')) {
+      return 'security';
     }
     
     return 'general';
@@ -326,21 +369,45 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {news.map((item: DiscordMessage) => {
           const date = new Date(item.created_at);
+          const channel = item.channel || determineChannelFromContent(item.content);
+          const formattedTitle = item.title || formatTitleFromContent(item.content);
+          const formattedContent = formatContentForDisplay(item.content);
+          
+          // Determine card style based on channel
+          const channelStyles: Record<string, { bg: string, text: string, border: string }> = {
+            alerts: { bg: 'bg-red-100 dark:bg-red-900', text: 'text-red-800 dark:text-red-100', border: 'border-red-200 dark:border-red-800' },
+            vulnerabilities: { bg: 'bg-amber-100 dark:bg-amber-900', text: 'text-amber-800 dark:text-amber-100', border: 'border-amber-200 dark:border-amber-800' },
+            updates: { bg: 'bg-blue-100 dark:bg-blue-900', text: 'text-blue-800 dark:text-blue-100', border: 'border-blue-200 dark:border-blue-800' },
+            threats: { bg: 'bg-purple-100 dark:bg-purple-900', text: 'text-purple-800 dark:text-purple-100', border: 'border-purple-200 dark:border-purple-800' },
+            advisories: { bg: 'bg-teal-100 dark:bg-teal-900', text: 'text-teal-800 dark:text-teal-100', border: 'border-teal-200 dark:border-teal-800' },
+            malware: { bg: 'bg-pink-100 dark:bg-pink-900', text: 'text-pink-800 dark:text-pink-100', border: 'border-pink-200 dark:border-pink-800' },
+            security: { bg: 'bg-indigo-100 dark:bg-indigo-900', text: 'text-indigo-800 dark:text-indigo-100', border: 'border-indigo-200 dark:border-indigo-800' },
+            general: { bg: 'bg-gray-100 dark:bg-gray-700', text: 'text-gray-800 dark:text-gray-100', border: 'border-gray-200 dark:border-gray-600' }
+          };
+          
+          const style = channelStyles[channel] || channelStyles.general;
+          
           return (
             <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
               <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-                  <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs rounded-full whitespace-nowrap">
-                    {item.channel}
+                <div className={`flex justify-between items-start mb-4 gap-2`}>
+                  <h2 className="text-xl font-semibold mb-2">{formattedTitle}</h2>
+                  <span className={`px-2 py-1 rounded-full whitespace-nowrap text-xs ${style.bg} ${style.text}`}>
+                    {channel}
                   </span>
                 </div>
-                <div className="text-gray-600 dark:text-gray-300 mb-4 max-h-36 overflow-y-auto">
-                  {item.content}
-                </div>
-                <div className="flex justify-between text-sm text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-700">
-                  <span>{item.author}</span>
-                  <time dateTime={date.toISOString()}>{date.toLocaleDateString()}</time>
+                
+                <div 
+                  className="text-gray-600 dark:text-gray-300 mb-4 max-h-36 overflow-y-auto prose prose-sm" 
+                  dangerouslySetInnerHTML={{ __html: formattedContent }}
+                />
+                
+                <div className="flex justify-between items-center text-sm text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-700">
+                  <span className="font-medium">{item.author || 'Unknown'}</span>
+                  <time dateTime={date.toISOString()} className="flex items-center gap-1">
+                    <Clock size={14} />
+                    {date.toLocaleDateString()} {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </time>
                 </div>
               </div>
             </div>
