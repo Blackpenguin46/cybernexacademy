@@ -59,12 +59,10 @@ const fallbackArticles = [
 // Debug function to check environment variables (safe way to log without exposing keys)
 function getEnvironmentInfo() {
   return {
-    urlExists: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
-    keyExists: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    urlPrefix: process.env.NEXT_PUBLIC_SUPABASE_URL?.substring(0, 15) + '...',
+    urlExists: !!process.env.NEXT_SUPABASE_URL,
+    keyExists: !!process.env.NEXT_SUPABASE_ANON_KEY,
+    urlPrefix: process.env.NEXT_SUPABASE_URL?.substring(0, 15) + '...',
     envKeys: Object.keys(process.env).filter(key => key.includes('SUPABASE')).join(', '),
-    serverUrlExists: !!process.env.SUPABASE_URL,
-    serverKeyExists: !!process.env.SUPABASE_ANON_KEY,
     serviceKeyExists: !!process.env.SUPABASE_SERVICE_KEY
   };
 }
@@ -77,15 +75,14 @@ export async function GET(request: Request) {
     const envInfo = getEnvironmentInfo();
     console.log('[DISCORD-NEWS-API] Environment info:', envInfo);
     
-    // Get Supabase URL - checking all possible environment variable names
-    // Try server-side URL first (no NEXT_PUBLIC prefix)
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
+    // Get Supabase URL using the correct environment variable names
+    const supabaseUrl = process.env.NEXT_SUPABASE_URL || 'https://vxxpwaloyrtwvpmatzpc.supabase.co';
     
     // For API routes, we should use the service key which has higher privileges
     const serviceKey = process.env.SUPABASE_SERVICE_KEY;
     
     // Fallback to the anon key if no service key is found
-    const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const anonKey = process.env.NEXT_SUPABASE_ANON_KEY;
     
     // Determine which key to use - prefer service key for server operations
     const useServiceKey = !!serviceKey;
@@ -108,7 +105,7 @@ export async function GET(request: Request) {
         message: 'No API key available in environment variables',
         debug_info: {
           environment: envInfo,
-          suggestion: "Check that SUPABASE_SERVICE_KEY and NEXT_PUBLIC_SUPABASE_ANON_KEY are correctly set in Vercel"
+          suggestion: "Check that SUPABASE_SERVICE_KEY and NEXT_SUPABASE_ANON_KEY are correctly set in Vercel"
         },
         time: new Date().toISOString()
       });
