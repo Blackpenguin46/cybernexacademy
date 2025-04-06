@@ -112,16 +112,21 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
         
         // Try the actual API fetch in the background
         try {
-          console.log("Attempting to fetch data from Supabase database...");
-          // Use the correct endpoint - discord-news instead of news
-          const response = await fetch('/api/discord-news');
+          console.log("Attempting to fetch data from API...");
+          
+          // Add timestamp to prevent caching
+          const timestamp = new Date().getTime();
+          const response = await fetch(`/api/discord-news?t=${timestamp}`);
           
           if (!response.ok) {
             console.warn(`API returned status ${response.status}, falling back to minimal content`);
+            const errorText = await response.text();
+            console.error("API error details:", errorText);
+            
             setAllNews(minimalFallback);
             setNews(minimalFallback);
             setSource('api_error');
-            setError(`API error: ${response.status}`);
+            setError(`API error: ${response.status} - ${errorText.substring(0, 100)}`);
             setLoading(false);
             return;
           }
@@ -129,8 +134,13 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           const data = await response.json();
           console.log("API response:", data);
           
+          // Always set the source accurately from the API response
+          setSource(data.source || 'unknown_source');
+          setLastUpdated(data.time || new Date().toISOString());
+          
+          // Even if we get an api_error source, check if we have articles
           if (data.articles && data.articles.length > 0) {
-            console.log(`API successful, fetched ${data.articles.length} items from database`);
+            console.log(`API response contains ${data.articles.length} articles from source: ${data.source}`);
             
             // Process and format data from the actual database based on screenshot structure
             const formattedData: DiscordMessage[] = data.articles.map((item: any) => {
@@ -151,8 +161,6 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
             // Store the complete dataset and update display
             setAllNews(formattedData);
             setNews(formattedData);
-            setSource(data.source || 'database_success');
-            setLastUpdated(data.time || new Date().toISOString());
             setError(null);
             
           } else {
@@ -415,20 +423,34 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
               </div>
             )}
             
-            {!error && (
-              <div className="mt-4 p-3 bg-green-900 border border-green-700 rounded text-sm">
-                <p className="font-medium text-green-200">✅ Feed is working correctly!</p>
-                <p className="text-green-300 text-xs mt-1">
-                  Data is being fetched successfully through the server-side API.
-                </p>
+            {!error && source !== 'api_error' && (
+              <div className={`mt-4 p-3 rounded text-sm ${
+                source === 'server_verified_fallback' ? 'bg-yellow-900 border border-yellow-700' : 'bg-green-900 border border-green-700'
+              }`}>
+                {source === 'server_verified_fallback' ? (
+                  <>
+                    <p className="font-medium text-yellow-200">⚠️ Using verified test data</p>
+                    <p className="text-yellow-300 text-xs mt-1">
+                      The API is working but using test data while database connection is being established.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="font-medium text-green-200">✅ Feed is working correctly!</p>
+                    <p className="text-green-300 text-xs mt-1">
+                      Data is being fetched successfully through the server-side API.
+                    </p>
+                  </>
+                )}
               </div>
             )}
             
-            {!error && source === 'simple_api_success' && (
-              <div className="mt-2">
-                <a href="/api-test" target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs underline hover:text-blue-300">
-                  View API details
-                </a>
+            {source === 'api_error' && !error && (
+              <div className="mt-4 p-3 bg-red-900 border border-red-700 rounded text-sm">
+                <p className="font-medium text-red-200">❌ Database connection error</p>
+                <p className="text-red-300 text-xs mt-1">
+                  The API is returning fallback data because it couldn't connect to the database.
+                </p>
               </div>
             )}
           </div>

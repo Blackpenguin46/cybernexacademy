@@ -71,8 +71,22 @@ function logWithEnv(message: string, ...args: any[]) {
 }
 
 export async function GET() {
-  console.log('Discord news API route called');
+  console.log('[DISCORD-NEWS-API] Route called at ' + new Date().toISOString());
   
+  // For debugging: Send hardcoded reponse but mark it as coming from an alternative fallback
+  // This will help us understand if the API route itself is working
+  console.log('[DISCORD-NEWS-API] Returning server-verified fallback data');
+  
+  return NextResponse.json({
+    articles: fallbackArticles,
+    source: 'server_verified_fallback',
+    message: 'Verified API route is working with fallback data. Database connection is still being configured.',
+    time: new Date().toISOString(),
+    count: fallbackArticles.length
+  });
+  
+  // The old Supabase code has been temporarily commented out for debugging
+  /*
   try {
     // IMPORTANT: Using direct REST API approach to bypass client-side issues
     const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
@@ -139,4 +153,5 @@ export async function GET() {
       time: new Date().toISOString()
     });
   }
+  */
 } 
