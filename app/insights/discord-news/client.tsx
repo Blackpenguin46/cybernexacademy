@@ -289,25 +289,36 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
         <p>Fetch mode: <span className="font-mono">client-side browser</span></p>
         {currentDomain && <p>Current domain: <span className="font-mono">{currentDomain}</span></p>}
         
-        {/* Environment debugging section */}
-        <div className="mt-4 border-t border-gray-200 dark:border-gray-700 pt-2">
-          <p className="font-medium">Environment Debug:</p>
-          <pre className="bg-gray-800 dark:bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto text-white font-mono">
-            {envDebug}
-          </pre>
-        </div>
+        {/* Only show debug info if there's an error */}
+        {error && (
+          <div className="mt-4 border-t border-gray-200 dark:border-gray-700 pt-2">
+            <p className="font-medium">Debug Information:</p>
+            <pre className="bg-gray-800 dark:bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto text-white font-mono">
+              {envDebug}
+            </pre>
+            
+            <div className="mt-4">
+              <a href="/api-test" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                Open API Test Page
+              </a>
+            </div>
+          </div>
+        )}
         
-        <div className="mt-4">
-          <a href="/api-test" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-            Open API Test Page
-          </a>
-        </div>
+        {!error && (
+          <div className="mt-4 p-3 bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-800 rounded text-sm">
+            <p className="font-medium text-green-800 dark:text-green-200">✅ Feed is working correctly!</p>
+            <p className="text-green-700 dark:text-green-300 text-xs mt-1">
+              Data is being fetched successfully through the server-side API.
+            </p>
+          </div>
+        )}
         
-        {currentDomain && currentDomain.includes('vercel.app') && (
-          <div className="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded text-xs">
-            <p className="font-medium">Preview deployment detected</p>
-            <p>1. Add this preview domain to your Supabase project's allowed origins</p>
-            <p>2. Ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set in Vercel environment variables</p>
+        {!error && source === 'simple_api_success' && (
+          <div className="mt-2">
+            <a href="/api-test" target="_blank" rel="noopener noreferrer" className="text-blue-500 text-xs underline">
+              View API details
+            </a>
           </div>
         )}
       </div>

@@ -399,11 +399,6 @@ function formatNewsContent(content: string, urls?: string[]) {
 
 // Server component that provides fallback data to the client component
 export default async function DiscordNewsPage() {
-  // Static environment check - this is server-side only
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  const hasServerEnvVars = !!supabaseUrl && !!supabaseKey;
-
   // We'll always use the fallback data initially, then client will try to fetch fresh data
   return (
     <div className="pt-20 pb-8 px-4 md:px-8 min-h-screen">
@@ -416,26 +411,8 @@ export default async function DiscordNewsPage() {
           <RefreshButton />
         </div>
         
-        {/* Server-side environment check */}
-        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-4 text-blue-700">
-          <p className="font-medium">Server-side Environment Check:</p>
-          <p>NEXT_PUBLIC_SUPABASE_URL: {hasServerEnvVars ? 'Available' : 'Missing'}</p>
-          {hasServerEnvVars && (
-            <p className="mt-2 text-green-600 font-medium">
-              Found environment variables on server side!
-            </p>
-          )}
-        </div>
-        
-        {/* Environment Test Component */}
-        <EnvTest />
-        
-        {/* Use our client-side component with server-side props */}
-        <NewsClient 
-          fallbackNews={enhancedFallbackArticles} 
-          serverSupabaseUrl={supabaseUrl}
-          serverSupabaseKey={supabaseKey}
-        />
+        {/* Use our client-side component with fallback data */}
+        <NewsClient fallbackNews={enhancedFallbackArticles} />
       </div>
     </div>
   );
