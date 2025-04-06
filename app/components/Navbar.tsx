@@ -116,13 +116,8 @@ export default function Navbar() {
 
   // Function to determine dropdown position
   const getDropdownPosition = (sectionId: string) => {
-    const index = navSections.findIndex(section => section.id === sectionId);
-    
-    if (index === 0) return "left-0";
-    if (index === 1) return "left-[calc(50%-425px)]";
-    if (index === 2) return "right-0";
-    
-    return "left-0";
+    // Always return the same centering calculation for all dropdowns
+    return "left-[calc(50%-425px)]"; // Centers the 850px dropdown in viewport
   };
 
   // Add custom animation
