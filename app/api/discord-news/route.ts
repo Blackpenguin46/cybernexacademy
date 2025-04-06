@@ -91,6 +91,52 @@ async function testConnectivity(url: string): Promise<{success: boolean, status?
   }
 }
 
+// Helper function to try Supabase access with a specific key
+async function tryWithKey(
+  url: string, 
+  key: string, 
+  keyType: 'anon' | 'service_role'
+): Promise<Response | null> {
+  try {
+    console.log(`[DISCORD-NEWS-API] Testing with ${keyType} key`);
+    
+    // Try to access the actual API endpoint for the newsfeed table
+    const apiUrl = `${url}/rest/v1/newsfeed?select=*&limit=10`;
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+      },
+      cache: 'no-store'
+    });
+    
+    if (!response.ok) {
+      const responseText = await response.text();
+      console.error(`[DISCORD-NEWS-API] ${keyType} key error: ${response.status} - ${responseText}`);
+      return null;
+    }
+    
+    const data = await response.json();
+    console.log(`[DISCORD-NEWS-API] Successfully fetched data with ${keyType} key:`, data);
+    
+    // Success! Return the actual data
+    return NextResponse.json({
+      articles: data.length > 0 ? data : fallbackArticles,
+      source: data.length > 0 ? 'database_success' : 'database_empty',
+      message: data.length > 0 ? `Retrieved ${data.length} articles using ${keyType} key` : 'Database is empty',
+      key_used: keyType,
+      time: new Date().toISOString(),
+      count: data.length
+    });
+  } catch (error) {
+    console.error(`[DISCORD-NEWS-API] Error with ${keyType} key:`, error);
+    return null;
+  }
+}
+
 export async function GET(request: Request) {
   console.log('[DISCORD-NEWS-API] Route called at ' + new Date().toISOString());
   
@@ -166,79 +212,47 @@ export async function GET(request: Request) {
       console.log('[DISCORD-NEWS-API] Can reach Supabase, trying to access data');
       
       const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
-      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
       
-      try {
-        // Try to access the actual API endpoint for the newsfeed table
-        const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&limit=1`;
-        
-        const response = await fetch(apiUrl, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': supabaseKey,
-            'Authorization': `Bearer ${supabaseKey}`,
-          },
-          cache: 'no-store'
-        });
-        
-        if (!response.ok) {
-          const responseText = await response.text();
-          console.error(`[DISCORD-NEWS-API] Supabase API error: ${response.status} - ${responseText}`);
-          
-          return NextResponse.json({
-            articles: fallbackArticles,
-            source: 'supabase_auth_error',
-            message: `Supabase is reachable but returned error: ${response.status}`,
-            error_details: {
-              type: 'SupabaseAuthenticationError',
-              status: response.status,
-              response: responseText.substring(0, 500),
-              connectivity_tests: connectivityReport,
-              suggestions: [
-                'Check your Supabase API key permissions',
-                'Verify the "newsfeed" table exists and is accessible',
-                'Check Row Level Security settings',
-                'Confirm your Supabase project is active'
-              ]
-            },
-            time: new Date().toISOString()
-          });
+      // Define both keys to try - anon key and service role key (if available)
+      const anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+      
+      // Try to get service role key from environment variables if available
+      const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+      
+      console.log('[DISCORD-NEWS-API] Will attempt with both anon key and service role key if available');
+      
+      // Try first with the service role key if it exists
+      if (serviceRoleKey) {
+        try {
+          console.log('[DISCORD-NEWS-API] Attempting with service role key');
+          const result = await tryWithKey(supabaseUrl, serviceRoleKey, 'service_role');
+          if (result) return result;
+        } catch (serviceKeyError) {
+          console.log('[DISCORD-NEWS-API] Service role key failed, falling back to anon key');
         }
+      }
+      
+      // Fall back to anonymous key
+      try {
+        console.log('[DISCORD-NEWS-API] Attempting with anon key');
+        const result = await tryWithKey(supabaseUrl, anonKey, 'anon');
+        if (result) return result;
+      } catch (anonKeyError) {
+        console.error('[DISCORD-NEWS-API] Both keys failed to authenticate');
         
-        const data = await response.json();
-        console.log(`[DISCORD-NEWS-API] Successfully fetched data from Supabase:`, data);
-        
-        // Success! We can return the actual data
-        return NextResponse.json({
-          articles: data.length > 0 ? data : fallbackArticles,
-          source: data.length > 0 ? 'database_success' : 'database_empty',
-          message: data.length > 0 ? `Retrieved ${data.length} articles from database` : 'Database is empty',
-          connectivity_tests: connectivityReport,
-          time: new Date().toISOString(),
-          count: data.length
-        });
-        
-      } catch (error) {
-        console.error('[DISCORD-NEWS-API] Error fetching data from Supabase:', error);
-        
+        // If we got here, both keys failed, return a clear error
         return NextResponse.json({
           articles: fallbackArticles,
-          source: 'supabase_fetch_error',
-          message: error instanceof Error ? error.message : 'Unknown error fetching data',
+          source: 'key_authentication_error',
+          message: 'Both service role and anon keys failed to authenticate',
           error_details: {
-            type: 'SupabaseFetchError',
-            error: error instanceof Error ? {
-              name: error.name,
-              message: error.message,
-              stack: error.stack?.split('\n').slice(0, 3).join('\n')
-            } : 'Unknown error object',
+            type: 'SupabaseKeyError',
             connectivity_tests: connectivityReport,
             suggestions: [
-              'There may be an issue with the database table structure',
-              'Check for errors in your Supabase logs',
-              'Verify the API key has the necessary permissions',
-              'Try using the Supabase client library instead of direct REST'
+              'Verify your Supabase API keys in the project settings',
+              'Check if the API keys have the necessary permissions',
+              'Ensure your keys have not expired',
+              'Try regenerating your API keys in the Supabase dashboard'
             ]
           },
           time: new Date().toISOString()

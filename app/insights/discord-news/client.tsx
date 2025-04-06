@@ -186,6 +186,14 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
             setSource('empty_database');
             setError('No articles found in database');
           }
+
+          // Add this to store key information
+          if (data.key_used) {
+            console.log('Key used for connection:', data.key_used);
+            setEnvDebug(prev => 
+              prev + '\n\nAPI Key Used: ' + data.key_used
+            );
+          }
         } catch (apiError: any) {
           console.error("API error:", apiError);
           setAllNews(minimalFallback);
@@ -533,6 +541,24 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
                     <li>Verify the "newsfeed" table exists in your project</li>
                     <li>Check Row Level Security settings for the table</li>
                     <li>Confirm your Supabase project is active</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {source === 'key_authentication_error' && (
+              <div className="mt-4 p-3 bg-purple-900 border border-purple-700 rounded text-sm">
+                <p className="font-medium text-purple-200">🔐 API Key Authentication Failed</p>
+                <p className="text-purple-300 text-xs mt-1">
+                  Your server can connect to Supabase, but both API keys failed to authenticate.
+                </p>
+                <div className="mt-2 p-2 bg-purple-950 rounded border border-purple-800">
+                  <p className="text-xs text-purple-300 font-medium">Troubleshooting suggestions:</p>
+                  <ul className="list-disc list-inside text-xs text-purple-300 mt-1 space-y-1">
+                    <li>Verify your API keys in the Supabase dashboard</li>
+                    <li>Try regenerating your API keys</li>
+                    <li>Check for expired keys</li>
+                    <li>Ensure Row Level Security policies allow access</li>
                   </ul>
                 </div>
               </div>
