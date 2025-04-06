@@ -39,6 +39,7 @@ function logObject(label: string, obj: any) {
 
 export async function GET() {
   console.log('[API Route] *** GET function entered *** Timestamp:', new Date().toISOString());
+  console.log('[API Route] ⭐ REBUILD FORCED TO REFRESH ENV VARS ⭐');
 
   console.log('[API Route] Endpoint called at:', new Date().toISOString());
   
