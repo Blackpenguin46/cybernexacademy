@@ -4,6 +4,35 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Shield, AlertTriangle, ExternalLink, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { createClient } from '@supabase/supabase-js';
+
+// Fallback data in case of errors
+const fallbackArticles = [
+  {
+    id: '1',
+    content: '[SECURITY ALERT] Microsoft has released patches for 147 vulnerabilities in their April 2024 Patch Tuesday update, including 5 actively exploited zero-days. https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html',
+    author: 'SecurityBot',
+    timestamp: '2024-04-09T16:30:00.000Z',
+    attachments: [],
+    urls: ['https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html']
+  },
+  {
+    id: '2',
+    content: '[THREAT INTEL] New LockBit ransomware variant detected with enhanced evasion capabilities. Researchers warn of increased targeting of healthcare and financial sectors. https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html',
+    author: 'SecurityBot',
+    timestamp: '2024-04-10T14:15:00.000Z',
+    attachments: [],
+    urls: ['https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html']
+  },
+  {
+    id: '3',
+    content: '[VULNERABILITY] Critical Adobe Acrobat zero-day vulnerability (CVE-2024-21412) being actively exploited. Update immediately! https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html',
+    author: 'SecurityBot',
+    timestamp: '2024-04-11T09:45:00.000Z',
+    attachments: [],
+    urls: ['https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html']
+  }
+];
 
 interface DiscordMessage {
   id: string;
@@ -112,7 +141,7 @@ export default function DiscordNewsPage() {
     setShowDebugPanel(prev => !prev);
   };
   
-  // Fetch news data
+  // Fetch news data directly from Supabase
   const fetchNews = useCallback(async () => {
     let currentLoading = true;
     let currentError = '';
@@ -124,7 +153,7 @@ export default function DiscordNewsPage() {
     loadingRef.current = true;
     setError(''); // Clear previous errors
     
-    console.log('[FETCH] Starting fetch...');
+    console.log('[FETCH] Starting direct Supabase fetch...');
     
     const loadingTimeout = setTimeout(() => {
       if (loadingRef.current) {
@@ -141,45 +170,79 @@ export default function DiscordNewsPage() {
     }, 10000); // 10 seconds timeout
     
     try {
-      const response = await fetch('/api/discord-news', {
-        cache: 'no-store',
-        next: { revalidate: 0 }
-      });
+      // Initialize Supabase client directly in the component
+      // Note: These environment variables must be prefixed with NEXT_PUBLIC_ to be available in the browser
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+      const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+      
+      console.log('[FETCH] Supabase URL:', supabaseUrl ? `${supabaseUrl.substring(0, 20)}...` : 'MISSING');
+      console.log('[FETCH] Supabase Key:', supabaseAnonKey ? 'Present' : 'MISSING');
+      
+      if (!supabaseUrl || !supabaseAnonKey) {
+        throw new Error('Missing Supabase environment variables');
+      }
+      
+      // Create Supabase client
+      const supabase = createClient(supabaseUrl, supabaseAnonKey);
+      
+      // Fetch data directly from Supabase
+      console.log('[FETCH] Querying newsfeed table...');
+      const { data: articles, error: supabaseError } = await supabase
+        .from('newsfeed')
+        .select('*')
+        .order('timestamp', { ascending: false })
+        .limit(50);
+      
+      if (supabaseError) {
+        console.error('[FETCH] Supabase error:', supabaseError);
+        throw new Error(`Supabase query error: ${supabaseError.message}`);
+      }
       
       clearTimeout(loadingTimeout); // Clear timeout if fetch completes
       
-      const data = await response.json();
-      console.log('[FETCH] API Response Data:', data);
+      const fetchedData = {
+        articles: articles || [],
+        source: articles && articles.length > 0 ? 'database' : 'empty',
+        message: articles && articles.length > 0 ? 'Retrieved from database' : 'No items found in database'
+      };
+      
+      console.log('[FETCH] Supabase Response Data:', fetchedData);
       
       setDebugData({ // Update debug info
-        responseStatus: response.status,
-        responseData: data,
-        time: new Date().toISOString()
+        articles: fetchedData.articles,
+        source: fetchedData.source,
+        message: fetchedData.message,
+        time: new Date().toISOString(),
+        directSupabase: true
       });
 
-      if (!response.ok) {
-        throw new Error(data.message || `API Error: ${response.status} ${response.statusText}`);
+      if (!articles || articles.length === 0) {
+        // No error, but no data either - use fallback
+        console.log('[FETCH] No data found in Supabase, using fallback');
+        currentNews = fallbackArticles;
+        currentSource = 'fallback';
+        currentStatusMsg = 'No items found in database, using fallback data';
+      } else {
+        console.log(`[FETCH] Success: Retrieved ${articles.length} items from Supabase`);
+        currentNews = articles;
+        currentSource = 'database';
+        currentStatusMsg = 'Retrieved from database';
       }
       
-      if (!data.articles || !Array.isArray(data.articles)) {
-        throw new Error('Invalid API response: missing articles array');
-      }
-      
-      console.log(`[FETCH] Success: Received ${data.articles.length} articles from source: ${data.source}`);
-      currentNews = data.articles;
-      newsRef.current = data.articles;
-      currentSource = data.source || 'unknown';
-      currentStatusMsg = data.message || '';
+      newsRef.current = currentNews;
       currentError = ''; // Clear error on success
       
     } catch (err) {
-      console.error('[FETCH] Error loading news:', err);
+      console.error('[FETCH] Error loading news directly from Supabase:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error';
       currentError = `Failed to load news. ${errorMessage}`;
       setDebugData((prev: any) => ({ ...prev, error: errorMessage, time: new Date().toISOString() }));
-      currentNews = []; // Clear news on error
-      newsRef.current = [];
-      currentSource = 'error';
+      
+      // Use fallback data on error
+      currentNews = fallbackArticles;
+      newsRef.current = fallbackArticles;
+      currentSource = 'fallback_error';
+      currentStatusMsg = errorMessage;
     } finally {
       console.log('[FETCH] Finally block: Setting final state');
       currentLoading = false;
