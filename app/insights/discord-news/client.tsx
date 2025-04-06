@@ -48,7 +48,49 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
       try {
         setLoading(true);
         
-        // APPROACH 1: Try our server-side proxy first - this avoids CORS issues
+        // Try the new simple API first (added 'news' route)
+        try {
+          console.log("Attempting to fetch data through simple API at /api/news");
+          
+          // This should be easier for Vercel to handle
+          const response = await fetch('/api/news');
+          
+          if (!response.ok) {
+            throw new Error(`API error: ${response.status}`);
+          }
+          
+          const data = await response.json();
+          
+          if (data.error) {
+            console.error("API error:", data.error);
+            throw new Error(data.error);
+          }
+          
+          if (data.news && data.news.length > 0) {
+            console.log(`API successful, fetched ${data.news.length} items`);
+            
+            // Process and format data
+            const formattedData: DiscordMessage[] = data.news.map((item: any) => ({
+              id: item.id,
+              title: formatTitleFromContent(item.content),
+              content: item.content,
+              author: item.author || 'Unknown',
+              created_at: item.created_at || item.timestamp || new Date().toISOString(),
+              channel: determineChannelFromContent(item.content)
+            }));
+            
+            setNews(formattedData);
+            setSource('simple_api_success');
+            setError(null);
+            setLastUpdated(data.timestamp || new Date().toISOString());
+            return;
+          }
+        } catch (apiError: any) {
+          console.error("Simple API error:", apiError);
+          // Continue to next approach
+        }
+        
+        // If simple API fails, try the news-proxy API
         try {
           console.log("Attempting to fetch data through server-side API proxy");
           
@@ -92,8 +134,8 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           console.error("Server proxy error:", proxyError);
         }
         
-        // APPROACH 2: Try client-side Supabase fetch if server proxy fails
-        console.log("Server proxy failed, trying direct Supabase client approach");
+        // APPROACH 3: Try client-side Supabase fetch if server proxies fail
+        console.log("Server proxies failed, trying direct Supabase client approach");
         
         // Try using client-side env vars first, then server-provided values, then hardcoded defaults
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 
@@ -177,7 +219,7 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
         
         // Special handling for preview deployment errors
         if (window.location.hostname.includes('vercel.app')) {
-          setError(`Preview deployment error: ${fetchError.message}. You may need to add this domain to Supabase allowed origins.`);
+          setError(`Preview deployment error: ${fetchError.message}. API route may be failing.`);
           setSource('fallback_preview_error');
         } else {
           setError(fetchError.message);
@@ -253,6 +295,12 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           <pre className="bg-gray-800 dark:bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto text-white font-mono">
             {envDebug}
           </pre>
+        </div>
+        
+        <div className="mt-4">
+          <a href="/api-test" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+            Open API Test Page
+          </a>
         </div>
         
         {currentDomain && currentDomain.includes('vercel.app') && (
