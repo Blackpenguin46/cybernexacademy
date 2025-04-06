@@ -124,24 +124,126 @@ export async function GET(request: Request) {
     
     // Execute the query
     console.log('[DISCORD-NEWS-API] Querying newsfeed table using', useServiceKey ? 'service key' : 'anon key');
-    const { data, error } = await supabase
-      .from('newsfeed')
-      .select()
-      .order('timestamp', { ascending: false });
     
-    // Handle errors
-    if (error) {
-      console.error('[DISCORD-NEWS-API] Supabase query error:', error);
+    // Try multiple approaches to access the table
+    try {
+      // Approach 1: Try with lowercase table name and explicit column selection
+      const { data, error } = await supabase
+        .from('newsfeed')
+        .select('id, author, content, timestamp, urls')
+        .order('timestamp', { ascending: false });
+      
+      if (!error && data) {
+        console.log(`[DISCORD-NEWS-API] Success with approach 1, retrieved ${data.length} articles`);
+        
+        if (data.length > 0) {
+          console.log('[DISCORD-NEWS-API] Sample article:', data[0]);
+          
+          return NextResponse.json({
+            articles: data,
+            source: 'database_success',
+            message: `Retrieved ${data.length} articles`,
+            time: new Date().toISOString(),
+            count: data.length,
+            approach: 'direct_lowercase'
+          });
+        }
+      } else {
+        console.log('[DISCORD-NEWS-API] Approach 1 failed with error:', error);
+      }
+      
+      // Approach 2: Try with explicit schema name
+      const { data: data2, error: error2 } = await supabase
+        .from('public.newsfeed')
+        .select('id, author, content, timestamp, urls')
+        .order('timestamp', { ascending: false });
+      
+      if (!error2 && data2) {
+        console.log(`[DISCORD-NEWS-API] Success with approach 2, retrieved ${data2.length} articles`);
+        
+        return NextResponse.json({
+          articles: data2,
+          source: 'database_success',
+          message: `Retrieved ${data2.length} articles using public schema`,
+          time: new Date().toISOString(),
+          count: data2.length,
+          approach: 'explicit_schema'
+        });
+      } else {
+        console.log('[DISCORD-NEWS-API] Approach 2 failed with error:', error2);
+      }
+      
+      // Approach 3: Try with capitalized table name (case sensitivity matters in PostgreSQL)
+      const { data: data3, error: error3 } = await supabase
+        .from('Newsfeed')
+        .select('id, author, content, timestamp, urls')
+        .order('timestamp', { ascending: false });
+      
+      if (!error3 && data3) {
+        console.log(`[DISCORD-NEWS-API] Success with approach 3, retrieved ${data3.length} articles`);
+        
+        return NextResponse.json({
+          articles: data3,
+          source: 'database_success',
+          message: `Retrieved ${data3.length} articles using capitalized table name`,
+          time: new Date().toISOString(),
+          count: data3.length,
+          approach: 'capitalized_name'
+        });
+      } else {
+        console.log('[DISCORD-NEWS-API] Approach 3 failed with error:', error3);
+      }
+      
+      // Approach 4: Try with the RPC function if available
+      const { data: data4, error: error4 } = await supabase
+        .rpc('get_newsfeed_articles')
+        .limit(50);
+      
+      if (!error4 && data4) {
+        console.log(`[DISCORD-NEWS-API] Success with approach 4, retrieved ${data4.length} articles`);
+        
+        return NextResponse.json({
+          articles: data4,
+          source: 'database_success',
+          message: `Retrieved ${data4.length} articles using RPC function`,
+          time: new Date().toISOString(),
+          count: data4.length,
+          approach: 'rpc_function'
+        });
+      } else {
+        console.log('[DISCORD-NEWS-API] Approach 4 failed with error:', error4);
+      }
+      
+      // If we got here, none of the approaches worked
+      // Return the most detailed error (from approach 1) for diagnosis
+      console.error('[DISCORD-NEWS-API] All query approaches failed');
       
       return NextResponse.json({
         articles: fallbackArticles,
         source: 'database_error',
-        message: `Database error: ${error.message}`,
+        message: `All table access approaches failed`,
         error_details: {
-          code: error.code,
-          message: error.message,
-          hint: error.hint,
-          details: error.details,
+          approach1_error: error,
+          approach2_error: error2,
+          approach3_error: error3, 
+          approach4_error: error4,
+          using_service_key: useServiceKey,
+          environment: envInfo,
+          request_origin: origin,
+          debug_help: "Check that your table is named 'newsfeed' (case sensitive) and contains the expected columns"
+        },
+        time: new Date().toISOString()
+      });
+      
+    } catch (queryError) {
+      console.error('[DISCORD-NEWS-API] Unexpected query error:', queryError);
+      
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'database_error',
+        message: `Query execution error: ${queryError instanceof Error ? queryError.message : 'Unknown error'}`,
+        error_details: {
+          error: queryError instanceof Error ? queryError.message : String(queryError),
           using_service_key: useServiceKey,
           environment: envInfo,
           request_origin: origin
@@ -149,29 +251,6 @@ export async function GET(request: Request) {
         time: new Date().toISOString()
       });
     }
-    
-    // Handle success
-    if (data && data.length > 0) {
-      console.log(`[DISCORD-NEWS-API] Successfully retrieved ${data.length} articles using ${useServiceKey ? 'SERVICE_KEY' : 'ANON_KEY'}`);
-      console.log('[DISCORD-NEWS-API] Sample article:', data[0]);
-      
-      return NextResponse.json({
-        articles: data,
-        source: 'database_success',
-        message: `Retrieved ${data.length} articles`,
-        time: new Date().toISOString(),
-        count: data.length
-      });
-    }
-    
-    // Handle empty results
-    console.log('[DISCORD-NEWS-API] No articles found in database');
-    return NextResponse.json({
-      articles: fallbackArticles,
-      source: 'empty_results',
-      message: 'No articles found in the database',
-      time: new Date().toISOString()
-    });
     
   } catch (error) {
     console.error('[DISCORD-NEWS-API] Unexpected error:', error);
