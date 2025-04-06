@@ -173,19 +173,60 @@ function formatDate(dateString: string) {
   }
 }
 
-// Use direct API fetch instead of relying on Supabase client
+// Use proxy API to work around DNS resolution issues
 async function getDiscordNews(): Promise<{ news: DiscordMessage[], source: string, error?: string, lastUpdated: string }> {
-  console.log("Starting getDiscordNews function (Edge runtime)");
-  
-  // Get Supabase credentials - use hardcoded as a guaranteed fallback
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+  console.log("Starting getDiscordNews function with proxy approach");
   
   try {
+    // APPROACH 1: Try our proxy API first
+    console.log("Attempting to fetch data through proxy API");
+    
+    // Build the URL for our proxy - use relative URL for better compatibility
+    const proxyUrl = '/api/supabase-proxy';
+    
+    const proxyResponse = await fetch(proxyUrl, { 
+      cache: 'no-store',
+      next: { revalidate: 0 }
+    });
+    
+    if (proxyResponse.ok) {
+      const proxyData = await proxyResponse.json();
+      console.log("Proxy API successful:", proxyData.source);
+      
+      if (proxyData.news && proxyData.news.length > 0) {
+        // Map the API response to our DiscordMessage format
+        const formattedData: DiscordMessage[] = proxyData.news.map((item: any) => ({
+          id: item.id,
+          title: item.title || formatTitleFromContent(item.content),
+          content: item.content,
+          author: item.author || 'Unknown',
+          created_at: item.created_at || item.timestamp || new Date().toISOString(),
+          channel: item.channel || determineChannelFromContent(item.content)
+        }));
+        
+        return {
+          news: formattedData,
+          source: "proxy_api_success",
+          lastUpdated: proxyData.timestamp || new Date().toISOString()
+        };
+      }
+    } else {
+      console.log("Proxy API failed with status:", proxyResponse.status);
+      const errorText = await proxyResponse.text();
+      console.error("Proxy error:", errorText);
+    }
+    
+    // APPROACH 2: Fall back to direct Supabase access if proxy fails
+    console.log("Falling back to direct Supabase access");
+    
+    // Get Supabase credentials - use hardcoded as a guaranteed fallback
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+    
     // Direct REST API call to Supabase (bypassing the client library)
     const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=20`;
     
-    console.log("Making direct REST API call to:", apiUrl);
+    console.log("Making direct REST API call to Supabase");
     
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -231,11 +272,11 @@ async function getDiscordNews(): Promise<{ news: DiscordMessage[], source: strin
       lastUpdated: new Date().toISOString()
     };
   } catch (error: any) {
-    console.error("Error fetching from Supabase:", error);
+    console.error("Error fetching from all sources:", error);
     
     return {
       news: enhancedFallbackArticles,
-      source: "fallback_api_error",
+      source: "fallback_all_methods_failed",
       error: error.message,
       lastUpdated: new Date().toISOString()
     };
