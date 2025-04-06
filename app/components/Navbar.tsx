@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Menu, X, Terminal, Zap, Home, Heart, ChevronDown, MessageSquare, Code, Award, BookOpen, AlertTriangle, Newspaper, LineChart, ArrowRight } from 'lucide-react';
+import { User, Menu, X, Terminal, Zap, Home, Heart, ChevronDown, MessageSquare, Code, Award, BookOpen, AlertTriangle, Newspaper, LineChart, ArrowRight, Linkedin, Users, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -26,9 +26,9 @@ export default function Navbar() {
         { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord" },
         { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github" },
         { title: "Substack", desc: "Subscribe to our cybersecurity newsletter", icon: Terminal, href: "/community/substack" },
-        { title: "LinkedIn", desc: "Connect with professionals in the industry", href: "/community/linkedin" },
-        { title: "Skool", desc: "Join our learning community", href: "/community/skool" },
-        { title: "Forums", desc: "Discuss cybersecurity topics", href: "/community/forums" }
+        { title: "LinkedIn", desc: "Connect with professionals in the industry", icon: Linkedin, href: "/community/linkedin" },
+        { title: "Skool", desc: "Join our learning community", icon: Users, href: "/community/skool" },
+        { title: "Forums", desc: "Discuss cybersecurity topics", icon: MessageCircle, href: "/community/forums" }
       ]
     },
     {
@@ -41,9 +41,9 @@ export default function Navbar() {
         { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
         { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats" },
         { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry" },
-        { title: "Research", desc: "Latest cybersecurity research findings", href: "/insights/research" },
-        { title: "Cases", desc: "Real-world cybersecurity incident analyses", href: "/insights/cases" },
-        { title: "Practices", desc: "Best practices for security", href: "/insights/practices" }
+        { title: "Research", desc: "Latest cybersecurity research findings", icon: BookOpen, href: "/insights/research" },
+        { title: "Cases", desc: "Real-world cybersecurity incident analyses", icon: Users, href: "/insights/cases" },
+        { title: "Practices", desc: "Best practices for security", icon: Code, href: "/insights/practices" }
       ]
     },
     {
@@ -56,9 +56,9 @@ export default function Navbar() {
         { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner" },
         { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced" },
         { title: "Certifications", desc: "Prepare for industry certifications", icon: Award, href: "/academy/certifications" },
-        { title: "Courses", desc: "Focused cybersecurity learning modules", href: "/academy/courses" },
-        { title: "Labs", desc: "Hands-on practical environments", href: "/academy/labs" },
-        { title: "YouTube", desc: "Free educational video content", href: "/academy/youtube" }
+        { title: "Courses", desc: "Focused cybersecurity learning modules", icon: Users, href: "/academy/courses" },
+        { title: "Labs", desc: "Hands-on practical environments", icon: Terminal, href: "/academy/labs" },
+        { title: "YouTube", desc: "Free educational video content", icon: Zap, href: "/academy/youtube" }
       ]
     }
   ];
@@ -117,12 +117,12 @@ export default function Navbar() {
   // Function to determine dropdown position
   const getDropdownPosition = (sectionId: string) => {
     const index = navSections.findIndex(section => section.id === sectionId);
-    const totalSections = navSections.length;
     
-    // Left, center, or right position based on index
     if (index === 0) return "left-0";
-    if (index === totalSections - 1) return "right-0";
-    return "left-1/2 transform -translate-x-1/2";
+    if (index === 1) return "left-1/2 transform -translate-x-1/2";
+    if (index === 2) return "right-0";
+    
+    return "left-0";
   };
 
   // Add custom animation
@@ -186,7 +186,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[800px] max-w-[calc(100vw-40px)] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
+                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[750px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
                       >
                         <div className="flex">
                           {/* Section overview - left side */}
@@ -215,13 +215,7 @@ export default function Navbar() {
                                   className="flex items-center p-2 rounded-md hover:bg-blue-500/10 transition-colors group"
                                 >
                                   <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
-                                    {item.icon ? (
-                                      <item.icon className="w-4 h-4 text-blue-400 group-hover:text-blue-300" />
-                                    ) : (
-                                      <div className="w-4 h-4 flex items-center justify-center rounded-sm bg-blue-500/20 group-hover:bg-blue-500/30">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 group-hover:bg-blue-300"></div>
-                                      </div>
-                                    )}
+                                    <item.icon className="w-4 h-4 text-blue-400 group-hover:text-blue-300" />
                                   </div>
                                   <span className="text-xs font-medium text-white group-hover:text-blue-300">{item.title}</span>
                                 </Link>
@@ -320,13 +314,7 @@ export default function Navbar() {
                                   onClick={() => setMobileMenuOpen(false)}
                                 >
                                   <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
-                                    {item.icon ? (
-                                      <item.icon className="w-4 h-4 text-blue-400" />
-                                    ) : (
-                                      <div className="w-4 h-4 flex items-center justify-center rounded-sm bg-blue-500/20">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
-                                      </div>
-                                    )}
+                                    <item.icon className="w-4 h-4 text-blue-400" />
                                   </div>
                                   <span className="text-xs font-medium text-white">{item.title}</span>
                                 </Link>
