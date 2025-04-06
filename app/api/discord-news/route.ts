@@ -34,12 +34,98 @@ const fallbackArticles = [
 
 // Debug function to log objects safely
 function logObject(label: string, obj: any) {
-  console.log(`${label}: ${JSON.stringify(obj, null, 2)}`);
+  try {
+    console.log(`${label}: ${JSON.stringify(obj, null, 2)}`);
+  } catch (e: any) {
+    console.log(`${label}: [Could not stringify object: ${e.message}]`, obj);
+  }
+}
+
+// Simple response format for diagnostics
+interface DiagnosticResult {
+  success: boolean;
+  status?: number;
+  message: string;
+  timing: number;
+  error?: any;
+  data?: any;
+}
+
+// Test fetch to external endpoint
+async function testExternalFetch(url: string): Promise<DiagnosticResult> {
+  const start = Date.now();
+  try {
+    console.log(`[DIAGNOSTIC] Testing fetch to: ${url}`);
+    const response = await fetch(url, { method: 'GET' });
+    const status = response.status;
+    const result: DiagnosticResult = {
+      success: response.ok,
+      status,
+      message: response.ok ? 'Success' : `Error: HTTP ${status}`,
+      timing: Date.now() - start
+    };
+    
+    if (response.ok) {
+      try {
+        result.data = await response.json();
+      } catch (e) {
+        result.data = await response.text();
+      }
+    }
+    
+    return result;
+  } catch (error: any) {
+    console.error(`[DIAGNOSTIC] Fetch error to ${url}:`, error);
+    return {
+      success: false,
+      message: `Fetch error: ${error.message || 'Unknown error'}`,
+      timing: Date.now() - start,
+      error
+    };
+  }
+}
+
+// Test direct REST API call to Supabase
+async function testSupabaseREST(supabaseUrl: string, apiKey: string): Promise<DiagnosticResult> {
+  const start = Date.now();
+  try {
+    console.log(`[DIAGNOSTIC] Testing direct REST call to Supabase`);
+    const endpoint = `${supabaseUrl}/rest/v1/newsfeed?select=*&limit=1`;
+    
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': apiKey,
+        'Authorization': `Bearer ${apiKey}`
+      }
+    });
+    
+    const status = response.status;
+    const data = await response.json();
+    
+    return {
+      success: response.ok,
+      status,
+      message: response.ok ? 'Success' : `Error: HTTP ${status}`,
+      timing: Date.now() - start,
+      data
+    };
+  } catch (error: any) {
+    console.error(`[DIAGNOSTIC] Supabase REST error:`, error);
+    return {
+      success: false,
+      message: `Supabase REST error: ${error.message || 'Unknown error'}`,
+      timing: Date.now() - start,
+      error
+    };
+  }
 }
 
 export async function GET() {
   console.log('[API Route] *** GET function entered *** Timestamp:', new Date().toISOString());
-  console.log('[API Route] ⭐ REBUILD FORCED TO REFRESH ENV VARS ⭐');
+  
+  const diagnostics: Record<string, any> = {};
 
   console.log('[API Route] Endpoint called at:', new Date().toISOString());
   
@@ -58,6 +144,31 @@ export async function GET() {
         error: 'Missing Supabase server environment variables in Vercel.'
       });
   }
+
+  // Run diagnostics
+  console.log('[DIAGNOSTIC] Running connectivity diagnostics tests...');
+  
+  // Test basic fetch capability to a public API
+  diagnostics.httpBinTest = await testExternalFetch('https://httpbin.org/get');
+  console.log('[DIAGNOSTIC] HTTP Bin Test Result:', 
+    diagnostics.httpBinTest.success ? 'SUCCESS' : 'FAILED', 
+    `(${diagnostics.httpBinTest.timing}ms)`
+  );
+  
+  // Test connectivity to Supabase base URL
+  const supabaseBaseUrl = supabaseUrl.replace(/\/$/, '');
+  diagnostics.supabaseBaseTest = await testExternalFetch(supabaseBaseUrl);
+  console.log('[DIAGNOSTIC] Supabase Base URL Test Result:', 
+    diagnostics.supabaseBaseTest.success ? 'SUCCESS' : 'FAILED', 
+    `(${diagnostics.supabaseBaseTest.timing}ms)`
+  );
+  
+  // Test direct REST API
+  diagnostics.supabaseRestTest = await testSupabaseREST(supabaseBaseUrl, supabaseServiceKey);
+  console.log('[DIAGNOSTIC] Supabase REST API Test Result:', 
+    diagnostics.supabaseRestTest.success ? 'SUCCESS' : 'FAILED', 
+    `(${diagnostics.supabaseRestTest.timing}ms)`
+  );
   
   let message = 'Operation started';
   try {
@@ -86,11 +197,8 @@ export async function GET() {
     } else if (articles && articles.length > 0) {
       console.log(`[API Route] Query successful, retrieved ${articles.length} items`);
       try {
-        const processedArticles = articles.map(article => {
-          // ... (URL processing logic) ...
-          return article;
-        });
-        finalArticles = processedArticles;
+        // Process articles if needed
+        finalArticles = articles;
         source = 'database';
         message = 'Retrieved from database';
       } catch (processingError) {
@@ -106,7 +214,8 @@ export async function GET() {
     return NextResponse.json({
       articles: finalArticles,
       source: source,
-      message: message
+      message: message,
+      diagnostics: diagnostics
     });
 
   } catch (catchError) {
@@ -122,7 +231,8 @@ export async function GET() {
       source: 'fallback_catch_error',
       error: `API Handler Error: ${errorMsg}`,
       message: errorMsg,
-      errorTime: new Date().toISOString()
+      errorTime: new Date().toISOString(),
+      diagnostics: diagnostics
     });
   }
 } 
