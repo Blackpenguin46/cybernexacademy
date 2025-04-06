@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Menu, X, Terminal, Zap, Home, Heart, ChevronDown, MessageSquare, Code, Award, BookOpen, AlertTriangle, Newspaper, LineChart } from 'lucide-react';
+import { User, Menu, X, Terminal, Zap, Home, Heart, ChevronDown, MessageSquare, Code, Award, BookOpen, AlertTriangle, Newspaper, LineChart, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 
 export default function Navbar() {
@@ -20,6 +20,7 @@ export default function Navbar() {
       title: "Community",
       href: "/community",
       icon: User,
+      description: "Connect with cybersecurity professionals and enthusiasts through our community platforms.",
       featured: [
         { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord" },
         { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github" },
@@ -36,6 +37,7 @@ export default function Navbar() {
       title: "Insights",
       href: "/insights",
       icon: Zap,
+      description: "Explore the latest cybersecurity news, threats, and industry trends to stay informed.",
       featured: [
         { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
         { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats" },
@@ -52,6 +54,7 @@ export default function Navbar() {
       title: "Academy",
       href: "/academy",
       icon: Terminal,
+      description: "Build your cybersecurity skills with structured learning paths, courses, and certifications.",
       featured: [
         { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner" },
         { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced" },
@@ -168,7 +171,7 @@ export default function Navbar() {
                     <span>{section.title}</span>
                   </Link>
 
-                  {/* Desktop Dropdown Menu */}
+                  {/* Desktop Dropdown Menu - New Horizontal Layout */}
                   <AnimatePresence>
                     {activeDropdown === section.id && (
                       <motion.div
@@ -176,34 +179,56 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute left-0 mt-2 w-80 bg-gray-900/95 backdrop-blur-md rounded-lg shadow-lg border border-blue-500/20 overflow-hidden"
+                        className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[800px] max-w-[calc(100vw-40px)] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50"
                       >
-                        <div className="p-4 grid gap-4">
-                          {section.featured.map((item) => (
-                            <Link
-                              key={item.title}
-                              href={item.href}
-                              className="flex items-start p-3 rounded-md hover:bg-blue-500/10 transition-colors group"
+                        <div className="flex">
+                          {/* Section overview - left side */}
+                          <div className="w-1/3 p-6 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-r border-blue-500/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <section.icon className="w-5 h-5 text-blue-400" />
+                              <h3 className="text-lg font-semibold text-white">{section.title}</h3>
+                            </div>
+                            <p className="text-sm text-gray-300 mb-4">{section.description}</p>
+                            <Link 
+                              href={section.href} 
+                              className="inline-flex items-center text-sm text-blue-400 hover:text-blue-300 group"
                             >
-                              <item.icon className="w-5 h-5 text-blue-400 group-hover:text-blue-300 mr-3" />
-                              <div>
-                                <div className="text-sm font-medium text-white group-hover:text-blue-300">{item.title}</div>
-                                <div className="text-xs text-gray-400 group-hover:text-gray-300">{item.desc}</div>
-                              </div>
+                              Explore all {section.title.toLowerCase()}
+                              <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                          ))}
+                          </div>
                           
-                          <div className="border-t border-blue-500/20 pt-3 mt-2">
-                            <div className="grid grid-cols-2 gap-2">
-                              {section.links.map((link) => (
+                          {/* Subsections - right side */}
+                          <div className="w-2/3 p-6">
+                            <div className="grid grid-cols-2 gap-4 mb-4">
+                              {section.featured.map((item) => (
                                 <Link
-                                  key={link.name}
-                                  href={link.href}
-                                  className="text-sm text-gray-300 hover:text-white px-3 py-2 rounded-md hover:bg-blue-500/10 transition-colors"
+                                  key={item.title}
+                                  href={item.href}
+                                  className="flex items-start p-3 rounded-md hover:bg-blue-500/10 transition-colors group"
                                 >
-                                  {link.name}
+                                  <item.icon className="w-5 h-5 text-blue-400 group-hover:text-blue-300 mr-3 mt-0.5" />
+                                  <div>
+                                    <div className="text-sm font-medium text-white group-hover:text-blue-300">{item.title}</div>
+                                    <div className="text-xs text-gray-400 group-hover:text-gray-300">{item.desc}</div>
+                                  </div>
                                 </Link>
                               ))}
+                            </div>
+                            
+                            <div className="border-t border-blue-500/20 pt-4">
+                              <h4 className="text-xs font-medium text-gray-500 uppercase mb-2 ml-2">Related Links</h4>
+                              <div className="grid grid-cols-3 gap-2">
+                                {section.links.map((link) => (
+                                  <Link
+                                    key={link.name}
+                                    href={link.href}
+                                    className="text-sm text-gray-300 hover:text-white px-3 py-2 rounded-md hover:bg-blue-500/10 transition-colors"
+                                  >
+                                    {link.name}
+                                  </Link>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -240,7 +265,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile menu */}
+          {/* Mobile menu - keeping the same implementation */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div 
@@ -287,6 +312,8 @@ export default function Navbar() {
                             exit={{ height: 0, opacity: 0 }}
                             className="pl-4 space-y-2"
                           >
+                            <p className="px-3 py-2 text-sm text-gray-400">{section.description}</p>
+                            
                             {section.featured.map((item) => (
                               <Link
                                 key={item.title}
