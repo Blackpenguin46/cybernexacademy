@@ -74,81 +74,88 @@ export async function GET() {
   logWithEnv('Discord news API route called');
   
   try {
-    // Direct hardcoded data from your database - as seen in screenshot
-    const realDatabaseArticles = [
-      {
-        id: '187',
-        title: 'Minnesota Tribe Struggles After Ransomware Attack',
-        content: 'Minnesota Tribe Struggles After Ransomware Attack Hote',
-        author: 'CyberSecurity Bot',
-        timestamp: '2025-04-05 03:44:07.954',
-        urls: ['https://www.darkreading.com/cyberattacks-data-breaches/minnesota-tribe-struggles-after-ransomware-attack']
-      },
-      {
-        id: '188',
-        title: 'Flaw in Verizon call record requests',
-        content: 'Flaw in Verizon call record requests put millions of Americans at risk',
-        author: 'CyberSecurity Bot',
-        timestamp: '2025-04-05 03:44:07.998',
-        urls: ['https://www.malwarebytes.com/blog/news/2025/04/flaw-in-verizon-call-records']
-      },
-      {
-        id: '189',
-        title: 'Medusa Rides Momentum From Ransomware-as-a-Service',
-        content: 'Medusa Rides Momentum From Ransomware-as-a-Service',
-        author: 'CyberSecurity Bot',
-        timestamp: '2025-04-05 03:44:08.037',
-        urls: ['https://www.darkreading.com/threat-intelligence/medusa-momentum']
-      },
-      {
-        id: '190',
-        title: 'CISA Layoffs Are a Momentary Disruption, Not a Threat',
-        content: 'CISA Layoffs Are a Momentary Disruption, Not a Threat',
-        author: 'CyberSecurity Bot',
-        timestamp: '2025-04-05 03:44:08.076',
-        urls: ['https://www.darkreading.com/vulnerabilities-threats/cisa-layoffs-momentary-disruption']
-      },
-      {
-        id: '191',
-        title: 'Rafts of Security Bugs Could Rain Out Solar Grids',
-        content: 'Rafts of Security Bugs Could Rain Out Solar Grids At least temporarily',
-        author: 'CyberSecurity Bot',
-        timestamp: '2025-04-05 03:44:08.117',
-        urls: ['https://www.darkreading.com/vulnerabilities-threats/security-bugs-solar-grids']
-      },
-      {
-        id: '192',
-        title: 'SpotBugs Access Token Theft Identified as Root Cause',
-        content: 'SpotBugs Access Token Theft Identified as Root Cause',
-        author: 'CyberSecurity Bot',
-        timestamp: '2025-04-05 03:44:08.156',
-        urls: ['https://thehackernews.com/2025/04/spotbugs-access-token-theft']
-      }
-    ];
+    // Get environment variables for Supabase connection
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
+    
+    logWithEnv(`Using Supabase URL: ${supabaseUrl.substring(0, 15)}...`);
+    logWithEnv(`Using Supabase Key: ${supabaseKey.substring(0, 10)}...`);
 
-    // Return the real database data
-    return NextResponse.json({
-      articles: realDatabaseArticles,
-      source: 'direct_data',
-      message: 'Using direct data from database screenshot',
-      time: new Date().toISOString(),
-      debug: {
-        method: 'hardcoded_data',
-        count: realDatabaseArticles.length,
-        env: isVercelEnv ? 'vercel' : 'local'
+    // Create Supabase client with more lenient timeout
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      },
+      global: {
+        fetch: (url, options) => {
+          return fetch(url, { 
+            ...options, 
+            signal: AbortSignal.timeout(10000) // 10 second timeout
+          });
+        }
       }
     });
-  } catch (error) {
-    // Catch-all for any unexpected errors
-    logWithEnv('Unexpected error:', error);
+
+    // Simple straightforward query to get all articles
+    logWithEnv('Querying newsfeed table in Supabase...');
+    const { data: articles, error } = await supabase
+      .from('newsfeed')
+      .select('*')
+      .order('timestamp', { ascending: false });
+    
+    // Handle query error
+    if (error) {
+      logWithEnv(`Supabase query error: ${error.message}`);
+      logWithEnv(`Error details: ${JSON.stringify(error)}`);
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'database_error',
+        message: `Database query error: ${error.message}`,
+        time: new Date().toISOString(),
+        debug: { error: error.message }
+      });
+    }
+    
+    // Handle no data returned
+    if (!articles || articles.length === 0) {
+      logWithEnv('No articles found in database');
+      return NextResponse.json({
+        articles: fallbackArticles,
+        source: 'database_empty',
+        message: 'No articles found in database',
+        time: new Date().toISOString()
+      });
+    }
+    
+    // Success - return the articles
+    logWithEnv(`Successfully retrieved ${articles.length} articles from database`);
     return NextResponse.json({
-      articles: fallbackArticles,
-      source: 'fallback_error',
-      message: `Unexpected error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      articles: articles,
+      source: 'database_success',
+      message: `Retrieved ${articles.length} articles from database`,
       time: new Date().toISOString(),
       debug: {
-        env: isVercelEnv ? 'vercel' : 'local',
-        error: error instanceof Error ? error.message : 'Unknown error'
+        count: articles.length
+      }
+    });
+    
+  } catch (error) {
+    // Catch-all for any unexpected errors
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : '';
+    
+    logWithEnv(`Unexpected error: ${errorMessage}`);
+    logWithEnv(`Error stack: ${errorStack}`);
+    
+    return NextResponse.json({
+      articles: fallbackArticles,
+      source: 'fetch_error',
+      message: `Error connecting to database: ${errorMessage}`,
+      time: new Date().toISOString(),
+      debug: {
+        error: errorMessage,
+        stack: errorStack
       }
     });
   }
