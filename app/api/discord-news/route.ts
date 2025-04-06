@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 
 // Always use server-side rendering so we can access server environment variables
 export const dynamic = 'force-dynamic';
@@ -62,41 +61,46 @@ const fallbackArticles = [
   }
 ];
 
-// Check if we're in a Vercel environment
-const isVercelEnv = process.env.VERCEL === '1' || process.env.VERCEL_ENV !== undefined;
-
-// Custom console log that includes environment info
-function logWithEnv(message: string, ...args: any[]) {
-  console.log(`[API:${isVercelEnv ? 'Vercel' : 'Local'}] ${message}`, ...args);
-}
-
-export async function GET() {
+export async function GET(request: Request) {
   console.log('[DISCORD-NEWS-API] Route called at ' + new Date().toISOString());
   
-  // For debugging: Send hardcoded reponse but mark it as coming from an alternative fallback
-  // This will help us understand if the API route itself is working
-  console.log('[DISCORD-NEWS-API] Returning server-verified fallback data');
-  
-  return NextResponse.json({
-    articles: fallbackArticles,
-    source: 'server_verified_fallback',
-    message: 'Verified API route is working with fallback data. Database connection is still being configured.',
-    time: new Date().toISOString(),
-    count: fallbackArticles.length
-  });
-  
-  // The old Supabase code has been temporarily commented out for debugging
-  /*
   try {
-    // IMPORTANT: Using direct REST API approach to bypass client-side issues
+    // Test if the Supabase table exists by making a direct fetch to the REST API
+    console.log('[DISCORD-NEWS-API] Attempting to test Supabase table');
+    
     const supabaseUrl = 'https://hpfpuljthcngnswwfkrb.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
     
-    console.log('Attempting direct REST API call to Supabase');
+    // Step 1: Simply test if the table exists with a count query
+    const testUrl = `${supabaseUrl}/rest/v1/newsfeed?select=count`;
+    console.log(`[DISCORD-NEWS-API] Testing table with URL: ${testUrl}`);
     
-    // Based on screenshot, the table appears to be called 'newsfeed' with specific fields
-    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=timestamp.desc`;
-    console.log(`API URL: ${apiUrl}`);
+    const testResponse = await fetch(testUrl, {
+      method: 'HEAD',
+      headers: {
+        'apikey': supabaseKey,
+        'Authorization': `Bearer ${supabaseKey}`,
+      },
+      cache: 'no-store'
+    });
+    
+    console.log(`[DISCORD-NEWS-API] Table test response status: ${testResponse.status}`);
+    
+    if (testResponse.status === 404) {
+      throw new Error('Table "newsfeed" not found. The table may not exist in your Supabase project.');
+    }
+    
+    if (!testResponse.ok) {
+      const errorText = await testResponse.text();
+      console.error(`[DISCORD-NEWS-API] Table test failed: ${testResponse.status} - ${errorText}`);
+      throw new Error(`Could not connect to database table: ${testResponse.status}`);
+    }
+    
+    // If we reach here, table exists, so fetch the actual data
+    console.log('[DISCORD-NEWS-API] Table exists, fetching data');
+    
+    // Step 2: Fetch the actual data with full details
+    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc`;
     
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -105,36 +109,36 @@ export async function GET() {
         'apikey': supabaseKey,
         'Authorization': `Bearer ${supabaseKey}`,
       },
-      next: { revalidate: 0 }, // Disable caching
       cache: 'no-store'
     });
     
     if (!response.ok) {
       const responseText = await response.text();
-      console.error(`API error: ${response.status} - ${responseText}`);
-      throw new Error(`API error ${response.status}: ${responseText}`);
+      console.error(`[DISCORD-NEWS-API] Data fetch error: ${response.status} - ${responseText}`);
+      throw new Error(`Database error: ${response.status} - ${responseText.substring(0, 100)}`);
     }
     
     const data = await response.json();
-    console.log(`Fetched ${data.length} records from database`);
+    console.log(`[DISCORD-NEWS-API] Successfully fetched ${data.length} records from database`);
     
-    // No articles found, return fallback
-    if (!data || data.length === 0) {
-      console.log('No articles found in database');
+    // No articles found, return notification with fallback
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      console.log('[DISCORD-NEWS-API] No articles found in database, using fallback');
       return NextResponse.json({
         articles: fallbackArticles,
         source: 'database_empty',
-        message: 'No articles found in database',
-        time: new Date().toISOString()
+        message: 'Database connection successful but no articles found',
+        time: new Date().toISOString(),
+        count: 0
       });
     }
     
-    // Success - log a sample of the data to verify structure
+    // Success - log a sample record to verify structure
     if (data.length > 0) {
-      console.log('Sample record:', JSON.stringify(data[0]));
+      console.log('[DISCORD-NEWS-API] Sample record:', JSON.stringify(data[0]));
     }
     
-    // Return the full dataset
+    // Return the actual data from the database
     return NextResponse.json({
       articles: data,
       source: 'database_success',
@@ -144,14 +148,19 @@ export async function GET() {
     });
     
   } catch (error) {
-    console.error('Error fetching from database:', error);
+    console.error('[DISCORD-NEWS-API] Error:', error);
     
+    // Include error details in the response
     return NextResponse.json({
       articles: fallbackArticles,
       source: 'api_error',
       message: error instanceof Error ? error.message : 'Unknown database error',
+      error_details: error instanceof Error ? {
+        name: error.name,
+        message: error.message,
+        stack: error.stack?.split('\n').slice(0, 3).join('\n')
+      } : 'Unknown error object',
       time: new Date().toISOString()
     });
   }
-  */
 } 

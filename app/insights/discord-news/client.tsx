@@ -138,6 +138,12 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
           setSource(data.source || 'unknown_source');
           setLastUpdated(data.time || new Date().toISOString());
           
+          // Check for detailed error information
+          if (data.error_details) {
+            console.log('Error details from API:', data.error_details);
+            setEnvDebug(prev => prev + '\n\nAPI Error Details:\n' + JSON.stringify(data.error_details, null, 2));
+          }
+          
           // Even if we get an api_error source, check if we have articles
           if (data.articles && data.articles.length > 0) {
             console.log(`API response contains ${data.articles.length} articles from source: ${data.source}`);
@@ -408,17 +414,28 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
             </div>
             
             {/* Only show debug info if there's an error */}
-            {error && (
+            {(error || source === 'api_error') && (
               <div className="mt-4 border-t border-gray-600 pt-2">
                 <p className="font-medium text-white">Debug Information:</p>
-                <pre className="bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto text-gray-300 font-mono">
+                <pre className="bg-gray-900 p-2 rounded text-xs mt-1 overflow-x-auto max-h-48 text-gray-300 font-mono">
                   {envDebug}
                 </pre>
                 
-                <div className="mt-4">
-                  <a href="/api-test" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300">
-                    Open API Test Page
+                <div className="mt-4 flex space-x-4">
+                  <a 
+                    href={`/api/discord-news?t=${new Date().getTime()}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-blue-400 underline hover:text-blue-300"
+                  >
+                    View Raw API Response
                   </a>
+                  <button
+                    onClick={() => window.location.reload()}
+                    className="text-green-400 underline hover:text-green-300"
+                  >
+                    Reload Page
+                  </button>
                 </div>
               </div>
             )}
