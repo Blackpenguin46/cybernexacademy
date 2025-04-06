@@ -160,9 +160,8 @@ The system requires the following environment variables:
 
 ```env
 # Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_KEY=your-service-role-key
 
 # API Security
 NEXT_PUBLIC_LINK_VERIFICATION_API_KEY=your-secret-api-key

@@ -1,35 +1,43 @@
 import { createClient } from '@supabase/supabase-js'
 import { Database } from './database.types';
 
-// Get environment variables
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Singleton pattern for the Supabase client
+let supabase: any = null;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+if (!supabaseUrl || !supabaseServiceKey) {
+  console.warn('Supabase URL or Key not found. Using placeholder values.');
 }
 
-// Create a Supabase client with enhanced security options
-export const supabase = createClient<Database>(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key',
-  {
-    auth: {
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: true,
-      flowType: 'pkce', // Use PKCE flow for enhanced security
-    },
-    global: {
-      headers: {
-        'X-Client-Info': 'cybernex-web',
-      },
-    },
-    db: {
-      schema: 'public',
-    },
+// Create a single supabase client for the entire application
+const getSupabase = () => {
+  if (!supabase) {
+    supabase = createClient<Database>(
+      supabaseUrl || 'https://placeholder.supabase.co',
+      supabaseServiceKey || 'placeholder-key',
+      {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true,
+          flowType: 'pkce', // Use PKCE flow for enhanced security
+        },
+        global: {
+          headers: {
+            'X-Client-Info': 'cybernex-web',
+          },
+        },
+        db: {
+          schema: 'public',
+        },
+      }
+    );
   }
-);
+  return supabase;
+};
+
+export default getSupabase;
 
 // Export a mock version for build/testing environments
 export const mockSupabase = {

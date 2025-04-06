@@ -27,21 +27,21 @@ export async function GET(request: NextRequest) {
   }
   
   // Only initialize Supabase if we're not in a preview environment
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  const supabaseAdmin = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_KEY!
   );
   
   try {
     const results = {
-      discord: await verifyDiscordLinks(supabase),
-      reddit: await verifyRedditLinks(supabase),
-      skool: await verifySkoolLinks(supabase),
+      discord: await verifyDiscordLinks(supabaseAdmin),
+      reddit: await verifyRedditLinks(supabaseAdmin),
+      skool: await verifySkoolLinks(supabaseAdmin),
       timestamp: new Date().toISOString()
     };
     
     // Log the verification run
-    await supabase
+    await supabaseAdmin
       .from('link_verification_log')
       .insert({
         verified_at: results.timestamp,

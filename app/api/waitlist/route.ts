@@ -18,6 +18,12 @@ export async function POST(request: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
+    // Add server-side Supabase client for admin access
+    const supabaseAdmin = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_KEY!
+    );
+
     // Store email in waitlist table
     const { error } = await supabase
       .from('waitlist')

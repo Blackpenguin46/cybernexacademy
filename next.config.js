@@ -7,7 +7,8 @@ const nextConfig = {
   },
   // Add env fallbacks
   env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    SUPABASE_URL: process.env.SUPABASE_URL || '',
+    SUPABASE_SERVICE_KEY: process.env.SUPABASE_SERVICE_KEY || '',
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   },
   // Reinstating CSP headers now that conflicting meta tag is removed

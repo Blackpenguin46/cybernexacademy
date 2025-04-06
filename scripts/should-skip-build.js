@@ -1,7 +1,7 @@
 // Check if required environment variables are present
 const requiredEnvVars = [
-  'NEXT_PUBLIC_SUPABASE_URL',
-  'NEXT_PUBLIC_SUPABASE_ANON_KEY'
+  'SUPABASE_URL',
+  'SUPABASE_SERVICE_KEY'
 ];
 
 const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);

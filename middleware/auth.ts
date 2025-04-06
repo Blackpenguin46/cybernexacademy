@@ -2,6 +2,7 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 
 export async function authMiddleware(request: NextRequest) {
   try {
@@ -82,4 +83,15 @@ export const config = {
      */
     '/((?!api|_next/static|_next/image|favicon.ico|public/).*)',
   ],
-}; 
+};
+
+// Middleware for handling authentication
+export async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res }, {
+    supabaseUrl: process.env.SUPABASE_URL!,
+    supabaseKey: process.env.SUPABASE_SERVICE_KEY!,
+  });
+
+  // ... rest of the middleware code ...
+} 
