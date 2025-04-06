@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, Shield, AlertTriangle, ExternalLink, RefreshCw } from
 import { Button } from '@/components/ui/button';
 import { createClient } from '@supabase/supabase-js';
 import { RefreshButton } from './RefreshButton';
+import { NewsClient } from './client';
 
 // Add Edge runtime directive to bypass Node.js network restrictions
 export const runtime = 'edge';
@@ -395,9 +396,9 @@ function formatNewsContent(content: string, urls?: string[]) {
   };
 }
 
+// Server component that provides fallback data to the client component
 export default async function DiscordNewsPage() {
-  const { news, source, error, lastUpdated } = await getDiscordNews();
-  
+  // We'll always use the fallback data initially, then client will try to fetch fresh data
   return (
     <div className="pt-20 pb-8 px-4 md:px-8 min-h-screen">
       <div className="max-w-6xl mx-auto">
@@ -409,41 +410,8 @@ export default async function DiscordNewsPage() {
           <RefreshButton />
         </div>
         
-        <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <div className={`w-3 h-3 rounded-full ${source.includes('fallback') ? 'bg-yellow-500' : 'bg-green-500'}`}></div>
-            <h3 className="font-medium">Feed Information</h3>
-          </div>
-          <p>Source: <span className="font-mono">{source}</span></p>
-          {error && <p>Error: <span className="font-mono text-red-500">{error}</span></p>}
-          <p>Articles: {news.length}</p>
-          <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {news.map((item: DiscordMessage) => {
-            const date = new Date(item.created_at);
-            return (
-              <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs rounded-full whitespace-nowrap">
-                      {item.channel}
-                    </span>
-                  </div>
-                  <div className="text-gray-600 dark:text-gray-300 mb-4 max-h-36 overflow-y-auto">
-                    {item.content}
-                  </div>
-                  <div className="flex justify-between text-sm text-gray-500 pt-2 border-t border-gray-100 dark:border-gray-700">
-                    <span>{item.author}</span>
-                    <time dateTime={date.toISOString()}>{date.toLocaleDateString()}</time>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        {/* Use our client-side component */}
+        <NewsClient fallbackNews={enhancedFallbackArticles} />
       </div>
     </div>
   );
