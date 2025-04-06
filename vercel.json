@@ -24,7 +24,7 @@
   },
   "github": {
     "enabled": true,
-    "silent": false,
+    "silent": true,
     "autoAlias": false,
     "production": {
       "branches": []
@@ -37,7 +37,10 @@
     }
   ],
   "env": {
-    "LINK_VERIFICATION_API_KEY": "preview-placeholder-value-for-verification"
+    "LINK_VERIFICATION_API_KEY": "preview-placeholder-value-for-verification",
+    "NEXT_PUBLIC_VERCEL_URL": {
+      "placeholder": "VERCEL_URL"
+    }
   }
 }
 
