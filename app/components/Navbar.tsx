@@ -23,12 +23,12 @@ export default function Navbar() {
       icon: User,
       description: "Connect with cybersecurity professionals and enthusiasts through our community platforms.",
       items: [
-        { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord", featured: true },
-        { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github", featured: true },
-        { title: "Substack", desc: "Subscribe to our cybersecurity newsletter", icon: Terminal, href: "/community/substack", featured: true },
-        { title: "LinkedIn", desc: "Connect with professionals in the industry", href: "/community/linkedin", featured: false },
-        { title: "Skool", desc: "Join our learning community", href: "/community/skool", featured: false },
-        { title: "Forums", desc: "Discuss cybersecurity topics", href: "/community/forums", featured: false }
+        { title: "Discord Servers", desc: "Join active cybersecurity discussion servers", icon: MessageSquare, href: "/community/discord" },
+        { title: "GitHub Projects", desc: "Collaborate on open-source security tools", icon: Code, href: "/community/github" },
+        { title: "Substack", desc: "Subscribe to our cybersecurity newsletter", icon: Terminal, href: "/community/substack" },
+        { title: "LinkedIn", desc: "Connect with professionals in the industry", href: "/community/linkedin" },
+        { title: "Skool", desc: "Join our learning community", href: "/community/skool" },
+        { title: "Forums", desc: "Discuss cybersecurity topics", href: "/community/forums" }
       ]
     },
     {
@@ -38,12 +38,12 @@ export default function Navbar() {
       icon: Zap,
       description: "Explore the latest cybersecurity news, threats, and industry trends to stay informed.",
       items: [
-        { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news", featured: true },
-        { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats", featured: true },
-        { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry", featured: true },
-        { title: "Research", desc: "Latest cybersecurity research findings", href: "/insights/research", featured: false },
-        { title: "Cases", desc: "Real-world cybersecurity incident analyses", href: "/insights/cases", featured: false },
-        { title: "Practices", desc: "Best practices for security", href: "/insights/practices", featured: false }
+        { title: "Cybersecurity News", desc: "Stay updated with cybersecurity events", icon: Newspaper, href: "/insights/news" },
+        { title: "Threat Reports", desc: "Analyses of emerging threats", icon: AlertTriangle, href: "/insights/threats" },
+        { title: "Industry Trends", desc: "Current developments in cybersecurity", icon: LineChart, href: "/insights/industry" },
+        { title: "Research", desc: "Latest cybersecurity research findings", href: "/insights/research" },
+        { title: "Cases", desc: "Real-world cybersecurity incident analyses", href: "/insights/cases" },
+        { title: "Practices", desc: "Best practices for security", href: "/insights/practices" }
       ]
     },
     {
@@ -53,12 +53,12 @@ export default function Navbar() {
       icon: Terminal,
       description: "Build your cybersecurity skills with structured learning paths, courses, and certifications.",
       items: [
-        { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner", featured: true },
-        { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced", featured: true },
-        { title: "Certifications", desc: "Prepare for industry certifications", icon: Award, href: "/academy/certifications", featured: true },
-        { title: "Courses", desc: "Focused cybersecurity learning modules", href: "/academy/courses", featured: false },
-        { title: "Labs", desc: "Hands-on practical environments", href: "/academy/labs", featured: false },
-        { title: "YouTube", desc: "Free educational video content", href: "/academy/youtube", featured: false }
+        { title: "Beginner Path", desc: "Start your cybersecurity journey", icon: BookOpen, href: "/academy/beginner" },
+        { title: "Advanced Path", desc: "Enhance your technical skills", icon: Code, href: "/academy/advanced" },
+        { title: "Certifications", desc: "Prepare for industry certifications", icon: Award, href: "/academy/certifications" },
+        { title: "Courses", desc: "Focused cybersecurity learning modules", href: "/academy/courses" },
+        { title: "Labs", desc: "Hands-on practical environments", href: "/academy/labs" },
+        { title: "YouTube", desc: "Free educational video content", href: "/academy/youtube" }
       ]
     }
   ];
@@ -186,47 +186,43 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[700px] max-w-[calc(100vw-40px)] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
+                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[800px] max-w-[calc(100vw-40px)] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
                       >
-                        <div className="flex flex-col md:flex-row">
-                          {/* Section overview */}
-                          <div className="w-full md:w-1/3 p-6 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-b md:border-b-0 md:border-r border-blue-500/10">
-                            <div className="flex items-center gap-2 mb-3">
+                        <div className="flex">
+                          {/* Section overview - left side */}
+                          <div className="w-1/4 p-4 bg-gradient-to-br from-gray-800/70 to-gray-900/95 border-r border-blue-500/10">
+                            <div className="flex items-center gap-2 mb-2">
                               <section.icon className="w-5 h-5 text-blue-400" />
                               <h3 className="text-lg font-semibold text-white">{section.title}</h3>
                             </div>
-                            <p className="text-sm text-gray-300 mb-4">{section.description}</p>
+                            <p className="text-xs text-gray-300 mb-3">{section.description}</p>
                             <Link 
                               href={section.href} 
-                              className="inline-flex items-center text-sm text-blue-400 hover:text-blue-300 group"
+                              className="inline-flex items-center text-xs text-blue-400 hover:text-blue-300 group"
                             >
                               Explore all {section.title.toLowerCase()}
-                              <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                              <ArrowRight className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" />
                             </Link>
                           </div>
                           
-                          {/* Unified links grid */}
-                          <div className="w-full md:w-2/3 p-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {/* Unified links grid - right side */}
+                          <div className="w-3/4 p-3">
+                            <div className="grid grid-cols-3 gap-2">
                               {section.items.map((item) => (
                                 <Link
                                   key={item.title}
                                   href={item.href}
-                                  className={`flex items-start p-3 rounded-md transition-colors group
-                                    ${item.featured 
-                                      ? 'bg-blue-500/5 hover:bg-blue-500/10 border border-blue-500/10' 
-                                      : 'hover:bg-gray-800/70'}`}
+                                  className="flex items-center p-2 rounded-md hover:bg-blue-500/10 transition-colors group"
                                 >
-                                  <div className="flex-shrink-0 w-8 h-8 mr-3 flex items-center justify-center">
+                                  <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
                                     {item.icon ? (
-                                      <item.icon className="w-5 h-5 text-blue-400 group-hover:text-blue-300" />
+                                      <item.icon className="w-4 h-4 text-blue-400 group-hover:text-blue-300" />
                                     ) : (
-                                      <div className="w-2 h-2 rounded-full bg-blue-400/50 group-hover:bg-blue-300/60"></div>
+                                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60 group-hover:bg-blue-300/70"></div>
                                     )}
                                   </div>
                                   <div>
-                                    <div className="text-sm font-medium text-white group-hover:text-blue-300">{item.title}</div>
-                                    <div className="text-xs text-gray-400 group-hover:text-gray-300">{item.desc}</div>
+                                    <div className="text-xs font-medium text-white group-hover:text-blue-300">{item.title}</div>
                                   </div>
                                 </Link>
                               ))}
@@ -315,26 +311,25 @@ export default function Navbar() {
                           >
                             <p className="px-3 py-2 text-sm text-gray-400">{section.description}</p>
                             
-                            {section.items.map((item) => (
-                              <Link
-                                key={item.title}
-                                href={item.href}
-                                className={`flex items-start p-2 rounded-md ${item.featured ? 'bg-blue-500/5 border border-blue-500/10' : ''} hover:bg-blue-500/10`}
-                                onClick={() => setMobileMenuOpen(false)}
-                              >
-                                <div className="flex-shrink-0 w-8 h-8 mr-3 flex items-center justify-center">
-                                  {item.icon ? (
-                                    <item.icon className="w-5 h-5 text-blue-400" />
-                                  ) : (
-                                    <div className="w-2 h-2 rounded-full bg-blue-400/50"></div>
-                                  )}
-                                </div>
-                                <div>
-                                  <div className="text-sm font-medium text-white">{item.title}</div>
-                                  <div className="text-xs text-gray-400">{item.desc}</div>
-                                </div>
-                              </Link>
-                            ))}
+                            <div className="grid grid-cols-2 gap-2">
+                              {section.items.map((item) => (
+                                <Link
+                                  key={item.title}
+                                  href={item.href}
+                                  className="flex items-center p-2 rounded-md hover:bg-blue-500/10 transition-colors"
+                                  onClick={() => setMobileMenuOpen(false)}
+                                >
+                                  <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
+                                    {item.icon ? (
+                                      <item.icon className="w-4 h-4 text-blue-400" />
+                                    ) : (
+                                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400/60"></div>
+                                    )}
+                                  </div>
+                                  <div className="text-xs font-medium text-white">{item.title}</div>
+                                </Link>
+                              ))}
+                            </div>
                           </motion.div>
                         )}
                       </AnimatePresence>
