@@ -36,14 +36,59 @@ const fallbackArticles = [
   }
 ];
 
-interface DiscordMessage {
+// Define proper types
+export interface DiscordMessage {
   id: string;
+  created_at: string;
+  title: string;
   content: string;
   author: string;
-  timestamp: string;
-  attachments: any[];
-  urls?: string[]; // Add optional urls array field
+  channel: string;
 }
+
+// Enhanced fallback for better user experience
+const enhancedFallbackArticles: DiscordMessage[] = [
+  {
+    id: '1',
+    created_at: new Date().toISOString(),
+    title: 'Welcome to CyberNex Academy News',
+    content: 'Our system is currently displaying fallback content while we establish connection to our live database. Please check back soon for real-time updates.',
+    author: 'CyberNex Team',
+    channel: 'announcements'
+  },
+  {
+    id: '2',
+    created_at: new Date(Date.now() - 86400000).toISOString(),
+    title: 'Security Best Practices Workshop',
+    content: 'Join us for a workshop on implementing security best practices in your organization.',
+    author: 'Security Team',
+    channel: 'events'
+  },
+  {
+    id: '3',
+    created_at: new Date(Date.now() - 172800000).toISOString(),
+    title: 'New Cybersecurity Course Released',
+    content: 'We\'ve just released a new course on advanced threat hunting techniques.',
+    author: 'Education Team',
+    channel: 'course-updates'
+  },
+  {
+    id: '4',
+    created_at: new Date(Date.now() - 259200000).toISOString(),
+    title: 'Upcoming Webinar on Cloud Security',
+    content: 'Don\'t miss our webinar on securing cloud infrastructure next week.',
+    author: 'Cloud Team',
+    channel: 'events'
+  },
+  {
+    id: '5',
+    created_at: new Date(Date.now() - 345600000).toISOString(),
+    title: 'Community Discussion: Latest Vulnerabilities',
+    content: 'Join the conversation on how to protect against recently discovered vulnerabilities.',
+    author: 'Community Manager',
+    channel: 'discussions'
+  }
+];
 
 // Function to determine message type and color
 function getMessageType(content: string) {
@@ -125,100 +170,109 @@ function formatDate(dateString: string) {
   }
 }
 
-// Get server-side data directly from Supabase
-async function getDiscordNews() {
+async function getDiscordNews(): Promise<{ news: DiscordMessage[], source: string, error?: string, lastUpdated: string }> {
+  console.log("Starting getDiscordNews function");
+  
+  // Check environment variables
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  
+  console.log(`Supabase URL configured: ${supabaseUrl ? 'Yes' : 'No'}`);
+  console.log(`Supabase Anon Key configured: ${supabaseAnonKey ? 'Yes (length: ' + supabaseAnonKey.length + ')' : 'No'}`);
+  
+  // Return fallback if credentials aren't available
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error("Missing Supabase credentials");
+    return {
+      news: enhancedFallbackArticles,
+      source: "fallback_missing_credentials",
+      error: "Missing Supabase credentials",
+      lastUpdated: new Date().toISOString()
+    };
+  }
+
   try {
-    console.log('Server-side: Fetching Discord news...');
-
-    // ENHANCED FALLBACK DATA: Use improved fallback data while we resolve connectivity issues
-    const enhancedFallbackArticles = [
-      ...fallbackArticles,
-      {
-        id: 'enhanced1',
-        content: '[RANSOMWARE] Major hospital chain hit with sophisticated ransomware attack affecting patient systems across 12 states. FBI investigating. https://example.com/hospital-attack',
-        author: 'CyberNewsBot',
-        timestamp: new Date(Date.now() - 3600000).toISOString(), // 1 hour ago
-        attachments: [],
-        urls: ['https://example.com/hospital-attack']
+    // Create client with specific fetch options
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
       },
-      {
-        id: 'enhanced2',
-        content: '[ADVISORY] CISA issues emergency directive for federal agencies to patch Exchange Server vulnerabilities being actively exploited. Patch within 48 hours. https://example.com/cisa-directive',
-        author: 'SecurityFeed',
-        timestamp: new Date(Date.now() - 7200000).toISOString(), // 2 hours ago
-        attachments: [],
-        urls: ['https://example.com/cisa-directive']
+      global: {
+        fetch: (url, options) => {
+          console.log(`Fetching from: ${url}`);
+          return fetch(url, {
+            ...options,
+            cache: 'no-store',
+            next: { revalidate: 0 },
+          });
+        }
       }
-    ];
+    });
 
-    // First, try direct Supabase access
+    // Perform a simple test query to check connectivity
+    console.log("Testing Supabase connection...");
     try {
-      // Initialize Supabase client with server-side environment variables
-      const supabaseUrl = process.env.SUPABASE_URL;
-      const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
-      
-      console.log('Server-side: Checking Supabase credentials...');
-      console.log('Server-side: SUPABASE_URL present:', !!supabaseUrl);
-      console.log('Server-side: SUPABASE_SERVICE_KEY present:', !!supabaseServiceKey);
-      
-      if (!supabaseUrl || !supabaseServiceKey) {
-        console.log('Server-side: Missing Supabase credentials, using enhanced fallback');
-        return { 
-          news: enhancedFallbackArticles, 
-          error: 'Using enhanced fallback data due to missing Supabase credentials',
-          source: 'enhanced_fallback' 
-        };
-      }
-      
-      console.log('Server-side: Initializing Supabase client...');
-      const supabase = createClient(supabaseUrl, supabaseServiceKey);
-      
-      console.log('Server-side: Querying newsfeed table...');
-      const { data: articles, error } = await supabase
+      const { data: testData, error: testError } = await supabase
         .from('newsfeed')
-        .select('*')
-        .order('timestamp', { ascending: false })
-        .limit(50);
+        .select('count')
+        .limit(1);
       
-      if (error) {
-        console.error('Server-side: Supabase query error:', error);
-        return { 
-          news: enhancedFallbackArticles, 
-          error: `Supabase query error: ${error.message}`,
-          source: 'enhanced_fallback_error' 
-        };
+      if (testError) {
+        throw new Error(`Supabase test connection failed: ${testError.message}`);
       }
-      
-      if (!articles || articles.length === 0) {
-        console.log('Server-side: No articles found, using enhanced fallback');
-        return { 
-          news: enhancedFallbackArticles, 
-          error: null,
-          source: 'enhanced_fallback_empty' 
-        };
-      }
-      
-      console.log(`Server-side: Successfully retrieved ${articles.length} articles`);
-      return { 
-        news: articles, 
-        error: null,
-        source: 'database' 
-      };
-    } catch (supabaseError) {
-      console.error('Server-side: Error accessing Supabase:', supabaseError);
-      return { 
-        news: enhancedFallbackArticles, 
-        error: `Error accessing Supabase: ${supabaseError instanceof Error ? supabaseError.message : 'Unknown error'}`,
-        source: 'enhanced_fallback_error' 
+      console.log("Supabase connection test successful:", testData);
+    } catch (testError: any) {
+      console.error("Supabase connection test error:", testError.message || testError);
+      return {
+        news: enhancedFallbackArticles,
+        source: "fallback_connection_test_failed",
+        error: testError.message || "Unknown connection error",
+        lastUpdated: new Date().toISOString()
       };
     }
-    
-  } catch (error) {
-    console.error('Server-side: Error fetching news:', error);
-    return { 
-      news: fallbackArticles, 
-      error: `Error fetching news: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      source: 'fallback_error' 
+
+    // Main query
+    console.log("Querying newsfeed table...");
+    const { data, error } = await supabase
+      .from('newsfeed')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(20);
+
+    if (error) {
+      console.error("Supabase query error:", error);
+      return {
+        news: enhancedFallbackArticles,
+        source: "fallback_query_error",
+        error: error.message,
+        lastUpdated: new Date().toISOString()
+      };
+    }
+
+    if (!data || data.length === 0) {
+      console.log("No news articles found in database");
+      return {
+        news: enhancedFallbackArticles,
+        source: "fallback_no_data",
+        error: "No news articles found",
+        lastUpdated: new Date().toISOString()
+      };
+    }
+
+    console.log(`Found ${data.length} news articles`);
+    return {
+      news: data as DiscordMessage[],
+      source: "supabase",
+      lastUpdated: new Date().toISOString()
+    };
+  } catch (error: any) {
+    console.error("Error fetching news:", error);
+    return {
+      news: enhancedFallbackArticles,
+      source: "fallback_error",
+      error: error.message || "Unknown error",
+      lastUpdated: new Date().toISOString()
     };
   }
 }
@@ -249,122 +303,43 @@ function formatNewsContent(content: string, urls?: string[]) {
 }
 
 export default async function DiscordNewsPage() {
-  // Fetch news server-side (at build time)
-  const { news, error, source } = await getDiscordNews();
-  
-  const debugData = {
-    source,
-    error,
-    newsCount: news.length,
-    time: new Date().toISOString()
-  };
+  const { news, source, error, lastUpdated } = await getDiscordNews();
   
   return (
-    <div className="min-h-screen bg-black text-white pt-24 p-8">
-      <div className="max-w-5xl mx-auto">
-        {/* Header and Controls */}
-        <div className="flex justify-between items-center mb-6">
-          <Link href="/insights" className="text-purple-400 hover:underline flex items-center">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Insights
-          </Link>
-          <div className="flex gap-2">
-            <RefreshButton />
-          </div>
-        </div>
-        
-        {/* Page Title */}
-        <h1 className="text-4xl font-bold mb-4">Cybersecurity News Feed</h1>
-        <p className="text-lg text-gray-300 mb-8">
-          Real-time cybersecurity news and alerts, typically sourced from our Discord channel.
-        </p>
-        
-        {/* Debug Panel */}
-        <div className="bg-gray-900/50 border border-gray-700 rounded-lg p-4 mb-6 font-mono text-xs text-gray-500">
-          <h3 className="font-semibold text-gray-400 mb-2">Debug Info</h3>
-          <p>News Count: {news.length}</p>
-          <p>Source: {source || 'N/A'}</p>
-          <p>Error: {error || 'none'}</p>
-          <p>Last Update: {new Date().toISOString()}</p>
-          <p>Debug Data: <pre className="overflow-auto max-h-20 mt-1">{JSON.stringify(debugData, null, 2)}</pre></p>
-        </div>
-        
-        {/* Display Area */} 
-        <div>
-          {/* No News Found Message Block */}
-          {news.length === 0 && (
-            <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-6 mb-8">
-              <div className="flex items-center text-blue-400 mb-2">
-                <AlertTriangle className="w-5 h-5 mr-2" />
-                <h3 className="font-semibold">No Recent News Found</h3>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight">Discord News Feed</h1>
+        <RefreshButton />
+      </div>
+      
+      <div className="mb-4 text-sm text-gray-500">
+        <p>Source: {source}</p>
+        {error && <p>Error: {error}</p>}
+        <p>Articles: {news.length}</p>
+        <p>Last updated: {new Date(lastUpdated).toLocaleString()}</p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {news.map((item: DiscordMessage) => {
+          const date = new Date(item.created_at);
+          return (
+            <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-4">
+                  <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+                  <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 text-xs rounded-full">
+                    {item.channel}
+                  </span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{item.content}</p>
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>{item.author}</span>
+                  <time dateTime={date.toISOString()}>{date.toLocaleDateString()}</time>
+                </div>
               </div>
-              <p className="text-blue-300">
-                No recent news articles are available at this time.
-              </p>
             </div>
-          )}
-          
-          {/* News Content */}
-          {news.length > 0 && (
-            <div className="space-y-6">
-              {news.map((item: DiscordMessage) => {
-                const { title, content } = formatNewsContent(item.content, item.urls);
-                const messageType = getMessageType(content);
-                
-                return (
-                  <div key={item.id} className="bg-gray-800/50 border border-gray-700 rounded-lg overflow-hidden">
-                    <div className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-xl font-semibold text-white">{title}</h3>
-                        <span className={`px-2 py-1 text-xs rounded ${messageType.color}`}>
-                          {messageType.type}
-                        </span>
-                      </div>
-                      
-                      <div className="mb-3 text-sm text-gray-400 flex items-center">
-                        <Clock className="w-3 h-3 mr-1" />
-                        <span>{formatDate(item.timestamp)}</span>
-                        {item.author && (
-                          <>
-                            <span className="mx-1">•</span>
-                            <Shield className="w-3 h-3 mr-1" />
-                            <span>{item.author}</span>
-                          </>
-                        )}
-                      </div>
-                      
-                      <div className="text-gray-300 whitespace-pre-line">
-                        {formatContentWithLinks(content)}
-                      </div>
-                      
-                      {/* Display URLs if present */}
-                      {item.urls && item.urls.length > 0 && (
-                        <div className="mt-4 pt-3 border-t border-gray-700">
-                          <h4 className="text-sm font-medium text-gray-400 mb-2">Related Links:</h4>
-                          <ul className="space-y-1">
-                            {item.urls.map((url: string, idx: number) => (
-                              <li key={idx} className="text-sm">
-                                <a 
-                                  href={url} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer" 
-                                  className="text-purple-400 hover:underline flex items-start"
-                                >
-                                  <ExternalLink className="w-3 h-3 mr-2 mt-1 flex-shrink-0" />
-                                  <span className="break-all">{url}</span>
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div> 
+          );
+        })}
       </div>
     </div>
   );
