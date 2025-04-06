@@ -136,6 +136,32 @@ export default function DiscordNewsPage() {
   const newsRef = useRef<DiscordMessage[]>([]);
   const loadingRef = useRef(true);
   
+  // Add global error handler to catch unhandled errors
+  useEffect(() => {
+    const handleError = (event: ErrorEvent) => {
+      console.error('[GLOBAL ERROR]', event.error);
+      setError(`Global error: ${event.error?.message || 'Unknown error'}`);
+      setStatusMsg(`Global error caught: ${event.error?.message || 'Unknown error'}`);
+      setSource('global_error');
+      setLoading(false);
+      loadingRef.current = false;
+      
+      // Still use fallback if error
+      if (newsRef.current.length === 0) {
+        setNews(fallbackArticles);
+        newsRef.current = fallbackArticles;
+      }
+    };
+    
+    // Add global error listener
+    window.addEventListener('error', handleError);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('error', handleError);
+    };
+  }, []);
+  
   // Function to toggle debug panel visibility
   const toggleDebugPanel = () => {
     setShowDebugPanel(prev => !prev);
@@ -143,6 +169,18 @@ export default function DiscordNewsPage() {
   
   // Fetch news data directly from Supabase
   const fetchNews = useCallback(async () => {
+    console.log('==========================================');
+    console.log('[FETCH] FETCH FUNCTION CALLED');
+    console.log('==========================================');
+    
+    // Test that window and navigator are available for browser features
+    if (typeof window !== 'undefined') {
+      console.log('[FETCH] Window object exists - running in browser');
+      console.log('[FETCH] User Agent:', navigator.userAgent);
+    } else {
+      console.log('[FETCH] No window object - may be running in SSR');
+    }
+    
     let currentLoading = true;
     let currentError = '';
     let currentNews: DiscordMessage[] = [];
@@ -182,11 +220,22 @@ export default function DiscordNewsPage() {
       console.log('[FETCH] Using hardcoded Supabase URL:', supabaseUrl);
       console.log('[FETCH] Using hardcoded Supabase Anon Key:', supabaseAnonKey.substring(0, 10) + '...');
       
-      // Try direct REST API call first
-      console.log('[FETCH] Trying direct REST API call...');
+      // First try a simple network test to Google to check general connectivity
+      console.log('[FETCH] TESTING BASIC NETWORK CONNECTIVITY...');
+      try {
+        const networkTestResponse = await fetch('https://www.google.com/generate_204');
+        console.log('[FETCH] Network test status:', networkTestResponse.status);
+      } catch (networkErr) {
+        console.error('[FETCH] NETWORK TEST FAILED!', networkErr);
+        throw new Error(`Network connectivity test failed: ${networkErr instanceof Error ? networkErr.message : String(networkErr)}`);
+      }
+      
+      // Try direct REST API call to Supabase
+      console.log('[FETCH] TRYING DIRECT SUPABASE API CALL...');
       const restApiUrl = `${supabaseUrl}/rest/v1/newsfeed`;
       console.log('[FETCH] REST API URL:', restApiUrl);
       
+      // Use simple fetch with no frills
       const restResponse = await fetch(restApiUrl, {
         method: 'GET',
         headers: {
@@ -194,7 +243,9 @@ export default function DiscordNewsPage() {
           'Authorization': `Bearer ${supabaseAnonKey}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=representation'
-        }
+        },
+        // Add cache: 'no-store' to prevent caching issues
+        cache: 'no-store'
       });
       
       if (!restResponse.ok) {
@@ -268,8 +319,15 @@ export default function DiscordNewsPage() {
 
   // Initial fetch and interval setup
   useEffect(() => {
-    console.log('[EFFECT] Initial fetch executing...');
-    fetchNews();
+    console.log('==========================================');
+    console.log('[EFFECT] COMPONENT MOUNTED - WILL ATTEMPT FETCH');
+    console.log('==========================================');
+    
+    // Add a slight delay before first fetch to ensure component is fully mounted
+    const initialFetchTimeout = setTimeout(() => {
+      console.log('[EFFECT] EXECUTING INITIAL FETCH AFTER DELAY');
+      fetchNews();
+    }, 1000);
     
     const intervalId = setInterval(() => {
       console.log('[EFFECT] Interval fetch executing...');
@@ -278,8 +336,9 @@ export default function DiscordNewsPage() {
     
     // Cleanup interval on unmount
     return () => {
-      console.log('[EFFECT] Cleaning up interval');
+      console.log('[EFFECT] Cleaning up interval and timeouts');
       clearInterval(intervalId);
+      clearTimeout(initialFetchTimeout);
     };
   }, [fetchNews]); // Rerun if fetchNews function identity changes (it shouldn't with useCallback)
 
