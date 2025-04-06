@@ -181,96 +181,142 @@ async function getDiscordNews(): Promise<{ news: DiscordMessage[], source: strin
     // APPROACH 1: Try our proxy API first
     console.log("Attempting to fetch data through proxy API");
     
-    // Build the URL for our proxy - use relative URL for better compatibility
-    const proxyUrl = '/api/supabase-proxy';
-    
-    const proxyResponse = await fetch(proxyUrl, { 
-      cache: 'no-store',
-      next: { revalidate: 0 }
-    });
-    
-    if (proxyResponse.ok) {
-      const proxyData = await proxyResponse.json();
-      console.log("Proxy API successful:", proxyData.source);
+    try {
+      // Build the URL for our proxy - ensure it's a valid URL by using URL constructor
+      const proxyUrl = new URL('/api/supabase-proxy', 'https://cybernexacademy.vercel.app').toString();
+      console.log("Constructed proxy URL:", proxyUrl);
       
-      if (proxyData.news && proxyData.news.length > 0) {
-        // Map the API response to our DiscordMessage format
-        const formattedData: DiscordMessage[] = proxyData.news.map((item: any) => ({
-          id: item.id,
-          title: item.title || formatTitleFromContent(item.content),
-          content: item.content,
-          author: item.author || 'Unknown',
-          created_at: item.created_at || item.timestamp || new Date().toISOString(),
-          channel: item.channel || determineChannelFromContent(item.content)
-        }));
+      const proxyResponse = await fetch(proxyUrl, { 
+        cache: 'no-store',
+        next: { revalidate: 0 }
+      });
+      
+      if (proxyResponse.ok) {
+        const proxyData = await proxyResponse.json();
+        console.log("Proxy API successful:", proxyData.source);
         
-        return {
-          news: formattedData,
-          source: "proxy_api_success",
-          lastUpdated: proxyData.timestamp || new Date().toISOString()
-        };
+        if (proxyData.news && proxyData.news.length > 0) {
+          // Map the API response to our DiscordMessage format
+          const formattedData: DiscordMessage[] = proxyData.news.map((item: any) => ({
+            id: item.id,
+            title: item.title || formatTitleFromContent(item.content),
+            content: item.content,
+            author: item.author || 'Unknown',
+            created_at: item.created_at || item.timestamp || new Date().toISOString(),
+            channel: item.channel || determineChannelFromContent(item.content)
+          }));
+          
+          return {
+            news: formattedData,
+            source: "proxy_api_success",
+            lastUpdated: proxyData.timestamp || new Date().toISOString()
+          };
+        }
+      } else {
+        console.log("Proxy API failed with status:", proxyResponse.status);
+        const errorText = await proxyResponse.text();
+        console.error("Proxy error:", errorText);
       }
-    } else {
-      console.log("Proxy API failed with status:", proxyResponse.status);
-      const errorText = await proxyResponse.text();
-      console.error("Proxy error:", errorText);
+    } catch (proxyError: any) {
+      console.error("Proxy API construction/fetch error:", proxyError.message);
     }
     
-    // APPROACH 2: Fall back to direct Supabase access if proxy fails
+    // APPROACH 2: Try with simpler relative URL
+    try {
+      console.log("Trying simpler relative URL approach");
+      const simpleProxyResponse = await fetch('/api/supabase-proxy', { 
+        cache: 'no-store'
+      });
+      
+      if (simpleProxyResponse.ok) {
+        const proxyData = await simpleProxyResponse.json();
+        console.log("Simple proxy URL successful");
+        
+        if (proxyData.news && proxyData.news.length > 0) {
+          const formattedData: DiscordMessage[] = proxyData.news.map((item: any) => ({
+            id: item.id,
+            title: item.title || formatTitleFromContent(item.content),
+            content: item.content,
+            author: item.author || 'Unknown',
+            created_at: item.created_at || item.timestamp || new Date().toISOString(),
+            channel: item.channel || determineChannelFromContent(item.content)
+          }));
+          
+          return {
+            news: formattedData,
+            source: "proxy_api_success_simple",
+            lastUpdated: proxyData.timestamp || new Date().toISOString()
+          };
+        }
+      }
+    } catch (simpleProxyError: any) {
+      console.error("Simple proxy error:", simpleProxyError.message);
+    }
+    
+    // APPROACH 3: Fall back to direct Supabase access if proxy fails
     console.log("Falling back to direct Supabase access");
     
     // Get Supabase credentials - use hardcoded as a guaranteed fallback
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://hpfpuljthcngnswwfkrb.supabase.co';
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhwZnB1bGp0aGNuZ25zd3dma3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI0MjkxMjAsImV4cCI6MjAyODAwNTEyMH0._YrJ9mZMfIikw-iXw20z_oDkUTLR5MwbY1qnoxpBOvY';
     
-    // Direct REST API call to Supabase (bypassing the client library)
-    const apiUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=20`;
-    
-    console.log("Making direct REST API call to Supabase");
-    
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': supabaseKey,
-        'Authorization': `Bearer ${supabaseKey}`
-      },
-      // Ensure we don't use any caching
-      cache: 'no-store'
-    });
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Supabase API error: ${response.status} - ${errorText}`);
-    }
-    
-    const data = await response.json();
-    console.log(`Successfully fetched ${data.length} articles from Supabase`);
-    
-    if (!data || data.length === 0) {
+    // Validate URL construction
+    try {
+      // Ensure Supabase URL is valid and has proper protocol
+      const validSupabaseUrl = new URL(supabaseUrl).toString();
+      console.log("Validated Supabase URL:", validSupabaseUrl);
+      
+      // Direct REST API call to Supabase (bypassing the client library)
+      const apiUrl = `${validSupabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=20`;
+      console.log("Making direct REST API call to:", apiUrl);
+      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': supabaseKey,
+          'Authorization': `Bearer ${supabaseKey}`
+        },
+        // Ensure we don't use any caching
+        cache: 'no-store'
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Supabase API error: ${response.status} - ${errorText}`);
+      }
+      
+      const data = await response.json();
+      console.log(`Successfully fetched ${data.length} articles from Supabase`);
+      
+      if (!data || data.length === 0) {
+        return {
+          news: enhancedFallbackArticles,
+          source: "fallback_empty_data",
+          error: "No data found in database",
+          lastUpdated: new Date().toISOString()
+        };
+      }
+      
+      // Map the API response to our DiscordMessage format
+      const formattedData: DiscordMessage[] = data.map((item: any) => ({
+        id: item.id,
+        title: item.title || formatTitleFromContent(item.content),
+        content: item.content,
+        author: item.author || 'Unknown',
+        created_at: item.created_at || item.timestamp || new Date().toISOString(),
+        channel: item.channel || determineChannelFromContent(item.content)
+      }));
+      
       return {
-        news: enhancedFallbackArticles,
-        source: "fallback_empty_data",
-        error: "No data found in database",
+        news: formattedData,
+        source: "supabase_direct_api",
         lastUpdated: new Date().toISOString()
       };
+    } catch (urlError: any) {
+      console.error("URL construction or Supabase API error:", urlError.message);
+      throw new Error(`URL or fetch error: ${urlError.message}`);
     }
-    
-    // Map the API response to our DiscordMessage format
-    const formattedData: DiscordMessage[] = data.map((item: any) => ({
-      id: item.id,
-      title: item.title || formatTitleFromContent(item.content),
-      content: item.content,
-      author: item.author || 'Unknown',
-      created_at: item.created_at || item.timestamp || new Date().toISOString(),
-      channel: item.channel || determineChannelFromContent(item.content)
-    }));
-    
-    return {
-      news: formattedData,
-      source: "supabase_direct_api",
-      lastUpdated: new Date().toISOString()
-    };
   } catch (error: any) {
     console.error("Error fetching from all sources:", error);
     

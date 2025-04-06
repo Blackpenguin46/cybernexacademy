@@ -20,8 +20,28 @@ export async function GET(request: Request) {
   }
 
   try {
+    // Validate Supabase URL first
+    let validSupabaseUrl;
+    try {
+      // Ensure URL has proper format with protocol
+      validSupabaseUrl = new URL(supabaseUrl).toString();
+      
+      // Make sure URL ends without trailing slash
+      if (validSupabaseUrl.endsWith('/')) {
+        validSupabaseUrl = validSupabaseUrl.slice(0, -1);
+      }
+    } catch (urlError) {
+      return NextResponse.json(
+        { 
+          error: `Invalid Supabase URL: ${supabaseUrl}`,
+          details: `URL error: ${urlError instanceof Error ? urlError.message : String(urlError)}`
+        },
+        { status: 500 }
+      );
+    }
+    
     // Build the target Supabase URL for querying the newsfeed table
-    const targetUrl = `${supabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=20`;
+    const targetUrl = `${validSupabaseUrl}/rest/v1/newsfeed?select=*&order=created_at.desc&limit=20`;
     
     console.log(`Proxy attempting to connect to: ${targetUrl}`);
 
