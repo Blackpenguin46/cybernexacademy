@@ -450,7 +450,10 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
               </div>
             )}
             
-            {!error && source !== 'api_error' && source !== 'network_error' && (
+            {!error && 
+              !source.includes('error') && 
+              source !== 'fallback_error' && 
+              source !== 'database_empty' && (
               <div className={`mt-4 p-3 rounded text-sm ${
                 source === 'server_verified_fallback' ? 'bg-yellow-900 border border-yellow-700' : 'bg-green-900 border border-green-700'
               }`}>
