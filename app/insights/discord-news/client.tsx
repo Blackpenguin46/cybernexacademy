@@ -98,105 +98,75 @@ export function NewsClient({ fallbackNews, serverSupabaseUrl, serverSupabaseKey 
       try {
         setLoading(true);
         
-        // Use hardcoded fallback data for immediate display
-        const fallbackData: DiscordMessage[] = [
+        // Create minimal fallback data in case API fails
+        const minimalFallback: DiscordMessage[] = [
           {
             id: '1',
-            title: 'Critical Security Alert: Microsoft April 2024 Patch Tuesday',
-            content: '[SECURITY ALERT] Microsoft has released patches for 147 vulnerabilities in their April 2024 Patch Tuesday update, including 5 actively exploited zero-days. https://thehackernews.com/2024/04/microsoft-april-2024-patch-tuesday.html',
-            author: 'SecurityBot',
-            created_at: '2024-04-09T16:30:00.000Z',
-            channel: 'security-alerts'
-          },
-          {
-            id: '2',
-            title: 'Threat Intel: New LockBit Ransomware Variant',
-            content: '[THREAT INTEL] New LockBit ransomware variant detected with enhanced evasion capabilities. Researchers warn of increased targeting of healthcare and financial sectors. https://thehackernews.com/2024/04/new-lockbit-30-ransomware-variant.html',
-            author: 'ThreatAnalyst',
-            created_at: '2024-04-10T14:15:00.000Z',
-            channel: 'threat-intel'
-          },
-          {
-            id: '3',
-            title: 'Critical Adobe Acrobat Zero-Day Vulnerability',
-            content: '[VULNERABILITY] Critical Adobe Acrobat zero-day vulnerability (CVE-2024-21412) being actively exploited. Update immediately! https://thehackernews.com/2024/04/critical-adobe-acrobat-zero-day-under.html',
-            author: 'VulnResearcher',
-            created_at: '2024-04-11T09:45:00.000Z',
-            channel: 'vulnerability-alerts'
-          },
-          {
-            id: '4',
-            title: 'CyberNex Academy Workshop: Advanced Threat Hunting',
-            content: '[EVENT] Join us on April 20th for an online workshop on advanced threat hunting techniques. Learn how to identify and track APT activities in your environment. Register now: https://cybernexacademy.com/workshops/threat-hunting',
-            author: 'EventCoordinator',
-            created_at: '2024-04-12T11:00:00.000Z',
-            channel: 'events'
-          },
-          {
-            id: '5',
-            title: 'New Cloud Security Best Practices Guide',
-            content: '[RESOURCE] We have published a comprehensive guide on cloud security best practices for 2024, covering AWS, Azure, and GCP. https://cybernexacademy.com/resources/cloud-security-guide-2024',
-            author: 'CloudSecTeam',
-            created_at: '2024-04-13T15:20:00.000Z',
-            channel: 'resources'
-          },
-          {
-            id: '6',
-            title: 'Community Discussion: Zero Trust Implementation',
-            content: '[DISCUSSION] Share your experiences implementing Zero Trust architecture in your organization. What challenges did you face? Join the conversation in our Discord server.',
-            author: 'CommunityManager',
-            created_at: '2024-04-14T13:10:00.000Z',
-            channel: 'discussions'
+            title: 'Loading database content...',
+            content: 'If you see this message, the database connection may not be working. Please check your Supabase configuration and ensure the API routes are functioning correctly.',
+            author: 'System',
+            created_at: new Date().toISOString(),
+            channel: 'general'
           }
         ];
         
-        // Set both the all news and filtered news with the fallback data
-        setAllNews(fallbackData);
-        setNews(fallbackData);
-        setSource('demo_data');
-        setError(null);
-        setLastUpdated(new Date().toISOString());
-        setLoading(false);
-        
         // Try the actual API fetch in the background
         try {
-          console.log("Attempting to fetch data through API...");
-          const response = await fetch('/api/news');
+          console.log("Attempting to fetch data from Supabase database...");
+          // Use the correct endpoint - discord-news instead of news
+          const response = await fetch('/api/discord-news');
           
           if (!response.ok) {
-            console.warn(`API returned status ${response.status}, continuing with demo data`);
+            console.warn(`API returned status ${response.status}, falling back to minimal content`);
+            setAllNews(minimalFallback);
+            setNews(minimalFallback);
+            setSource('api_error');
+            setError(`API error: ${response.status}`);
+            setLoading(false);
             return;
           }
           
           const data = await response.json();
           
-          if (data.news && data.news.length > 0) {
-            console.log(`API successful, fetched ${data.news.length} items`);
+          if (data.articles && data.articles.length > 0) {
+            console.log(`API successful, fetched ${data.articles.length} items from database`);
             
-            // Process and format data
-            const formattedData: DiscordMessage[] = data.news.map((item: any) => ({
+            // Process and format data from the actual database
+            const formattedData: DiscordMessage[] = data.articles.map((item: any) => ({
               id: item.id || `gen-${Math.random().toString(36).substr(2, 9)}`,
-              title: item.title || formatTitleFromContent(item.content || ''),
+              title: item.title || item.content?.substring(0, 80) || 'News Update',
               content: item.content || '',
-              author: item.author || 'Unknown',
-              created_at: item.created_at || item.timestamp || new Date().toISOString(),
-              channel: item.channel || determineChannelFromContent(item.content || '')
+              author: item.author || 'CyberSecurity Bot',
+              created_at: item.timestamp || item.created_at || new Date().toISOString(),
+              channel: determineChannelFromContent(item.content || '')
             }));
             
             // Store the complete dataset and update display
             setAllNews(formattedData);
-            // Initial filtering will be handled by the timeFilter effect
-            setSource('api_success');
-            setLastUpdated(data.timestamp || new Date().toISOString());
+            setNews(formattedData);
+            setSource(data.source || 'database_success');
+            setLastUpdated(data.time || new Date().toISOString());
+            setError(null);
+            console.log('Updated with real database data:', formattedData.length, 'articles');
+          } else {
+            console.warn('API returned empty data array');
+            setAllNews(minimalFallback);
+            setNews(minimalFallback);
+            setSource('empty_database');
+            setError('No articles found in database');
           }
         } catch (apiError: any) {
           console.error("API error:", apiError);
-          // Continue with demo data, no need to update state
+          setAllNews(minimalFallback);
+          setNews(minimalFallback);
+          setSource('api_error');
+          setError(`Error fetching from API: ${apiError.message}`);
         }
       } catch (error: any) {
         console.error("Error in fetchNewsData:", error);
         setError(error.message || 'An unknown error occurred');
         setSource('error_fallback');
+      } finally {
         setLoading(false);
       }
     }
