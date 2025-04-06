@@ -119,7 +119,7 @@ export default function Navbar() {
     const index = navSections.findIndex(section => section.id === sectionId);
     
     if (index === 0) return "left-0";
-    if (index === 1) return "left-1/2 transform -translate-x-1/2";
+    if (index === 1) return "left-[15%]";
     if (index === 2) return "right-0";
     
     return "left-0";
@@ -186,7 +186,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[750px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
+                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[900px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl border border-blue-500/20 overflow-hidden z-50`}
                       >
                         <div className="flex">
                           {/* Section overview - left side */}
