@@ -104,7 +104,7 @@ export default function YouTubePage() {
                 Explore curated cybersecurity YouTube channels and playlists covering various topics from beginner to advanced.
             </p>
         </div>
-      </div>
+        </div>
 
       {/* --- Main Content Area --- */}
       <div className="container mx-auto px-4 mt-12">
@@ -114,26 +114,26 @@ export default function YouTubePage() {
             <div className="flex flex-col md:flex-row gap-3 items-center">
                {/* Topic Filter */}
                <div className="flex-grow w-full">
-                  <CategoryFilter 
+            <CategoryFilter 
                      categories={topicFilters}
                      selectedCategory={selectedTopic}
                      setSelectedCategory={setSelectedTopic}
                      accentColor="purple"
-                  />
-               </div>
+            />
+          </div>
                {/* Clear Button */}
                {selectedTopic !== 'all' && (
-                  <Button 
+              <Button 
                      variant="ghost"
                      size="sm"
                      onClick={() => setSelectedTopic('all')}
                      className="text-purple-400 hover:text-purple-300 hover:bg-purple-900/30 h-9 px-2 whitespace-nowrap"
                   >
                      <X className="w-4 h-4 mr-1"/> Clear
-                  </Button>
+              </Button>
                )}
             </div>
-         </div>
+        </div>
 
          {/* Resource Count */}
          <p className="text-sm text-gray-400 mb-6">
@@ -163,7 +163,7 @@ export default function YouTubePage() {
                               <TopicIcon className="w-3 h-3 mr-1.5" />
                               {topicFilters.find(t => t.id === resource.topic)?.name || 'Resource'}
                            </span>
-                        </div>
+        </div>
 
                         {/* Description */}
                         <p className="text-sm text-gray-300 mb-4 line-clamp-4 flex-grow">
@@ -178,10 +178,10 @@ export default function YouTubePage() {
                            >
                               <Link href={resource.url} target="_blank" rel="noopener noreferrer">
                                  Visit Channel / Playlist
-                              </Link>
-                           </Button>
-                        </div>
-                     </div>
+              </Link>
+            </Button>
+          </div>
+        </div>
                   );
                })}
             </div>

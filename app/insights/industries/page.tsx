@@ -34,7 +34,7 @@ interface TopIndustryFocus {
 const topIndustries: TopIndustryFocus[] = [
     {
         id: "healthcare",
-        name: "Healthcare",
+      name: "Healthcare",
         icon: Heart,
         landscape: "High-value target due to sensitive patient data (ePHI) and critical service delivery. Increasingly interconnected medical devices (IoMT) expand the attack surface.",
         vulnsThreats: ["Ransomware targeting patient care disruption", "Data breaches exposing ePHI", "Insider threats (accidental & malicious)", "IoMT vulnerabilities", "Phishing campaigns"],
@@ -44,7 +44,7 @@ const topIndustries: TopIndustryFocus[] = [
     },
     {
         id: "financial",
-        name: "Financial Services",
+      name: "Financial Services",
         icon: DollarSign,
         landscape: "Constant target for monetary gain and disruption. Focus on protecting financial assets, customer data, and maintaining trust. Highly regulated environment.",
         vulnsThreats: ["Credential stuffing & account takeover", "Banking trojans & malware", "ATM/PoS attacks", "Web application vulnerabilities (APIs)", "Supply chain risks"],
@@ -170,12 +170,12 @@ export default function IndustriesPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {topIndustries.map((industry) => (
             <IndustryFocusCard key={industry.id} {...industry} />
-          ))}
-        </div>
-      </div>
+                        ))}
+                      </div>
+                    </div>
 
       {/* Removed other sections (Solutions, Compliance, Trends, Reports, CTA) */} 
-    </div>
+                      </div>
   );
 }
 
@@ -187,27 +187,27 @@ const IndustryFocusCard: React.FC<TopIndustryFocus> = ({ id, name, icon: Icon, l
        <div className="flex items-center mb-4">
          <Icon className="w-8 h-8 text-pink-400 mr-4 flex-shrink-0" />
          <h3 className="text-2xl font-bold text-white">{name}</h3>
-       </div>
+        </div>
        
        {/* Content Sections */}
        <div className="space-y-4 text-sm flex-grow">
-         <div>
+                          <div>
              <h4 className="font-semibold text-pink-300 mb-1">Landscape Overview:</h4>
              <p className="text-gray-300">{landscape}</p>
-         </div>
-         <div>
+                        </div>
+                          <div>
              <h4 className="font-semibold text-pink-300 mb-1">Vulnerabilities & Threats:</h4>
              <ul className="list-disc list-inside space-y-1 text-gray-400">
                {vulnsThreats.map((item, index) => <li key={index}>{item}</li>)}
              </ul>
-         </div>
-          <div>
+                        </div>
+                        <div>
              <h4 className="font-semibold text-pink-300 mb-1">Security Focus Areas:</h4>
              <ul className="list-disc list-inside space-y-1 text-gray-400">
                {focusAreas.map((item, index) => <li key={index}>{item}</li>)}
              </ul>
-         </div>
-       </div>
+          </div>
+        </div>
        
        {/* Resource Link */}
        {resourceLink && (
@@ -220,6 +220,6 @@ const IndustryFocusCard: React.FC<TopIndustryFocus> = ({ id, name, icon: Icon, l
             {resourceLink.title} <ExternalLink className="w-3 h-3 ml-1.5" />
          </a>
        )}
-     </div>
+                          </div>
   );
 }; 

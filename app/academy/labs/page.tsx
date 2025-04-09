@@ -146,10 +146,10 @@ export default function LabsPage() {
 
             <div className="flex-grow w-full flex items-center gap-2">
               {activeFilterDimension === 'category' && (
-                <CategoryFilter
+            <CategoryFilter 
                   categories={categoryFilters}
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
                   accentColor="red"
                 />
               )}
@@ -234,13 +234,13 @@ export default function LabsPage() {
                                 <span className="inline-flex items-center bg-gray-700/70 text-gray-300 px-2 py-0.5 rounded">
                                     <CategoryIcon className="w-3 h-3 mr-1.5 opacity-80" />
                                     {lab.category}
-                                </span>
+                              </span>
                                  <span className="inline-flex items-center bg-gray-700/70 text-gray-300 px-2 py-0.5 rounded">
                                     <FormatIcon format={lab.type} />
                                     {lab.type}
                                 </span>
                             </div>
-                        </div>
+                          </div>
 
                         <p className="text-sm text-gray-300 mb-4 line-clamp-4 flex-grow">
                             {lab.description}
@@ -260,10 +260,10 @@ export default function LabsPage() {
                                >
                                   {lab.url === '#' ? 'Link Unavailable' : 'Start Lab'}
                                   {lab.url !== '#' && <ExternalLink className="w-4 h-4 ml-2" />}
-                               </Link>
+                              </Link>
                             </Button>
+                          </div>
                         </div>
-                    </div>
                 );
             })}
           </div>
@@ -272,15 +272,15 @@ export default function LabsPage() {
             <div className="text-red-500 mx-auto mb-4"><Search className="w-12 h-12" /></div>
             <h3 className="text-xl font-medium text-white mb-2">No Labs Found</h3>
             <p className="text-gray-400 mb-6">Try adjusting the category, difficulty, or free filters.</p>
-            <Button
-              variant="outline"
+                <Button 
+                  variant="outline" 
               onClick={() => { setSelectedCategory('all'); setSelectedDifficulty('all'); setFreeOnly(false); setActiveFilterDimension('category'); }}
               className="text-red-400 border-red-600 hover:bg-red-900/30 hover:text-red-300"
-            >
+                >
               <X className="w-4 h-4 mr-2" /> Clear All Filters
-            </Button>
+                </Button>
           </div>
-        )}
+      )}
       </div>
     </div>
   )

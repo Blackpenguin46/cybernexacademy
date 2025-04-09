@@ -195,7 +195,7 @@ export default function ResearchReportsPage() {
              </Link>
           </div>
         </div>
-      </div>
+                      </div>
 
       {/* --- Main Content Area --- */}
       <div className="container mx-auto px-4 mt-12">
@@ -298,8 +298,8 @@ export default function ResearchReportsPage() {
                           <span className="text-xs bg-gray-700/50 text-gray-300 px-2 py-0.5 rounded">
                               {report.topic}
                           </span>
-                     </div>
-                 </div>
+                      </div>
+                    </div>
 
                 {/* Summary */}
                 <p className="text-sm text-gray-300 mb-4 line-clamp-4 flex-grow">
@@ -323,10 +323,10 @@ export default function ResearchReportsPage() {
                        )}
                        {report.url === '#' ? 'Link Unavailable' : (report.isPdf ? 'View PDF Report' : 'Visit Source')}
                     </a>
-                 </div>
-              </div>
-            ))}
-          </div>
+                  </div>
+                </div>
+              ))}
+            </div>
         ) : (
           <div className="text-center py-16 bg-gray-900/30 rounded-lg border border-gray-800 mt-8">
             <div className="text-blue-500 mx-auto mb-4"><Search className="w-12 h-12" /></div>
@@ -338,10 +338,10 @@ export default function ResearchReportsPage() {
               className="text-blue-400 border-blue-600 hover:bg-blue-900/30 hover:text-blue-300"
             >
               <X className="w-4 h-4 mr-2" /> Clear Filters
-            </Button>
+                </Button>
           </div>
         )}
-      </div>
+        </div>
     </div>
   );
 } 

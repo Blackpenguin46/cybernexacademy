@@ -1,0 +1,45 @@
+name: 🔗 Weekly Broken Link Report
+
+on:
+  schedule:
+    - cron: '0 12 * * 1'  # every Monday at 12PM UTC
+  workflow_dispatch:
+
+jobs:
+  scan-broken-links:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🔎 Install Lychee
+        run: cargo install lychee
+
+      - name: 🔍 Scan for broken links
+        run: lychee ./app/**/*.tsx --verbose --format json > broken-links.json
+
+      - name: 📥 Save to Supabase
+        run: node scripts/saveToSupabase.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+      - name: 📨 Generate email summary
+        run: node scripts/generateEmail.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
+      - name: 📬 Send email with results
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.EMAIL_SMTP_HOST }}
+          server_port: ${{ secrets.EMAIL_SMTP_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "🔗 Cybernex Weekly Broken Link Report"
+          to: cybernexacademy@proton.me
+          from: Cybernex Bot <${{ secrets.EMAIL_USERNAME }}>
+          body: |
+            $(cat email-output.txt) 
