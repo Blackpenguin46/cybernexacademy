@@ -19,6 +19,7 @@ jobs:
       - name: 🔍 Scan for broken links
         run: |
           lychee ./app/**/*.tsx --verbose --format json > broken-links.json || echo "Broken links found — continuing..."
+        continue-on-error: true
 
       - name: 📥 Save to Supabase
         run: node scripts/saveToSupabase.js
