@@ -50,6 +50,21 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
+      - name: 📜 Read email body from file
+        id: read_email_body
+        run: |
+          # Check if file exists, provide default if not (shouldn't happen with generateEmail.js changes)
+          if [[ ! -f email-output.txt ]]; then
+            echo "email-output.txt not found. Using default message." >&2
+            content="Error: Email content file not found."
+          else
+            content=$(cat email-output.txt)
+          fi
+          # Use EOF markers for multiline output
+          echo "body_text<<EOF" >> $GITHUB_OUTPUT
+          echo "$content" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: 📬 Send email with results
         uses: dawidd6/action-send-mail@v3
         with:
@@ -60,5 +75,4 @@ jobs:
           subject: "🔗 Cybernex Weekly Broken Link Report"
           to: cybernexacademy@proton.me
           from: Cybernex Bot <${{ secrets.EMAIL_USERNAME }}>
-          body: |
-            $(cat email-output.txt) 
+          body: ${{ steps.read_email_body.outputs.body_text }} 
