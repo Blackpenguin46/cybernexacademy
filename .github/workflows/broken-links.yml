@@ -8,6 +8,9 @@ on:
 jobs:
   scan-broken-links:
     runs-on: ubuntu-latest
+    # Add permissions to allow writing back to the repo
+    permissions:
+      contents: write
 
     steps:
       - name: ⬇️ Checkout code
@@ -75,4 +78,43 @@ jobs:
           subject: "🔗 Cybernex Weekly Broken Link Report"
           to: cybernexacademy@proton.me
           from: Cybernex Bot <${{ secrets.EMAIL_USERNAME }}>
-          body: ${{ steps.read_email_body.outputs.body_text }} 
+          body: ${{ steps.read_email_body.outputs.body_text }}
+
+      - name: 🧹 Run cleanup script
+        run: node scripts/cleanupApprovedLinks.js
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          # Ensure Node can find modules installed earlier
+          NODE_PATH: "${{ github.workspace }}/node_modules"
+
+      - name: ⚙️ Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: 🔍 Check for changes
+        id: check_changes
+        run: |
+          # Stage potential changes
+          git add app/**/*.tsx
+          # Check if there are staged changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            echo "changes_exist=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected."
+            echo "changes_exist=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 💾 Commit changes
+        if: steps.check_changes.outputs.changes_exist == 'true'
+        run: |
+          git commit -m "chore: cleanup approved broken links"
+
+      - name: ⬆️ Push changes
+        if: steps.check_changes.outputs.changes_exist == 'true'
+        run: |
+          # Pull first to avoid conflicts if possible (optional, depends on strategy)
+          # git pull origin ${{ github.ref_name }} --rebase
+          git push origin HEAD:${{ github.ref_name }} 
