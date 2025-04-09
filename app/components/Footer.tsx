@@ -38,7 +38,7 @@ const Footer = () => {
 
         {/* Social links with titles for better SEO */}
         <div className="flex justify-center mt-4 gap-4">
-          <a href="https://example-substack.com" className="text-gray-400 hover:text-blue-500 transition-colors" target="_blank" rel="noopener noreferrer" title="CyberNex on Substack" aria-label="CyberNex Substack profile">
+          <a href="https://cybernexacademy.substack.com/" className="text-gray-400 hover:text-blue-500 transition-colors" target="_blank" rel="noopener noreferrer" title="CyberNex on Substack" aria-label="CyberNex Substack profile">
             <span className="h-5 w-5" aria-hidden="true">Substack</span>
           </a>
         </div>
@@ -60,7 +60,7 @@ const Footer = () => {
               "addressCountry": "US"
             },
             "sameAs": [
-              "https://example-substack.com"
+              "https://cybernexacademy.substack.com/"
             ]
           }
         `}
