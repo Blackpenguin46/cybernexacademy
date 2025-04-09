@@ -6,13 +6,25 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const raw = fs.readFileSync("broken-links.json", "utf8");
-const parsed = JSON.parse(raw);
+let raw;
+try {
+  raw = fs.readFileSync("broken-links.json", "utf8");
+} catch (error) {
+  console.error("Error reading broken-links.json:", error.message);
+  // If file cannot be read, treat as empty
+  raw = "[]"; 
+}
 
-// Add safety check for JSON format
-if (!Array.isArray(parsed)) {
-  console.error("Invalid JSON format: broken-links.json does not contain a JSON array.");
-  process.exit(1); // Exit if format is wrong
+let parsed;
+try {
+  parsed = JSON.parse(raw);
+  if (!Array.isArray(parsed)) {
+    console.error("Warning: broken-links.json does not contain a valid JSON array. Treating as empty.");
+    parsed = []; // Default to an empty array if not an array
+  }
+} catch (error) {
+  console.error("Invalid JSON format in broken-links.json. Treating as empty:", error.message);
+  parsed = []; // Default to an empty array if parsing fails
 }
 
 (async () => {
