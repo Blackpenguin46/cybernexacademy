@@ -31,8 +31,8 @@ jobs:
 
       - name: 🛠 Debug Lychee Output & Ensure Valid JSON
         run: |
-          if [ ! -s broken-links.json ]; then
-            echo "broken-links.json not found or empty. Creating empty array."
+          if ! jq empty broken-links.json 2>/dev/null; then
+            echo "broken-links.json is invalid or empty. Replacing with an empty JSON array."
             echo "[]" > broken-links.json
           fi
           echo "--- broken-links.json content --- "

@@ -38,7 +38,7 @@ const Footer = () => {
 
         {/* Social links with titles for better SEO */}
         <div className="flex justify-center mt-4 gap-4">
-          <a href="https://cybernex-academy.substack.com" className="text-gray-400 hover:text-blue-500 transition-colors" target="_blank" rel="noopener noreferrer" title="CyberNex on Substack" aria-label="CyberNex Substack profile">
+          <a href="https://example-substack.com" className="text-gray-400 hover:text-blue-500 transition-colors" target="_blank" rel="noopener noreferrer" title="CyberNex on Substack" aria-label="CyberNex Substack profile">
             <span className="h-5 w-5" aria-hidden="true">Substack</span>
           </a>
         </div>
@@ -51,8 +51,8 @@ const Footer = () => {
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
             "name": "CyberNex Academy",
-            "url": "https://cybernex.vercel.app",
-            "logo": "https://cybernex.vercel.app/logo.png",
+            "url": "https://example.com",
+            "logo": "https://example.com/logo.png",
             "description": "Comprehensive cybersecurity education platform offering courses, community resources, and security insights",
             "email": "cybernexacademy@proton.me",
             "address": {
@@ -60,7 +60,7 @@ const Footer = () => {
               "addressCountry": "US"
             },
             "sameAs": [
-              "https://cybernex-academy.substack.com"
+              "https://example-substack.com"
             ]
           }
         `}
