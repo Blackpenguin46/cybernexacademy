@@ -26,7 +26,7 @@ jobs:
 
       - name: 🔍 Scan for broken links & Validate Output
         run: |
-          lychee ./app/**/*.tsx --verbose --format json --no-progress -- --ignore-file .lycheeignore > broken-links.json || echo "Lychee command finished (may have found errors)."
+          lychee ./app/**/*.tsx --verbose --format json --no-progress --base http://example.com -- --ignore-file .lycheeignore > broken-links.json || echo "Lychee command finished (may have found errors)."
           # Validate JSON output and replace with empty array if invalid/empty
           if ! jq empty broken-links.json 2>/dev/null; then
             echo "broken-links.json is invalid or empty. Replacing with an empty JSON array."
