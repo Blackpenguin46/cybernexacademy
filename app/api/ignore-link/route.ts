@@ -5,7 +5,7 @@ export async function GET(req: Request) {
   const url = searchParams.get("url");
 
   const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_KEY!
   );
 

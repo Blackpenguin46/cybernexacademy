@@ -17,7 +17,8 @@ jobs:
         run: cargo install lychee
 
       - name: 🔍 Scan for broken links
-        run: lychee ./app/**/*.tsx --verbose --format json > broken-links.json
+        run: |
+          lychee ./app/**/*.tsx --verbose --format json > broken-links.json || echo "Broken links found — continuing..."
 
       - name: 📥 Save to Supabase
         run: node scripts/saveToSupabase.js
