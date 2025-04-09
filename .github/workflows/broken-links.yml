@@ -26,7 +26,7 @@ jobs:
 
       - name: 🔍 Scan for broken links
         run: |
-          lychee ./app/**/*.tsx --verbose --format json > broken-links.json || echo "Broken links found — continuing..."
+          lychee ./app/**/*.tsx --verbose --format json --no-progress > broken-links.json || echo "Broken links found — continuing..."
         continue-on-error: true
 
       - name: 🛠 Debug Lychee Output & Ensure Valid JSON
