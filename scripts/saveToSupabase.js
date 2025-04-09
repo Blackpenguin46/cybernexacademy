@@ -9,6 +9,12 @@ const supabase = createClient(
 const raw = fs.readFileSync("broken-links.json", "utf8");
 const parsed = JSON.parse(raw);
 
+// Add safety check for JSON format
+if (!Array.isArray(parsed)) {
+  console.error("Invalid JSON format: broken-links.json does not contain a JSON array.");
+  process.exit(1); // Exit if format is wrong
+}
+
 (async () => {
   try {
     for (const result of parsed) {

@@ -29,8 +29,15 @@ jobs:
           lychee ./app/**/*.tsx --verbose --format json > broken-links.json || echo "Broken links found — continuing..."
         continue-on-error: true
 
-      - name: 🛠 Debug Lychee Output
-        run: cat broken-links.json || echo "broken-links.json not found or empty"
+      - name: 🛠 Debug Lychee Output & Ensure Valid JSON
+        run: |
+          if [ ! -s broken-links.json ]; then
+            echo "broken-links.json not found or empty. Creating empty array."
+            echo "[]" > broken-links.json
+          fi
+          echo "--- broken-links.json content --- "
+          cat broken-links.json
+          echo "--- end content ---"
 
       - name: 📥 Save to Supabase
         run: node scripts/saveToSupabase.js
