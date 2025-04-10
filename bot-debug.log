@@ -42693,3 +42693,151 @@ The original vulnerability CVE-2024-0132 (CVSS score: 9.0) is a Time-of-Check Ti
 [2025-04-10T18:01:44.162Z] Fetching recent messages using REST API
 [2025-04-10T18:01:44.430Z] Fetched 50 messages via REST API
 [2025-04-10T18:01:44.441Z] Finished processing REST API messages
+[2025-04-10T18:02:44.164Z] Fetching recent messages using REST API
+[2025-04-10T18:02:44.509Z] Fetched 50 messages via REST API
+[2025-04-10T18:02:44.516Z] Finished processing REST API messages
+[2025-04-10T18:03:44.165Z] Fetching recent messages using REST API
+[2025-04-10T18:03:44.427Z] Fetched 50 messages via REST API
+[2025-04-10T18:03:44.428Z] Finished processing REST API messages
+[2025-04-10T18:04:44.166Z] Fetching recent messages using REST API
+[2025-04-10T18:04:44.593Z] Fetched 50 messages via REST API
+[2025-04-10T18:04:44.594Z] Finished processing REST API messages
+[2025-04-10T18:05:44.168Z] Fetching recent messages using REST API
+[2025-04-10T18:05:44.449Z] Fetched 50 messages via REST API
+[2025-04-10T18:05:44.450Z] Finished processing REST API messages
+[2025-04-10T18:06:44.170Z] Fetching recent messages using REST API
+[2025-04-10T18:06:44.489Z] Fetched 50 messages via REST API
+[2025-04-10T18:06:44.498Z] Finished processing REST API messages
+[2025-04-10T18:07:44.172Z] Fetching recent messages using REST API
+[2025-04-10T18:07:44.484Z] Fetched 50 messages via REST API
+[2025-04-10T18:07:44.485Z] Finished processing REST API messages
+[2025-04-10T18:08:44.173Z] Fetching recent messages using REST API
+[2025-04-10T18:08:44.607Z] Fetched 50 messages via REST API
+[2025-04-10T18:08:44.612Z] Finished processing REST API messages
+[2025-04-10T18:09:44.175Z] Fetching recent messages using REST API
+[2025-04-10T18:09:44.616Z] Fetched 50 messages via REST API
+[2025-04-10T18:09:44.617Z] Finished processing REST API messages
+[2025-04-10T18:10:44.176Z] Fetching recent messages using REST API
+[2025-04-10T18:10:44.518Z] Fetched 50 messages via REST API
+[2025-04-10T18:10:44.526Z] Finished processing REST API messages
+[2025-04-10T18:11:44.177Z] Fetching recent messages using REST API
+[2025-04-10T18:11:44.512Z] Fetched 50 messages via REST API
+[2025-04-10T18:11:44.513Z] Finished processing REST API messages
+[2025-04-10T18:12:44.178Z] Fetching recent messages using REST API
+[2025-04-10T18:12:44.502Z] Fetched 50 messages via REST API
+[2025-04-10T18:12:44.503Z] Finished processing REST API messages
+[2025-04-10T18:13:44.180Z] Fetching recent messages using REST API
+[2025-04-10T18:13:44.468Z] Fetched 50 messages via REST API
+[2025-04-10T18:13:44.472Z] Finished processing REST API messages
+[2025-04-10T18:14:44.182Z] Fetching recent messages using REST API
+[2025-04-10T18:14:44.515Z] Fetched 50 messages via REST API
+[2025-04-10T18:14:44.516Z] Finished processing REST API messages
+[2025-04-10T18:15:44.183Z] Fetching recent messages using REST API
+[2025-04-10T18:15:44.475Z] Fetched 50 messages via REST API
+[2025-04-10T18:15:44.476Z] Finished processing REST API messages
+[2025-04-10T18:16:44.185Z] Fetching recent messages using REST API
+[2025-04-10T18:16:44.623Z] Fetched 50 messages via REST API
+[2025-04-10T18:16:44.625Z] Finished processing REST API messages
+[2025-04-10T18:17:44.186Z] Fetching recent messages using REST API
+[2025-04-10T18:17:44.548Z] Fetched 50 messages via REST API
+[2025-04-10T18:17:44.549Z] Finished processing REST API messages
+[2025-04-10T18:18:00.390Z] Received message from CyberSecurity Bot
+[2025-04-10T18:18:00.418Z] Message via WebSocket: {
+  "channelId": "1299032261470978159",
+  "guildId": "1299032261470978152",
+  "id": "1359955593720500356",
+  "createdTimestamp": 1744309080296,
+  "type": 0,
+  "system": false,
+  "content": "",
+  "authorId": "1024363293189611581",
+  "pinned": false,
+  "tts": false,
+  "nonce": null,
+  "embeds": [
+    {
+      "url": "https://www.darkreading.com/cloud-security/open-source-poisoned-patches-infect-local-software",
+      "type": "rich",
+      "title": "Open Source Poisoned Patches Infect Local Software",
+      "timestamp": "2025-04-10T18:10:10+00:00",
+      "thumbnail": {
+        "width": 720,
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "placeholder_version": 1,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "height": 113,
+        "flags": 0
+      },
+      "description": "Malicious packages lurking on open source repositories like npm have become less effective, so cyberattackers are using a new strategy: offering &quot;patches&quot; for locally installed programs.",
+      "color": 44678
+    }
+  ],
+  "components": [],
+  "attachments": [],
+  "stickers": [],
+  "position": null,
+  "roleSubscriptionData": null,
+  "resolved": null,
+  "editedTimestamp": null,
+  "mentions": {
+    "everyone": false,
+    "users": [],
+    "roles": [],
+    "crosspostedChannels": [],
+    "repliedUser": null,
+    "members": [],
+    "channels": []
+  },
+  "webhookId": null,
+  "groupActivityApplicationId": null,
+  "applicationId": null,
+  "activity": null,
+  "flags": 0,
+  "reference": null,
+  "interactionMetadata": null,
+  "interaction": null,
+  "poll": null,
+  "messageSnapshots": [],
+  "call": null,
+  "cleanContent": ""
+}
+[2025-04-10T18:18:00.419Z] Processing message 1359955593720500356 from websocket
+[2025-04-10T18:18:00.419Z] Message content: ""
+[2025-04-10T18:18:00.419Z] Has embeds: true
+[2025-04-10T18:18:00.419Z] Message has 1 embeds
+[2025-04-10T18:18:00.419Z] Embed data: {
+  "url": "https://www.darkreading.com/cloud-security/open-source-poisoned-patches-infect-local-software",
+  "type": "rich",
+  "title": "Open Source Poisoned Patches Infect Local Software",
+  "timestamp": "2025-04-10T18:10:10+00:00",
+  "thumbnail": {
+    "width": 720,
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "placeholder_version": 1,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "height": 113,
+    "flags": 0
+  },
+  "description": "Malicious packages lurking on open source repositories like npm have become less effective, so cyberattackers are using a new strategy: offering &quot;patches&quot; for locally installed programs.",
+  "color": 44678
+}
+[2025-04-10T18:18:00.419Z] Found embed title: Open Source Poisoned Patches Infect Local Software
+[2025-04-10T18:18:00.419Z] Found embed description: Malicious packages lurking on open source repositories like npm have become less effective, so cyberattackers are using a new strategy: offering &quot;patches&quot; for locally installed programs.
+[2025-04-10T18:18:00.420Z] Inserting content into Supabase: Open Source Poisoned Patches Infect Local Software
+
+Malicious packages lurking on open source repositories like npm have become less effective, so cyberattackers are using a new strategy: offering &quot;patches&quot; for locally installed programs.
+[2025-04-10T18:18:00.673Z] Successfully saved to Supabase: null
+[2025-04-10T18:18:44.188Z] Fetching recent messages using REST API
+[2025-04-10T18:18:44.496Z] Fetched 50 messages via REST API
+[2025-04-10T18:18:44.497Z] Finished processing REST API messages
+[2025-04-10T18:19:44.190Z] Fetching recent messages using REST API
+[2025-04-10T18:19:44.503Z] Fetched 50 messages via REST API
+[2025-04-10T18:19:44.504Z] Finished processing REST API messages
+[2025-04-10T18:20:44.191Z] Fetching recent messages using REST API
+[2025-04-10T18:20:44.570Z] Fetched 50 messages via REST API
+[2025-04-10T18:20:44.571Z] Finished processing REST API messages
+[2025-04-10T18:21:44.193Z] Fetching recent messages using REST API
+[2025-04-10T18:21:44.685Z] Fetched 50 messages via REST API
+[2025-04-10T18:21:44.696Z] Finished processing REST API messages
