@@ -40458,3 +40458,9 @@ Attacks on a critical authentication bypass flaw in CrushFTP's file transfer pro
 [2025-04-10T02:11:07.859Z] Fetching recent messages using REST API
 [2025-04-10T02:11:08.118Z] Fetched 50 messages via REST API
 [2025-04-10T02:11:08.131Z] Finished processing REST API messages
+[2025-04-10T02:12:07.860Z] Fetching recent messages using REST API
+[2025-04-10T02:12:08.158Z] Fetched 50 messages via REST API
+[2025-04-10T02:12:08.173Z] Finished processing REST API messages
+[2025-04-10T02:13:07.862Z] Fetching recent messages using REST API
+[2025-04-10T02:13:08.188Z] Fetched 50 messages via REST API
+[2025-04-10T02:13:08.195Z] Finished processing REST API messages
