@@ -23,19 +23,37 @@ jobs:
           node-version: '20' # Or your project's node version
 
       - name: 📦 Install Node dependencies
-        run: npm install
+        # Use npm ci for cleaner installs if lock file exists
+        run: npm ci
 
-      - name: ⬇️ Install Lychee globally
-        run: npm install -g lychee
+      - name: ⬇️ Install Lychee globally & Verify
+        run: |
+          npm install -g lychee
+          npm list -g lychee || (echo "Lychee global installation check failed" && exit 1)
 
       - name: 🐛 Debug Node.js and Lychee
         run: |
           echo "--- Versions ---"
           node -v
           npm -v
-          echo "--- Checking npx lychee --version ---"
-          npx lychee --version
-          echo "--- End Debug ---"
+          echo "--- Checking for Lychee ---"
+          if ! npx lychee --version; then
+            echo "Lychee not found via npx, trying reinstallation..."
+            npm install -g lychee
+            echo "--- Checking npx lychee --version after reinstall ---"
+            npx lychee --version || (echo "Lychee command unavailable even after reinstallation" && exit 1)
+          fi
+          echo "--- Lychee Found --- "
+
+      # Add npm environment debug step
+      - name: 🐛 Debug npm environment
+        run: |
+          echo "--- Debugging npm environment ---"
+          echo "npm prefix:"
+          npm config get prefix
+          echo "Global packages (depth 0):"
+          npm list -g --depth=0 || echo "Could not list global packages"
+          echo "--- End npm environment debug ---"
 
       - name: Run Lychee and save to broken-links.json
         run: |
