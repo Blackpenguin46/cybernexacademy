@@ -27,26 +27,49 @@ try {
   console.error("--- Raw content that failed parsing ---");
   console.error(raw); // Log the raw string that caused the error
   console.error("--- End raw content ---");
-  parsed = []; // Default to an empty array if parsing fails
+  parsed = {}; // Default to an empty object if parsing fails
 }
 
-console.log(`📝 Saving ${parsed.length} results to Supabase`);
+// Check if parsed is an object and has error_map
+if (typeof parsed !== 'object' || parsed === null || !parsed.error_map) {
+  console.log("✅ No errors found in lychee output or output format unexpected.");
+  // Exit gracefully if no errors or unexpected format
+  process.exit(0); 
+}
+
+console.log(`📝 Processing errors found in ${Object.keys(parsed.error_map).length} file(s)`);
 
 (async () => {
+  let savedCount = 0;
   try {
-    for (const result of parsed) {
-      if (result.status === 200) continue;
-      console.log(`❌ Saving broken link: ${result.uri} (${result.status})`);
-      const { error } = await supabase.from("broken_links").upsert({
-        url: result.uri,
-        status_code: result.status,
-        source_file: result.base || "unknown",
-      });
-      if (error) {
-        console.error(`Failed to insert ${result.uri}:`, error.message);
+    // Iterate through the error_map: { "./path/to/file.tsx": [ {link_result}, ... ], ... }
+    for (const [source_file, errorResults] of Object.entries(parsed.error_map)) {
+      for (const result of errorResults) {
+        // Skip results that might not have a status code (e.g., network errors before status)
+        if (!result.status || result.status.code === undefined) continue;
+
+        // Skip actual successes if they somehow end up in error_map (shouldn't happen)
+        if (result.status.code >= 200 && result.status.code < 300) continue;
+        
+        const url = result.url;
+        const status_code = result.status.code;
+        
+        console.log(`❌ Found broken link: ${url} (${status_code}) in ${source_file}`);
+        const { error } = await supabase.from("broken_links").upsert({
+          url: url,
+          status_code: status_code,
+          // Use the source_file from the error_map key
+          source_file: source_file || "unknown", 
+        });
+        if (error) {
+          console.error(`Failed to insert ${url}:`, error.message);
+        } else {
+          savedCount++;
+        }
       }
     }
+    console.log(`💾 Successfully saved ${savedCount} broken link results to Supabase.`);
   } catch (err) {
-    console.error("Error processing broken-links.json:", err.message);
+    console.error("Error processing lychee error map:", err.message);
   }
 })(); 
