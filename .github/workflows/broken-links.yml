@@ -26,34 +26,18 @@ jobs:
         # Use npm ci for cleaner installs if lock file exists
         run: npm ci
 
+      - name: Set npm global prefix
+        run: |
+          mkdir -p ~/.npm-global
+          npm config set prefix '~/.npm-global'
+          export PATH=~/.npm-global/bin:$PATH
+          echo "PATH=$PATH" >> $GITHUB_ENV
+
       - name: ⬇️ Install Lychee globally & Verify
         run: |
           npm install -g lychee
-          npm list -g lychee || (echo "Lychee global installation check failed" && exit 1)
-
-      - name: 🐛 Debug Node.js and Lychee
-        run: |
-          echo "--- Versions ---"
-          node -v
-          npm -v
-          echo "--- Checking for Lychee ---"
-          if ! npx lychee --version; then
-            echo "Lychee not found via npx, trying reinstallation..."
-            npm install -g lychee
-            echo "--- Checking npx lychee --version after reinstall ---"
-            npx lychee --version || (echo "Lychee command unavailable even after reinstallation" && exit 1)
-          fi
-          echo "--- Lychee Found --- "
-
-      # Add npm environment debug step
-      - name: 🐛 Debug npm environment
-        run: |
-          echo "--- Debugging npm environment ---"
-          echo "npm prefix:"
-          npm config get prefix
-          echo "Global packages (depth 0):"
-          npm list -g --depth=0 || echo "Could not list global packages"
-          echo "--- End npm environment debug ---"
+          # Verify directly after setting PATH
+          npx lychee --version || (echo "Lychee not found via npx even after setting prefix/PATH" && exit 1)
 
       - name: Run Lychee and save to broken-links.json
         run: |
