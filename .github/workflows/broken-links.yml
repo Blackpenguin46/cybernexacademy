@@ -28,15 +28,27 @@ jobs:
         run: cargo install lychee
 
       - name: 🔍 Scan for broken links
+        id: scan
         run: |
           # Re-adding ignore file, adding timeout
-          lychee ./app/**/*.tsx --verbose --format json --output broken-links.json --ignore-file .lycheeignore --timeout 15 || echo "Lychee command finished (may have errors, check output file)"
+          lychee ./app/**/*.tsx --verbose --format json --output broken-links.json --ignore-file .lycheeignore --timeout 15
+          echo "Lychee exit code: $?"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: true # Ensure workflow continues
+        continue-on-error: true
 
       - name: 🐛 Print contents of broken-links.json
-        run: cat broken-links.json || echo "broken-links.json not found or empty"
+        run: |
+          echo "Checking for broken-links.json..."
+          if [[ -f "broken-links.json" ]]; then
+            echo "File found. Contents:"
+            cat broken-links.json
+          else
+            echo "ERROR: broken-links.json not found!"
+            # Optionally exit here if file is mandatory
+            # exit 1 
+          fi
+          echo "Lychee step exit code was: ${{ steps.scan.outputs.exit_code || 'N/A' }}"
 
       - name: 📥 Save to Supabase
         run: node scripts/saveToSupabase.js
