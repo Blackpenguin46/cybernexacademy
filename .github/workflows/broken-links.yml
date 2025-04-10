@@ -31,6 +31,9 @@ jobs:
         run: |
           mkdir -p ~/.npm-global
           npm config set prefix '~/.npm-global'
+          # Export PATH for the current step's shell
+          export PATH=~/.npm-global/bin:$PATH 
+          # Also add to GITHUB_PATH for subsequent steps
           echo "~/.npm-global/bin" >> $GITHUB_PATH
           npm install -g lychee || (echo "Retrying installation" && npm install -g lychee)
           # Verify using direct path
