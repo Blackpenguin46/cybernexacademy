@@ -24,6 +24,9 @@ try {
   }
 } catch (error) {
   console.error("Invalid JSON format in broken-links.json. Treating as empty:", error.message);
+  console.error("--- Raw content that failed parsing ---");
+  console.error(raw); // Log the raw string that caused the error
+  console.error("--- End raw content ---");
   parsed = []; // Default to an empty array if parsing fails
 }
 
