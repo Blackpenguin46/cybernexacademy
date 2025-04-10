@@ -40590,3 +40590,1953 @@ Attacks on a critical authentication bypass flaw in CrushFTP's file transfer pro
 [2025-04-10T02:55:07.939Z] Fetching recent messages using REST API
 [2025-04-10T02:55:08.204Z] Fetched 50 messages via REST API
 [2025-04-10T02:55:08.212Z] Finished processing REST API messages
+[2025-04-10T02:56:07.942Z] Fetching recent messages using REST API
+[2025-04-10T02:56:08.251Z] Fetched 50 messages via REST API
+[2025-04-10T02:56:08.251Z] Finished processing REST API messages
+[2025-04-10T03:00:35.112Z] Fetching recent messages using REST API
+[2025-04-10T03:00:35.941Z] Fetched 50 messages via REST API
+[2025-04-10T03:00:35.945Z] Finished processing REST API messages
+[2025-04-10T03:01:44.209Z] Fetching recent messages using REST API
+[2025-04-10T03:01:44.688Z] Fetched 50 messages via REST API
+[2025-04-10T03:01:44.695Z] Finished processing REST API messages
+[2025-04-10T03:03:07.773Z] Fetching recent messages using REST API
+[2025-04-10T03:03:08.589Z] Fetched 50 messages via REST API
+[2025-04-10T03:03:08.599Z] Finished processing REST API messages
+[2025-04-10T03:04:07.775Z] Fetching recent messages using REST API
+[2025-04-10T03:04:08.026Z] Fetched 50 messages via REST API
+[2025-04-10T03:04:08.042Z] Finished processing REST API messages
+[2025-04-10T03:05:07.775Z] Fetching recent messages using REST API
+[2025-04-10T03:05:08.064Z] Fetched 50 messages via REST API
+[2025-04-10T03:05:08.070Z] Finished processing REST API messages
+[2025-04-10T03:06:07.777Z] Fetching recent messages using REST API
+[2025-04-10T03:06:08.191Z] Fetched 50 messages via REST API
+[2025-04-10T03:06:08.195Z] Finished processing REST API messages
+[2025-04-10T03:07:07.779Z] Fetching recent messages using REST API
+[2025-04-10T03:07:08.060Z] Fetched 50 messages via REST API
+[2025-04-10T03:07:08.068Z] Finished processing REST API messages
+[2025-04-10T03:08:07.781Z] Fetching recent messages using REST API
+[2025-04-10T03:08:08.103Z] Fetched 50 messages via REST API
+[2025-04-10T03:08:08.109Z] Finished processing REST API messages
+[2025-04-10T03:09:07.783Z] Fetching recent messages using REST API
+[2025-04-10T03:09:08.339Z] Fetched 50 messages via REST API
+[2025-04-10T03:09:08.344Z] Finished processing REST API messages
+[2025-04-10T03:10:07.784Z] Fetching recent messages using REST API
+[2025-04-10T03:10:08.212Z] Fetched 50 messages via REST API
+[2025-04-10T03:10:08.213Z] Finished processing REST API messages
+[2025-04-10T03:11:07.785Z] Fetching recent messages using REST API
+[2025-04-10T03:11:08.045Z] Fetched 50 messages via REST API
+[2025-04-10T03:11:08.059Z] Finished processing REST API messages
+[2025-04-10T03:12:07.788Z] Fetching recent messages using REST API
+[2025-04-10T03:12:08.275Z] Fetched 50 messages via REST API
+[2025-04-10T03:12:08.281Z] Finished processing REST API messages
+[2025-04-10T03:13:07.790Z] Fetching recent messages using REST API
+[2025-04-10T03:13:08.056Z] Fetched 50 messages via REST API
+[2025-04-10T03:13:08.062Z] Finished processing REST API messages
+[2025-04-10T03:14:07.791Z] Fetching recent messages using REST API
+[2025-04-10T03:14:08.121Z] Fetched 50 messages via REST API
+[2025-04-10T03:14:08.126Z] Finished processing REST API messages
+[2025-04-10T03:15:07.794Z] Fetching recent messages using REST API
+[2025-04-10T03:15:08.080Z] Fetched 50 messages via REST API
+[2025-04-10T03:15:08.081Z] Finished processing REST API messages
+[2025-04-10T03:16:07.796Z] Fetching recent messages using REST API
+[2025-04-10T03:16:08.224Z] Fetched 50 messages via REST API
+[2025-04-10T03:16:08.229Z] Finished processing REST API messages
+[2025-04-10T03:17:07.797Z] Fetching recent messages using REST API
+[2025-04-10T03:17:08.112Z] Fetched 50 messages via REST API
+[2025-04-10T03:17:08.117Z] Finished processing REST API messages
+[2025-04-10T03:18:07.798Z] Fetching recent messages using REST API
+[2025-04-10T03:18:08.065Z] Fetched 50 messages via REST API
+[2025-04-10T03:18:08.078Z] Finished processing REST API messages
+[2025-04-10T03:19:07.801Z] Fetching recent messages using REST API
+[2025-04-10T03:19:08.294Z] Fetched 50 messages via REST API
+[2025-04-10T03:19:08.295Z] Finished processing REST API messages
+[2025-04-10T03:20:07.804Z] Fetching recent messages using REST API
+[2025-04-10T03:20:08.120Z] Fetched 50 messages via REST API
+[2025-04-10T03:20:08.128Z] Finished processing REST API messages
+[2025-04-10T03:21:07.806Z] Fetching recent messages using REST API
+[2025-04-10T03:21:08.254Z] Fetched 50 messages via REST API
+[2025-04-10T03:21:08.259Z] Finished processing REST API messages
+[2025-04-10T03:36:36.074Z] Fetching recent messages using REST API
+[2025-04-10T03:36:36.943Z] Fetched 50 messages via REST API
+[2025-04-10T03:36:36.950Z] Finished processing REST API messages
+[2025-04-10T03:53:15.284Z] Fetching recent messages using REST API
+[2025-04-10T03:53:15.951Z] Fetched 50 messages via REST API
+[2025-04-10T03:53:15.956Z] Finished processing REST API messages
+[2025-04-10T04:10:08.834Z] Fetching recent messages using REST API
+[2025-04-10T04:10:09.967Z] Fetched 50 messages via REST API
+[2025-04-10T04:10:09.974Z] Finished processing REST API messages
+[2025-04-10T04:17:13.843Z] Fetching recent messages using REST API
+[2025-04-10T04:17:14.941Z] Fetched 50 messages via REST API
+[2025-04-10T04:17:14.941Z] Finished processing REST API messages
+[2025-04-10T04:33:41.298Z] Fetching recent messages using REST API
+[2025-04-10T04:33:41.911Z] Fetched 50 messages via REST API
+[2025-04-10T04:33:41.924Z] Finished processing REST API messages
+[2025-04-10T04:51:35.869Z] Fetching recent messages using REST API
+[2025-04-10T04:51:36.995Z] Fetched 50 messages via REST API
+[2025-04-10T04:51:37.002Z] Finished processing REST API messages
+[2025-04-10T05:08:18.130Z] Fetching recent messages using REST API
+[2025-04-10T05:08:18.897Z] Fetched 50 messages via REST API
+[2025-04-10T05:08:18.909Z] Finished processing REST API messages
+[2025-04-10T05:22:09.340Z] Fetching recent messages using REST API
+[2025-04-10T05:22:10.008Z] Fetched 50 messages via REST API
+[2025-04-10T05:22:10.017Z] Finished processing REST API messages
+[2025-04-10T05:40:25.001Z] Fetching recent messages using REST API
+[2025-04-10T05:40:25.862Z] Fetched 50 messages via REST API
+[2025-04-10T05:40:25.872Z] Finished processing REST API messages
+[2025-04-10T05:57:27.258Z] Fetching recent messages using REST API
+[2025-04-10T05:57:27.995Z] Fetched 50 messages via REST API
+[2025-04-10T05:57:28.006Z] Finished processing REST API messages
+[2025-04-10T06:13:12.989Z] Fetching recent messages using REST API
+[2025-04-10T06:13:13.939Z] Fetched 50 messages via REST API
+[2025-04-10T06:13:13.957Z] Finished processing REST API messages
+[2025-04-10T06:30:37.235Z] Fetching recent messages using REST API
+[2025-04-10T06:30:37.975Z] Fetched 50 messages via REST API
+[2025-04-10T06:30:37.983Z] Finished processing REST API messages
+[2025-04-10T06:46:12.097Z] Fetching recent messages using REST API
+[2025-04-10T06:46:13.024Z] Fetched 50 messages via REST API
+[2025-04-10T06:46:13.034Z] Finished processing REST API messages
+[2025-04-10T07:02:39.816Z] Fetching recent messages using REST API
+[2025-04-10T07:02:40.968Z] Fetched 50 messages via REST API
+[2025-04-10T07:02:40.982Z] Finished processing REST API messages
+[2025-04-10T07:18:28.508Z] Fetching recent messages using REST API
+[2025-04-10T07:18:28.898Z] Fetched 50 messages via REST API
+[2025-04-10T07:18:28.898Z] Finished processing REST API messages
+[2025-04-10T07:35:54.006Z] Fetching recent messages using REST API
+[2025-04-10T07:35:55.034Z] Fetched 50 messages via REST API
+[2025-04-10T07:35:55.047Z] Processing message 1359793864499662991 from REST API
+[2025-04-10T07:35:55.047Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/we-live-science/bernhard-scholkopf-is-ai-intelligent-starmus-highlights/",
+      "title": "Bernhard Schölkopf: Is AI intelligent? | Starmus highlights",
+      "description": "With AI's pattern recognition capabilities well-established, Mr. Schölkopf's talk shifts the focus to a pressing question: what will be the next great leap for AI?",
+      "color": 44678,
+      "timestamp": "2025-02-27T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/videos/month-security-tony-anscombe-february-2025-edition/",
+      "title": "This month in security with Tony Anscombe – February 2025 edition",
+      "description": "Ransomware payments trending down, the cyber-resilience gap facing SMBs, and APT groups embracing generative AI – it's a wrap on another month filled with impactful security news",
+      "color": 44678,
+      "timestamp": "2025-02-26T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/we-live-science/laurie-anderson-building-ark-starmus-highlights/",
+      "title": "Laurie Anderson: Building an ARK | Starmus highlights",
+      "description": "The pioneering multi-media artist reveals the creative process behind her stage show called ARK, which challenges audiences to reflect on some of the most pressing issues of our times",
+      "color": 44678,
+      "timestamp": "2025-02-24T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T07:35:21.045000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359793864499662991",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T07:35:55.048Z] Processing message 1359793864499662991 from rest-api
+[2025-04-10T07:35:55.048Z] Message content: ""
+[2025-04-10T07:35:55.048Z] Has embeds: true
+[2025-04-10T07:35:55.048Z] Message has 3 embeds
+[2025-04-10T07:35:55.048Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.welivesecurity.com/en/we-live-science/bernhard-scholkopf-is-ai-intelligent-starmus-highlights/",
+  "title": "Bernhard Schölkopf: Is AI intelligent? | Starmus highlights",
+  "description": "With AI's pattern recognition capabilities well-established, Mr. Schölkopf's talk shifts the focus to a pressing question: what will be the next great leap for AI?",
+  "color": 44678,
+  "timestamp": "2025-02-27T10:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "width": 1745,
+    "height": 247,
+    "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T07:35:55.048Z] Found embed title: Bernhard Schölkopf: Is AI intelligent? | Starmus highlights
+[2025-04-10T07:35:55.048Z] Found embed description: With AI's pattern recognition capabilities well-established, Mr. Schölkopf's talk shifts the focus to a pressing question: what will be the next great leap for AI?
+[2025-04-10T07:35:55.049Z] Inserting content into Supabase: Bernhard Schölkopf: Is AI intelligent? | Starmus highlights
+
+With AI's pattern recognition capabilities well-established, Mr. Schölkopf's talk shifts the focus to a pressing question: what will be the next great leap for AI?
+[2025-04-10T07:35:55.377Z] Successfully saved to Supabase: null
+[2025-04-10T07:35:55.396Z] Processing message 1359793862947897396 from REST API
+[2025-04-10T07:35:55.396Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/videos/mirrorface-updates-toolset-expands-reach-europe/",
+      "title": "MirrorFace updates toolset, expands targeting to Europe",
+      "description": "The group's Operation AkaiRyū begins with targeted spearphishing emails that use the upcoming World Expo 2025 in Osaka, Japan, as a lure",
+      "color": 44678,
+      "timestamp": "2025-03-18T15:45:18+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/videos/ai-biggest-surprises-2024-unlocked-403-cybersecurity-podcast-season-2-episode-1/",
+      "title": "AI's biggest surprises of 2024 | Unlocked 403 cybersecurity podcast (S2E1)",
+      "description": "Here's what's been hot on the AI scene over the past 12 months, how it's changing the face of warfare, and how you can fight AI-powered scams",
+      "color": 44678,
+      "timestamp": "2025-03-17T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/eset-research/shifting-sands-ransomhub-edrkillshifter/",
+      "title": "Shifting the sands of RansomHub’s EDRKillShifter",
+      "description": "ESET researchers discover new ties between affiliates of RansomHub and of rival gangs Medusa, BianLian, and Play",
+      "color": 44678,
+      "timestamp": "2025-03-26T14:58:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/critical-infrastructure/when-it-meets-ot-cybersecurity-physical-world/",
+      "title": "When IT meets OT: Cybersecurity for the physical world",
+      "description": "While relatively rare, real-world incidents impacting operational technology highlight that organizations in critical infrastructure can’t afford to dismiss the OT threat",
+      "color": 44678,
+      "timestamp": "2025-03-14T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/cybersecurity/cybercriminals-steal-spotify-account/",
+      "title": "Don’t let cybercriminals steal your Spotify account",
+      "description": "Listen up, this is sure to be music to your ears – a few minutes spent securing your account today can save you a ton of trouble tomorrow",
+      "color": 44678,
+      "timestamp": "2025-03-11T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/cybersecurity/ai-driven-deception-new-face-corporate-fraud/",
+      "title": "AI-driven deception: A new face of corporate fraud",
+      "description": "Malicious use of AI is reshaping the fraud landscape, creating major new risks for businesses",
+      "color": 44678,
+      "timestamp": "2025-03-10T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/eset-research/operation-akairyu-mirrorface-invites-europe-expo-2025-revives-anel-backdoor/",
+      "title": "Operation AkaiRyū: MirrorFace invites Europe to Expo 2025 and revives ANEL backdoor",
+      "description": "ESET researchers uncovered MirrorFace activity that expanded beyond its usual focus on Japan and targeted a Central European diplomatic institute with the ANEL backdoor",
+      "color": 44678,
+      "timestamp": "2025-03-18T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/kids-online/kids-behaving-badly-online-heres-how-parents-can-help/",
+      "title": "Kids behaving badly online? Here's what parents can do",
+      "description": "By taking time to understand and communicate the impact of undesirable online behavior, you can teach your kids an invaluable set of life lessons for a new digital age",
+      "color": 44678,
+      "timestamp": "2025-03-05T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/podcasts/threat-report-h2-2024-infostealer-shakeup-new-attack-vector-mobile-nomani/",
+      "title": "Threat Report H2 2024: Infostealer shakeup, new attack vector for mobile, and Nomani",
+      "description": "Big shifts in the infostealer scene, novel attack vector against iOS and Android, and a massive surge in investment scams on social media",
+      "color": 44678,
+      "timestamp": "2025-02-28T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/we-live-science/martin-rees-post-human-intelligence-cosmic-perspective-starmus-highlights/",
+      "title": "Martin Rees: Post-human intelligence – a cosmic perspective | Starmus highlights",
+      "description": "Take a moment to think beyond our current capabilities and consider what might come next in the grand story of evolution",
+      "color": 44678,
+      "timestamp": "2025-03-03T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T07:35:20.675000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359793862947897396",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T07:35:55.397Z] Processing message 1359793862947897396 from rest-api
+[2025-04-10T07:35:55.397Z] Message content: ""
+[2025-04-10T07:35:55.397Z] Has embeds: true
+[2025-04-10T07:35:55.398Z] Message has 10 embeds
+[2025-04-10T07:35:55.398Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.welivesecurity.com/en/videos/mirrorface-updates-toolset-expands-reach-europe/",
+  "title": "MirrorFace updates toolset, expands targeting to Europe",
+  "description": "The group's Operation AkaiRyū begins with targeted spearphishing emails that use the upcoming World Expo 2025 in Osaka, Japan, as a lure",
+  "color": 44678,
+  "timestamp": "2025-03-18T15:45:18+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "width": 1745,
+    "height": 247,
+    "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T07:35:55.398Z] Found embed title: MirrorFace updates toolset, expands targeting to Europe
+[2025-04-10T07:35:55.398Z] Found embed description: The group's Operation AkaiRyū begins with targeted spearphishing emails that use the upcoming World Expo 2025 in Osaka, Japan, as a lure
+[2025-04-10T07:35:55.399Z] Inserting content into Supabase: MirrorFace updates toolset, expands targeting to Europe
+
+The group's Operation AkaiRyū begins with targeted spearphishing emails that use the upcoming World Expo 2025 in Osaka, Japan, as a lure
+[2025-04-10T07:35:55.494Z] Successfully saved to Supabase: null
+[2025-04-10T07:35:55.502Z] Processing message 1359793856702316686 from REST API
+[2025-04-10T07:35:55.502Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/cybersecurity/1-billion-reasons-protect-identity-online/",
+      "title": "1 billion reasons to protect your identity online",
+      "description": "Corporate data breaches are a gateway to identity fraud, but they’re not the only one. Here’s a lowdown on how your personal data could be stolen – and how to make sure it isn’t.",
+      "color": 44678,
+      "timestamp": "2025-04-08T09:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/cybersecurity/so-your-friend-has-been-hacked-could-you-be-next/",
+      "title": "So your friend has been hacked: Could you be next?",
+      "description": "When a ruse puts on a familiar face, your guard might drop, making you an easy mark. Learn how to tell a friend apart from a foe.",
+      "color": 44678,
+      "timestamp": "2025-04-09T09:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/we-live-science/good-bad-unknown-ai-qa-maria-bielikova/",
+      "title": "The good, the bad and the unknown of AI: A Q&A with Mária Bieliková",
+      "description": "The computer scientist and AI researcher shares her thoughts on the technology’s potential and pitfalls – and what may lie ahead for us",
+      "color": 44678,
+      "timestamp": "2025-04-03T09:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/videos/month-security-tony-anscombe-march-2025-edition/",
+      "title": "This month in security with Tony Anscombe – March 2025 edition",
+      "description": "From an exploited vulnerability in a third-party ChatGPT tool to a bizarre twist on ransomware demands, it's a wrap on another month filled with impactful cybersecurity news",
+      "color": 44678,
+      "timestamp": "2025-03-31T10:46:09+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/videos/ransomhub-affiliates-linked-rival-raas-providers/",
+      "title": "RansomHub affiliates linked to rival RaaS gangs",
+      "description": "ESET researchers also examine the growing threat posed by tools that ransomware affiliates deploy in an attempt to disrupt EDR security solutions",
+      "color": 44678,
+      "timestamp": "2025-03-27T13:10:08+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/videos/famoussparrow-resurfaces-spy-targets-us-latin-america/",
+      "title": "FamousSparrow resurfaces to spy on targets in the US, Latin America",
+      "description": "Once thought to be dormant, the China-aligned group has also been observed using the privately-sold ShadowPad backdoor for the first time",
+      "color": 44678,
+      "timestamp": "2025-03-27T10:42:38+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/business-security/resilience-face-ransomware-key-business-survival/",
+      "title": "Resilience in the face of ransomware: A key to business survival",
+      "description": "Your company’s ability to tackle the ransomware threat head-on can ultimately be a competitive advantage",
+      "color": 44678,
+      "timestamp": "2025-03-31T09:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/business-security/making-it-stick-get-most-cybersecurity-training/",
+      "title": "Making it stick: How to get the most out of cybersecurity training",
+      "description": "Security awareness training doesn’t have to be a snoozefest – games and stories can help instill ‘sticky’ habits that will kick in when a danger is near",
+      "color": 44678,
+      "timestamp": "2025-03-28T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/eset-research/you-will-always-remember-this-as-the-day-you-finally-caught-famoussparrow/",
+      "title": "You will always remember this as the day you finally caught FamousSparrow",
+      "description": "ESET researchers uncover the toolset used by the FamousSparrow APT group, including two undocumented versions of the group’s signature backdoor, SparrowDoor",
+      "color": 44678,
+      "timestamp": "2025-03-26T14:45:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/eset-research/operation-fishmedley/",
+      "title": "Operation FishMedley",
+      "description": "ESET researchers detail a global espionage operation by FishMonger, the APT group run by I‑SOON",
+      "color": 44678,
+      "timestamp": "2025-03-20T10:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T07:35:19.186000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359793856702316686",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T07:35:55.503Z] Processing message 1359793856702316686 from rest-api
+[2025-04-10T07:35:55.503Z] Message content: ""
+[2025-04-10T07:35:55.503Z] Has embeds: true
+[2025-04-10T07:35:55.504Z] Message has 10 embeds
+[2025-04-10T07:35:55.504Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.welivesecurity.com/en/cybersecurity/1-billion-reasons-protect-identity-online/",
+  "title": "1 billion reasons to protect your identity online",
+  "description": "Corporate data breaches are a gateway to identity fraud, but they’re not the only one. Here’s a lowdown on how your personal data could be stolen – and how to make sure it isn’t.",
+  "color": 44678,
+  "timestamp": "2025-04-08T09:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "width": 1745,
+    "height": 247,
+    "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T07:35:55.504Z] Found embed title: 1 billion reasons to protect your identity online
+[2025-04-10T07:35:55.504Z] Found embed description: Corporate data breaches are a gateway to identity fraud, but they’re not the only one. Here’s a lowdown on how your personal data could be stolen – and how to make sure it isn’t.
+[2025-04-10T07:35:55.504Z] Inserting content into Supabase: 1 billion reasons to protect your identity online
+
+Corporate data breaches are a gateway to identity fraud, but they’re not the only one. Here’s a lowdown on how your personal data could be stolen – and how to make sure it isn’t.
+[2025-04-10T07:35:55.583Z] Successfully saved to Supabase: null
+[2025-04-10T07:35:55.584Z] Processing message 1359793614540111974 from REST API
+[2025-04-10T07:35:55.584Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/akirabot-targets-420000-sites-with.html",
+      "title": "AkiraBot Targets 420,000 Sites with OpenAI-Generated Spam, Bypassing CAPTCHA Protections",
+      "description": "Cybersecurity researchers have disclosed details of an artificial intelligence (AI) powered platform called AkiraBot that's used to spam website chats, comment sections, and contact forms to promote dubious search engine optimization (SEO) services such as Akira and ServicewrapGO.\n\"AkiraBot has targeted more than 400,000 websites and successfully spammed at least 80,000 websites since September",
+      "color": 2639502,
+      "timestamp": "2025-04-10T07:15:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T07:34:21.450000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359793614540111974",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T07:35:55.584Z] Processing message 1359793614540111974 from rest-api
+[2025-04-10T07:35:55.584Z] Message content: ""
+[2025-04-10T07:35:55.584Z] Has embeds: true
+[2025-04-10T07:35:55.584Z] Message has 1 embeds
+[2025-04-10T07:35:55.584Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/akirabot-targets-420000-sites-with.html",
+  "title": "AkiraBot Targets 420,000 Sites with OpenAI-Generated Spam, Bypassing CAPTCHA Protections",
+  "description": "Cybersecurity researchers have disclosed details of an artificial intelligence (AI) powered platform called AkiraBot that's used to spam website chats, comment sections, and contact forms to promote dubious search engine optimization (SEO) services such as Akira and ServicewrapGO.\n\"AkiraBot has targeted more than 400,000 websites and successfully spammed at least 80,000 websites since September",
+  "color": 2639502,
+  "timestamp": "2025-04-10T07:15:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T07:35:55.585Z] Found embed title: AkiraBot Targets 420,000 Sites with OpenAI-Generated Spam, Bypassing CAPTCHA Protections
+[2025-04-10T07:35:55.585Z] Found embed description: Cybersecurity researchers have disclosed details of an artificial intelligence (AI) powered platform called AkiraBot that's used to spam website chats, comment sections, and contact forms to promote dubious search engine optimization (SEO) services such as Akira and ServicewrapGO.
+"AkiraBot has targeted more than 400,000 websites and successfully spammed at least 80,000 websites since September
+[2025-04-10T07:35:55.585Z] Inserting content into Supabase: AkiraBot Targets 420,000 Sites with OpenAI-Generated Spam, Bypassing CAPTCHA Protections
+
+Cybersecurity researchers have disclosed details of an artificial intelligence (AI) powered platform called AkiraBot that's used to spam website chats, comment sections, and contact forms to promote dubious search engine optimization (SEO) services such as Akira and ServicewrapGO.
+"AkiraBot has targeted more than 400,000 websites and successfully spammed at least 80,000 websites since September
+[2025-04-10T07:35:55.664Z] Successfully saved to Supabase: null
+[2025-04-10T07:35:55.665Z] Finished processing REST API messages
+[2025-04-10T07:52:07.308Z] Fetching recent messages using REST API
+[2025-04-10T07:52:07.973Z] Fetched 50 messages via REST API
+[2025-04-10T07:52:07.984Z] Finished processing REST API messages
+[2025-04-10T08:09:44.467Z] Fetching recent messages using REST API
+[2025-04-10T08:09:45.022Z] Fetched 50 messages via REST API
+[2025-04-10T08:09:45.029Z] Finished processing REST API messages
+[2025-04-10T08:24:54.837Z] Fetching recent messages using REST API
+[2025-04-10T08:24:55.996Z] Fetched 50 messages via REST API
+[2025-04-10T08:24:56.006Z] Finished processing REST API messages
+[2025-04-10T08:40:16.873Z] Fetching recent messages using REST API
+[2025-04-10T08:40:17.981Z] Fetched 50 messages via REST API
+[2025-04-10T08:40:17.994Z] Finished processing REST API messages
+[2025-04-10T08:56:07.447Z] Fetching recent messages using REST API
+[2025-04-10T08:56:07.925Z] Fetched 50 messages via REST API
+[2025-04-10T08:56:07.930Z] Finished processing REST API messages
+[2025-04-10T09:12:19.285Z] Fetching recent messages using REST API
+[2025-04-10T09:12:20.160Z] Fetched 50 messages via REST API
+[2025-04-10T09:12:20.167Z] Finished processing REST API messages
+[2025-04-10T09:20:34.892Z] Fetching recent messages using REST API
+[2025-04-10T09:20:36.025Z] Fetched 50 messages via REST API
+[2025-04-10T09:20:36.036Z] Finished processing REST API messages
+[2025-04-10T09:36:13.216Z] Fetching recent messages using REST API
+[2025-04-10T09:36:13.930Z] Fetched 50 messages via REST API
+[2025-04-10T09:36:13.941Z] Finished processing REST API messages
+[2025-04-10T09:52:57.150Z] Fetching recent messages using REST API
+[2025-04-10T09:52:58.092Z] Fetched 50 messages via REST API
+[2025-04-10T09:52:58.108Z] Finished processing REST API messages
+[2025-04-10T10:08:40.030Z] Fetching recent messages using REST API
+[2025-04-10T10:08:40.975Z] Fetched 50 messages via REST API
+[2025-04-10T10:08:40.997Z] Finished processing REST API messages
+[2025-04-10T10:25:13.924Z] Fetching recent messages using REST API
+[2025-04-10T10:25:15.105Z] Fetched 50 messages via REST API
+[2025-04-10T10:25:15.118Z] Finished processing REST API messages
+[2025-04-10T10:43:14.150Z] Fetching recent messages using REST API
+[2025-04-10T10:43:14.964Z] Fetched 50 messages via REST API
+[2025-04-10T10:43:14.970Z] Finished processing REST API messages
+[2025-04-10T10:58:36.325Z] Fetching recent messages using REST API
+[2025-04-10T10:58:38.322Z] Fetched 50 messages via REST API
+[2025-04-10T10:58:38.331Z] Finished processing REST API messages
+[2025-04-10T11:16:03.899Z] Fetching recent messages using REST API
+[2025-04-10T11:16:04.770Z] Fetched 50 messages via REST API
+[2025-04-10T11:16:04.778Z] Processing message 1359846435603873854 from REST API
+[2025-04-10T11:16:04.778Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/europol-arrests-five-smokeloader.html",
+      "title": "Europol Arrests Five SmokeLoader Clients Linked by Seized Database Evidence",
+      "description": "Law enforcement authorities have announced that they tracked down the customers of the SmokeLoader malware and detained at least five individuals.\n\"In a coordinated series of actions, customers of the Smokeloader pay-per-install botnet, operated by the actor known as 'Superstar,' faced consequences such as arrests, house searches, arrest warrants or 'knock and talks,'\" Europol said in a",
+      "color": 2639502,
+      "timestamp": "2025-04-10T09:55:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T11:04:14.973000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359846435603873854",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T11:16:04.779Z] Processing message 1359846435603873854 from rest-api
+[2025-04-10T11:16:04.779Z] Message content: ""
+[2025-04-10T11:16:04.779Z] Has embeds: true
+[2025-04-10T11:16:04.779Z] Message has 1 embeds
+[2025-04-10T11:16:04.779Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/europol-arrests-five-smokeloader.html",
+  "title": "Europol Arrests Five SmokeLoader Clients Linked by Seized Database Evidence",
+  "description": "Law enforcement authorities have announced that they tracked down the customers of the SmokeLoader malware and detained at least five individuals.\n\"In a coordinated series of actions, customers of the Smokeloader pay-per-install botnet, operated by the actor known as 'Superstar,' faced consequences such as arrests, house searches, arrest warrants or 'knock and talks,'\" Europol said in a",
+  "color": 2639502,
+  "timestamp": "2025-04-10T09:55:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T11:16:04.779Z] Found embed title: Europol Arrests Five SmokeLoader Clients Linked by Seized Database Evidence
+[2025-04-10T11:16:04.779Z] Found embed description: Law enforcement authorities have announced that they tracked down the customers of the SmokeLoader malware and detained at least five individuals.
+"In a coordinated series of actions, customers of the Smokeloader pay-per-install botnet, operated by the actor known as 'Superstar,' faced consequences such as arrests, house searches, arrest warrants or 'knock and talks,'" Europol said in a
+[2025-04-10T11:16:04.779Z] Inserting content into Supabase: Europol Arrests Five SmokeLoader Clients Linked by Seized Database Evidence
+
+Law enforcement authorities have announced that they tracked down the customers of the SmokeLoader malware and detained at least five individuals.
+"In a coordinated series of actions, customers of the Smokeloader pay-per-install botnet, operated by the actor known as 'Superstar,' faced consequences such as arrests, house searches, arrest warrants or 'knock and talks,'" Europol said in a
+[2025-04-10T11:16:05.256Z] Successfully saved to Supabase: null
+[2025-04-10T11:16:05.262Z] Processing message 1359846051154235613 from REST API
+[2025-04-10T11:16:05.262Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.welivesecurity.com/en/cybersecurity/watch-out-traps-lurking-search-results/",
+      "title": "Watch out for these traps lurking in search results",
+      "description": "Here’s how to avoid being hit by fraudulent websites that scammers can catapult directly to the top of your search results",
+      "color": 44678,
+      "timestamp": "2025-04-10T09:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+        "width": 1745,
+        "height": 247,
+        "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T11:02:43.313000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359846051154235613",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T11:16:05.262Z] Processing message 1359846051154235613 from rest-api
+[2025-04-10T11:16:05.262Z] Message content: ""
+[2025-04-10T11:16:05.262Z] Has embeds: true
+[2025-04-10T11:16:05.262Z] Message has 1 embeds
+[2025-04-10T11:16:05.263Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.welivesecurity.com/en/cybersecurity/watch-out-traps-lurking-search-results/",
+  "title": "Watch out for these traps lurking in search results",
+  "description": "Here’s how to avoid being hit by fraudulent websites that scammers can catapult directly to the top of your search results",
+  "color": 44678,
+  "timestamp": "2025-04-10T09:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/DW4UYn3rBilk3rFCoAPcIhUfGKTeKe80ELpX_-DlGjY/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/welivesecurity.png",
+    "width": 1745,
+    "height": 247,
+    "placeholder": "X1WBCYIkjgJ4iEiPePiIh3iHhYhwqJg=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T11:16:05.263Z] Found embed title: Watch out for these traps lurking in search results
+[2025-04-10T11:16:05.263Z] Found embed description: Here’s how to avoid being hit by fraudulent websites that scammers can catapult directly to the top of your search results
+[2025-04-10T11:16:05.263Z] Inserting content into Supabase: Watch out for these traps lurking in search results
+
+Here’s how to avoid being hit by fraudulent websites that scammers can catapult directly to the top of your search results
+[2025-04-10T11:16:05.369Z] Successfully saved to Supabase: null
+[2025-04-10T11:16:05.378Z] Finished processing REST API messages
+[2025-04-10T11:21:35.044Z] Fetching recent messages using REST API
+[2025-04-10T11:21:35.982Z] Fetched 50 messages via REST API
+[2025-04-10T11:21:35.990Z] Finished processing REST API messages
+[2025-04-10T11:38:27.435Z] Fetching recent messages using REST API
+[2025-04-10T11:38:27.958Z] Fetched 50 messages via REST API
+[2025-04-10T11:38:27.969Z] Finished processing REST API messages
+[2025-04-10T11:53:44.874Z] Fetching recent messages using REST API
+[2025-04-10T11:53:45.870Z] Fetched 50 messages via REST API
+[2025-04-10T11:53:45.880Z] Finished processing REST API messages
+[2025-04-10T12:10:05.892Z] Fetching recent messages using REST API
+[2025-04-10T12:10:07.157Z] Fetched 50 messages via REST API
+[2025-04-10T12:10:07.167Z] Processing message 1359861490299175024 from REST API
+[2025-04-10T12:10:07.168Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/playpraetor-reloaded-ctm360-uncovers.html",
+      "title": "PlayPraetor Reloaded: CTM360 Uncovers a Play Masquerading Party",
+      "description": "Overview of the PlayPraetor Masquerading Party Variants\nCTM360 has now identified a much larger extent of the ongoing Play Praetor campaign. What started with 6000+ URLs of a very specific banking attack has now grown to 16,000+ with multiple variants. This research is ongoing, and much more is expected to be discovered in the coming days.&nbsp;\nAs before, all the newly discovered play",
+      "color": 2639502,
+      "timestamp": "2025-04-10T11:25:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/the-identities-behind-ai-agents-deep.html",
+      "title": "The Identities Behind AI Agents: A Deep Dive Into AI & NHI",
+      "description": "AI agents have rapidly evolved from experimental technology to essential business tools. The OWASP framework explicitly recognizes that Non-Human Identities play a key role in agentic AI security. Their analysis highlights how these autonomous software entities can make decisions, chain complex actions together, and operate continuously without human intervention. They're no longer just tools,",
+      "color": 2639502,
+      "timestamp": "2025-04-10T11:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/gamaredon-uses-infected-removable.html",
+      "title": "Gamaredon Uses Infected Removable Drives to Breach Western Military Mission in Ukraine",
+      "description": "The Russia-linked threat actor known as Gamaredon (aka Shuckworm) has been attributed to a cyber attack targeting a foreign military mission based in Ukraine with an aim to deliver an updated version of a known malware called GammaSteel.\nThe group targeted the military mission of a Western country, per the Symantec Threat Hunter team, with first signs of the malicious activity detected on",
+      "color": 2639502,
+      "timestamp": "2025-04-10T10:53:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T12:04:04.292000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359861490299175024",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T12:10:07.168Z] Processing message 1359861490299175024 from rest-api
+[2025-04-10T12:10:07.168Z] Message content: ""
+[2025-04-10T12:10:07.169Z] Has embeds: true
+[2025-04-10T12:10:07.169Z] Message has 3 embeds
+[2025-04-10T12:10:07.169Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/playpraetor-reloaded-ctm360-uncovers.html",
+  "title": "PlayPraetor Reloaded: CTM360 Uncovers a Play Masquerading Party",
+  "description": "Overview of the PlayPraetor Masquerading Party Variants\nCTM360 has now identified a much larger extent of the ongoing Play Praetor campaign. What started with 6000+ URLs of a very specific banking attack has now grown to 16,000+ with multiple variants. This research is ongoing, and much more is expected to be discovered in the coming days.&nbsp;\nAs before, all the newly discovered play",
+  "color": 2639502,
+  "timestamp": "2025-04-10T11:25:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T12:10:07.169Z] Found embed title: PlayPraetor Reloaded: CTM360 Uncovers a Play Masquerading Party
+[2025-04-10T12:10:07.169Z] Found embed description: Overview of the PlayPraetor Masquerading Party Variants
+CTM360 has now identified a much larger extent of the ongoing Play Praetor campaign. What started with 6000+ URLs of a very specific banking attack has now grown to 16,000+ with multiple variants. This research is ongoing, and much more is expected to be discovered in the coming days.&nbsp;
+As before, all the newly discovered play
+[2025-04-10T12:10:07.169Z] Inserting content into Supabase: PlayPraetor Reloaded: CTM360 Uncovers a Play Masquerading Party
+
+Overview of the PlayPraetor Masquerading Party Variants
+CTM360 has now identified a much larger extent of the ongoing Play Praetor campaign. What started with 6000+ URLs of a very specific banking attack has now grown to 16,000+ with multiple variants. This research is ongoing, and much more is expected to be discovered in the coming days.&nbsp;
+As before, all the newly discovered play
+[2025-04-10T12:10:07.419Z] Successfully saved to Supabase: null
+[2025-04-10T12:10:07.420Z] Finished processing REST API messages
+[2025-04-10T12:19:28.723Z] Fetching recent messages using REST API
+[2025-04-10T12:19:29.546Z] Fetched 50 messages via REST API
+[2025-04-10T12:19:29.555Z] Finished processing REST API messages
+[2025-04-10T12:21:35.619Z] Fetching recent messages using REST API
+[2025-04-10T12:21:36.279Z] Fetched 50 messages via REST API
+[2025-04-10T12:21:36.295Z] Finished processing REST API messages
+[2025-04-10T12:30:13.910Z] Fetching recent messages using REST API
+[2025-04-10T12:30:15.188Z] Fetched 50 messages via REST API
+[2025-04-10T12:30:15.202Z] Finished processing REST API messages
+[2025-04-10T12:46:56.332Z] Fetching recent messages using REST API
+[2025-04-10T12:46:56.884Z] Fetched 50 messages via REST API
+[2025-04-10T12:46:56.885Z] Processing message 1359868520426639446 from REST API
+[2025-04-10T12:46:56.885Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/your-23andme-genetic-data-could-be-bought-by-china-senator-warns",
+      "title": "Your 23andMe genetic data could be bought by China, senator warns",
+      "description": "US senator Cassidy is afraid that Chinese companies will jump at the opportunity to buy the genetic data of 15 million 23andMe customers.",
+      "color": 2193615,
+      "timestamp": "2025-04-10T12:15:03+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "placeholder": "3lOBBIA4eoiImHB4Z2X1H7iEesWHCIh0Bw==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T12:32:00.405000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359868520426639446",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T12:46:56.886Z] Processing message 1359868520426639446 from rest-api
+[2025-04-10T12:46:56.887Z] Message content: ""
+[2025-04-10T12:46:56.887Z] Has embeds: true
+[2025-04-10T12:46:56.887Z] Message has 1 embeds
+[2025-04-10T12:46:56.887Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/your-23andme-genetic-data-could-be-bought-by-china-senator-warns",
+  "title": "Your 23andMe genetic data could be bought by China, senator warns",
+  "description": "US senator Cassidy is afraid that Chinese companies will jump at the opportunity to buy the genetic data of 15 million 23andMe customers.",
+  "color": 2193615,
+  "timestamp": "2025-04-10T12:15:03+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "placeholder": "3lOBBIA4eoiImHB4Z2X1H7iEesWHCIh0Bw==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T12:46:56.887Z] Found embed title: Your 23andMe genetic data could be bought by China, senator warns
+[2025-04-10T12:46:56.887Z] Found embed description: US senator Cassidy is afraid that Chinese companies will jump at the opportunity to buy the genetic data of 15 million 23andMe customers.
+[2025-04-10T12:46:56.888Z] Inserting content into Supabase: Your 23andMe genetic data could be bought by China, senator warns
+
+US senator Cassidy is afraid that Chinese companies will jump at the opportunity to buy the genetic data of 15 million 23andMe customers.
+[2025-04-10T12:46:57.094Z] Successfully saved to Supabase: null
+[2025-04-10T12:46:57.106Z] Finished processing REST API messages
+[2025-04-10T12:54:34.107Z] Fetching recent messages using REST API
+[2025-04-10T12:54:35.124Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T12:54:35.131Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T13:00:01.223Z] Fetching recent messages using REST API
+[2025-04-10T13:00:01.232Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T13:00:01.232Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T13:16:03.166Z] Fetching recent messages using REST API
+[2025-04-10T13:16:03.186Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T13:16:03.186Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T13:17:50.878Z] Fetching recent messages using REST API
+[2025-04-10T13:17:50.944Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T13:17:50.944Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T13:19:27.248Z] Fetching recent messages using REST API
+[2025-04-10T13:19:27.278Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T13:19:27.279Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T13:22:17.135Z] Fetching recent messages using REST API
+[2025-04-10T13:22:18.067Z] Fetched 50 messages via REST API
+[2025-04-10T13:22:18.073Z] Processing message 1359879894884159652 from REST API
+[2025-04-10T13:22:18.073Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/threat-actors-spam-bombing-malicious-motives",
+      "title": "Threat Actors Use 'Spam Bombing' Technique to Hide Malicious Motives",
+      "description": "Darktrace researchers detailed &quot;spam bombing,&quot; a technique in which threat actors bombard targets with spam emails as a pretense for activity like social engineering campaigns.",
+      "color": 44678,
+      "timestamp": "2025-04-10T13:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T13:17:12.287000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359879894884159652",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T13:22:18.074Z] Processing message 1359879894884159652 from rest-api
+[2025-04-10T13:22:18.074Z] Message content: ""
+[2025-04-10T13:22:18.074Z] Has embeds: true
+[2025-04-10T13:22:18.074Z] Message has 1 embeds
+[2025-04-10T13:22:18.075Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyberattacks-data-breaches/threat-actors-spam-bombing-malicious-motives",
+  "title": "Threat Actors Use 'Spam Bombing' Technique to Hide Malicious Motives",
+  "description": "Darktrace researchers detailed &quot;spam bombing,&quot; a technique in which threat actors bombard targets with spam emails as a pretense for activity like social engineering campaigns.",
+  "color": 44678,
+  "timestamp": "2025-04-10T13:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T13:22:18.075Z] Found embed title: Threat Actors Use 'Spam Bombing' Technique to Hide Malicious Motives
+[2025-04-10T13:22:18.075Z] Found embed description: Darktrace researchers detailed &quot;spam bombing,&quot; a technique in which threat actors bombard targets with spam emails as a pretense for activity like social engineering campaigns.
+[2025-04-10T13:22:18.075Z] Inserting content into Supabase: Threat Actors Use 'Spam Bombing' Technique to Hide Malicious Motives
+
+Darktrace researchers detailed &quot;spam bombing,&quot; a technique in which threat actors bombard targets with spam emails as a pretense for activity like social engineering campaigns.
+[2025-04-10T13:22:18.279Z] Successfully saved to Supabase: null
+[2025-04-10T13:22:18.289Z] Processing message 1359876152809750729 from REST API
+[2025-04-10T13:22:18.290Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cloud-security/google-merges-security-offerings-cohesive-suite",
+      "title": "Google Merges Security Offerings Into a Cohesive Suite",
+      "description": "Google Unified Security brings together threat detection, AI-powered security, secure browser features, and Mandiant services, the company said at its Cloud Next conference.",
+      "color": 44678,
+      "timestamp": "2025-04-09T22:40:04+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T13:02:20.107000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359876152809750729",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T13:22:18.290Z] Processing message 1359876152809750729 from rest-api
+[2025-04-10T13:22:18.290Z] Message content: ""
+[2025-04-10T13:22:18.290Z] Has embeds: true
+[2025-04-10T13:22:18.290Z] Message has 1 embeds
+[2025-04-10T13:22:18.290Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cloud-security/google-merges-security-offerings-cohesive-suite",
+  "title": "Google Merges Security Offerings Into a Cohesive Suite",
+  "description": "Google Unified Security brings together threat detection, AI-powered security, secure browser features, and Mandiant services, the company said at its Cloud Next conference.",
+  "color": 44678,
+  "timestamp": "2025-04-09T22:40:04+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T13:22:18.290Z] Found embed title: Google Merges Security Offerings Into a Cohesive Suite
+[2025-04-10T13:22:18.291Z] Found embed description: Google Unified Security brings together threat detection, AI-powered security, secure browser features, and Mandiant services, the company said at its Cloud Next conference.
+[2025-04-10T13:22:18.291Z] Inserting content into Supabase: Google Merges Security Offerings Into a Cohesive Suite
+
+Google Unified Security brings together threat detection, AI-powered security, secure browser features, and Mandiant services, the company said at its Cloud Next conference.
+[2025-04-10T13:22:18.356Z] Successfully saved to Supabase: null
+[2025-04-10T13:22:18.357Z] Processing message 1359872397297057895 from REST API
+[2025-04-10T13:22:18.357Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cybersecurity-operations/advanced-preparation-key-secure-paris-olympics",
+      "title": "Advanced Preparation Was Key to a Secure Paris Olympics",
+      "description": "The security teams associated with the 2024 Olympic Games in Paris focused on in-depth penetration testing, crisis management exercises, and collaboration to defend against potential cyberattacks.",
+      "color": 44678,
+      "timestamp": "2025-04-09T21:57:34+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T12:47:24.723000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359872397297057895",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T13:22:18.357Z] Processing message 1359872397297057895 from rest-api
+[2025-04-10T13:22:18.358Z] Message content: ""
+[2025-04-10T13:22:18.358Z] Has embeds: true
+[2025-04-10T13:22:18.358Z] Message has 1 embeds
+[2025-04-10T13:22:18.358Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cybersecurity-operations/advanced-preparation-key-secure-paris-olympics",
+  "title": "Advanced Preparation Was Key to a Secure Paris Olympics",
+  "description": "The security teams associated with the 2024 Olympic Games in Paris focused on in-depth penetration testing, crisis management exercises, and collaboration to defend against potential cyberattacks.",
+  "color": 44678,
+  "timestamp": "2025-04-09T21:57:34+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T13:22:18.358Z] Found embed title: Advanced Preparation Was Key to a Secure Paris Olympics
+[2025-04-10T13:22:18.359Z] Found embed description: The security teams associated with the 2024 Olympic Games in Paris focused on in-depth penetration testing, crisis management exercises, and collaboration to defend against potential cyberattacks.
+[2025-04-10T13:22:18.359Z] Inserting content into Supabase: Advanced Preparation Was Key to a Secure Paris Olympics
+
+The security teams associated with the 2024 Olympic Games in Paris focused on in-depth penetration testing, crisis management exercises, and collaboration to defend against potential cyberattacks.
+[2025-04-10T13:22:18.430Z] Successfully saved to Supabase: null
+[2025-04-10T13:22:18.431Z] Finished processing REST API messages
+[2025-04-10T13:23:52.623Z] Fetching recent messages using REST API
+[2025-04-10T13:23:53.283Z] Fetched 50 messages via REST API
+[2025-04-10T13:23:53.299Z] Finished processing REST API messages
+[2025-04-10T13:41:10.891Z] Fetching recent messages using REST API
+[2025-04-10T13:41:11.728Z] Fetched 50 messages via REST API
+[2025-04-10T13:41:11.735Z] Finished processing REST API messages
+[2025-04-10T13:59:05.212Z] Fetching recent messages using REST API
+[2025-04-10T13:59:06.026Z] Fetched 50 messages via REST API
+[2025-04-10T13:59:06.041Z] Finished processing REST API messages
+[2025-04-10T14:16:55.157Z] Fetching recent messages using REST API
+[2025-04-10T14:16:55.780Z] Fetched 50 messages via REST API
+[2025-04-10T14:16:55.795Z] Processing message 1359891661970215143 from REST API
+[2025-04-10T14:16:55.796Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/malicious-npm-package-targets-atomic.html",
+      "title": "Malicious npm Package Targets Atomic Wallet, Exodus Users by Swapping Crypto Addresses",
+      "description": "Threat actors are continuing to upload malicious packages to the npm registry so as to tamper with already-installed local versions of legitimate libraries to execute malicious code in what's seen as a sneakier attempt to stage a software supply chain attack.\nThe newly discovered package, named pdf-to-office, masquerades as a utility for converting PDF files to Microsoft Word documents. But, in",
+      "color": 2639502,
+      "timestamp": "2025-04-10T12:58:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T14:03:57.779000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359891661970215143",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T14:16:55.796Z] Processing message 1359891661970215143 from rest-api
+[2025-04-10T14:16:55.796Z] Message content: ""
+[2025-04-10T14:16:55.796Z] Has embeds: true
+[2025-04-10T14:16:55.796Z] Message has 1 embeds
+[2025-04-10T14:16:55.797Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/malicious-npm-package-targets-atomic.html",
+  "title": "Malicious npm Package Targets Atomic Wallet, Exodus Users by Swapping Crypto Addresses",
+  "description": "Threat actors are continuing to upload malicious packages to the npm registry so as to tamper with already-installed local versions of legitimate libraries to execute malicious code in what's seen as a sneakier attempt to stage a software supply chain attack.\nThe newly discovered package, named pdf-to-office, masquerades as a utility for converting PDF files to Microsoft Word documents. But, in",
+  "color": 2639502,
+  "timestamp": "2025-04-10T12:58:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T14:16:55.797Z] Found embed title: Malicious npm Package Targets Atomic Wallet, Exodus Users by Swapping Crypto Addresses
+[2025-04-10T14:16:55.797Z] Found embed description: Threat actors are continuing to upload malicious packages to the npm registry so as to tamper with already-installed local versions of legitimate libraries to execute malicious code in what's seen as a sneakier attempt to stage a software supply chain attack.
+The newly discovered package, named pdf-to-office, masquerades as a utility for converting PDF files to Microsoft Word documents. But, in
+[2025-04-10T14:16:55.797Z] Inserting content into Supabase: Malicious npm Package Targets Atomic Wallet, Exodus Users by Swapping Crypto Addresses
+
+Threat actors are continuing to upload malicious packages to the npm registry so as to tamper with already-installed local versions of legitimate libraries to execute malicious code in what's seen as a sneakier attempt to stage a software supply chain attack.
+The newly discovered package, named pdf-to-office, masquerades as a utility for converting PDF files to Microsoft Word documents. But, in
+[2025-04-10T14:16:56.096Z] Successfully saved to Supabase: null
+[2025-04-10T14:16:56.110Z] Processing message 1359891206934626374 from REST API
+[2025-04-10T14:16:56.111Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/child-predators-are-lurking-on-dating-apps-warns-report",
+      "title": "Child predators are lurking on dating apps, warns report",
+      "description": "A report from Edinburgh University warns that child abusers are using dating apps to find single parents with vulnerable children.",
+      "color": 2193615,
+      "timestamp": "2025-04-10T13:45:23+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "placeholder": "3lOBBIA4eoiImHB4Z2X1H7iEesWHCIh0Bw==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T14:02:09.290000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359891206934626374",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T14:16:56.111Z] Processing message 1359891206934626374 from rest-api
+[2025-04-10T14:16:56.111Z] Message content: ""
+[2025-04-10T14:16:56.111Z] Has embeds: true
+[2025-04-10T14:16:56.111Z] Message has 1 embeds
+[2025-04-10T14:16:56.112Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/child-predators-are-lurking-on-dating-apps-warns-report",
+  "title": "Child predators are lurking on dating apps, warns report",
+  "description": "A report from Edinburgh University warns that child abusers are using dating apps to find single parents with vulnerable children.",
+  "color": 2193615,
+  "timestamp": "2025-04-10T13:45:23+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "placeholder": "3lOBBIA4eoiImHB4Z2X1H7iEesWHCIh0Bw==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T14:16:56.112Z] Found embed title: Child predators are lurking on dating apps, warns report
+[2025-04-10T14:16:56.112Z] Found embed description: A report from Edinburgh University warns that child abusers are using dating apps to find single parents with vulnerable children.
+[2025-04-10T14:16:56.112Z] Inserting content into Supabase: Child predators are lurking on dating apps, warns report
+
+A report from Edinburgh University warns that child abusers are using dating apps to find single parents with vulnerable children.
+[2025-04-10T14:16:56.201Z] Successfully saved to Supabase: null
+[2025-04-10T14:16:56.202Z] Finished processing REST API messages
+[2025-04-10T14:23:17.870Z] Fetching recent messages using REST API
+[2025-04-10T14:23:18.806Z] Fetched 50 messages via REST API
+[2025-04-10T14:23:18.816Z] Processing message 1359895010023309455 from REST API
+[2025-04-10T14:23:18.817Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyber-risk/data-privacy-versus-data-security",
+      "title": "Why Data Privacy Isn't the Same as Data Security",
+      "description": "Failing to distinguish between data privacy and data security leaves businesses vulnerable to regulatory scrutiny and the kinds of breaches that erode consumer trust overnight.",
+      "color": 44678,
+      "timestamp": "2025-04-10T14:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T14:17:16.017000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359895010023309455",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T14:23:18.817Z] Processing message 1359895010023309455 from rest-api
+[2025-04-10T14:23:18.817Z] Message content: ""
+[2025-04-10T14:23:18.817Z] Has embeds: true
+[2025-04-10T14:23:18.817Z] Message has 1 embeds
+[2025-04-10T14:23:18.817Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyber-risk/data-privacy-versus-data-security",
+  "title": "Why Data Privacy Isn't the Same as Data Security",
+  "description": "Failing to distinguish between data privacy and data security leaves businesses vulnerable to regulatory scrutiny and the kinds of breaches that erode consumer trust overnight.",
+  "color": 44678,
+  "timestamp": "2025-04-10T14:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T14:23:18.817Z] Found embed title: Why Data Privacy Isn't the Same as Data Security
+[2025-04-10T14:23:18.818Z] Found embed description: Failing to distinguish between data privacy and data security leaves businesses vulnerable to regulatory scrutiny and the kinds of breaches that erode consumer trust overnight.
+[2025-04-10T14:23:18.818Z] Inserting content into Supabase: Why Data Privacy Isn't the Same as Data Security
+
+Failing to distinguish between data privacy and data security leaves businesses vulnerable to regulatory scrutiny and the kinds of breaches that erode consumer trust overnight.
+[2025-04-10T14:23:19.046Z] Successfully saved to Supabase: null
+[2025-04-10T14:23:19.047Z] Finished processing REST API messages
+[2025-04-10T14:40:28.245Z] Fetching recent messages using REST API
+[2025-04-10T14:40:30.646Z] Fetched 50 messages via REST API
+[2025-04-10T14:40:30.660Z] Finished processing REST API messages
+[2025-04-10T14:58:18.051Z] Fetching recent messages using REST API
+[2025-04-10T14:58:18.894Z] Fetched 50 messages via REST API
+[2025-04-10T14:58:18.905Z] Finished processing REST API messages
+[2025-04-10T14:59:26.185Z] Fetching recent messages using REST API
+[2025-04-10T14:59:28.780Z] Error fetching messages via REST API: 
+[2025-04-10T14:59:28.790Z] AggregateError [ENETUNREACH]: 
+    at internalConnectMultiple (node:net:1139:18)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:464:18)
+    at GetAddrInfoReqWrap.emitLookup [as callback] (node:net:1551:7)
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:134:8)
+[2025-04-10T15:01:28.958Z] Fetching recent messages using REST API
+[2025-04-10T15:01:29.005Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:01:29.005Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:09:34.308Z] Fetching recent messages using REST API
+[2025-04-10T15:09:36.887Z] Fetched 50 messages via REST API
+[2025-04-10T15:09:36.903Z] Processing message 1359906801226747986 from REST API
+[2025-04-10T15:09:36.903Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/incomplete-patch-in-nvidia-toolkit.html",
+      "title": "Incomplete Patch in NVIDIA Toolkit Leaves CVE-2024-0132 Open to Container Escapes",
+      "description": "Cybersecurity researchers have detailed a case of an incomplete patch for a previously addressed security flaw impacting the NVIDIA Container Toolkit that, if successfully exploited, could put sensitive data at risk.\nThe original vulnerability CVE-2024-0132 (CVSS score: 9.0) is a Time-of-Check Time-of-Use (TOCTOU) vulnerability that could lead to a container escape attack and allow for",
+      "color": 2639502,
+      "timestamp": "2025-04-10T14:13:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T15:04:07.259000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359906801226747986",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T15:09:36.903Z] Processing message 1359906801226747986 from rest-api
+[2025-04-10T15:09:36.904Z] Message content: ""
+[2025-04-10T15:09:36.904Z] Has embeds: true
+[2025-04-10T15:09:36.904Z] Message has 1 embeds
+[2025-04-10T15:09:36.904Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/incomplete-patch-in-nvidia-toolkit.html",
+  "title": "Incomplete Patch in NVIDIA Toolkit Leaves CVE-2024-0132 Open to Container Escapes",
+  "description": "Cybersecurity researchers have detailed a case of an incomplete patch for a previously addressed security flaw impacting the NVIDIA Container Toolkit that, if successfully exploited, could put sensitive data at risk.\nThe original vulnerability CVE-2024-0132 (CVSS score: 9.0) is a Time-of-Check Time-of-Use (TOCTOU) vulnerability that could lead to a container escape attack and allow for",
+  "color": 2639502,
+  "timestamp": "2025-04-10T14:13:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T15:09:36.904Z] Found embed title: Incomplete Patch in NVIDIA Toolkit Leaves CVE-2024-0132 Open to Container Escapes
+[2025-04-10T15:09:36.904Z] Found embed description: Cybersecurity researchers have detailed a case of an incomplete patch for a previously addressed security flaw impacting the NVIDIA Container Toolkit that, if successfully exploited, could put sensitive data at risk.
+The original vulnerability CVE-2024-0132 (CVSS score: 9.0) is a Time-of-Check Time-of-Use (TOCTOU) vulnerability that could lead to a container escape attack and allow for
+[2025-04-10T15:09:36.905Z] Inserting content into Supabase: Incomplete Patch in NVIDIA Toolkit Leaves CVE-2024-0132 Open to Container Escapes
+
+Cybersecurity researchers have detailed a case of an incomplete patch for a previously addressed security flaw impacting the NVIDIA Container Toolkit that, if successfully exploited, could put sensitive data at risk.
+The original vulnerability CVE-2024-0132 (CVSS score: 9.0) is a Time-of-Check Time-of-Use (TOCTOU) vulnerability that could lead to a container escape attack and allow for
+[2025-04-10T15:09:37.133Z] Successfully saved to Supabase: null
+[2025-04-10T15:09:37.142Z] Finished processing REST API messages
+[2025-04-10T15:11:21.877Z] Fetching recent messages using REST API
+[2025-04-10T15:11:24.634Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:11:24.642Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:12:21.880Z] Fetching recent messages using REST API
+[2025-04-10T15:12:21.908Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:12:21.908Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:24:18.926Z] Fetching recent messages using REST API
+[2025-04-10T15:24:18.996Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:24:19.001Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:40:36.935Z] Fetching recent messages using REST API
+[2025-04-10T15:40:37.055Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:40:37.055Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:41:36.938Z] Fetching recent messages using REST API
+[2025-04-10T15:41:36.948Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:41:36.948Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:43:13.630Z] Fetching recent messages using REST API
+[2025-04-10T15:43:13.697Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:43:13.698Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:44:41.750Z] Fetching recent messages using REST API
+[2025-04-10T15:44:41.816Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:44:41.817Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:46:22.363Z] Fetching recent messages using REST API
+[2025-04-10T15:46:22.431Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:46:22.431Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:47:54.174Z] Fetching recent messages using REST API
+[2025-04-10T15:47:54.214Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:47:54.214Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:49:31.220Z] Fetching recent messages using REST API
+[2025-04-10T15:49:31.287Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:49:31.287Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:51:24.624Z] Fetching recent messages using REST API
+[2025-04-10T15:51:24.689Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:51:24.689Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:52:24.625Z] Fetching recent messages using REST API
+[2025-04-10T15:52:24.638Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:52:24.638Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:55:45.410Z] Fetching recent messages using REST API
+[2025-04-10T15:55:45.472Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:55:45.472Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T15:58:52.056Z] Fetching recent messages using REST API
+[2025-04-10T15:58:52.121Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T15:58:52.121Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:01:58.283Z] Fetching recent messages using REST API
+[2025-04-10T16:01:58.329Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:01:58.330Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:20:38.952Z] Fetching recent messages using REST API
+[2025-04-10T16:20:39.021Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:20:39.021Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:25:20.339Z] Fetching recent messages using REST API
+[2025-04-10T16:25:20.353Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:25:20.354Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:42:28.960Z] Fetching recent messages using REST API
+[2025-04-10T16:42:29.023Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:42:29.023Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:43:30.426Z] Fetching recent messages using REST API
+[2025-04-10T16:43:30.439Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:43:30.439Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:44:44.264Z] Fetching recent messages using REST API
+[2025-04-10T16:44:44.398Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:44:44.401Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:50:30.968Z] Fetching recent messages using REST API
+[2025-04-10T16:50:31.036Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:50:31.036Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:52:19.871Z] Fetching recent messages using REST API
+[2025-04-10T16:52:19.919Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T16:52:19.919Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T16:55:29.545Z] Fetching recent messages using REST API
+[2025-04-10T16:55:30.412Z] Fetched 50 messages via REST API
+[2025-04-10T16:55:30.415Z] Finished processing REST API messages
+[2025-04-10T16:56:29.545Z] Fetching recent messages using REST API
+[2025-04-10T16:56:29.809Z] Fetched 50 messages via REST API
+[2025-04-10T16:56:29.810Z] Finished processing REST API messages
+[2025-04-10T16:57:29.546Z] Fetching recent messages using REST API
+[2025-04-10T16:57:29.813Z] Fetched 50 messages via REST API
+[2025-04-10T16:57:29.814Z] Finished processing REST API messages
+[2025-04-10T16:58:29.545Z] Fetching recent messages using REST API
+[2025-04-10T16:58:29.830Z] Fetched 50 messages via REST API
+[2025-04-10T16:58:29.831Z] Finished processing REST API messages
+[2025-04-10T16:59:29.546Z] Fetching recent messages using REST API
+[2025-04-10T16:59:29.873Z] Fetched 50 messages via REST API
+[2025-04-10T16:59:29.873Z] Finished processing REST API messages
+[2025-04-10T17:00:29.546Z] Fetching recent messages using REST API
+[2025-04-10T17:00:29.988Z] Fetched 50 messages via REST API
+[2025-04-10T17:00:29.995Z] Finished processing REST API messages
+[2025-04-10T17:01:29.546Z] Fetching recent messages using REST API
+[2025-04-10T17:01:29.862Z] Fetched 50 messages via REST API
+[2025-04-10T17:01:29.863Z] Finished processing REST API messages
+[2025-04-10T17:02:29.546Z] Fetching recent messages using REST API
+[2025-04-10T17:02:29.998Z] Fetched 50 messages via REST API
+[2025-04-10T17:02:29.999Z] Finished processing REST API messages
+[2025-04-10T17:03:29.547Z] Fetching recent messages using REST API
+[2025-04-10T17:03:29.902Z] Fetched 50 messages via REST API
+[2025-04-10T17:03:29.902Z] Finished processing REST API messages
+[2025-04-10T17:04:29.546Z] Fetching recent messages using REST API
+[2025-04-10T17:04:29.833Z] Fetched 50 messages via REST API
+[2025-04-10T17:04:29.833Z] Finished processing REST API messages
+[2025-04-10T17:05:29.546Z] Fetching recent messages using REST API
+[2025-04-10T17:05:30.017Z] Fetched 50 messages via REST API
+[2025-04-10T17:05:30.029Z] Finished processing REST API messages

@@ -25,6 +25,18 @@ jobs:
       - name: 📦 Install Node dependencies
         run: npm install
 
+      - name: ⬇️ Install Lychee globally
+        run: npm install -g lychee
+
+      - name: 🐛 Debug Node.js and Lychee
+        run: |
+          echo "--- Versions ---"
+          node -v
+          npm -v
+          echo "--- Checking npx lychee --version ---"
+          npx lychee --version
+          echo "--- End Debug ---"
+
       - name: Run Lychee and save to broken-links.json
         run: |
           # Using npx lychee
