@@ -91,6 +91,8 @@ jobs:
       - name: 🔍 Check for changes
         id: check_changes
         run: |
+          # Force remove lock file if it exists from a previous crashed process
+          rm -f .git/index.lock
           # Stage potential changes
           git add app/**/*.tsx
           # Check if there are staged changes
