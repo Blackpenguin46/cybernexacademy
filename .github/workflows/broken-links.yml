@@ -1,9 +1,10 @@
 name: 🔗 Weekly Broken Link Report
 
+# Updated schedule
 on:
   schedule:
-    - cron: '0 12 * * 1'  # every Monday at 12PM UTC
-  workflow_dispatch:
+    - cron: '0 6 * * 1' # Every Monday at 6 AM UTC
+  workflow_dispatch: # Allow manual run too
 
 jobs:
   scan-broken-links:
@@ -24,18 +25,26 @@ jobs:
       - name: 📦 Install Node dependencies
         run: npm install
 
-      - name: 🔎 Install Lychee
-        run: cargo install lychee
-
-      - name: 🔍 Scan for broken links
-        id: scan
+      - name: Run Lychee and save to broken-links.json
         run: |
-          # Re-adding ignore file, adding timeout, adding debug, path last
-          lychee --verbose --debug --format json --output broken-links.json --ignore-file .lycheeignore --timeout 15 ./app/**/*.tsx
-          echo "Lychee exit code: $?"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Using npx lychee
+          npx lychee ./app/**/*.tsx --verbose --output broken-links.json --format json || echo "Lychee command finished (may have errors, check output file)"
         continue-on-error: true
+
+      # Added wait step
+      - name: Wait for broken-links.json
+        run: |
+          timeout=0
+          while [ ! -f broken-links.json ] && [ $timeout -lt 10 ]; do
+            sleep 1
+            timeout=$((timeout+1))
+          done
+
+          if [ ! -f broken-links.json ]; then
+            echo "broken-links.json not found after waiting"
+            exit 1
+          fi
+          echo "broken-links.json found."
 
       - name: 🐛 Print contents of broken-links.json
         run: |
@@ -48,7 +57,6 @@ jobs:
             # Optionally exit here if file is mandatory
             # exit 1 
           fi
-          echo "Lychee step exit code was: ${{ steps.scan.outputs.exit_code || 'N/A' }}"
 
       - name: 📥 Save to Supabase
         run: node scripts/saveToSupabase.js
