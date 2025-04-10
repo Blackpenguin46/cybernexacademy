@@ -27,10 +27,13 @@ try {
   parsed = []; // Default to an empty array if parsing fails
 }
 
+console.log(`📝 Saving ${parsed.length} results to Supabase`);
+
 (async () => {
   try {
     for (const result of parsed) {
       if (result.status === 200) continue;
+      console.log(`❌ Saving broken link: ${result.uri} (${result.status})`);
       const { error } = await supabase.from("broken_links").upsert({
         url: result.uri,
         status_code: result.status,

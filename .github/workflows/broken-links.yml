@@ -27,19 +27,13 @@ jobs:
       - name: 🔎 Install Lychee
         run: cargo install lychee
 
-      - name: 🔍 Scan for broken links & Validate Output
+      - name: 🔍 Scan for broken links
         run: |
-          export RUST_BACKTRACE=1
-          lychee --verbose --format json --no-progress --base https://cybernexacademy.com -- --ignore-file .lycheeignore ./app/**/*.tsx > broken-links.json || echo "Lychee command finished (may have errors)"
-          # Validate JSON output and replace with empty array if invalid/empty
-          if ! jq empty broken-links.json 2>/dev/null; then
-            echo "broken-links.json is invalid or empty. Replacing with an empty JSON array."
-            echo "[]" > broken-links.json
-          fi
-          echo "--- broken-links.json content after validation ---"
-          cat broken-links.json
-          echo "--- end content ---"
-        continue-on-error: true
+          lychee ./app/**/*.tsx --verbose --format json > broken-links.json || echo "Broken links found — continuing..."
+        continue-on-error: true # Ensure workflow continues
+
+      - name: 🐛 Print contents of broken-links.json
+        run: cat broken-links.json || echo "broken-links.json not found or empty"
 
       - name: 📥 Save to Supabase
         run: node scripts/saveToSupabase.js
