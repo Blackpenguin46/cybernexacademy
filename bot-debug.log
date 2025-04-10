@@ -40482,3 +40482,27 @@ Attacks on a critical authentication bypass flaw in CrushFTP's file transfer pro
 [2025-04-10T02:19:07.869Z] Fetching recent messages using REST API
 [2025-04-10T02:19:08.160Z] Fetched 50 messages via REST API
 [2025-04-10T02:19:08.161Z] Finished processing REST API messages
+[2025-04-10T02:20:07.870Z] Fetching recent messages using REST API
+[2025-04-10T02:20:09.405Z] Fetched 50 messages via REST API
+[2025-04-10T02:20:09.411Z] Finished processing REST API messages
+[2025-04-10T02:21:07.871Z] Fetching recent messages using REST API
+[2025-04-10T02:21:08.753Z] Fetched 50 messages via REST API
+[2025-04-10T02:21:08.765Z] Finished processing REST API messages
+[2025-04-10T02:22:07.872Z] Fetching recent messages using REST API
+[2025-04-10T02:22:08.148Z] Fetched 50 messages via REST API
+[2025-04-10T02:22:08.155Z] Finished processing REST API messages
+[2025-04-10T02:23:07.873Z] Fetching recent messages using REST API
+[2025-04-10T02:23:08.325Z] Fetched 50 messages via REST API
+[2025-04-10T02:23:08.332Z] Finished processing REST API messages
+[2025-04-10T02:24:07.873Z] Fetching recent messages using REST API
+[2025-04-10T02:24:08.184Z] Fetched 50 messages via REST API
+[2025-04-10T02:24:08.190Z] Finished processing REST API messages
+[2025-04-10T02:25:07.875Z] Fetching recent messages using REST API
+[2025-04-10T02:25:08.182Z] Fetched 50 messages via REST API
+[2025-04-10T02:25:08.188Z] Finished processing REST API messages
+[2025-04-10T02:26:07.876Z] Fetching recent messages using REST API
+[2025-04-10T02:26:08.321Z] Fetched 50 messages via REST API
+[2025-04-10T02:26:08.328Z] Finished processing REST API messages
+[2025-04-10T02:27:07.876Z] Fetching recent messages using REST API
+[2025-04-10T02:27:08.250Z] Fetched 50 messages via REST API
+[2025-04-10T02:27:08.257Z] Finished processing REST API messages

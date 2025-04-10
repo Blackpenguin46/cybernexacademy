@@ -30,8 +30,8 @@ jobs:
       - name: 🔍 Scan for broken links
         id: scan
         run: |
-          # Re-adding ignore file, adding timeout
-          lychee ./app/**/*.tsx --verbose --format json --output broken-links.json --ignore-file .lycheeignore --timeout 15
+          # Re-adding ignore file, adding timeout, adding debug, path last
+          lychee --verbose --debug --format json --output broken-links.json --ignore-file .lycheeignore --timeout 15 ./app/**/*.tsx
           echo "Lychee exit code: $?"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
