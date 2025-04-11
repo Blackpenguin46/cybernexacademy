@@ -50,12 +50,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'CyberNex Academy',
-    description: 'Your comprehensive cybersecurity education platform with courses, community resources, and insights',
-    url: 'https://cybernex.vercel.app',
+    description: 'Your comprehensive cybersecurity education platform with courses, community resources, and insights.',
+    url: 'https://www.cybernexacademy.com',
     siteName: 'CyberNex Academy',
     images: [
       {
-        url: '/og-image.jpg',
+        url: 'https://www.cybernexacademy.com/CyberNeximage.png',
         width: 1200,
         height: 630,
         alt: 'CyberNex Academy - Cybersecurity Education Platform',
@@ -66,9 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CyberNex Academy - Cybersecurity Education',
-    description: 'Comprehensive cybersecurity learning platform for students and professionals',
-    images: ['/twitter-image.jpg'],
+    title: 'CyberNex Academy',
+    description: 'Courses, community, and cybersecurity insights – all in one place.',
+    images: ['https://www.cybernexacademy.com/CyberNeximage.png'],
   },
   robots: {
     index: true,

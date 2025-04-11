@@ -42853,3 +42853,1801 @@ Malicious packages lurking on open source repositories like npm have become less
 [2025-04-10T18:25:44.201Z] Fetching recent messages using REST API
 [2025-04-10T18:25:44.568Z] Fetched 50 messages via REST API
 [2025-04-10T18:25:44.572Z] Finished processing REST API messages
+[2025-04-10T18:26:44.202Z] Fetching recent messages using REST API
+[2025-04-10T18:26:44.499Z] Fetched 50 messages via REST API
+[2025-04-10T18:26:44.500Z] Finished processing REST API messages
+[2025-04-10T18:27:44.204Z] Fetching recent messages using REST API
+[2025-04-10T18:27:44.495Z] Fetched 50 messages via REST API
+[2025-04-10T18:27:44.508Z] Finished processing REST API messages
+[2025-04-10T18:28:44.204Z] Fetching recent messages using REST API
+[2025-04-10T18:28:44.538Z] Fetched 50 messages via REST API
+[2025-04-10T18:28:44.547Z] Finished processing REST API messages
+[2025-04-10T18:29:44.205Z] Fetching recent messages using REST API
+[2025-04-10T18:29:44.635Z] Fetched 50 messages via REST API
+[2025-04-10T18:29:44.644Z] Finished processing REST API messages
+[2025-04-10T18:41:55.013Z] Fetching recent messages using REST API
+[2025-04-10T18:41:57.287Z] Fetched 50 messages via REST API
+[2025-04-10T18:41:57.296Z] Finished processing REST API messages
+[2025-04-10T18:51:32.195Z] Fetching recent messages using REST API
+[2025-04-10T18:51:32.254Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T18:51:32.254Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T18:57:59.023Z] Fetching recent messages using REST API
+[2025-04-10T18:57:59.094Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T18:57:59.094Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T18:59:01.827Z] Fetching recent messages using REST API
+[2025-04-10T18:59:02.667Z] Fetched 50 messages via REST API
+[2025-04-10T18:59:02.678Z] Finished processing REST API messages
+[2025-04-10T19:00:09.840Z] Fetching recent messages using REST API
+[2025-04-10T19:00:10.621Z] Fetched 50 messages via REST API
+[2025-04-10T19:00:10.630Z] Finished processing REST API messages
+[2025-04-10T19:01:09.840Z] Fetching recent messages using REST API
+[2025-04-10T19:01:10.311Z] Fetched 50 messages via REST API
+[2025-04-10T19:01:10.312Z] Finished processing REST API messages
+[2025-04-10T19:02:09.840Z] Fetching recent messages using REST API
+[2025-04-10T19:02:10.143Z] Fetched 50 messages via REST API
+[2025-04-10T19:02:10.144Z] Finished processing REST API messages
+[2025-04-10T19:03:09.842Z] Fetching recent messages using REST API
+[2025-04-10T19:03:10.306Z] Fetched 50 messages via REST API
+[2025-04-10T19:03:10.313Z] Finished processing REST API messages
+[2025-04-10T19:04:09.841Z] Fetching recent messages using REST API
+[2025-04-10T19:04:10.340Z] Fetched 50 messages via REST API
+[2025-04-10T19:04:10.345Z] Finished processing REST API messages
+[2025-04-10T19:05:09.841Z] Fetching recent messages using REST API
+[2025-04-10T19:05:10.233Z] Fetched 50 messages via REST API
+[2025-04-10T19:05:10.240Z] Finished processing REST API messages
+[2025-04-10T19:06:09.842Z] Fetching recent messages using REST API
+[2025-04-10T19:06:10.210Z] Fetched 50 messages via REST API
+[2025-04-10T19:06:10.216Z] Finished processing REST API messages
+[2025-04-10T19:07:09.842Z] Fetching recent messages using REST API
+[2025-04-10T19:07:10.272Z] Fetched 50 messages via REST API
+[2025-04-10T19:07:10.279Z] Finished processing REST API messages
+[2025-04-10T19:08:09.843Z] Fetching recent messages using REST API
+[2025-04-10T19:08:10.266Z] Fetched 50 messages via REST API
+[2025-04-10T19:08:10.273Z] Finished processing REST API messages
+[2025-04-10T19:09:09.844Z] Fetching recent messages using REST API
+[2025-04-10T19:09:10.175Z] Fetched 50 messages via REST API
+[2025-04-10T19:09:10.176Z] Finished processing REST API messages
+[2025-04-10T19:10:09.845Z] Fetching recent messages using REST API
+[2025-04-10T19:10:10.188Z] Fetched 50 messages via REST API
+[2025-04-10T19:10:10.194Z] Finished processing REST API messages
+[2025-04-10T19:11:09.845Z] Fetching recent messages using REST API
+[2025-04-10T19:11:10.134Z] Fetched 50 messages via REST API
+[2025-04-10T19:11:10.135Z] Finished processing REST API messages
+[2025-04-10T19:12:09.846Z] Fetching recent messages using REST API
+[2025-04-10T19:12:10.760Z] Fetched 50 messages via REST API
+[2025-04-10T19:12:10.772Z] Finished processing REST API messages
+[2025-04-10T19:13:09.847Z] Fetching recent messages using REST API
+[2025-04-10T19:13:10.166Z] Fetched 50 messages via REST API
+[2025-04-10T19:13:10.167Z] Finished processing REST API messages
+[2025-04-10T19:14:09.848Z] Fetching recent messages using REST API
+[2025-04-10T19:14:10.182Z] Fetched 50 messages via REST API
+[2025-04-10T19:14:10.188Z] Finished processing REST API messages
+[2025-04-10T19:15:09.849Z] Fetching recent messages using REST API
+[2025-04-10T19:15:10.175Z] Fetched 50 messages via REST API
+[2025-04-10T19:15:10.181Z] Finished processing REST API messages
+[2025-04-10T19:16:09.849Z] Fetching recent messages using REST API
+[2025-04-10T19:16:10.663Z] Fetched 50 messages via REST API
+[2025-04-10T19:16:10.676Z] Finished processing REST API messages
+[2025-04-10T19:17:09.849Z] Fetching recent messages using REST API
+[2025-04-10T19:17:10.426Z] Fetched 50 messages via REST API
+[2025-04-10T19:17:10.434Z] Finished processing REST API messages
+[2025-04-10T19:19:45.541Z] Fetching recent messages using REST API
+[2025-04-10T19:19:46.144Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T19:19:46.150Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T19:20:45.545Z] Fetching recent messages using REST API
+[2025-04-10T19:20:45.565Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T19:20:45.566Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T19:21:54.676Z] Fetching recent messages using REST API
+[2025-04-10T19:21:55.329Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T19:21:55.338Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T19:39:35.229Z] Fetching recent messages using REST API
+[2025-04-10T19:39:35.796Z] Fetched 50 messages via REST API
+[2025-04-10T19:39:35.804Z] Processing message 1359970568283226182 from REST API
+[2025-04-10T19:39:35.804Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/what-should-us-do-salt-typhoon",
+      "title": "What Should the US Do About Salt Typhoon?",
+      "description": "Security experts weigh in on the problem Salt Typhoon and its hacking of telecoms poses against the United States, including what the US should do and how defenders can protect themselves.",
+      "color": 44678,
+      "timestamp": "2025-04-10T18:36:49+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T19:17:30.510000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359970568283226182",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T19:39:35.804Z] Processing message 1359970568283226182 from rest-api
+[2025-04-10T19:39:35.804Z] Message content: ""
+[2025-04-10T19:39:35.805Z] Has embeds: true
+[2025-04-10T19:39:35.805Z] Message has 1 embeds
+[2025-04-10T19:39:35.805Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyberattacks-data-breaches/what-should-us-do-salt-typhoon",
+  "title": "What Should the US Do About Salt Typhoon?",
+  "description": "Security experts weigh in on the problem Salt Typhoon and its hacking of telecoms poses against the United States, including what the US should do and how defenders can protect themselves.",
+  "color": 44678,
+  "timestamp": "2025-04-10T18:36:49+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T19:39:35.805Z] Found embed title: What Should the US Do About Salt Typhoon?
+[2025-04-10T19:39:35.805Z] Found embed description: Security experts weigh in on the problem Salt Typhoon and its hacking of telecoms poses against the United States, including what the US should do and how defenders can protect themselves.
+[2025-04-10T19:39:35.805Z] Inserting content into Supabase: What Should the US Do About Salt Typhoon?
+
+Security experts weigh in on the problem Salt Typhoon and its hacking of telecoms poses against the United States, including what the US should do and how defenders can protect themselves.
+[2025-04-10T19:39:36.068Z] Successfully saved to Supabase: null
+[2025-04-10T19:39:36.069Z] Finished processing REST API messages
+[2025-04-10T19:56:16.988Z] Fetching recent messages using REST API
+[2025-04-10T19:56:18.017Z] Fetched 50 messages via REST API
+[2025-04-10T19:56:18.033Z] Processing message 1359978101592953154 from REST API
+[2025-04-10T19:56:18.033Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/threat-intelligence/trump-doj-krebs-revokes-sentinelone-security-clearance",
+      "title": "Trump's DoJ Targets Krebs, Revokes SentinelOne Security Clearance",
+      "description": "An executive order is targeting former Trump appointees, including former CISA director Chris Krebs and his current coworkers, in the latest in a series of directives against those who dissented against the president and his associates.",
+      "color": 44678,
+      "timestamp": "2025-04-10T19:31:04+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T19:47:26.591000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359978101592953154",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T19:56:18.034Z] Processing message 1359978101592953154 from rest-api
+[2025-04-10T19:56:18.034Z] Message content: ""
+[2025-04-10T19:56:18.034Z] Has embeds: true
+[2025-04-10T19:56:18.034Z] Message has 1 embeds
+[2025-04-10T19:56:18.035Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/threat-intelligence/trump-doj-krebs-revokes-sentinelone-security-clearance",
+  "title": "Trump's DoJ Targets Krebs, Revokes SentinelOne Security Clearance",
+  "description": "An executive order is targeting former Trump appointees, including former CISA director Chris Krebs and his current coworkers, in the latest in a series of directives against those who dissented against the president and his associates.",
+  "color": 44678,
+  "timestamp": "2025-04-10T19:31:04+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T19:56:18.035Z] Found embed title: Trump's DoJ Targets Krebs, Revokes SentinelOne Security Clearance
+[2025-04-10T19:56:18.043Z] Found embed description: An executive order is targeting former Trump appointees, including former CISA director Chris Krebs and his current coworkers, in the latest in a series of directives against those who dissented against the president and his associates.
+[2025-04-10T19:56:18.044Z] Inserting content into Supabase: Trump's DoJ Targets Krebs, Revokes SentinelOne Security Clearance
+
+An executive order is targeting former Trump appointees, including former CISA director Chris Krebs and his current coworkers, in the latest in a series of directives against those who dissented against the president and his associates.
+[2025-04-10T19:56:18.287Z] Successfully saved to Supabase: null
+[2025-04-10T19:56:18.295Z] Finished processing REST API messages
+[2025-04-10T20:05:04.514Z] Fetching recent messages using REST API
+[2025-04-10T20:05:05.441Z] Fetched 50 messages via REST API
+[2025-04-10T20:05:05.448Z] Finished processing REST API messages
+[2025-04-10T20:09:06.605Z] Fetching recent messages using REST API
+[2025-04-10T20:09:06.654Z] Error fetching messages via REST API: 
+[2025-04-10T20:09:06.655Z] AggregateError [ENETUNREACH]: 
+    at internalConnectMultiple (node:net:1139:18)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at internalConnectMultiple (node:net:1215:5)
+    at defaultTriggerAsyncIdScope (node:internal/async_hooks:464:18)
+    at GetAddrInfoReqWrap.emitLookup [as callback] (node:net:1551:7)
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:134:8)
+[2025-04-10T20:10:06.605Z] Fetching recent messages using REST API
+[2025-04-10T20:10:06.623Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T20:10:06.624Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T20:23:04.697Z] Fetching recent messages using REST API
+[2025-04-10T20:23:04.713Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-10T20:23:04.713Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-10T20:38:41.017Z] Fetching recent messages using REST API
+[2025-04-10T20:38:42.177Z] Fetched 50 messages via REST API
+[2025-04-10T20:38:42.184Z] Finished processing REST API messages
+[2025-04-10T20:40:33.933Z] Fetching recent messages using REST API
+[2025-04-10T20:40:34.480Z] Fetched 50 messages via REST API
+[2025-04-10T20:40:34.494Z] Finished processing REST API messages
+[2025-04-10T20:43:13.956Z] Fetching recent messages using REST API
+[2025-04-10T20:43:14.997Z] Fetched 50 messages via REST API
+[2025-04-10T20:43:15.007Z] Finished processing REST API messages
+[2025-04-10T20:59:54.379Z] Fetching recent messages using REST API
+[2025-04-10T20:59:54.882Z] Fetched 50 messages via REST API
+[2025-04-10T20:59:54.890Z] Finished processing REST API messages
+[2025-04-10T21:17:01.980Z] Fetching recent messages using REST API
+[2025-04-10T21:17:03.120Z] Fetched 50 messages via REST API
+[2025-04-10T21:17:03.129Z] Processing message 1359997069804437666 from REST API
+[2025-04-10T21:17:03.129Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cloud-security/authzen-aims-harmonize-fractured-authorization-controls",
+      "title": "AuthZEN Aims to Harmonize Fractured Authorization Controls",
+      "description": "Managing permissions and authorizations across dozens or hundreds of cloud services and platforms poses significant headaches for companies. An open specification aims to change that.",
+      "color": 44678,
+      "timestamp": "2025-04-10T20:41:31+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T21:02:48.965000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1359997069804437666",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T21:17:03.129Z] Processing message 1359997069804437666 from rest-api
+[2025-04-10T21:17:03.129Z] Message content: ""
+[2025-04-10T21:17:03.129Z] Has embeds: true
+[2025-04-10T21:17:03.129Z] Message has 1 embeds
+[2025-04-10T21:17:03.130Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cloud-security/authzen-aims-harmonize-fractured-authorization-controls",
+  "title": "AuthZEN Aims to Harmonize Fractured Authorization Controls",
+  "description": "Managing permissions and authorizations across dozens or hundreds of cloud services and platforms poses significant headaches for companies. An open specification aims to change that.",
+  "color": 44678,
+  "timestamp": "2025-04-10T20:41:31+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T21:17:03.130Z] Found embed title: AuthZEN Aims to Harmonize Fractured Authorization Controls
+[2025-04-10T21:17:03.130Z] Found embed description: Managing permissions and authorizations across dozens or hundreds of cloud services and platforms poses significant headaches for companies. An open specification aims to change that.
+[2025-04-10T21:17:03.130Z] Inserting content into Supabase: AuthZEN Aims to Harmonize Fractured Authorization Controls
+
+Managing permissions and authorizations across dozens or hundreds of cloud services and platforms poses significant headaches for companies. An open specification aims to change that.
+[2025-04-10T21:17:03.372Z] Successfully saved to Supabase: null
+[2025-04-10T21:17:03.375Z] Finished processing REST API messages
+[2025-04-10T21:18:09.995Z] Fetching recent messages using REST API
+[2025-04-10T21:18:10.985Z] Fetched 50 messages via REST API
+[2025-04-10T21:18:10.985Z] Finished processing REST API messages
+[2025-04-10T21:22:13.398Z] Fetching recent messages using REST API
+[2025-04-10T21:22:14.041Z] Fetched 50 messages via REST API
+[2025-04-10T21:22:14.055Z] Finished processing REST API messages
+[2025-04-10T21:38:07.030Z] Fetching recent messages using REST API
+[2025-04-10T21:38:08.055Z] Fetched 50 messages via REST API
+[2025-04-10T21:38:08.063Z] Processing message 1360004463414349966 from REST API
+[2025-04-10T21:38:08.063Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/vulnerabilities-threats/zero-day-centrestack-platform-under-attack",
+      "title": "Zero-Day in CentreStack File Sharing Platform Under Attack",
+      "description": "Gladinet's platform is widely used among managed service providers, and a critical deserialization flaw could put MSP customers in jeopardy.",
+      "color": 44678,
+      "timestamp": "2025-04-10T21:15:36+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-10T21:32:11.739000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360004463414349966",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-10T21:38:08.064Z] Processing message 1360004463414349966 from rest-api
+[2025-04-10T21:38:08.064Z] Message content: ""
+[2025-04-10T21:38:08.064Z] Has embeds: true
+[2025-04-10T21:38:08.064Z] Message has 1 embeds
+[2025-04-10T21:38:08.064Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/vulnerabilities-threats/zero-day-centrestack-platform-under-attack",
+  "title": "Zero-Day in CentreStack File Sharing Platform Under Attack",
+  "description": "Gladinet's platform is widely used among managed service providers, and a critical deserialization flaw could put MSP customers in jeopardy.",
+  "color": 44678,
+  "timestamp": "2025-04-10T21:15:36+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-10T21:38:08.064Z] Found embed title: Zero-Day in CentreStack File Sharing Platform Under Attack
+[2025-04-10T21:38:08.065Z] Found embed description: Gladinet's platform is widely used among managed service providers, and a critical deserialization flaw could put MSP customers in jeopardy.
+[2025-04-10T21:38:08.065Z] Inserting content into Supabase: Zero-Day in CentreStack File Sharing Platform Under Attack
+
+Gladinet's platform is widely used among managed service providers, and a critical deserialization flaw could put MSP customers in jeopardy.
+[2025-04-10T21:38:08.294Z] Successfully saved to Supabase: null
+[2025-04-10T21:38:08.303Z] Finished processing REST API messages
+[2025-04-10T21:54:37.115Z] Fetching recent messages using REST API
+[2025-04-10T21:54:38.175Z] Fetched 50 messages via REST API
+[2025-04-10T21:54:38.183Z] Finished processing REST API messages
+[2025-04-10T22:11:12.345Z] Fetching recent messages using REST API
+[2025-04-10T22:11:14.771Z] Fetched 50 messages via REST API
+[2025-04-10T22:11:14.778Z] Finished processing REST API messages
+[2025-04-10T22:18:10.026Z] Fetching recent messages using REST API
+[2025-04-10T22:18:11.248Z] Fetched 50 messages via REST API
+[2025-04-10T22:18:11.263Z] Finished processing REST API messages
+[2025-04-10T22:34:50.284Z] Fetching recent messages using REST API
+[2025-04-10T22:34:51.192Z] Fetched 50 messages via REST API
+[2025-04-10T22:34:51.205Z] Finished processing REST API messages
+[2025-04-10T22:40:13.112Z] Fetching recent messages using REST API
+[2025-04-10T22:40:14.656Z] Fetched 50 messages via REST API
+[2025-04-10T22:40:14.665Z] Finished processing REST API messages
+[2025-04-10T22:55:54.384Z] Fetching recent messages using REST API
+[2025-04-10T22:55:55.138Z] Fetched 50 messages via REST API
+[2025-04-10T22:55:55.146Z] Finished processing REST API messages
+[2025-04-10T23:11:04.026Z] Fetching recent messages using REST API
+[2025-04-10T23:11:05.154Z] Fetched 50 messages via REST API
+[2025-04-10T23:11:05.167Z] Finished processing REST API messages
+[2025-04-10T23:19:11.307Z] Fetching recent messages using REST API
+[2025-04-10T23:19:12.057Z] Fetched 50 messages via REST API
+[2025-04-10T23:19:12.072Z] Finished processing REST API messages
+[2025-04-10T23:36:16.176Z] Fetching recent messages using REST API
+[2025-04-10T23:36:16.863Z] Fetched 50 messages via REST API
+[2025-04-10T23:36:16.875Z] Finished processing REST API messages
+[2025-04-10T23:51:22.377Z] Fetching recent messages using REST API
+[2025-04-10T23:51:23.194Z] Fetched 50 messages via REST API
+[2025-04-10T23:51:23.207Z] Finished processing REST API messages
+[2025-04-11T00:08:37.420Z] Fetching recent messages using REST API
+[2025-04-11T00:08:38.105Z] Fetched 50 messages via REST API
+[2025-04-11T00:08:38.118Z] Finished processing REST API messages
+[2025-04-11T00:14:23.674Z] Fetching recent messages using REST API
+[2025-04-11T00:14:24.697Z] Fetched 50 messages via REST API
+[2025-04-11T00:14:24.701Z] Finished processing REST API messages
+[2025-04-11T00:15:23.667Z] Fetching recent messages using REST API
+[2025-04-11T00:15:23.985Z] Fetched 50 messages via REST API
+[2025-04-11T00:15:23.985Z] Finished processing REST API messages
+[2025-04-11T00:16:23.667Z] Fetching recent messages using REST API
+[2025-04-11T00:16:25.175Z] Fetched 50 messages via REST API
+[2025-04-11T00:16:25.189Z] Finished processing REST API messages
+[2025-04-11T00:17:23.668Z] Fetching recent messages using REST API
+[2025-04-11T00:17:23.970Z] Fetched 50 messages via REST API
+[2025-04-11T00:17:23.981Z] Finished processing REST API messages
+[2025-04-11T00:18:23.669Z] Fetching recent messages using REST API
+[2025-04-11T00:18:24.016Z] Fetched 50 messages via REST API
+[2025-04-11T00:18:24.024Z] Finished processing REST API messages
+[2025-04-11T00:19:23.670Z] Fetching recent messages using REST API
+[2025-04-11T00:19:24.175Z] Fetched 50 messages via REST API
+[2025-04-11T00:19:24.183Z] Finished processing REST API messages
+[2025-04-11T00:20:23.671Z] Fetching recent messages using REST API
+[2025-04-11T00:20:24.111Z] Fetched 50 messages via REST API
+[2025-04-11T00:20:24.112Z] Finished processing REST API messages
+[2025-04-11T00:21:23.672Z] Fetching recent messages using REST API
+[2025-04-11T00:21:23.974Z] Fetched 50 messages via REST API
+[2025-04-11T00:21:23.975Z] Finished processing REST API messages
+[2025-04-11T00:22:23.673Z] Fetching recent messages using REST API
+[2025-04-11T00:22:24.005Z] Fetched 50 messages via REST API
+[2025-04-11T00:22:24.012Z] Finished processing REST API messages
+[2025-04-11T00:23:23.678Z] Fetching recent messages using REST API
+[2025-04-11T00:23:24.055Z] Fetched 50 messages via REST API
+[2025-04-11T00:23:24.062Z] Finished processing REST API messages
+[2025-04-11T00:24:23.674Z] Fetching recent messages using REST API
+[2025-04-11T00:24:24.017Z] Fetched 50 messages via REST API
+[2025-04-11T00:24:24.024Z] Finished processing REST API messages
+[2025-04-11T00:25:23.674Z] Fetching recent messages using REST API
+[2025-04-11T00:25:23.955Z] Fetched 50 messages via REST API
+[2025-04-11T00:25:23.955Z] Finished processing REST API messages
+[2025-04-11T00:26:23.675Z] Fetching recent messages using REST API
+[2025-04-11T00:26:24.122Z] Fetched 50 messages via REST API
+[2025-04-11T00:26:24.130Z] Finished processing REST API messages
+[2025-04-11T00:27:23.677Z] Fetching recent messages using REST API
+[2025-04-11T00:27:23.971Z] Fetched 50 messages via REST API
+[2025-04-11T00:27:23.972Z] Finished processing REST API messages
+[2025-04-11T00:28:23.677Z] Fetching recent messages using REST API
+[2025-04-11T00:28:24.031Z] Fetched 50 messages via REST API
+[2025-04-11T00:28:24.032Z] Finished processing REST API messages
+[2025-04-11T00:29:23.679Z] Fetching recent messages using REST API
+[2025-04-11T00:29:23.966Z] Fetched 50 messages via REST API
+[2025-04-11T00:29:23.967Z] Finished processing REST API messages
+[2025-04-11T00:32:53.077Z] Fetching recent messages using REST API
+[2025-04-11T00:32:54.118Z] Fetched 50 messages via REST API
+[2025-04-11T00:32:54.128Z] Finished processing REST API messages
+[2025-04-11T00:33:53.078Z] Fetching recent messages using REST API
+[2025-04-11T00:33:53.358Z] Fetched 50 messages via REST API
+[2025-04-11T00:33:53.364Z] Finished processing REST API messages
+[2025-04-11T00:34:53.078Z] Fetching recent messages using REST API
+[2025-04-11T00:34:53.441Z] Fetched 50 messages via REST API
+[2025-04-11T00:34:53.442Z] Finished processing REST API messages
+[2025-04-11T00:35:53.079Z] Fetching recent messages using REST API
+[2025-04-11T00:35:53.386Z] Fetched 50 messages via REST API
+[2025-04-11T00:35:53.396Z] Finished processing REST API messages
+[2025-04-11T00:36:53.080Z] Fetching recent messages using REST API
+[2025-04-11T00:36:53.407Z] Fetched 50 messages via REST API
+[2025-04-11T00:36:53.420Z] Finished processing REST API messages
+[2025-04-11T00:37:53.080Z] Fetching recent messages using REST API
+[2025-04-11T00:37:53.453Z] Fetched 50 messages via REST API
+[2025-04-11T00:37:53.459Z] Finished processing REST API messages
+[2025-04-11T00:38:53.081Z] Fetching recent messages using REST API
+[2025-04-11T00:38:53.419Z] Fetched 50 messages via REST API
+[2025-04-11T00:38:53.425Z] Finished processing REST API messages
+[2025-04-11T00:39:53.085Z] Fetching recent messages using REST API
+[2025-04-11T00:39:53.398Z] Fetched 50 messages via REST API
+[2025-04-11T00:39:53.399Z] Finished processing REST API messages
+[2025-04-11T00:40:53.086Z] Fetching recent messages using REST API
+[2025-04-11T00:40:53.500Z] Fetched 50 messages via REST API
+[2025-04-11T00:40:53.500Z] Finished processing REST API messages
+[2025-04-11T00:41:53.086Z] Fetching recent messages using REST API
+[2025-04-11T00:41:53.534Z] Fetched 50 messages via REST API
+[2025-04-11T00:41:53.539Z] Finished processing REST API messages
+[2025-04-11T00:42:53.087Z] Fetching recent messages using REST API
+[2025-04-11T00:42:53.494Z] Fetched 50 messages via REST API
+[2025-04-11T00:42:53.500Z] Finished processing REST API messages
+[2025-04-11T00:43:53.087Z] Fetching recent messages using REST API
+[2025-04-11T00:43:53.529Z] Fetched 50 messages via REST API
+[2025-04-11T00:43:53.530Z] Finished processing REST API messages
+[2025-04-11T00:44:53.088Z] Fetching recent messages using REST API
+[2025-04-11T00:44:53.432Z] Fetched 50 messages via REST API
+[2025-04-11T00:44:53.433Z] Finished processing REST API messages
+[2025-04-11T00:45:53.089Z] Fetching recent messages using REST API
+[2025-04-11T00:45:53.414Z] Fetched 50 messages via REST API
+[2025-04-11T00:45:53.421Z] Finished processing REST API messages
+[2025-04-11T00:46:53.090Z] Fetching recent messages using REST API
+[2025-04-11T00:46:53.386Z] Fetched 50 messages via REST API
+[2025-04-11T00:46:53.387Z] Finished processing REST API messages
+[2025-04-11T00:47:53.090Z] Fetching recent messages using REST API
+[2025-04-11T00:47:53.381Z] Fetched 50 messages via REST API
+[2025-04-11T00:47:53.382Z] Finished processing REST API messages
+[2025-04-11T00:48:53.090Z] Fetching recent messages using REST API
+[2025-04-11T00:48:53.433Z] Fetched 50 messages via REST API
+[2025-04-11T00:48:53.443Z] Finished processing REST API messages
+[2025-04-11T00:49:53.092Z] Fetching recent messages using REST API
+[2025-04-11T00:49:53.459Z] Fetched 50 messages via REST API
+[2025-04-11T00:49:53.460Z] Finished processing REST API messages
+[2025-04-11T00:50:53.092Z] Fetching recent messages using REST API
+[2025-04-11T00:50:53.570Z] Fetched 50 messages via REST API
+[2025-04-11T00:50:53.571Z] Finished processing REST API messages
+[2025-04-11T00:51:53.091Z] Fetching recent messages using REST API
+[2025-04-11T00:51:53.393Z] Fetched 50 messages via REST API
+[2025-04-11T00:51:53.406Z] Finished processing REST API messages
+[2025-04-11T00:52:53.076Z] Fetching recent messages using REST API
+[2025-04-11T00:52:53.443Z] Fetched 50 messages via REST API
+[2025-04-11T00:52:53.444Z] Finished processing REST API messages
+[2025-04-11T00:53:53.078Z] Fetching recent messages using REST API
+[2025-04-11T00:53:53.357Z] Fetched 50 messages via REST API
+[2025-04-11T00:53:53.362Z] Finished processing REST API messages
+[2025-04-11T00:54:53.080Z] Fetching recent messages using REST API
+[2025-04-11T00:54:53.687Z] Fetched 50 messages via REST API
+[2025-04-11T00:54:53.694Z] Finished processing REST API messages
+[2025-04-11T00:55:53.080Z] Fetching recent messages using REST API
+[2025-04-11T00:55:53.687Z] Fetched 50 messages via REST API
+[2025-04-11T00:55:53.698Z] Finished processing REST API messages
+[2025-04-11T00:56:53.081Z] Fetching recent messages using REST API
+[2025-04-11T00:56:53.381Z] Fetched 50 messages via REST API
+[2025-04-11T00:56:53.382Z] Finished processing REST API messages
+[2025-04-11T00:57:53.083Z] Fetching recent messages using REST API
+[2025-04-11T00:57:53.357Z] Fetched 50 messages via REST API
+[2025-04-11T00:57:53.370Z] Finished processing REST API messages
+[2025-04-11T00:58:53.085Z] Fetching recent messages using REST API
+[2025-04-11T00:58:53.394Z] Fetched 50 messages via REST API
+[2025-04-11T00:58:53.407Z] Finished processing REST API messages
+[2025-04-11T00:59:53.086Z] Fetching recent messages using REST API
+[2025-04-11T00:59:53.437Z] Fetched 50 messages via REST API
+[2025-04-11T00:59:53.447Z] Finished processing REST API messages
+[2025-04-11T01:00:53.088Z] Fetching recent messages using REST API
+[2025-04-11T01:00:53.389Z] Fetched 50 messages via REST API
+[2025-04-11T01:00:53.390Z] Finished processing REST API messages
+[2025-04-11T01:01:53.090Z] Fetching recent messages using REST API
+[2025-04-11T01:01:53.451Z] Fetched 50 messages via REST API
+[2025-04-11T01:01:53.452Z] Finished processing REST API messages
+[2025-04-11T01:02:53.090Z] Fetching recent messages using REST API
+[2025-04-11T01:02:53.407Z] Fetched 50 messages via REST API
+[2025-04-11T01:02:53.408Z] Finished processing REST API messages
+[2025-04-11T01:03:53.091Z] Fetching recent messages using REST API
+[2025-04-11T01:03:53.676Z] Fetched 50 messages via REST API
+[2025-04-11T01:03:53.682Z] Finished processing REST API messages
+[2025-04-11T01:04:53.092Z] Fetching recent messages using REST API
+[2025-04-11T01:04:53.376Z] Fetched 50 messages via REST API
+[2025-04-11T01:04:53.377Z] Finished processing REST API messages
+[2025-04-11T01:05:53.094Z] Fetching recent messages using REST API
+[2025-04-11T01:05:53.445Z] Fetched 50 messages via REST API
+[2025-04-11T01:05:53.452Z] Finished processing REST API messages
+[2025-04-11T01:06:53.094Z] Fetching recent messages using REST API
+[2025-04-11T01:06:53.448Z] Fetched 50 messages via REST API
+[2025-04-11T01:06:53.449Z] Finished processing REST API messages
+[2025-04-11T01:07:53.095Z] Fetching recent messages using REST API
+[2025-04-11T01:07:53.386Z] Fetched 50 messages via REST API
+[2025-04-11T01:07:53.398Z] Finished processing REST API messages
+[2025-04-11T01:08:53.097Z] Fetching recent messages using REST API
+[2025-04-11T01:08:53.583Z] Fetched 50 messages via REST API
+[2025-04-11T01:08:53.589Z] Finished processing REST API messages
+[2025-04-11T01:09:53.098Z] Fetching recent messages using REST API
+[2025-04-11T01:09:53.428Z] Fetched 50 messages via REST API
+[2025-04-11T01:09:53.434Z] Finished processing REST API messages
+[2025-04-11T01:10:53.099Z] Fetching recent messages using REST API
+[2025-04-11T01:10:53.415Z] Fetched 50 messages via REST API
+[2025-04-11T01:10:53.415Z] Finished processing REST API messages
+[2025-04-11T01:11:53.099Z] Fetching recent messages using REST API
+[2025-04-11T01:11:53.418Z] Fetched 50 messages via REST API
+[2025-04-11T01:11:53.419Z] Finished processing REST API messages
+[2025-04-11T01:12:53.099Z] Fetching recent messages using REST API
+[2025-04-11T01:12:53.562Z] Fetched 50 messages via REST API
+[2025-04-11T01:12:53.562Z] Finished processing REST API messages
+[2025-04-11T01:13:53.101Z] Fetching recent messages using REST API
+[2025-04-11T01:13:53.431Z] Fetched 50 messages via REST API
+[2025-04-11T01:13:53.432Z] Finished processing REST API messages
+[2025-04-11T01:14:53.103Z] Fetching recent messages using REST API
+[2025-04-11T01:14:53.414Z] Fetched 50 messages via REST API
+[2025-04-11T01:14:53.415Z] Finished processing REST API messages
+[2025-04-11T01:15:53.104Z] Fetching recent messages using REST API
+[2025-04-11T01:15:53.571Z] Fetched 50 messages via REST API
+[2025-04-11T01:15:53.576Z] Finished processing REST API messages
+[2025-04-11T01:16:53.105Z] Fetching recent messages using REST API
+[2025-04-11T01:16:53.392Z] Fetched 50 messages via REST API
+[2025-04-11T01:16:53.401Z] Finished processing REST API messages
+[2025-04-11T01:17:53.108Z] Fetching recent messages using REST API
+[2025-04-11T01:17:53.756Z] Fetched 50 messages via REST API
+[2025-04-11T01:17:53.770Z] Finished processing REST API messages
+[2025-04-11T01:18:53.108Z] Fetching recent messages using REST API
+[2025-04-11T01:18:53.410Z] Fetched 50 messages via REST API
+[2025-04-11T01:18:53.411Z] Finished processing REST API messages
+[2025-04-11T01:19:53.110Z] Fetching recent messages using REST API
+[2025-04-11T01:19:53.395Z] Fetched 50 messages via REST API
+[2025-04-11T01:19:53.396Z] Finished processing REST API messages
+[2025-04-11T01:20:53.110Z] Fetching recent messages using REST API
+[2025-04-11T01:20:53.420Z] Fetched 50 messages via REST API
+[2025-04-11T01:20:53.421Z] Finished processing REST API messages
+[2025-04-11T01:21:53.111Z] Fetching recent messages using REST API
+[2025-04-11T01:21:53.595Z] Fetched 50 messages via REST API
+[2025-04-11T01:21:53.601Z] Finished processing REST API messages
+[2025-04-11T01:22:53.113Z] Fetching recent messages using REST API
+[2025-04-11T01:22:53.538Z] Fetched 50 messages via REST API
+[2025-04-11T01:22:53.539Z] Finished processing REST API messages
+[2025-04-11T01:23:53.167Z] Fetching recent messages using REST API
+[2025-04-11T01:23:53.612Z] Fetched 50 messages via REST API
+[2025-04-11T01:23:53.617Z] Finished processing REST API messages
+[2025-04-11T01:24:53.167Z] Fetching recent messages using REST API
+[2025-04-11T01:24:53.438Z] Fetched 50 messages via REST API
+[2025-04-11T01:24:53.444Z] Finished processing REST API messages
+[2025-04-11T01:25:53.170Z] Fetching recent messages using REST API
+[2025-04-11T01:25:53.451Z] Fetched 50 messages via REST API
+[2025-04-11T01:25:53.451Z] Finished processing REST API messages
+[2025-04-11T01:26:53.172Z] Fetching recent messages using REST API
+[2025-04-11T01:26:53.600Z] Fetched 50 messages via REST API
+[2025-04-11T01:26:53.606Z] Finished processing REST API messages
+[2025-04-11T01:27:53.175Z] Fetching recent messages using REST API
+[2025-04-11T01:27:53.635Z] Fetched 50 messages via REST API
+[2025-04-11T01:27:53.641Z] Finished processing REST API messages
+[2025-04-11T01:28:53.176Z] Fetching recent messages using REST API
+[2025-04-11T01:28:53.521Z] Fetched 50 messages via REST API
+[2025-04-11T01:28:53.526Z] Finished processing REST API messages
+[2025-04-11T01:29:53.180Z] Fetching recent messages using REST API
+[2025-04-11T01:29:53.481Z] Fetched 50 messages via REST API
+[2025-04-11T01:29:53.482Z] Finished processing REST API messages
+[2025-04-11T01:30:53.183Z] Fetching recent messages using REST API
+[2025-04-11T01:30:53.665Z] Fetched 50 messages via REST API
+[2025-04-11T01:30:53.666Z] Finished processing REST API messages
+[2025-04-11T01:31:53.186Z] Fetching recent messages using REST API
+[2025-04-11T01:31:53.451Z] Fetched 50 messages via REST API
+[2025-04-11T01:31:53.457Z] Finished processing REST API messages
+[2025-04-11T01:32:53.188Z] Fetching recent messages using REST API
+[2025-04-11T01:32:53.574Z] Fetched 50 messages via REST API
+[2025-04-11T01:32:53.579Z] Finished processing REST API messages
+[2025-04-11T01:33:53.189Z] Fetching recent messages using REST API
+[2025-04-11T01:33:53.591Z] Fetched 50 messages via REST API
+[2025-04-11T01:33:53.605Z] Finished processing REST API messages
+[2025-04-11T01:34:53.192Z] Fetching recent messages using REST API
+[2025-04-11T01:34:53.491Z] Fetched 50 messages via REST API
+[2025-04-11T01:34:53.499Z] Finished processing REST API messages
+[2025-04-11T01:35:53.194Z] Fetching recent messages using REST API
+[2025-04-11T01:35:53.521Z] Fetched 50 messages via REST API
+[2025-04-11T01:35:53.530Z] Finished processing REST API messages
+[2025-04-11T01:36:53.199Z] Fetching recent messages using REST API
+[2025-04-11T01:36:53.531Z] Fetched 50 messages via REST API
+[2025-04-11T01:36:53.543Z] Finished processing REST API messages
+[2025-04-11T01:53:37.037Z] Fetching recent messages using REST API
+[2025-04-11T01:53:38.022Z] Fetched 50 messages via REST API
+[2025-04-11T01:53:38.035Z] Finished processing REST API messages
+[2025-04-11T01:54:37.061Z] Fetching recent messages using REST API
+[2025-04-11T01:54:37.493Z] Fetched 50 messages via REST API
+[2025-04-11T01:54:37.506Z] Finished processing REST API messages
+[2025-04-11T02:11:18.089Z] Fetching recent messages using REST API
+[2025-04-11T02:11:19.126Z] Fetched 50 messages via REST API
+[2025-04-11T02:11:19.141Z] Finished processing REST API messages
+[2025-04-11T02:26:30.429Z] Fetching recent messages using REST API
+[2025-04-11T02:26:31.275Z] Fetched 50 messages via REST API
+[2025-04-11T02:26:31.284Z] Finished processing REST API messages
+[2025-04-11T02:37:05.991Z] Fetching recent messages using REST API
+[2025-04-11T02:37:07.018Z] Fetched 50 messages via REST API
+[2025-04-11T02:37:07.029Z] Finished processing REST API messages
+[2025-04-11T02:38:05.992Z] Fetching recent messages using REST API
+[2025-04-11T02:38:06.317Z] Fetched 50 messages via REST API
+[2025-04-11T02:38:06.319Z] Finished processing REST API messages
+[2025-04-11T02:39:05.993Z] Fetching recent messages using REST API
+[2025-04-11T02:39:06.297Z] Fetched 50 messages via REST API
+[2025-04-11T02:39:06.298Z] Finished processing REST API messages
+[2025-04-11T02:40:05.996Z] Fetching recent messages using REST API
+[2025-04-11T02:40:06.513Z] Fetched 50 messages via REST API
+[2025-04-11T02:40:06.521Z] Finished processing REST API messages
+[2025-04-11T02:41:05.999Z] Fetching recent messages using REST API
+[2025-04-11T02:41:06.273Z] Fetched 50 messages via REST API
+[2025-04-11T02:41:06.274Z] Finished processing REST API messages
+[2025-04-11T02:42:06.000Z] Fetching recent messages using REST API
+[2025-04-11T02:42:06.337Z] Fetched 50 messages via REST API
+[2025-04-11T02:42:06.337Z] Finished processing REST API messages
+[2025-04-11T02:43:06.003Z] Fetching recent messages using REST API
+[2025-04-11T02:43:06.268Z] Fetched 50 messages via REST API
+[2025-04-11T02:43:06.269Z] Finished processing REST API messages
+[2025-04-11T02:44:06.003Z] Fetching recent messages using REST API
+[2025-04-11T02:44:06.326Z] Fetched 50 messages via REST API
+[2025-04-11T02:44:06.327Z] Finished processing REST API messages
+[2025-04-11T02:45:06.005Z] Fetching recent messages using REST API
+[2025-04-11T02:45:06.343Z] Fetched 50 messages via REST API
+[2025-04-11T02:45:06.344Z] Finished processing REST API messages
+[2025-04-11T02:46:06.007Z] Fetching recent messages using REST API
+[2025-04-11T02:46:06.369Z] Fetched 50 messages via REST API
+[2025-04-11T02:46:06.370Z] Finished processing REST API messages
+[2025-04-11T02:47:06.009Z] Fetching recent messages using REST API
+[2025-04-11T02:47:06.409Z] Fetched 50 messages via REST API
+[2025-04-11T02:47:06.410Z] Finished processing REST API messages
+[2025-04-11T02:48:06.011Z] Fetching recent messages using REST API
+[2025-04-11T02:48:06.266Z] Fetched 50 messages via REST API
+[2025-04-11T02:48:06.267Z] Finished processing REST API messages
+[2025-04-11T02:49:06.013Z] Fetching recent messages using REST API
+[2025-04-11T02:49:06.337Z] Fetched 50 messages via REST API
+[2025-04-11T02:49:06.338Z] Finished processing REST API messages
+[2025-04-11T02:50:06.015Z] Fetching recent messages using REST API
+[2025-04-11T02:50:06.279Z] Fetched 50 messages via REST API
+[2025-04-11T02:50:06.280Z] Finished processing REST API messages
+[2025-04-11T02:51:06.017Z] Fetching recent messages using REST API
+[2025-04-11T02:51:06.371Z] Fetched 50 messages via REST API
+[2025-04-11T02:51:06.376Z] Finished processing REST API messages
+[2025-04-11T02:52:06.019Z] Fetching recent messages using REST API
+[2025-04-11T02:52:06.451Z] Fetched 50 messages via REST API
+[2025-04-11T02:52:06.452Z] Finished processing REST API messages
+[2025-04-11T02:53:06.021Z] Fetching recent messages using REST API
+[2025-04-11T02:53:06.341Z] Fetched 50 messages via REST API
+[2025-04-11T02:53:06.342Z] Finished processing REST API messages
+[2025-04-11T02:54:06.025Z] Fetching recent messages using REST API
+[2025-04-11T02:54:06.360Z] Fetched 50 messages via REST API
+[2025-04-11T02:54:06.360Z] Finished processing REST API messages
+[2025-04-11T02:55:06.026Z] Fetching recent messages using REST API
+[2025-04-11T02:55:06.309Z] Fetched 50 messages via REST API
+[2025-04-11T02:55:06.315Z] Finished processing REST API messages
+[2025-04-11T02:56:06.029Z] Fetching recent messages using REST API
+[2025-04-11T02:56:06.321Z] Fetched 50 messages via REST API
+[2025-04-11T02:56:06.322Z] Finished processing REST API messages
+[2025-04-11T02:57:06.031Z] Fetching recent messages using REST API
+[2025-04-11T02:57:06.327Z] Fetched 50 messages via REST API
+[2025-04-11T02:57:06.327Z] Finished processing REST API messages
+[2025-04-11T02:58:06.035Z] Fetching recent messages using REST API
+[2025-04-11T02:58:06.340Z] Fetched 50 messages via REST API
+[2025-04-11T02:58:06.341Z] Finished processing REST API messages
+[2025-04-11T02:59:06.037Z] Fetching recent messages using REST API
+[2025-04-11T02:59:06.325Z] Fetched 50 messages via REST API
+[2025-04-11T02:59:06.326Z] Finished processing REST API messages
+[2025-04-11T03:00:06.040Z] Fetching recent messages using REST API
+[2025-04-11T03:00:06.867Z] Fetched 50 messages via REST API
+[2025-04-11T03:00:06.873Z] Finished processing REST API messages
+[2025-04-11T03:01:06.043Z] Fetching recent messages using REST API
+[2025-04-11T03:01:06.468Z] Fetched 50 messages via REST API
+[2025-04-11T03:01:06.469Z] Finished processing REST API messages
+[2025-04-11T03:02:06.044Z] Fetching recent messages using REST API
+[2025-04-11T03:02:06.550Z] Fetched 50 messages via REST API
+[2025-04-11T03:02:06.554Z] Finished processing REST API messages
+[2025-04-11T03:03:06.001Z] Fetching recent messages using REST API
+[2025-04-11T03:03:06.329Z] Fetched 50 messages via REST API
+[2025-04-11T03:03:06.330Z] Finished processing REST API messages
+[2025-04-11T03:04:05.999Z] Fetching recent messages using REST API
+[2025-04-11T03:04:06.364Z] Fetched 50 messages via REST API
+[2025-04-11T03:04:06.365Z] Finished processing REST API messages
+[2025-04-11T03:05:06.002Z] Fetching recent messages using REST API
+[2025-04-11T03:05:06.477Z] Fetched 50 messages via REST API
+[2025-04-11T03:05:06.490Z] Finished processing REST API messages
+[2025-04-11T03:06:06.004Z] Fetching recent messages using REST API
+[2025-04-11T03:06:06.376Z] Fetched 50 messages via REST API
+[2025-04-11T03:06:06.376Z] Finished processing REST API messages
+[2025-04-11T03:07:06.006Z] Fetching recent messages using REST API
+[2025-04-11T03:07:06.376Z] Fetched 50 messages via REST API
+[2025-04-11T03:07:06.376Z] Finished processing REST API messages
+[2025-04-11T03:08:06.008Z] Fetching recent messages using REST API
+[2025-04-11T03:08:06.301Z] Fetched 50 messages via REST API
+[2025-04-11T03:08:06.302Z] Finished processing REST API messages
+[2025-04-11T03:09:06.008Z] Fetching recent messages using REST API
+[2025-04-11T03:09:06.268Z] Fetched 50 messages via REST API
+[2025-04-11T03:09:06.269Z] Finished processing REST API messages
+[2025-04-11T03:10:06.010Z] Fetching recent messages using REST API
+[2025-04-11T03:10:06.389Z] Fetched 50 messages via REST API
+[2025-04-11T03:10:06.390Z] Finished processing REST API messages
+[2025-04-11T03:11:06.011Z] Fetching recent messages using REST API
+[2025-04-11T03:11:06.485Z] Fetched 50 messages via REST API
+[2025-04-11T03:11:06.486Z] Finished processing REST API messages
+[2025-04-11T03:12:06.012Z] Fetching recent messages using REST API
+[2025-04-11T03:12:06.361Z] Fetched 50 messages via REST API
+[2025-04-11T03:12:06.362Z] Finished processing REST API messages
+[2025-04-11T03:13:06.013Z] Fetching recent messages using REST API
+[2025-04-11T03:13:06.256Z] Fetched 50 messages via REST API
+[2025-04-11T03:13:06.257Z] Finished processing REST API messages
+[2025-04-11T03:14:06.014Z] Fetching recent messages using REST API
+[2025-04-11T03:14:06.462Z] Fetched 50 messages via REST API
+[2025-04-11T03:14:06.463Z] Finished processing REST API messages
+[2025-04-11T03:15:06.015Z] Fetching recent messages using REST API
+[2025-04-11T03:15:06.326Z] Fetched 50 messages via REST API
+[2025-04-11T03:15:06.327Z] Finished processing REST API messages
+[2025-04-11T03:16:06.017Z] Fetching recent messages using REST API
+[2025-04-11T03:16:06.314Z] Fetched 50 messages via REST API
+[2025-04-11T03:16:06.315Z] Finished processing REST API messages
+[2025-04-11T03:17:06.019Z] Fetching recent messages using REST API
+[2025-04-11T03:17:06.336Z] Fetched 50 messages via REST API
+[2025-04-11T03:17:06.337Z] Finished processing REST API messages
+[2025-04-11T03:18:06.021Z] Fetching recent messages using REST API
+[2025-04-11T03:18:06.321Z] Fetched 50 messages via REST API
+[2025-04-11T03:18:06.322Z] Finished processing REST API messages
+[2025-04-11T03:19:06.022Z] Fetching recent messages using REST API
+[2025-04-11T03:19:06.488Z] Fetched 50 messages via REST API
+[2025-04-11T03:19:06.494Z] Finished processing REST API messages
+[2025-04-11T03:20:06.024Z] Fetching recent messages using REST API
+[2025-04-11T03:20:06.324Z] Fetched 50 messages via REST API
+[2025-04-11T03:20:06.325Z] Finished processing REST API messages
+[2025-04-11T03:21:06.027Z] Fetching recent messages using REST API
+[2025-04-11T03:21:06.328Z] Fetched 50 messages via REST API
+[2025-04-11T03:21:06.329Z] Finished processing REST API messages
+[2025-04-11T03:22:06.029Z] Fetching recent messages using REST API
+[2025-04-11T03:22:06.311Z] Fetched 50 messages via REST API
+[2025-04-11T03:22:06.312Z] Finished processing REST API messages
+[2025-04-11T03:23:06.032Z] Fetching recent messages using REST API
+[2025-04-11T03:23:06.305Z] Fetched 50 messages via REST API
+[2025-04-11T03:23:06.305Z] Finished processing REST API messages
+[2025-04-11T03:24:06.032Z] Fetching recent messages using REST API
+[2025-04-11T03:24:06.340Z] Fetched 50 messages via REST API
+[2025-04-11T03:24:06.341Z] Finished processing REST API messages
+[2025-04-11T03:25:06.033Z] Fetching recent messages using REST API
+[2025-04-11T03:25:06.420Z] Fetched 50 messages via REST API
+[2025-04-11T03:25:06.421Z] Finished processing REST API messages
+[2025-04-11T03:26:06.035Z] Fetching recent messages using REST API
+[2025-04-11T03:26:06.312Z] Fetched 50 messages via REST API
+[2025-04-11T03:26:06.313Z] Finished processing REST API messages
+[2025-04-11T03:27:06.036Z] Fetching recent messages using REST API
+[2025-04-11T03:27:06.359Z] Fetched 50 messages via REST API
+[2025-04-11T03:27:06.360Z] Finished processing REST API messages
+[2025-04-11T03:28:06.038Z] Fetching recent messages using REST API
+[2025-04-11T03:28:06.369Z] Fetched 50 messages via REST API
+[2025-04-11T03:28:06.377Z] Finished processing REST API messages
+[2025-04-11T03:29:06.040Z] Fetching recent messages using REST API
+[2025-04-11T03:29:06.395Z] Fetched 50 messages via REST API
+[2025-04-11T03:29:06.396Z] Finished processing REST API messages
+[2025-04-11T03:30:06.041Z] Fetching recent messages using REST API
+[2025-04-11T03:30:06.355Z] Fetched 50 messages via REST API
+[2025-04-11T03:30:06.356Z] Finished processing REST API messages
+[2025-04-11T03:31:06.043Z] Fetching recent messages using REST API
+[2025-04-11T03:31:06.405Z] Fetched 50 messages via REST API
+[2025-04-11T03:31:06.406Z] Finished processing REST API messages
+[2025-04-11T03:47:01.542Z] Fetching recent messages using REST API
+[2025-04-11T03:47:02.188Z] Fetched 50 messages via REST API
+[2025-04-11T03:47:02.194Z] Finished processing REST API messages
+[2025-04-11T04:04:00.058Z] Fetching recent messages using REST API
+[2025-04-11T04:04:01.319Z] Fetched 50 messages via REST API
+[2025-04-11T04:04:01.333Z] Finished processing REST API messages
+[2025-04-11T04:20:55.473Z] Fetching recent messages using REST API
+[2025-04-11T04:20:56.259Z] Fetched 50 messages via REST API
+[2025-04-11T04:20:56.272Z] Finished processing REST API messages
+[2025-04-11T04:37:43.121Z] Fetching recent messages using REST API
+[2025-04-11T04:37:44.215Z] Fetched 50 messages via REST API
+[2025-04-11T04:37:44.222Z] Finished processing REST API messages
+[2025-04-11T04:53:58.069Z] Fetching recent messages using REST API
+[2025-04-11T04:53:59.148Z] Fetched 50 messages via REST API
+[2025-04-11T04:53:59.149Z] Finished processing REST API messages
+[2025-04-11T05:09:57.381Z] Fetching recent messages using REST API
+[2025-04-11T05:09:58.229Z] Fetched 50 messages via REST API
+[2025-04-11T05:09:58.238Z] Finished processing REST API messages
+[2025-04-11T05:26:13.083Z] Fetching recent messages using REST API
+[2025-04-11T05:26:14.231Z] Fetched 50 messages via REST API
+[2025-04-11T05:26:14.241Z] Finished processing REST API messages
+[2025-04-11T05:32:40.436Z] Fetching recent messages using REST API
+[2025-04-11T05:32:41.148Z] Fetched 50 messages via REST API
+[2025-04-11T05:32:41.167Z] Finished processing REST API messages
+[2025-04-11T05:50:07.656Z] Fetching recent messages using REST API
+[2025-04-11T05:50:08.043Z] Fetched 50 messages via REST API
+[2025-04-11T05:50:08.051Z] Processing message 1360125718754889844 from REST API
+[2025-04-11T05:50:08.052Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/ottokit-wordpress-plugin-admin-creation.html",
+      "title": "OttoKit WordPress Plugin Admin Creation Vulnerability Under Active Exploitation",
+      "description": "A newly disclosed high-severity security flaw impacting OttoKit (formerly SureTriggers) has come under active exploitation within a few hours of public disclosure.\nThe vulnerability, tracked as CVE-2025-3102 (CVSS score: 8.1), is an authorization bypass bug that could permit an attacker to create administrator accounts under certain conditions and take control of susceptible websites.\n\"The",
+      "color": 2639502,
+      "timestamp": "2025-04-11T04:58:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T05:34:01.265000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360125718754889844",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T05:50:08.052Z] Processing message 1360125718754889844 from rest-api
+[2025-04-11T05:50:08.053Z] Message content: ""
+[2025-04-11T05:50:08.053Z] Has embeds: true
+[2025-04-11T05:50:08.053Z] Message has 1 embeds
+[2025-04-11T05:50:08.053Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/ottokit-wordpress-plugin-admin-creation.html",
+  "title": "OttoKit WordPress Plugin Admin Creation Vulnerability Under Active Exploitation",
+  "description": "A newly disclosed high-severity security flaw impacting OttoKit (formerly SureTriggers) has come under active exploitation within a few hours of public disclosure.\nThe vulnerability, tracked as CVE-2025-3102 (CVSS score: 8.1), is an authorization bypass bug that could permit an attacker to create administrator accounts under certain conditions and take control of susceptible websites.\n\"The",
+  "color": 2639502,
+  "timestamp": "2025-04-11T04:58:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T05:50:08.053Z] Found embed title: OttoKit WordPress Plugin Admin Creation Vulnerability Under Active Exploitation
+[2025-04-11T05:50:08.053Z] Found embed description: A newly disclosed high-severity security flaw impacting OttoKit (formerly SureTriggers) has come under active exploitation within a few hours of public disclosure.
+The vulnerability, tracked as CVE-2025-3102 (CVSS score: 8.1), is an authorization bypass bug that could permit an attacker to create administrator accounts under certain conditions and take control of susceptible websites.
+"The
+[2025-04-11T05:50:08.053Z] Inserting content into Supabase: OttoKit WordPress Plugin Admin Creation Vulnerability Under Active Exploitation
+
+A newly disclosed high-severity security flaw impacting OttoKit (formerly SureTriggers) has come under active exploitation within a few hours of public disclosure.
+The vulnerability, tracked as CVE-2025-3102 (CVSS score: 8.1), is an authorization bypass bug that could permit an attacker to create administrator accounts under certain conditions and take control of susceptible websites.
+"The
+[2025-04-11T05:50:08.349Z] Successfully saved to Supabase: null
+[2025-04-11T05:50:08.357Z] Finished processing REST API messages
+[2025-04-11T06:08:08.087Z] Fetching recent messages using REST API
+[2025-04-11T06:08:09.191Z] Fetched 50 messages via REST API
+[2025-04-11T06:08:09.209Z] Finished processing REST API messages
+[2025-04-11T06:24:25.246Z] Fetching recent messages using REST API
+[2025-04-11T06:24:26.205Z] Fetched 50 messages via REST API
+[2025-04-11T06:24:26.220Z] Finished processing REST API messages
+[2025-04-11T06:40:09.355Z] Fetching recent messages using REST API
+[2025-04-11T06:40:09.951Z] Fetched 50 messages via REST API
+[2025-04-11T06:40:09.958Z] Finished processing REST API messages
+[2025-04-11T06:57:59.432Z] Fetching recent messages using REST API
+[2025-04-11T06:58:00.214Z] Fetched 50 messages via REST API
+[2025-04-11T06:58:00.227Z] Finished processing REST API messages
+[2025-04-11T07:14:40.066Z] Fetching recent messages using REST API
+[2025-04-11T07:14:41.198Z] Fetched 50 messages via REST API
+[2025-04-11T07:14:41.205Z] Finished processing REST API messages
+[2025-04-11T07:17:54.765Z] Fetching recent messages using REST API
+[2025-04-11T07:17:55.420Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-11T07:17:55.430Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-11T07:19:45.902Z] Fetching recent messages using REST API
+[2025-04-11T07:19:45.968Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-11T07:19:45.968Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-11T07:30:51.699Z] Fetching recent messages using REST API
+[2025-04-11T07:30:53.685Z] Fetched 50 messages via REST API
+[2025-04-11T07:30:53.695Z] Finished processing REST API messages
+[2025-04-11T07:47:36.059Z] Fetching recent messages using REST API
+[2025-04-11T07:47:37.123Z] Fetched 50 messages via REST API
+[2025-04-11T07:47:37.138Z] Finished processing REST API messages
+[2025-04-11T08:03:40.109Z] Fetching recent messages using REST API
+[2025-04-11T08:03:41.359Z] Fetched 50 messages via REST API
+[2025-04-11T08:03:41.374Z] Finished processing REST API messages
+[2025-04-11T08:20:57.304Z] Fetching recent messages using REST API
+[2025-04-11T08:20:58.155Z] Fetched 50 messages via REST API
+[2025-04-11T08:20:58.172Z] Finished processing REST API messages
+[2025-04-11T08:37:16.110Z] Fetching recent messages using REST API
+[2025-04-11T08:37:17.258Z] Fetched 50 messages via REST API
+[2025-04-11T08:37:17.274Z] Finished processing REST API messages
+[2025-04-11T08:54:47.162Z] Fetching recent messages using REST API
+[2025-04-11T08:54:48.217Z] Fetched 50 messages via REST API
+[2025-04-11T08:54:48.228Z] Finished processing REST API messages
+[2025-04-11T09:10:37.200Z] Fetching recent messages using REST API
+[2025-04-11T09:10:38.250Z] Fetched 50 messages via REST API
+[2025-04-11T09:10:38.266Z] Finished processing REST API messages
+[2025-04-11T09:19:12.124Z] Fetching recent messages using REST API
+[2025-04-11T09:19:13.250Z] Fetched 50 messages via REST API
+[2025-04-11T09:19:13.259Z] Finished processing REST API messages
+[2025-04-11T09:30:54.347Z] Fetching recent messages using REST API
+[2025-04-11T09:30:55.270Z] Fetched 50 messages via REST API
+[2025-04-11T09:30:55.279Z] Finished processing REST API messages
+[2025-04-11T09:47:55.127Z] Fetching recent messages using REST API
+[2025-04-11T09:47:56.289Z] Fetched 50 messages via REST API
+[2025-04-11T09:47:56.304Z] Processing message 1360186264632037376 from REST API
+[2025-04-11T09:47:56.304Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/palo-alto-networks-warns-of-brute-force.html",
+      "title": "Palo Alto Networks Warns of Brute-Force Attempts Targeting PAN-OS GlobalProtect Gateways",
+      "description": "Palo Alto Networks has revealed that it's observing brute-force login attempts against PAN-OS GlobalProtect gateways, days after threat actors warned of a surge in suspicious login scanning activity targeting its appliances.\n\"Our teams are observing evidence of activity consistent with password-related attacks, such as brute-force login attempts, which does not indicate exploitation of a",
+      "color": 2639502,
+      "timestamp": "2025-04-11T08:53:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    },
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/spynote-badbazaar-moonshine-malware.html",
+      "title": "SpyNote, BadBazaar, MOONSHINE Malware Target Android and iOS Users via Fake Apps",
+      "description": "Cybersecurity researchers have found that threat actors are setting up deceptive websites hosted on newly registered domains to deliver a known Android malware called SpyNote.\nThese bogus websites masquerade as Google Play Store install pages for apps like the Chrome web browser, indicating an attempt to deceive unsuspecting users into installing the malware instead.\n\"The threat actor utilized a",
+      "color": 2639502,
+      "timestamp": "2025-04-11T08:13:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T09:34:36.527000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360186264632037376",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T09:47:56.304Z] Processing message 1360186264632037376 from rest-api
+[2025-04-11T09:47:56.305Z] Message content: ""
+[2025-04-11T09:47:56.305Z] Has embeds: true
+[2025-04-11T09:47:56.305Z] Message has 2 embeds
+[2025-04-11T09:47:56.305Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/palo-alto-networks-warns-of-brute-force.html",
+  "title": "Palo Alto Networks Warns of Brute-Force Attempts Targeting PAN-OS GlobalProtect Gateways",
+  "description": "Palo Alto Networks has revealed that it's observing brute-force login attempts against PAN-OS GlobalProtect gateways, days after threat actors warned of a surge in suspicious login scanning activity targeting its appliances.\n\"Our teams are observing evidence of activity consistent with password-related attacks, such as brute-force login attempts, which does not indicate exploitation of a",
+  "color": 2639502,
+  "timestamp": "2025-04-11T08:53:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T09:47:56.305Z] Found embed title: Palo Alto Networks Warns of Brute-Force Attempts Targeting PAN-OS GlobalProtect Gateways
+[2025-04-11T09:47:56.305Z] Found embed description: Palo Alto Networks has revealed that it's observing brute-force login attempts against PAN-OS GlobalProtect gateways, days after threat actors warned of a surge in suspicious login scanning activity targeting its appliances.
+"Our teams are observing evidence of activity consistent with password-related attacks, such as brute-force login attempts, which does not indicate exploitation of a
+[2025-04-11T09:47:56.306Z] Inserting content into Supabase: Palo Alto Networks Warns of Brute-Force Attempts Targeting PAN-OS GlobalProtect Gateways
+
+Palo Alto Networks has revealed that it's observing brute-force login attempts against PAN-OS GlobalProtect gateways, days after threat actors warned of a surge in suspicious login scanning activity targeting its appliances.
+"Our teams are observing evidence of activity consistent with password-related attacks, such as brute-force login attempts, which does not indicate exploitation of a
+[2025-04-11T09:47:56.948Z] Successfully saved to Supabase: null
+[2025-04-11T09:47:56.957Z] Finished processing REST API messages
+[2025-04-11T10:03:42.134Z] Fetching recent messages using REST API
+[2025-04-11T10:03:43.237Z] Fetched 50 messages via REST API
+[2025-04-11T10:03:43.251Z] Finished processing REST API messages
+[2025-04-11T10:20:36.144Z] Fetching recent messages using REST API
+[2025-04-11T10:20:37.291Z] Fetched 50 messages via REST API
+[2025-04-11T10:20:37.308Z] Finished processing REST API messages
+[2025-04-11T10:36:58.318Z] Fetching recent messages using REST API
+[2025-04-11T10:36:59.321Z] Fetched 50 messages via REST API
+[2025-04-11T10:36:59.336Z] Finished processing REST API messages
+[2025-04-11T10:52:33.140Z] Fetching recent messages using REST API
+[2025-04-11T10:52:34.436Z] Fetched 50 messages via REST API
+[2025-04-11T10:52:34.444Z] Finished processing REST API messages
+[2025-04-11T11:09:43.317Z] Fetching recent messages using REST API
+[2025-04-11T11:09:44.278Z] Fetched 50 messages via REST API
+[2025-04-11T11:09:44.287Z] Finished processing REST API messages
+[2025-04-11T11:25:25.401Z] Fetching recent messages using REST API
+[2025-04-11T11:25:27.687Z] Fetched 50 messages via REST API
+[2025-04-11T11:25:27.703Z] Finished processing REST API messages
+[2025-04-11T11:31:54.069Z] Fetching recent messages using REST API
+[2025-04-11T11:31:55.119Z] Fetched 50 messages via REST API
+[2025-04-11T11:31:55.140Z] Finished processing REST API messages
+[2025-04-11T11:49:22.427Z] Fetching recent messages using REST API
+[2025-04-11T11:49:22.934Z] Fetched 50 messages via REST API
+[2025-04-11T11:49:22.934Z] Processing message 1360216302635057289 from REST API
+[2025-04-11T11:49:22.936Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/initial-access-brokers-shift-tactics.html",
+      "title": "Initial Access Brokers Shift Tactics, Selling More for Less",
+      "description": "What are IABs?\nInitial Access Brokers (IABs) specialize in gaining unauthorized entry into computer systems and networks, then selling that access to other cybercriminals. This division of labor allows IABs to concentrate on their core expertise: exploiting vulnerabilities through methods like social engineering and brute-force attacks.&nbsp;\nBy selling access, they significantly mitigate the",
+      "color": 2639502,
+      "timestamp": "2025-04-11T10:30:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T11:33:58.145000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360216302635057289",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T11:49:22.939Z] Processing message 1360216302635057289 from rest-api
+[2025-04-11T11:49:22.939Z] Message content: ""
+[2025-04-11T11:49:22.940Z] Has embeds: true
+[2025-04-11T11:49:22.940Z] Message has 1 embeds
+[2025-04-11T11:49:22.940Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/initial-access-brokers-shift-tactics.html",
+  "title": "Initial Access Brokers Shift Tactics, Selling More for Less",
+  "description": "What are IABs?\nInitial Access Brokers (IABs) specialize in gaining unauthorized entry into computer systems and networks, then selling that access to other cybercriminals. This division of labor allows IABs to concentrate on their core expertise: exploiting vulnerabilities through methods like social engineering and brute-force attacks.&nbsp;\nBy selling access, they significantly mitigate the",
+  "color": 2639502,
+  "timestamp": "2025-04-11T10:30:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T11:49:22.940Z] Found embed title: Initial Access Brokers Shift Tactics, Selling More for Less
+[2025-04-11T11:49:22.941Z] Found embed description: What are IABs?
+Initial Access Brokers (IABs) specialize in gaining unauthorized entry into computer systems and networks, then selling that access to other cybercriminals. This division of labor allows IABs to concentrate on their core expertise: exploiting vulnerabilities through methods like social engineering and brute-force attacks.&nbsp;
+By selling access, they significantly mitigate the
+[2025-04-11T11:49:22.941Z] Inserting content into Supabase: Initial Access Brokers Shift Tactics, Selling More for Less
+
+What are IABs?
+Initial Access Brokers (IABs) specialize in gaining unauthorized entry into computer systems and networks, then selling that access to other cybercriminals. This division of labor allows IABs to concentrate on their core expertise: exploiting vulnerabilities through methods like social engineering and brute-force attacks.&nbsp;
+By selling access, they significantly mitigate the
+[2025-04-11T11:49:23.203Z] Successfully saved to Supabase: null
+[2025-04-11T11:49:23.216Z] Finished processing REST API messages
+[2025-04-11T12:05:46.254Z] Fetching recent messages using REST API
+[2025-04-11T12:05:47.234Z] Fetched 50 messages via REST API
+[2025-04-11T12:05:47.251Z] Finished processing REST API messages
+[2025-04-11T12:21:25.122Z] Fetching recent messages using REST API
+[2025-04-11T12:21:26.129Z] Fetched 50 messages via REST API
+[2025-04-11T12:21:26.146Z] Finished processing REST API messages
+[2025-04-11T12:32:54.149Z] Fetching recent messages using REST API
+[2025-04-11T12:32:55.247Z] Fetched 50 messages via REST API
+[2025-04-11T12:32:55.255Z] Finished processing REST API messages
+[2025-04-11T12:48:04.356Z] Fetching recent messages using REST API
+[2025-04-11T12:48:06.455Z] Fetched 50 messages via REST API
+[2025-04-11T12:48:06.465Z] Finished processing REST API messages
+[2025-04-11T13:00:00.433Z] Fetching recent messages using REST API
+[2025-04-11T13:00:01.326Z] Fetched 50 messages via REST API
+[2025-04-11T13:00:01.327Z] Finished processing REST API messages
+[2025-04-11T13:17:21.140Z] Fetching recent messages using REST API
+[2025-04-11T13:17:22.193Z] Fetched 50 messages via REST API
+[2025-04-11T13:17:22.209Z] Finished processing REST API messages
+[2025-04-11T13:33:54.136Z] Fetching recent messages using REST API
+[2025-04-11T13:33:55.500Z] Fetched 50 messages via REST API
+[2025-04-11T13:33:55.513Z] Processing message 1360242677052080179 from REST API
+[2025-04-11T13:33:55.513Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://thehackernews.com/2025/04/paper-werewolf-deploys-powermodul.html",
+      "title": "Paper Werewolf Deploys PowerModul Implant in Targeted Cyberattacks on Russian Sectors",
+      "description": "The threat actor known as Paper Werewolf has been observed exclusively targeting Russian entities with a new implant called PowerModul.\nThe activity, which took place between July and December 2024, singled out organizations in the mass media, telecommunications, construction, government entities, and energy sectors, Kaspersky said in a new report published Thursday.\nPaper Werewolf, also known",
+      "color": 2639502,
+      "timestamp": "2025-04-11T13:09:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+        "width": 256,
+        "height": 256,
+        "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T13:18:46.296000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360242677052080179",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T13:33:55.514Z] Processing message 1360242677052080179 from rest-api
+[2025-04-11T13:33:55.514Z] Message content: ""
+[2025-04-11T13:33:55.514Z] Has embeds: true
+[2025-04-11T13:33:55.514Z] Message has 1 embeds
+[2025-04-11T13:33:55.514Z] Embed data: {
+  "type": "rich",
+  "url": "https://thehackernews.com/2025/04/paper-werewolf-deploys-powermodul.html",
+  "title": "Paper Werewolf Deploys PowerModul Implant in Targeted Cyberattacks on Russian Sectors",
+  "description": "The threat actor known as Paper Werewolf has been observed exclusively targeting Russian entities with a new implant called PowerModul.\nThe activity, which took place between July and December 2024, singled out organizations in the mass media, telecommunications, construction, government entities, and energy sectors, Kaspersky said in a new report published Thursday.\nPaper Werewolf, also known",
+  "color": 2639502,
+  "timestamp": "2025-04-11T13:09:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/u3u4UQCF3INP1nqnrMCdBCIQsuQ4Jll7egrPjgQgiEc/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/thehackernews.png",
+    "width": 256,
+    "height": 256,
+    "placeholder": "mcWFDQApV4iId4Jr91eIcIUIByeHiIB5KA==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T13:33:55.515Z] Found embed title: Paper Werewolf Deploys PowerModul Implant in Targeted Cyberattacks on Russian Sectors
+[2025-04-11T13:33:55.515Z] Found embed description: The threat actor known as Paper Werewolf has been observed exclusively targeting Russian entities with a new implant called PowerModul.
+The activity, which took place between July and December 2024, singled out organizations in the mass media, telecommunications, construction, government entities, and energy sectors, Kaspersky said in a new report published Thursday.
+Paper Werewolf, also known
+[2025-04-11T13:33:55.515Z] Inserting content into Supabase: Paper Werewolf Deploys PowerModul Implant in Targeted Cyberattacks on Russian Sectors
+
+The threat actor known as Paper Werewolf has been observed exclusively targeting Russian entities with a new implant called PowerModul.
+The activity, which took place between July and December 2024, singled out organizations in the mass media, telecommunications, construction, government entities, and energy sectors, Kaspersky said in a new report published Thursday.
+Paper Werewolf, also known
+[2025-04-11T13:33:55.749Z] Successfully saved to Supabase: null
+[2025-04-11T13:33:55.750Z] Processing message 1360242425230262383 from REST API
+[2025-04-11T13:33:55.751Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/application-security/11-bugs-found-perplexity-chatbots-android-app",
+      "title": "11 Bugs Found in Perplexity AI's Chatbot Android App",
+      "description": "Researchers characterize the company's artificial intelligence chatbot as less secure than ChatGPT and even DeepSeek.",
+      "color": 44678,
+      "timestamp": "2025-04-11T13:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T13:17:46.257000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360242425230262383",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T13:33:55.752Z] Processing message 1360242425230262383 from rest-api
+[2025-04-11T13:33:55.768Z] Message content: ""
+[2025-04-11T13:33:55.768Z] Has embeds: true
+[2025-04-11T13:33:55.768Z] Message has 1 embeds
+[2025-04-11T13:33:55.768Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/application-security/11-bugs-found-perplexity-chatbots-android-app",
+  "title": "11 Bugs Found in Perplexity AI's Chatbot Android App",
+  "description": "Researchers characterize the company's artificial intelligence chatbot as less secure than ChatGPT and even DeepSeek.",
+  "color": 44678,
+  "timestamp": "2025-04-11T13:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T13:33:55.769Z] Found embed title: 11 Bugs Found in Perplexity AI's Chatbot Android App
+[2025-04-11T13:33:55.769Z] Found embed description: Researchers characterize the company's artificial intelligence chatbot as less secure than ChatGPT and even DeepSeek.
+[2025-04-11T13:33:55.769Z] Inserting content into Supabase: 11 Bugs Found in Perplexity AI's Chatbot Android App
+
+Researchers characterize the company's artificial intelligence chatbot as less secure than ChatGPT and even DeepSeek.
+[2025-04-11T13:33:55.861Z] Successfully saved to Supabase: null
+[2025-04-11T13:33:55.870Z] Finished processing REST API messages
+[2025-04-11T13:49:55.378Z] Fetching recent messages using REST API
+[2025-04-11T13:49:56.215Z] Fetched 50 messages via REST API
+[2025-04-11T13:49:56.229Z] Finished processing REST API messages
+[2025-04-11T14:07:23.493Z] Fetching recent messages using REST API
+[2025-04-11T14:07:24.257Z] Fetched 50 messages via REST API
+[2025-04-11T14:07:24.271Z] Processing message 1360253716673859706 from REST API
+[2025-04-11T14:07:24.272Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyberattacks-data-breaches/shortcomings-improvements-incident-response-plans",
+      "title": "Organizations Lack Incident Response Plans, But Answers Are on the Way",
+      "description": "Developing strong incident response plans remains an area that requires significant improvement. Here are some shortcomings and how to address them.",
+      "color": 44678,
+      "timestamp": "2025-04-11T13:45:48+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T14:02:38.347000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360253716673859706",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T14:07:24.272Z] Processing message 1360253716673859706 from rest-api
+[2025-04-11T14:07:24.272Z] Message content: ""
+[2025-04-11T14:07:24.272Z] Has embeds: true
+[2025-04-11T14:07:24.272Z] Message has 1 embeds
+[2025-04-11T14:07:24.273Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyberattacks-data-breaches/shortcomings-improvements-incident-response-plans",
+  "title": "Organizations Lack Incident Response Plans, But Answers Are on the Way",
+  "description": "Developing strong incident response plans remains an area that requires significant improvement. Here are some shortcomings and how to address them.",
+  "color": 44678,
+  "timestamp": "2025-04-11T13:45:48+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T14:07:24.273Z] Found embed title: Organizations Lack Incident Response Plans, But Answers Are on the Way
+[2025-04-11T14:07:24.273Z] Found embed description: Developing strong incident response plans remains an area that requires significant improvement. Here are some shortcomings and how to address them.
+[2025-04-11T14:07:24.273Z] Inserting content into Supabase: Organizations Lack Incident Response Plans, But Answers Are on the Way
+
+Developing strong incident response plans remains an area that requires significant improvement. Here are some shortcomings and how to address them.
+[2025-04-11T14:07:24.508Z] Successfully saved to Supabase: null
+[2025-04-11T14:07:24.516Z] Finished processing REST API messages
+[2025-04-11T14:24:37.185Z] Fetching recent messages using REST API
+[2025-04-11T14:24:38.348Z] Fetched 50 messages via REST API
+[2025-04-11T14:24:38.358Z] Finished processing REST API messages
+[2025-04-11T14:34:54.193Z] Fetching recent messages using REST API
+[2025-04-11T14:34:55.119Z] Fetched 50 messages via REST API
+[2025-04-11T14:34:55.136Z] Processing message 1360261148993257553 from REST API
+[2025-04-11T14:34:55.136Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.darkreading.com/cyber-risk/using-third-party-id-providers-zero-trust",
+      "title": "Using Third-Party ID Providers Without Losing Zero Trust",
+      "description": "With $4.4 billion in worldwide data breach fines in 2024, the cost of not knowing who's walking into your systems is devastating.",
+      "color": 44678,
+      "timestamp": "2025-04-11T14:00:00+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "width": 720,
+        "height": 113,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T14:32:10.350000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360261148993257553",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T14:34:55.136Z] Processing message 1360261148993257553 from rest-api
+[2025-04-11T14:34:55.137Z] Message content: ""
+[2025-04-11T14:34:55.137Z] Has embeds: true
+[2025-04-11T14:34:55.137Z] Message has 1 embeds
+[2025-04-11T14:34:55.137Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.darkreading.com/cyber-risk/using-third-party-id-providers-zero-trust",
+  "title": "Using Third-Party ID Providers Without Losing Zero Trust",
+  "description": "With $4.4 billion in worldwide data breach fines in 2024, the cost of not knowing who's walking into your systems is devastating.",
+  "color": 44678,
+  "timestamp": "2025-04-11T14:00:00+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "width": 720,
+    "height": 113,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T14:34:55.138Z] Found embed title: Using Third-Party ID Providers Without Losing Zero Trust
+[2025-04-11T14:34:55.138Z] Found embed description: With $4.4 billion in worldwide data breach fines in 2024, the cost of not knowing who's walking into your systems is devastating.
+[2025-04-11T14:34:55.138Z] Inserting content into Supabase: Using Third-Party ID Providers Without Losing Zero Trust
+
+With $4.4 billion in worldwide data breach fines in 2024, the cost of not knowing who's walking into your systems is devastating.
+[2025-04-11T14:34:55.440Z] Successfully saved to Supabase: null
+[2025-04-11T14:34:55.448Z] Finished processing REST API messages
+[2025-04-11T14:50:09.654Z] Fetching recent messages using REST API
+[2025-04-11T14:50:10.371Z] Fetched 50 messages via REST API
+[2025-04-11T14:50:10.378Z] Finished processing REST API messages
+[2025-04-11T15:06:26.460Z] Fetching recent messages using REST API
+[2025-04-11T15:06:27.091Z] Fetched 50 messages via REST API
+[2025-04-11T15:06:27.097Z] Finished processing REST API messages
+[2025-04-11T15:18:35.192Z] Fetching recent messages using REST API
+[2025-04-11T15:18:36.075Z] Fetched 50 messages via REST API
+[2025-04-11T15:18:36.085Z] Finished processing REST API messages
+[2025-04-11T15:35:54.266Z] Fetching recent messages using REST API
+[2025-04-11T15:35:55.422Z] Fetched 50 messages via REST API
+[2025-04-11T15:35:55.432Z] Finished processing REST API messages
+[2025-04-11T15:51:39.839Z] Fetching recent messages using REST API
+[2025-04-11T15:51:40.198Z] Fetched 50 messages via REST API
+[2025-04-11T15:51:40.203Z] Finished processing REST API messages
+[2025-04-11T16:08:28.347Z] Fetching recent messages using REST API
+[2025-04-11T16:08:29.440Z] Fetched 50 messages via REST API
+[2025-04-11T16:08:29.448Z] Processing message 1360283806422138889 from REST API
+[2025-04-11T16:08:29.448Z] Raw message from REST API: {
+  "type": 0,
+  "content": "",
+  "mentions": [],
+  "mention_roles": [],
+  "attachments": [],
+  "embeds": [
+    {
+      "type": "rich",
+      "url": "https://www.malwarebytes.com/blog/news/2025/04/the-pall-mall-pact-and-why-it-matters",
+      "title": "The Pall Mall Pact and why it matters",
+      "description": "The US indicated they will sign the Pall Mall Pact, an international treaty to regulate commercial spyware and surveillance tools.",
+      "color": 2193615,
+      "timestamp": "2025-04-11T15:31:41+00:00",
+      "thumbnail": {
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+        "width": 1200,
+        "height": 1068,
+        "placeholder": "3lOBBIA4eoiImHB4Z2X1H7iEesWHCIh0Bw==",
+        "placeholder_version": 1,
+        "flags": 0
+      }
+    }
+  ],
+  "timestamp": "2025-04-11T16:02:12.302000+00:00",
+  "edited_timestamp": null,
+  "flags": 0,
+  "components": [],
+  "id": "1360283806422138889",
+  "channel_id": "1299032261470978159",
+  "author": {
+    "id": "1024363293189611581",
+    "username": "CyberSecurity Bot",
+    "avatar": "a4d5ce1f112435b90692c674a841df7c",
+    "discriminator": "6140",
+    "public_flags": 65536,
+    "flags": 65536,
+    "bot": true,
+    "banner": null,
+    "accent_color": null,
+    "global_name": null,
+    "avatar_decoration_data": null,
+    "collectibles": null,
+    "banner_color": null,
+    "clan": null,
+    "primary_guild": null
+  },
+  "pinned": false,
+  "mention_everyone": false,
+  "tts": false
+}
+[2025-04-11T16:08:29.448Z] Processing message 1360283806422138889 from rest-api
+[2025-04-11T16:08:29.449Z] Message content: ""
+[2025-04-11T16:08:29.449Z] Has embeds: true
+[2025-04-11T16:08:29.449Z] Message has 1 embeds
+[2025-04-11T16:08:29.449Z] Embed data: {
+  "type": "rich",
+  "url": "https://www.malwarebytes.com/blog/news/2025/04/the-pall-mall-pact-and-why-it-matters",
+  "title": "The Pall Mall Pact and why it matters",
+  "description": "The US indicated they will sign the Pall Mall Pact, an international treaty to regulate commercial spyware and surveillance tools.",
+  "color": 2193615,
+  "timestamp": "2025-04-11T15:31:41+00:00",
+  "thumbnail": {
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/h2-ftmx4ZxpQFLlgUa6wOxumjcmVmvjkIfsFSkIKw60/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/malwarebytes.png",
+    "width": 1200,
+    "height": 1068,
+    "placeholder": "3lOBBIA4eoiImHB4Z2X1H7iEesWHCIh0Bw==",
+    "placeholder_version": 1,
+    "flags": 0
+  }
+}
+[2025-04-11T16:08:29.449Z] Found embed title: The Pall Mall Pact and why it matters
+[2025-04-11T16:08:29.449Z] Found embed description: The US indicated they will sign the Pall Mall Pact, an international treaty to regulate commercial spyware and surveillance tools.
+[2025-04-11T16:08:29.450Z] Inserting content into Supabase: The Pall Mall Pact and why it matters
+
+The US indicated they will sign the Pall Mall Pact, an international treaty to regulate commercial spyware and surveillance tools.
+[2025-04-11T16:08:29.667Z] Successfully saved to Supabase: null
+[2025-04-11T16:08:29.679Z] Finished processing REST API messages
+[2025-04-11T16:25:31.215Z] Fetching recent messages using REST API
+[2025-04-11T16:25:32.089Z] Fetched 50 messages via REST API
+[2025-04-11T16:25:32.100Z] Finished processing REST API messages
+[2025-04-11T16:26:31.215Z] Fetching recent messages using REST API
+[2025-04-11T16:26:31.553Z] Fetched 50 messages via REST API
+[2025-04-11T16:26:31.554Z] Finished processing REST API messages
+[2025-04-11T16:33:22.713Z] Fetching recent messages using REST API
+[2025-04-11T16:33:23.784Z] Fetched 50 messages via REST API
+[2025-04-11T16:33:23.795Z] Finished processing REST API messages
+[2025-04-11T16:34:22.714Z] Fetching recent messages using REST API
+[2025-04-11T16:34:24.552Z] Fetched 50 messages via REST API
+[2025-04-11T16:34:24.557Z] Finished processing REST API messages
+[2025-04-11T16:36:54.171Z] Fetching recent messages using REST API
+[2025-04-11T16:36:55.172Z] Fetched 50 messages via REST API
+[2025-04-11T16:36:55.184Z] Finished processing REST API messages
+[2025-04-11T16:43:10.675Z] Fetching recent messages using REST API
+[2025-04-11T16:43:11.396Z] Fetched 50 messages via REST API
+[2025-04-11T16:43:11.402Z] Finished processing REST API messages
+[2025-04-11T16:44:36.968Z] Fetching recent messages using REST API
+[2025-04-11T16:44:37.891Z] Fetched 50 messages via REST API
+[2025-04-11T16:44:37.975Z] Finished processing REST API messages
+[2025-04-11T16:45:36.971Z] Fetching recent messages using REST API
+[2025-04-11T16:45:37.297Z] Fetched 50 messages via REST API
+[2025-04-11T16:45:37.298Z] Finished processing REST API messages
+[2025-04-11T16:46:36.971Z] Fetching recent messages using REST API
+[2025-04-11T16:46:37.268Z] Fetched 50 messages via REST API
+[2025-04-11T16:46:37.268Z] Finished processing REST API messages
+[2025-04-11T16:47:36.972Z] Fetching recent messages using REST API
+[2025-04-11T16:47:37.301Z] Fetched 50 messages via REST API
+[2025-04-11T16:47:37.307Z] Finished processing REST API messages
+[2025-04-11T16:48:36.975Z] Fetching recent messages using REST API
+[2025-04-11T16:48:37.251Z] Fetched 50 messages via REST API
+[2025-04-11T16:48:37.253Z] Finished processing REST API messages
+[2025-04-11T16:49:36.977Z] Fetching recent messages using REST API
+[2025-04-11T16:49:37.342Z] Fetched 50 messages via REST API
+[2025-04-11T16:49:37.347Z] Finished processing REST API messages
+[2025-04-11T16:50:36.978Z] Fetching recent messages using REST API
+[2025-04-11T16:50:37.278Z] Fetched 50 messages via REST API
+[2025-04-11T16:50:37.279Z] Finished processing REST API messages
+[2025-04-11T16:51:36.979Z] Fetching recent messages using REST API
+[2025-04-11T16:51:37.294Z] Fetched 50 messages via REST API
+[2025-04-11T16:51:37.295Z] Finished processing REST API messages
+[2025-04-11T16:52:36.980Z] Fetching recent messages using REST API
+[2025-04-11T16:52:37.238Z] Fetched 50 messages via REST API
+[2025-04-11T16:52:37.245Z] Finished processing REST API messages
+[2025-04-11T16:53:36.982Z] Fetching recent messages using REST API
+[2025-04-11T16:53:37.282Z] Fetched 50 messages via REST API
+[2025-04-11T16:53:37.282Z] Finished processing REST API messages
+[2025-04-11T16:54:36.984Z] Fetching recent messages using REST API
+[2025-04-11T16:54:37.376Z] Fetched 50 messages via REST API
+[2025-04-11T16:54:37.377Z] Finished processing REST API messages
+[2025-04-11T16:55:36.985Z] Fetching recent messages using REST API
+[2025-04-11T16:55:37.293Z] Fetched 50 messages via REST API
+[2025-04-11T16:55:37.294Z] Finished processing REST API messages
