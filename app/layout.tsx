@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: 'CyberNex Academy',
     images: [
       {
-        url: 'https://www.cybernexacademy.com/Cyberneximage.png',
+        url: 'https://www.cybernexacademy.com/cybernex-og.png',
         width: 1200,
         height: 630,
         alt: 'CyberNex Academy OG Image',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'CyberNex Academy',
     description: 'Courses, community, and cybersecurity insights – all in one place.',
-    images: ['https://www.cybernexacademy.com/Cyberneximage.png'],
+    images: ['https://www.cybernexacademy.com/cybernex-og.png'],
   },
   robots: {
     index: true,
