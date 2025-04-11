@@ -1,154 +1,92 @@
-name: 🔗 Weekly Broken Link Report
+name: Check Broken Links
 
-# Updated schedule
 on:
   schedule:
-    - cron: '0 6 * * 1' # Every Monday at 6 AM UTC
-  workflow_dispatch: # Allow manual run too
+    - cron: '0 2 * * 0' # weekly on Sunday at 2am
+  workflow_dispatch:
 
 jobs:
-  scan-broken-links:
+  check-links:
     runs-on: ubuntu-latest
-    # Add permissions to allow writing back to the repo
-    permissions:
-      contents: write
-
     steps:
-      - name: ⬇️ Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: 🔩 Set up Node.js
+      # Step to install Rust/Cargo if not pre-installed on runner
+      # Usually ubuntu-latest has it, but this ensures it
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+      
+      - name: Cache Cargo registry
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/registry
+          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache Cargo index
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/git
+          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Cache Cargo build
+        uses: actions/cache@v3
+        with:
+          path: target
+          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+          
+      - name: Install lychee via cargo
+        run: cargo install lychee
+
+      - name: Run link checker
+        run: |
+          # Ensure the lychee binary path is available
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          lychee --verbose --retry 2 --timeout 20 --max-concurrency 4 \
+            --user-agent "Mozilla/5.0 (compatible; LycheeBot/1.0; +https://github.com/lycheeverse/lychee)" \
+            --output broken-links.json \
+            --exclude "https://cybernexacademy.substack.com" \
+            --format json \
+            ./app || echo "Lychee finished with some errors, check broken-links.json"
+        continue-on-error: true # Continue even if lychee finds broken links
+
+      - name: Check if broken-links.json exists and has content
+        id: check_file
+        run: |
+          if [[ -f broken-links.json && -s broken-links.json ]]; then
+            echo "File exists and is not empty."
+            echo "file_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "File does not exist or is empty."
+            echo "file_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload to Supabase
+        if: steps.check_file.outputs.file_exists == 'true'
+        run: |
+          # Ensure curl is installed
+          sudo apt-get update && sudo apt-get install -y curl
+          # Replace <your-project> with your actual Supabase project ID/ref
+          curl -X POST https://<your-project-ref>.supabase.co/functions/v1/log-broken-links \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Content-Type: application/json" \
+            --data-binary "@broken-links.json"
+
+      - name: Setup Node.js for email script
+        if: steps.check_file.outputs.file_exists == 'true' # Only setup if file exists
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Or your project's node version
+          node-version: '20' # Or your preferred Node version
 
-      - name: 📦 Install Node dependencies
-        # Use npm ci for cleaner installs if lock file exists
-        run: npm ci
+      - name: Install email dependencies
+        if: steps.check_file.outputs.file_exists == 'true' # Only install if needed
+        run: npm install nodemailer fs-extra # Use fs-extra for potential future needs
+        working-directory: .github/scripts # Assuming script is in this folder
 
-      # Combined step to set prefix, add to PATH, install globally & verify
-      - name: ⬇️ Install Lychee globally & Verify
-        run: |
-          mkdir -p ~/.npm-global
-          npm config set prefix '~/.npm-global'
-          # Export PATH for the current step's shell
-          export PATH=~/.npm-global/bin:$PATH 
-          # Also add to GITHUB_PATH for subsequent steps
-          echo "~/.npm-global/bin" >> $GITHUB_PATH
-          npm install -g lychee || (echo "Retrying installation" && npm install -g lychee)
-          # Verify using direct path
-          ~/.npm-global/bin/lychee --version || (echo "Lychee not found at ~/.npm-global/bin/lychee" && exit 1)
-          echo "Lychee found and verified."
-
-      - name: Run Lychee and save to broken-links.json
-        run: |
-          # Using npx lychee
-          npx lychee ./app/**/*.tsx --verbose --output broken-links.json --format json || echo "Lychee command finished (may have errors, check output file)"
-        continue-on-error: true
-
-      # Added wait step
-      - name: Wait for broken-links.json
-        run: |
-          timeout=0
-          while [ ! -f broken-links.json ] && [ $timeout -lt 10 ]; do
-            sleep 1
-            timeout=$((timeout+1))
-          done
-
-          if [ ! -f broken-links.json ]; then
-            echo "broken-links.json not found after waiting"
-            exit 1
-          fi
-          echo "broken-links.json found."
-
-      - name: 🐛 Print contents of broken-links.json
-        run: |
-          echo "Checking for broken-links.json..."
-          if [[ -f "broken-links.json" ]]; then
-            echo "File found. Contents:"
-            cat broken-links.json
-          else
-            echo "ERROR: broken-links.json not found!"
-            # Optionally exit here if file is mandatory
-            # exit 1 
-          fi
-
-      - name: 📥 Save to Supabase
-        run: node scripts/saveToSupabase.js
+      - name: Send email report
+        if: steps.check_file.outputs.file_exists == 'true' # Only send if file exists
+        run: node .github/scripts/sendBrokenLinksEmail.js
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-
-      - name: 📨 Generate email summary
-        run: node scripts/generateEmail.js
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-
-      - name: 📜 Read email body from file
-        id: read_email_body
-        run: |
-          # Check if file exists, provide default if not (shouldn't happen with generateEmail.js changes)
-          if [[ ! -f email-output.txt ]]; then
-            echo "email-output.txt not found. Using default message." >&2
-            content="Error: Email content file not found."
-          else
-            content=$(cat email-output.txt)
-          fi
-          # Use EOF markers for multiline output
-          echo "body_text<<EOF" >> $GITHUB_OUTPUT
-          echo "$content" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: 📬 Send email with results
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: ${{ secrets.EMAIL_SMTP_HOST }}
-          server_port: ${{ secrets.EMAIL_SMTP_PORT }}
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "🔗 Cybernex Weekly Broken Link Report"
-          to: cybernexacademy@proton.me
-          from: Cybernex Bot <${{ secrets.EMAIL_USERNAME }}>
-          body: ${{ steps.read_email_body.outputs.body_text }}
-
-      - name: 🧹 Run cleanup script
-        run: node scripts/cleanupApprovedLinks.js
-        env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          # Ensure Node can find modules installed earlier
-          NODE_PATH: "${{ github.workspace }}/node_modules"
-
-      - name: ⚙️ Configure Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-      - name: 🔍 Check for changes
-        id: check_changes
-        run: |
-          # Force remove lock file if it exists from a previous crashed process
-          rm -f .git/index.lock
-          # Stage potential changes
-          git add app/**/*.tsx
-          # Check if there are staged changes
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-            echo "changes_exist=false" >> $GITHUB_OUTPUT
-          else
-            echo "Changes detected."
-            echo "changes_exist=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: 💾 Commit changes
-        if: steps.check_changes.outputs.changes_exist == 'true'
-        run: |
-          git commit -m "chore: cleanup approved broken links"
-
-      - name: ⬆️ Push changes
-        if: steps.check_changes.outputs.changes_exist == 'true'
-        run: |
-          # Pull first to avoid conflicts if possible (optional, depends on strategy)
-          # git pull origin ${{ github.ref_name }} --rebase
-          git push origin HEAD:${{ github.ref_name }} 
+          PROTON_SMTP_PASS: ${{ secrets.PROTON_SMTP_PASS }} 
