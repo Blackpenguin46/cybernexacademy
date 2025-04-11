@@ -48,7 +48,7 @@ jobs:
             --output broken-links.json \
             --exclude "https://cybernexacademy.substack.com" \
             --format json \
-            ./app || echo "Lychee finished with some errors, check broken-links.json"
+            ./app/**/*.tsx || echo "Lychee finished with some errors, check broken-links.json"
         continue-on-error: true # Continue even if lychee finds broken links
 
       - name: Check if broken-links.json exists and has content

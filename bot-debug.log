@@ -45165,3 +45165,157 @@ The attackers are believed to have leveraged known and now-patched security flaw
 [2025-04-11T19:44:39.509Z] Fetching recent messages using REST API
 [2025-04-11T19:44:40.109Z] Fetched 50 messages via REST API
 [2025-04-11T19:44:40.115Z] Finished processing REST API messages
+[2025-04-11T19:45:39.512Z] Fetching recent messages using REST API
+[2025-04-11T19:45:39.821Z] Fetched 50 messages via REST API
+[2025-04-11T19:45:39.822Z] Finished processing REST API messages
+[2025-04-11T19:46:39.512Z] Fetching recent messages using REST API
+[2025-04-11T19:46:39.922Z] Fetched 50 messages via REST API
+[2025-04-11T19:46:39.923Z] Finished processing REST API messages
+[2025-04-11T19:47:39.514Z] Fetching recent messages using REST API
+[2025-04-11T19:47:39.804Z] Fetched 50 messages via REST API
+[2025-04-11T19:47:39.805Z] Finished processing REST API messages
+[2025-04-11T19:48:39.516Z] Fetching recent messages using REST API
+[2025-04-11T19:48:39.833Z] Fetched 50 messages via REST API
+[2025-04-11T19:48:39.833Z] Finished processing REST API messages
+[2025-04-11T19:49:39.518Z] Fetching recent messages using REST API
+[2025-04-11T19:49:39.833Z] Fetched 50 messages via REST API
+[2025-04-11T19:49:39.833Z] Finished processing REST API messages
+[2025-04-11T19:50:39.520Z] Fetching recent messages using REST API
+[2025-04-11T19:50:39.821Z] Fetched 50 messages via REST API
+[2025-04-11T19:50:39.821Z] Finished processing REST API messages
+[2025-04-11T19:51:39.521Z] Fetching recent messages using REST API
+[2025-04-11T19:51:39.815Z] Fetched 50 messages via REST API
+[2025-04-11T19:51:39.824Z] Finished processing REST API messages
+[2025-04-11T19:52:39.523Z] Fetching recent messages using REST API
+[2025-04-11T19:52:39.923Z] Fetched 50 messages via REST API
+[2025-04-11T19:52:39.924Z] Finished processing REST API messages
+[2025-04-11T19:53:39.524Z] Fetching recent messages using REST API
+[2025-04-11T19:53:39.886Z] Fetched 50 messages via REST API
+[2025-04-11T19:53:39.886Z] Finished processing REST API messages
+[2025-04-11T19:54:39.525Z] Fetching recent messages using REST API
+[2025-04-11T19:54:39.854Z] Fetched 50 messages via REST API
+[2025-04-11T19:54:39.855Z] Finished processing REST API messages
+[2025-04-11T19:55:39.527Z] Fetching recent messages using REST API
+[2025-04-11T19:55:39.858Z] Fetched 50 messages via REST API
+[2025-04-11T19:55:39.864Z] Finished processing REST API messages
+[2025-04-11T19:56:39.529Z] Fetching recent messages using REST API
+[2025-04-11T19:56:39.965Z] Fetched 50 messages via REST API
+[2025-04-11T19:56:39.966Z] Finished processing REST API messages
+[2025-04-11T19:57:39.531Z] Fetching recent messages using REST API
+[2025-04-11T19:57:40.309Z] Fetched 50 messages via REST API
+[2025-04-11T19:57:40.324Z] Finished processing REST API messages
+[2025-04-11T19:58:39.532Z] Fetching recent messages using REST API
+[2025-04-11T19:58:39.799Z] Fetched 50 messages via REST API
+[2025-04-11T19:58:39.800Z] Finished processing REST API messages
+[2025-04-11T19:59:39.534Z] Fetching recent messages using REST API
+[2025-04-11T19:59:39.881Z] Fetched 50 messages via REST API
+[2025-04-11T19:59:39.891Z] Finished processing REST API messages
+[2025-04-11T20:00:39.536Z] Fetching recent messages using REST API
+[2025-04-11T20:00:39.833Z] Fetched 50 messages via REST API
+[2025-04-11T20:00:39.833Z] Finished processing REST API messages
+[2025-04-11T20:01:39.537Z] Fetching recent messages using REST API
+[2025-04-11T20:01:39.893Z] Fetched 50 messages via REST API
+[2025-04-11T20:01:39.893Z] Finished processing REST API messages
+[2025-04-11T20:02:39.540Z] Fetching recent messages using REST API
+[2025-04-11T20:02:40.075Z] Fetched 50 messages via REST API
+[2025-04-11T20:02:40.082Z] Finished processing REST API messages
+[2025-04-11T20:02:44.960Z] Received message from CyberSecurity Bot
+[2025-04-11T20:02:44.976Z] Message via WebSocket: {
+  "channelId": "1299032261470978159",
+  "guildId": "1299032261470978152",
+  "id": "1360344341155151943",
+  "createdTimestamp": 1744401764907,
+  "type": 0,
+  "system": false,
+  "content": "",
+  "authorId": "1024363293189611581",
+  "pinned": false,
+  "tts": false,
+  "nonce": null,
+  "embeds": [
+    {
+      "url": "https://www.darkreading.com/threat-intelligence/paper-werewolf-targets-flash-drives-new-malware",
+      "type": "rich",
+      "title": "Paper Werewolf Threat Actor Targets Flash Drives With New Malware",
+      "timestamp": "2025-04-11T19:42:08+00:00",
+      "thumbnail": {
+        "width": 720,
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "placeholder_version": 1,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "height": 113,
+        "flags": 0
+      },
+      "description": "The threat actor, also known as Goffee, has been active since at least 2022 and has changed its tactics and techniques over the years while targeting Russian organizations.",
+      "color": 44678
+    }
+  ],
+  "components": [],
+  "attachments": [],
+  "stickers": [],
+  "position": null,
+  "roleSubscriptionData": null,
+  "resolved": null,
+  "editedTimestamp": null,
+  "mentions": {
+    "everyone": false,
+    "users": [],
+    "roles": [],
+    "crosspostedChannels": [],
+    "repliedUser": null,
+    "members": [],
+    "channels": []
+  },
+  "webhookId": null,
+  "groupActivityApplicationId": null,
+  "applicationId": null,
+  "activity": null,
+  "flags": 0,
+  "reference": null,
+  "interactionMetadata": null,
+  "interaction": null,
+  "poll": null,
+  "messageSnapshots": [],
+  "call": null,
+  "cleanContent": ""
+}
+[2025-04-11T20:02:44.976Z] Processing message 1360344341155151943 from websocket
+[2025-04-11T20:02:44.976Z] Message content: ""
+[2025-04-11T20:02:44.976Z] Has embeds: true
+[2025-04-11T20:02:44.977Z] Message has 1 embeds
+[2025-04-11T20:02:44.977Z] Embed data: {
+  "url": "https://www.darkreading.com/threat-intelligence/paper-werewolf-targets-flash-drives-new-malware",
+  "type": "rich",
+  "title": "Paper Werewolf Threat Actor Targets Flash Drives With New Malware",
+  "timestamp": "2025-04-11T19:42:08+00:00",
+  "thumbnail": {
+    "width": 720,
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "placeholder_version": 1,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "height": 113,
+    "flags": 0
+  },
+  "description": "The threat actor, also known as Goffee, has been active since at least 2022 and has changed its tactics and techniques over the years while targeting Russian organizations.",
+  "color": 44678
+}
+[2025-04-11T20:02:44.977Z] Found embed title: Paper Werewolf Threat Actor Targets Flash Drives With New Malware
+[2025-04-11T20:02:44.977Z] Found embed description: The threat actor, also known as Goffee, has been active since at least 2022 and has changed its tactics and techniques over the years while targeting Russian organizations.
+[2025-04-11T20:02:44.977Z] Inserting content into Supabase: Paper Werewolf Threat Actor Targets Flash Drives With New Malware
+
+The threat actor, also known as Goffee, has been active since at least 2022 and has changed its tactics and techniques over the years while targeting Russian organizations.
+[2025-04-11T20:02:45.227Z] Successfully saved to Supabase: null
+[2025-04-11T20:03:39.542Z] Fetching recent messages using REST API
+[2025-04-11T20:03:39.835Z] Fetched 50 messages via REST API
+[2025-04-11T20:03:39.835Z] Finished processing REST API messages
+[2025-04-11T20:04:39.542Z] Fetching recent messages using REST API
+[2025-04-11T20:04:39.870Z] Fetched 50 messages via REST API
+[2025-04-11T20:04:39.871Z] Finished processing REST API messages
+[2025-04-11T20:05:39.546Z] Fetching recent messages using REST API
+[2025-04-11T20:05:39.859Z] Fetched 50 messages via REST API
+[2025-04-11T20:05:39.869Z] Finished processing REST API messages
+[2025-04-11T20:06:39.547Z] Fetching recent messages using REST API
+[2025-04-11T20:06:39.882Z] Fetched 50 messages via REST API
+[2025-04-11T20:06:39.889Z] Finished processing REST API messages
