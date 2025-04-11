@@ -1,68 +1,147 @@
-name: Check Broken Links
+name: Check Broken Links from Supabase
 
 on:
-  schedule:
-    - cron: '0 2 * * 0' # weekly on Sunday at 2am
   workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * 0' # weekly on Sundays
 
 jobs:
   check-links:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      # Removed manual Rust/Cargo/Lychee installation steps
-      
-      - name: Link Checker using lychee-action
-        uses: lycheeverse/lychee-action@v2 # Use the official action
-        id: lychee # Give the step an ID to potentially reference outputs if needed
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
-          # Use the specific glob pattern that worked before
-          # Use --exclude-all for the ignore file as suggested
-          args: --verbose --retry 2 --timeout 20 --max-concurrency 4 --exclude-all .lycheeignore ./app/**/*.tsx 
-          format: json
-          output: ./broken-links.json
-        # Continue workflow even if lychee finds broken links, 
-        # but the action itself might fail on severe errors.
-        continue-on-error: true 
-          
-      # Subsequent steps remain the same, checking the output file
-      - name: Check if broken-links.json exists and has content
-        id: check_file
+          toolchain: stable
+
+      - name: Cache Cargo registry/index/build
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+            
+      - name: Install Lychee via cargo
+        run: cargo install lychee --locked
+        
+      - name: Install jq (for JSON processing)
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Fetch active links from Supabase
+        id: fetch_links
         run: |
-          if [[ -f broken-links.json && -s broken-links.json ]]; then
-            echo "File exists and is not empty."
-            echo "file_exists=true" >> $GITHUB_OUTPUT
+          echo "Fetching links from Supabase..."
+          # Replace placeholder with actual project reference ID
+          curl -f -s https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/get-active-links \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -o urls.json
+          
+          # Check if the file was created and is not empty
+          if [[ -f urls.json && -s urls.json ]]; then
+            echo "urls.json fetched successfully."
+            echo "exists=true" >> $GITHUB_OUTPUT
           else
-            echo "File does not exist or is empty."
-            echo "file_exists=false" >> $GITHUB_OUTPUT
+            echo "Failed to fetch urls.json or it is empty."
+            echo "exists=false" >> $GITHUB_OUTPUT
+            # Optional: exit 1 if fetching links is mandatory
           fi
 
-      - name: Upload to Supabase
-        if: steps.check_file.outputs.file_exists == 'true'
+      - name: Convert JSON to TXT (for Lychee)
+        if: steps.fetch_links.outputs.exists == 'true'
         run: |
-          # Ensure curl is installed
-          sudo apt-get update && sudo apt-get install -y curl
-          # Replace <your-project> with your actual Supabase project ID/ref
-          curl -X POST https://<your-project-ref>.supabase.co/functions/v1/log-broken-links \
+          echo "Converting urls.json to url-list.txt..."
+          jq -r '.[] | select(.url != null) | .url' urls.json > url-list.txt
+          echo "Contents of url-list.txt:"
+          cat url-list.txt
+          # Check if the output file has content
+          if [[ ! -s url-list.txt ]]; then
+            echo "Warning: url-list.txt is empty after jq processing."
+          fi
+
+      - name: Check if url-list.txt has content
+        id: check_list_content
+        if: steps.fetch_links.outputs.exists == 'true'
+        run: |
+          if [[ -s url-list.txt ]]; then
+            echo "url_list_has_content=true" >> $GITHUB_OUTPUT
+          else
+            echo "url_list_has_content=false" >> $GITHUB_OUTPUT
+            echo "Warning: url-list.txt is empty. Skipping Lychee scan."
+          fi
+          
+      - name: Run Lychee on Supabase URLs
+        # Check fetch success AND if the list file has content
+        if: steps.fetch_links.outputs.exists == 'true' && steps.check_list_content.outputs.url_list_has_content == 'true'
+        id: run_lychee
+        run: |
+          echo "Running Lychee..."
+          # Ensure lychee is in PATH
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          lychee --verbose --retry 2 --timeout 20 \
+            --max-concurrency 4 --format json \
+            --output broken-links.json \
+            --input url-list.txt || echo "Lychee finished, potentially with errors."
+            
+          # Check if broken-links.json was created
+          if [[ -f broken-links.json ]]; then
+            echo "broken_links_generated=true" >> $GITHUB_OUTPUT
+          else
+            echo "broken_links_generated=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true # Allow workflow to continue to reporting stage
+
+      - name: Show Lychee output file contents
+        if: steps.run_lychee.outputs.broken_links_generated == 'true'
+        run: cat broken-links.json || echo "No broken links found or file empty."
+
+      - name: Check if broken-links.json has non-success content
+        id: check_report_content
+        if: steps.run_lychee.outputs.broken_links_generated == 'true'
+        run: |
+          # Use jq to check if there are any links that are NOT 'success'
+          if jq -e '.[] | select(.status.type != "success")' broken-links.json > /dev/null; then
+            echo "Broken links found."
+            echo "has_broken_links=true" >> $GITHUB_OUTPUT
+          else
+            echo "No broken links reported in file."
+            echo "has_broken_links=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Upload Broken Links to Supabase
+        # Only run if the file was generated AND contains broken links
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
+        run: |
+          echo "Uploading broken links to Supabase..."
+          # Replace placeholder with actual project reference ID
+          curl -f -X POST https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/log-broken-links \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
             -H "Content-Type: application/json" \
             --data-binary "@broken-links.json"
 
       - name: Setup Node.js for email script
-        if: steps.check_file.outputs.file_exists == 'true' # Only setup if file exists
+        # Only run if the file was generated AND contains broken links
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Or your preferred Node version
+          node-version: '20'
 
       - name: Install email dependencies
-        if: steps.check_file.outputs.file_exists == 'true' # Only install if needed
-        run: npm install nodemailer fs-extra # Use fs-extra for potential future needs
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
+        run: npm install nodemailer fs-extra
         working-directory: .github/scripts # Assuming script is in this folder
 
-      - name: Send email report
-        if: steps.check_file.outputs.file_exists == 'true' # Only send if file exists
+      - name: Send Broken Links Email
+        # Only run if the file was generated AND contains broken links
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
         run: node .github/scripts/sendBrokenLinksEmail.js
         env:
           PROTON_SMTP_PASS: ${{ secrets.PROTON_SMTP_PASS }} 
