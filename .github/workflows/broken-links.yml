@@ -11,45 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Step to install Rust/Cargo if not pre-installed on runner
-      # Usually ubuntu-latest has it, but this ensures it
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
-        with:
-          toolchain: stable
+      # Removed manual Rust/Cargo/Lychee installation steps
       
-      - name: Cache Cargo registry
-        uses: actions/cache@v3
+      - name: Link Checker using lychee-action
+        uses: lycheeverse/lychee-action@v2 # Use the official action
+        id: lychee # Give the step an ID to potentially reference outputs if needed
         with:
-          path: ~/.cargo/registry
-          key: ${{ runner.os }}-cargo-registry-${{ hashFiles('**/Cargo.lock') }}
-
-      - name: Cache Cargo index
-        uses: actions/cache@v3
-        with:
-          path: ~/.cargo/git
-          key: ${{ runner.os }}-cargo-index-${{ hashFiles('**/Cargo.lock') }}
-
-      - name: Cache Cargo build
-        uses: actions/cache@v3
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
+          # Use the specific glob pattern that worked before
+          # Use --exclude-all for the ignore file as suggested
+          args: --verbose --retry 2 --timeout 20 --max-concurrency 4 --exclude-all .lycheeignore ./app/**/*.tsx 
+          format: json
+          output: ./broken-links.json
+        # Continue workflow even if lychee finds broken links, 
+        # but the action itself might fail on severe errors.
+        continue-on-error: true 
           
-      - name: Install lychee via cargo
-        run: cargo install lychee
-
-      - name: Run link checker
-        run: |
-          # Ensure the lychee binary path is available
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          lychee --verbose --retry 2 --timeout 20 --max-concurrency 4 \
-            --user-agent "Mozilla/5.0 (compatible; LycheeBot/1.0; +https://github.com/lycheeverse/lychee)" \
-            --output broken-links.json \
-            --exclude "https://cybernexacademy.substack.com" \
-            --format json \
-            ./app/**/*.tsx || echo "Lychee finished with some errors, check broken-links.json"
-
+      # Subsequent steps remain the same, checking the output file
       - name: Check if broken-links.json exists and has content
         id: check_file
         run: |
