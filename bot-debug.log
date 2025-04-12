@@ -46065,3 +46065,117 @@ Nations continue to sign the Code of Practice for States in an effort to curb co
 [2025-04-12T00:49:12.206Z] Fetching recent messages using REST API
 [2025-04-12T00:49:12.484Z] Fetched 50 messages via REST API
 [2025-04-12T00:49:12.496Z] Finished processing REST API messages
+[2025-04-12T00:50:12.209Z] Fetching recent messages using REST API
+[2025-04-12T00:50:12.603Z] Fetched 50 messages via REST API
+[2025-04-12T00:50:12.603Z] Finished processing REST API messages
+[2025-04-12T00:51:12.210Z] Fetching recent messages using REST API
+[2025-04-12T00:51:12.812Z] Fetched 50 messages via REST API
+[2025-04-12T00:51:12.827Z] Finished processing REST API messages
+[2025-04-12T00:52:12.212Z] Fetching recent messages using REST API
+[2025-04-12T00:52:12.613Z] Fetched 50 messages via REST API
+[2025-04-12T00:52:12.614Z] Finished processing REST API messages
+[2025-04-12T00:53:12.210Z] Fetching recent messages using REST API
+[2025-04-12T00:53:12.473Z] Fetched 50 messages via REST API
+[2025-04-12T00:53:12.474Z] Finished processing REST API messages
+[2025-04-12T00:54:12.211Z] Fetching recent messages using REST API
+[2025-04-12T00:54:12.550Z] Fetched 50 messages via REST API
+[2025-04-12T00:54:12.550Z] Finished processing REST API messages
+[2025-04-12T00:55:12.213Z] Fetching recent messages using REST API
+[2025-04-12T00:55:12.509Z] Fetched 50 messages via REST API
+[2025-04-12T00:55:12.510Z] Finished processing REST API messages
+[2025-04-12T00:56:12.214Z] Fetching recent messages using REST API
+[2025-04-12T00:56:12.530Z] Fetched 50 messages via REST API
+[2025-04-12T00:56:12.531Z] Finished processing REST API messages
+[2025-04-12T00:57:12.215Z] Fetching recent messages using REST API
+[2025-04-12T00:57:12.609Z] Fetched 50 messages via REST API
+[2025-04-12T00:57:12.609Z] Finished processing REST API messages
+[2025-04-12T00:58:12.216Z] Fetching recent messages using REST API
+[2025-04-12T00:58:12.619Z] Fetched 50 messages via REST API
+[2025-04-12T00:58:12.624Z] Finished processing REST API messages
+[2025-04-12T01:02:52.738Z] Fetching recent messages using REST API
+[2025-04-12T01:02:54.964Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-12T01:02:54.973Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-12T01:19:59.348Z] Fetching recent messages using REST API
+[2025-04-12T01:20:07.130Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-12T01:20:07.171Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-12T01:33:26.195Z] Fetching recent messages using REST API
+[2025-04-12T01:33:26.260Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-12T01:33:26.261Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-12T01:43:57.987Z] Fetching recent messages using REST API
+[2025-04-12T01:43:58.071Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-12T01:43:58.072Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-12T01:45:33.933Z] Fetching recent messages using REST API
+[2025-04-12T01:45:34.000Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-12T01:45:34.000Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-12T01:46:33.934Z] Fetching recent messages using REST API
+[2025-04-12T01:46:33.953Z] Error fetching messages via REST API: getaddrinfo ENOTFOUND discord.com
+[2025-04-12T01:46:33.953Z] Error: getaddrinfo ENOTFOUND discord.com
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)
+[2025-04-12T01:47:33.912Z] Fetching recent messages using REST API
+[2025-04-12T01:47:34.327Z] Fetched 50 messages via REST API
+[2025-04-12T01:47:34.328Z] Finished processing REST API messages
+[2025-04-12T01:48:33.906Z] Fetching recent messages using REST API
+[2025-04-12T01:48:34.239Z] Fetched 50 messages via REST API
+[2025-04-12T01:48:34.239Z] Finished processing REST API messages
+[2025-04-12T01:49:33.907Z] Fetching recent messages using REST API
+[2025-04-12T01:49:34.217Z] Fetched 50 messages via REST API
+[2025-04-12T01:49:34.221Z] Finished processing REST API messages
+[2025-04-12T01:50:33.907Z] Fetching recent messages using REST API
+[2025-04-12T01:50:34.323Z] Fetched 50 messages via REST API
+[2025-04-12T01:50:34.324Z] Finished processing REST API messages
+[2025-04-12T01:51:33.908Z] Fetching recent messages using REST API
+[2025-04-12T01:51:34.203Z] Fetched 50 messages via REST API
+[2025-04-12T01:51:34.207Z] Finished processing REST API messages
+[2025-04-12T01:52:33.908Z] Fetching recent messages using REST API
+[2025-04-12T01:52:34.340Z] Fetched 50 messages via REST API
+[2025-04-12T01:52:34.341Z] Finished processing REST API messages
+[2025-04-12T01:53:33.908Z] Fetching recent messages using REST API
+[2025-04-12T01:53:34.251Z] Fetched 50 messages via REST API
+[2025-04-12T01:53:34.257Z] Finished processing REST API messages
+[2025-04-12T01:54:33.909Z] Fetching recent messages using REST API
+[2025-04-12T01:54:34.231Z] Fetched 50 messages via REST API
+[2025-04-12T01:54:34.231Z] Finished processing REST API messages
+[2025-04-12T01:55:33.910Z] Fetching recent messages using REST API
+[2025-04-12T01:55:34.359Z] Fetched 50 messages via REST API
+[2025-04-12T01:55:34.360Z] Finished processing REST API messages
+[2025-04-12T01:56:33.911Z] Fetching recent messages using REST API
+[2025-04-12T01:56:34.204Z] Fetched 50 messages via REST API
+[2025-04-12T01:56:34.205Z] Finished processing REST API messages
+[2025-04-12T01:57:33.911Z] Fetching recent messages using REST API
+[2025-04-12T01:57:34.216Z] Fetched 50 messages via REST API
+[2025-04-12T01:57:34.216Z] Finished processing REST API messages
+[2025-04-12T01:58:33.912Z] Fetching recent messages using REST API
+[2025-04-12T01:58:34.211Z] Fetched 50 messages via REST API
+[2025-04-12T01:58:34.212Z] Finished processing REST API messages
+[2025-04-12T01:59:33.912Z] Fetching recent messages using REST API
+[2025-04-12T01:59:34.189Z] Fetched 50 messages via REST API
+[2025-04-12T01:59:34.206Z] Finished processing REST API messages
+[2025-04-12T02:00:33.913Z] Fetching recent messages using REST API
+[2025-04-12T02:00:34.194Z] Fetched 50 messages via REST API
+[2025-04-12T02:00:34.195Z] Finished processing REST API messages
+[2025-04-12T02:01:33.914Z] Fetching recent messages using REST API
+[2025-04-12T02:01:34.278Z] Fetched 50 messages via REST API
+[2025-04-12T02:01:34.278Z] Finished processing REST API messages
+[2025-04-12T02:02:33.915Z] Fetching recent messages using REST API
+[2025-04-12T02:02:34.235Z] Fetched 50 messages via REST API
+[2025-04-12T02:02:34.235Z] Finished processing REST API messages
+[2025-04-12T02:03:33.916Z] Fetching recent messages using REST API
+[2025-04-12T02:03:34.312Z] Fetched 50 messages via REST API
+[2025-04-12T02:03:34.313Z] Finished processing REST API messages
+[2025-04-12T02:04:33.915Z] Fetching recent messages using REST API
+[2025-04-12T02:04:34.316Z] Fetched 50 messages via REST API
+[2025-04-12T02:04:34.316Z] Finished processing REST API messages
+[2025-04-12T02:05:33.915Z] Fetching recent messages using REST API
+[2025-04-12T02:05:34.195Z] Fetched 50 messages via REST API
+[2025-04-12T02:05:34.196Z] Finished processing REST API messages
+[2025-04-12T02:06:33.915Z] Fetching recent messages using REST API
+[2025-04-12T02:06:34.330Z] Fetched 50 messages via REST API
+[2025-04-12T02:06:34.331Z] Finished processing REST API messages
+[2025-04-12T02:07:33.915Z] Fetching recent messages using REST API
+[2025-04-12T02:07:34.202Z] Fetched 50 messages via REST API
+[2025-04-12T02:07:34.202Z] Finished processing REST API messages
