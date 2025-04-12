@@ -53,7 +53,7 @@ jobs:
               -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
               -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
               -o urls.json \
-              "${{ secrets.SUPABASE_URL }}/rest/v1/monitored_links?select=url&status=eq.Active" \
+              "${{ secrets.SUPABASE_URL }}/rest/v1/monitored_links?select=url&status=eq.active" \
               --trace-ascii $TRACE_LOG ) # Log trace to file
 
             CURL_EXIT_CODE=$?
