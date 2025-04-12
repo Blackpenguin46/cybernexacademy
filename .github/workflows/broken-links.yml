@@ -49,11 +49,11 @@ jobs:
           while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
             echo "Attempt $(($RETRY_COUNT + 1)) of $MAX_RETRIES..."
             # Added --trace-ascii for detailed logging
-            HTTP_STATUS=$(curl --fail --silent --write-out "%{http_code}" --max-time 60 \\
-              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \\
-              -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \\
-              -o urls.json \\
-              "${{ secrets.SUPABASE_URL }}/rest/v1/links?select=url&status=eq.Active" \\
+            HTTP_STATUS=$(curl --fail --silent --write-out "%{http_code}" --max-time 60 \
+              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+              -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+              -o urls.json \
+              "${{ secrets.SUPABASE_URL }}/rest/v1/links?select=url&status=eq.Active" \
               --trace-ascii $TRACE_LOG ) # Log trace to file
 
             CURL_EXIT_CODE=$?
@@ -186,12 +186,12 @@ jobs:
         if: steps.fetch_links.outputs.exists == 'true' && steps.run_lychee.outputs.broken_links_generated == 'true'
         run: |
           echo "Checking for non-success statuses in broken-links.json..."
-          # Alternative jq command for older versions (checks if any value has status != "success")
-          if jq -e 'any(.[]; .status != "success")' broken-links.json > /dev/null; then
+          # Updated jq command to check the error_map in Lychee's summary JSON format
+          if jq -e '.error_map | length > 0' broken-links.json > /dev/null; then
             echo "Broken or errored links found."
             echo "has_broken=true" >> $GITHUB_OUTPUT
           else
-            echo "No broken links reported in file."
+            echo "No broken links reported in file (error_map is empty)."
             echo "has_broken=false" >> $GITHUB_OUTPUT
           fi
           
