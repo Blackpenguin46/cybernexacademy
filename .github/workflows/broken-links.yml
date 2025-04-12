@@ -155,44 +155,86 @@ jobs:
             echo "Warning: url-list.txt is empty. Skipping Lychee scan."
           fi
           
+      # NEW STEP: Verify Lychee Installation
+      - name: Verify Lychee Installation
+        # Only run if we intend to run Lychee later
+        if: steps.fetch_links.outputs.exists == 'true' && steps.check_list_content.outputs.url_list_has_content == 'true'
+        run: |
+          echo "Checking Lychee installation..."
+          # Ensure cargo bin is in PATH (where lychee should be)
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          if ! command -v lychee &>/dev/null; then
+            echo "Error: lychee command not found in PATH."
+            exit 1
+          fi
+          echo "Lychee version:"
+          lychee --version
+
       - name: Run Lychee on Supabase URLs
         # Check fetch success AND if the list file has content
         if: steps.fetch_links.outputs.exists == 'true' && steps.check_list_content.outputs.url_list_has_content == 'true'
         id: run_lychee
         run: |
           echo "Running Lychee..."
-          # Ensure lychee is in PATH
+          # Ensure lychee is in PATH (may be redundant, but safe)
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+          # Run lychee and capture its exit code
           lychee --verbose --timeout 20 \
             --max-concurrency 4 --format json \
             --output broken-links.json \
-            url-list.txt || echo "Lychee finished, potentially with errors."
-            
-          # Check if broken-links.json was created
-          if [[ -f broken-links.json ]]; then
-            echo "broken_links_generated=true" >> $GITHUB_OUTPUT
-          else
+            url-list.txt
+          LYCHEE_EXIT_CODE=$?
+          echo "Lychee exit code: $LYCHEE_EXIT_CODE"
+
+          # Handle Lychee exit codes:
+          # 0 = OK, no broken links
+          # 1 = OK, broken links found
+          # 2+ = Error during execution
+          if [[ $LYCHEE_EXIT_CODE -gt 1 ]]; then
+            echo "Error: Lychee failed during execution (exit code $LYCHEE_EXIT_CODE)."
+            # Set output to false and exit, forcing workflow failure here
             echo "broken_links_generated=false" >> $GITHUB_OUTPUT
+            exit 1 
           fi
-        continue-on-error: true # Allow workflow to continue to reporting stage
+
+          # Check if the output file was created if exit code was 0 or 1
+          if [[ -f broken-links.json ]]; then
+             echo "Lychee finished. broken-links.json generated."
+             echo "broken_links_generated=true" >> $GITHUB_OUTPUT
+          else
+             # This case should ideally not happen if exit code was 0 or 1, but check anyway
+             echo "Error: Lychee finished (exit code $LYCHEE_EXIT_CODE) but broken-links.json was not generated."
+             # Set output to false; subsequent steps expecting the file will be skipped.
+             echo "broken_links_generated=false" >> $GITHUB_OUTPUT
+             # We don't exit 1 here because Lychee itself didn't report a fatal error (code 0 or 1)
+             # but the file is missing, which is an issue we log.
+          fi
 
       - name: Show Lychee output file contents
-        if: always() && steps.fetch_links.outputs.exists == 'true'
+        # Only show the file if the lychee step indicates it was generated
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' 
         run: cat broken-links.json
 
       - name: Check if broken-links.json has non-success content
         id: check_broken
-        # Check if the original fetch was successful AND lychee generated its output file
-        if: steps.fetch_links.outputs.exists == 'true' && steps.run_lychee.outputs.broken_links_generated == 'true'
+        # Only run if Lychee generated the file
+        if: steps.run_lychee.outputs.broken_links_generated == 'true'
         run: |
           echo "Checking for non-success statuses in broken-links.json..."
-          # Updated jq command to check the error_map in Lychee's summary JSON format
-          if jq -e '.error_map | length > 0' broken-links.json > /dev/null; then
-            echo "Broken or errored links found."
-            echo "has_broken=true" >> $GITHUB_OUTPUT
+          # Check if file exists and is not empty before running jq
+          # Use -s to check for non-zero size.
+          if [[ ! -s broken-links.json ]]; then
+             echo "broken-links.json exists but is empty. Assuming no broken links reported by Lychee."
+             echo "has_broken=false" >> $GITHUB_OUTPUT
+          # Check if .error_map exists as an object and has entries. Use jq -e for exit code check.
+          elif jq -e '.error_map | objects | length > 0' broken-links.json > /dev/null; then
+             echo "Broken or errored links found in error_map."
+             echo "has_broken=true" >> $GITHUB_OUTPUT
           else
-            echo "No broken links reported in file (error_map is empty)."
-            echo "has_broken=false" >> $GITHUB_OUTPUT
+             # File has content, but error_map is empty or doesn't exist (e.g., only successes)
+             echo "No broken links reported in file (error_map is empty or not found)."
+             echo "has_broken=false" >> $GITHUB_OUTPUT
           fi
           
       - name: Upload Broken Links to Supabase
