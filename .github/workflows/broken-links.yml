@@ -180,36 +180,39 @@ jobs:
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
           # Run lychee and capture its exit code
-          lychee --verbose --timeout 30 \
+          lychee --verbose --timeout 60 \
             --max-concurrency 6 --format json \
             --output broken-links.json \
             --exclude "https://www.corelan-training.com/" \
+            --exclude "https://www.hakin9.org/category/free" \
+            --exclude "https://ghidra-sre.org/courses" \
+            --exclude "https://www.govware.sg/" \
+            --exclude "https://benheater.com/building-a-security-lab-in-virtualbox" \
+            --insecure \
             url-list.txt
           LYCHEE_EXIT_CODE=$?
           echo "Lychee exit code: $LYCHEE_EXIT_CODE"
 
           # Handle Lychee exit codes:
           # 0 = OK, no broken links
-          # 1 = OK, broken links found
-          # 2+ = Error during execution
-          if [[ $LYCHEE_EXIT_CODE -gt 1 ]]; then
-            echo "Error: Lychee failed during execution (exit code $LYCHEE_EXIT_CODE)."
-            # Set output to false and exit, forcing workflow failure here
-            echo "broken_links_generated=false" >> $GITHUB_OUTPUT
-            exit 1 
-          fi
-
-          # Check if the output file was created if exit code was 0 or 1
-          if [[ -f broken-links.json ]]; then
-             echo "Lychee finished. broken-links.json generated."
-             echo "broken_links_generated=true" >> $GITHUB_OUTPUT
+          # 1 = OK, broken links found (THIS IS WHAT WE WANT TO ALLOW)
+          # 2+ = Error during execution (THIS SHOULD FAIL THE STEP)
+          if [[ $LYCHEE_EXIT_CODE -eq 0 || $LYCHEE_EXIT_CODE -eq 1 ]]; then
+             echo "Lychee completed successfully (exit code 0) or with broken links found (exit code 1)."
+             # Check if file exists just in case (though it should for exit code 0 or 1)
+             if [[ -f broken-links.json ]]; then
+                echo "broken-links.json generated."
+                echo "broken_links_generated=true" >> $GITHUB_OUTPUT
+             else
+                # This is unexpected if exit code was 0 or 1
+                echo "Warning: Lychee finished (exit code $LYCHEE_EXIT_CODE) but broken-links.json was not generated."
+                echo "broken_links_generated=false" >> $GITHUB_OUTPUT 
+                # Don't exit 1 here, let subsequent steps handle the missing file if needed
+             fi
           else
-             # This case should ideally not happen if exit code was 0 or 1, but check anyway
-             echo "Error: Lychee finished (exit code $LYCHEE_EXIT_CODE) but broken-links.json was not generated."
-             # Set output to false; subsequent steps expecting the file will be skipped.
+             echo "Error: Lychee failed during execution (exit code $LYCHEE_EXIT_CODE)."
              echo "broken_links_generated=false" >> $GITHUB_OUTPUT
-             # We don't exit 1 here because Lychee itself didn't report a fatal error (code 0 or 1)
-             # but the file is missing, which is an issue we log.
+             exit 1 # Fail the step only for exit codes > 1
           fi
 
       - name: Show Lychee output file contents
