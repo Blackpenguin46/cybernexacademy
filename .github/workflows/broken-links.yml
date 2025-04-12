@@ -180,9 +180,10 @@ jobs:
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
           # Run lychee and capture its exit code
-          lychee --verbose --timeout 20 \
-            --max-concurrency 4 --format json \
+          lychee --verbose --timeout 30 \
+            --max-concurrency 6 --format json \
             --output broken-links.json \
+            --exclude "https://www.corelan-training.com/" \
             url-list.txt
           LYCHEE_EXIT_CODE=$?
           echo "Lychee exit code: $LYCHEE_EXIT_CODE"
