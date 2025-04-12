@@ -38,21 +38,23 @@ jobs:
         id: fetch_links
         run: |
           echo "Fetching links from Supabase..."
-          # Replace placeholder with actual project reference ID
-          curl -f -s https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/get-active-links \
+          # Added -v for verbose output and retry logic
+          curl --retry 5 --retry-delay 10 --retry-connrefused -f -s -v https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/get-active-links \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
-            -o urls.json
-          
-          # Check if the file was created and is not empty
+            -o urls.json || echo "Curl failed with error code $?"
+
           if [[ -f urls.json && -s urls.json ]]; then
             echo "urls.json fetched successfully."
             echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "Failed to fetch urls.json or it is empty."
             echo "exists=false" >> $GITHUB_OUTPUT
-            # Optional: exit 1 if fetching links is mandatory
+            exit 1  # Exit if fetching links is mandatory
           fi
+          
+          # Validate JSON format
+          jq empty urls.json || { echo "Invalid JSON format in urls.json"; exit 1; }
 
       - name: Convert JSON to TXT (for Lychee)
         if: steps.fetch_links.outputs.exists == 'true'
