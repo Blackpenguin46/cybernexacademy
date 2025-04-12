@@ -93,7 +93,7 @@ jobs:
           lychee --verbose --timeout 20 \
             --max-concurrency 4 --format json \
             --output broken-links.json \
-            --input url-list.txt || echo "Lychee finished, potentially with errors."
+            url-list.txt || echo "Lychee finished, potentially with errors."
             
           # Check if broken-links.json was created
           if [[ -f broken-links.json ]]; then
