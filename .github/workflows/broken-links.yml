@@ -180,7 +180,7 @@ jobs:
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
           # Run lychee and capture its exit code
-          lychee --verbose --timeout 300 \
+          lychee --verbose --timeout 30 \
             --max-concurrency 3 --format json \
             --output broken-links.json \
             --exclude "https://carhacking.tools/" \
