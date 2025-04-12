@@ -41,14 +41,20 @@ jobs:
           MAX_RETRIES=5
           RETRY_COUNT=0
           SUCCESS=false
+          TRACE_LOG="curl_trace.log" # Define trace log filename
+
+          # Clear any previous trace log
+          rm -f $TRACE_LOG
+
           while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
             echo "Attempt $(($RETRY_COUNT + 1)) of $MAX_RETRIES..."
-            # Increased max-time, added --fail, outputting HTTP status code
-            HTTP_STATUS=$(curl --fail --silent --write-out "%{http_code}" --max-time 60 \
-              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-              -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-              -o urls.json \
-              "${{ secrets.SUPABASE_URL }}/rest/v1/links?select=url&status=eq.Active")
+            # Added --trace-ascii for detailed logging
+            HTTP_STATUS=$(curl --fail --silent --write-out "%{http_code}" --max-time 60 \\
+              -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \\
+              -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \\
+              -o urls.json \\
+              "${{ secrets.SUPABASE_URL }}/rest/v1/links?select=url&status=eq.Active" \\
+              --trace-ascii $TRACE_LOG ) # Log trace to file
 
             CURL_EXIT_CODE=$?
             echo "Curl exit code: $CURL_EXIT_CODE"
@@ -60,6 +66,10 @@ jobs:
               break
             else
               echo "Curl command failed with exit code $CURL_EXIT_CODE and HTTP status $HTTP_STATUS."
+              # Append separator to trace log between retries if it exists
+              if [ -f $TRACE_LOG ]; then
+                echo -e "\\n----- RETRY $(($RETRY_COUNT + 1)) -----\\n" >> $TRACE_LOG
+              fi
               RETRY_COUNT=$(($RETRY_COUNT + 1))
               if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
                 echo "Retrying in 5 seconds..."
@@ -70,22 +80,57 @@ jobs:
             fi
           done
 
-          if [ "$SUCCESS" = true ] && [ -s urls.json ]; then
-            echo "urls.json successfully fetched and is not empty."
-            echo "exists=true" >> $GITHUB_OUTPUT
-            # Display first few lines for verification
-            echo "Preview of urls.json:"
-            head -n 10 urls.json
-          else
-            echo "Failed to fetch URLs from Supabase after $MAX_RETRIES attempts or file is empty. Using fallback."
+          if [ "$SUCCESS" = true ]; then
+             # Check if file has content before validating JSON
+            if [ -s urls.json ]; then
+              echo "urls.json successfully fetched and is not empty."
+              # Validate JSON format
+              if jq empty urls.json > /dev/null 2>&1; then
+                 echo "urls.json is valid JSON."
+                 echo "exists=true" >> $GITHUB_OUTPUT
+                 # Display first few lines for verification
+                 echo "Preview of urls.json:"
+                 head -n 10 urls.json
+              else
+                 echo "Error: urls.json contains invalid JSON."
+                 # Optionally append invalid JSON to trace log for inspection
+                 echo -e "\\n----- INVALID JSON START -----\\n" >> $TRACE_LOG
+                 cat urls.json >> $TRACE_LOG
+                 echo -e "\\n----- INVALID JSON END -----\\n" >> $TRACE_LOG
+                 SUCCESS=false # Mark as failed if JSON is invalid
+              fi
+            else
+              echo "Error: urls.json was fetched successfully but is empty."
+              SUCCESS=false # Mark as failed if empty
+            fi
+          fi
+
+          # Handle final failure (either fetch failed or JSON invalid/empty)
+          if [ "$SUCCESS" = false ]; then
+            echo "Failed to fetch valid URLs from Supabase after $MAX_RETRIES attempts. Using fallback."
             # Fallback: create a dummy urls.json if the curl command fails
             echo '[{"url":"https://example.com"}, {"url":"https://google.com"}, {"url":"https://github.com"}]' > urls.json
             echo "exists=true" >> $GITHUB_OUTPUT # Still set exists to true for fallback
             echo "Warning: Using fallback URLs."
+            # Set output to indicate failure for artifact upload condition
+            echo "fetch_failed=true" >> $GITHUB_OUTPUT
+          else
+             echo "fetch_failed=false" >> $GITHUB_OUTPUT
           fi
 
           # Always output the size for debugging
           echo "urls.json size: $(wc -c < urls.json) bytes"
+        # REMOVED -e from bash shell to allow script's retry logic
+        shell: /usr/bin/bash {0}
+
+      - name: Upload Curl Trace Log on Failure
+        uses: actions/upload-artifact@v3
+        # Only upload if the fetch_failed output is true
+        if: steps.fetch_links.outputs.fetch_failed == 'true'
+        with:
+          name: curl-trace-log
+          path: curl_trace.log
+          retention-days: 7 # Keep logs for 7 days
 
       - name: Convert JSON to TXT (for Lychee)
         if: steps.fetch_links.outputs.exists == 'true'
