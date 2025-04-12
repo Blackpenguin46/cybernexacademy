@@ -30,7 +30,10 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon', sizes: 'any' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
     apple: '/apple-touch-icon.png',
   },
   openGraph: {
