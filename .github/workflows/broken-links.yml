@@ -90,7 +90,7 @@ jobs:
           echo "Running Lychee..."
           # Ensure lychee is in PATH
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          lychee --verbose --retry 2 --timeout 20 \
+          lychee --verbose --timeout 20 \
             --max-concurrency 4 --format json \
             --output broken-links.json \
             --input url-list.txt || echo "Lychee finished, potentially with errors."
