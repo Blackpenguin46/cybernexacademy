@@ -38,8 +38,8 @@ jobs:
         id: fetch_links
         run: |
           echo "Fetching links from Supabase..."
-          # Added -v for verbose output and retry logic
-          curl --retry 5 --retry-delay 10 --retry-connrefused -f -s -v https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/get-active-links \
+          # Updated retry logic and error handling for timeouts
+          curl --retry 10 --retry-delay 15 --retry-connrefused -f -s -v https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/get-active-links \
             -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
             -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
             -o urls.json || echo "Curl failed with error code $?"
@@ -48,13 +48,16 @@ jobs:
             echo "urls.json fetched successfully."
             echo "exists=true" >> $GITHUB_OUTPUT
           else
-            echo "Failed to fetch urls.json or it is empty."
+            # Changed: Don't exit on fetch failure, just log and proceed
+            echo "Failed to fetch urls.json or it is empty. Proceeding without it."
             echo "exists=false" >> $GITHUB_OUTPUT
-            exit 1  # Exit if fetching links is mandatory
+            # exit 1 # Removed mandatory exit
           fi
-          
-          # Validate JSON format
-          jq empty urls.json || { echo "Invalid JSON format in urls.json"; exit 1; }
+
+          # Validate JSON format only if the file exists and has content
+          if [[ -f urls.json && -s urls.json ]]; then
+            jq empty urls.json || { echo "Invalid JSON format in urls.json"; exit 1; }
+          fi
 
       - name: Convert JSON to TXT (for Lychee)
         if: steps.fetch_links.outputs.exists == 'true'
