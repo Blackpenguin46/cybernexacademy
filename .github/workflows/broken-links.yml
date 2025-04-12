@@ -104,25 +104,26 @@ jobs:
         continue-on-error: true # Allow workflow to continue to reporting stage
 
       - name: Show Lychee output file contents
-        if: steps.run_lychee.outputs.broken_links_generated == 'true'
-        run: cat broken-links.json || echo "No broken links found or file empty."
+        if: always() && steps.fetch_links.outputs.exists == 'true'
+        run: cat broken-links.json
 
       - name: Check if broken-links.json has non-success content
-        id: check_report_content
-        if: steps.run_lychee.outputs.broken_links_generated == 'true'
+        id: check_broken
+        if: steps.fetch_links.outputs.exists == 'true'
         run: |
-          # Use jq to check if there are any links that are NOT 'success'
-          if jq -e '.[] | select(.status.type != "success")' broken-links.json > /dev/null; then
-            echo "Broken links found."
-            echo "has_broken_links=true" >> $GITHUB_OUTPUT
+          echo "Checking for non-success statuses in broken-links.json..."
+          # Corrected jq command to handle Lychee's object output format
+          if jq -e 'tovalues | .[] | select(.status != "success")' broken-links.json > /dev/null; then
+            echo "Broken or errored links found."
+            echo "has_broken=true" >> $GITHUB_OUTPUT
           else
             echo "No broken links reported in file."
-            echo "has_broken_links=false" >> $GITHUB_OUTPUT
+            echo "has_broken=false" >> $GITHUB_OUTPUT
           fi
           
       - name: Upload Broken Links to Supabase
         # Only run if the file was generated AND contains broken links
-        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_broken.outputs.has_broken == 'true'
         run: |
           echo "Uploading broken links to Supabase..."
           # Replace placeholder with actual project reference ID
@@ -134,19 +135,19 @@ jobs:
 
       - name: Setup Node.js for email script
         # Only run if the file was generated AND contains broken links
-        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_broken.outputs.has_broken == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: '20'
 
       - name: Install email dependencies
-        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_broken.outputs.has_broken == 'true'
         run: npm install nodemailer fs-extra
         working-directory: .github/scripts # Assuming script is in this folder
 
       - name: Send Broken Links Email
         # Only run if the file was generated AND contains broken links
-        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_report_content.outputs.has_broken_links == 'true'
+        if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_broken.outputs.has_broken == 'true'
         run: node .github/scripts/sendBrokenLinksEmail.js
         env:
           PROTON_SMTP_PASS: ${{ secrets.PROTON_SMTP_PASS }} 
