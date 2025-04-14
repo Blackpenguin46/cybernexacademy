@@ -243,17 +243,37 @@ jobs:
              echo "has_broken=false" >> $GITHUB_OUTPUT
           fi
           
-      - name: Upload Broken Links to Supabase
-        # Only run if the file was generated AND contains broken links
+      # NEW: Extract simplified error list for Supabase function
+      - name: Prepare Simplified Error List
+        id: prepare_list
         if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_broken.outputs.has_broken == 'true'
         run: |
-          echo "Uploading broken links to Supabase..."
-          # Replace placeholder with actual project reference ID
+          echo "Extracting simplified list of errors for Supabase function..."
+          # Create a JSON array containing objects with url and statusText for each error
+          jq '[.error_map[][] | {url: .url, statusText: .status.text}]' broken-links.json > simplified_broken_links.json
+          
+          # Check if the simplified file was created and has content
+          if [[ -s simplified_broken_links.json ]]; then
+            echo "Simplified list created successfully."
+            echo "simplified_list_created=true" >> $GITHUB_OUTPUT
+            echo "Preview of simplified list:"
+            head -n 10 simplified_broken_links.json
+          else
+            echo "Warning: Failed to create or populate simplified_broken_links.json"
+            echo "simplified_list_created=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload Broken Links to Supabase
+        # Only run if the simplified list was created successfully
+        if: steps.prepare_list.outputs.simplified_list_created == 'true'
+        run: |
+          echo "Uploading simplified broken links list to Supabase..."
+          # Send the simplified JSON list
           curl -f -X POST https://vxxpwaloyrtwvpmatzpc.supabase.co/functions/v1/log-broken-links \
-            -H "apikey: ${{ secrets.SUPABASE_SERVICE_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_KEY }}" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
             -H "Content-Type: application/json" \
-            --data-binary "@broken-links.json"
+            --data-binary "@simplified_broken_links.json"
 
       - name: Setup Node.js for email script
         # Only run if the file was generated AND contains broken links
