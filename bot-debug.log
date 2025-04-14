@@ -52591,3 +52591,216 @@ A threat actor posted about the zero-day exploit on the same day that Fortinet p
 [2025-04-14T19:30:14.647Z] Fetching recent messages using REST API
 [2025-04-14T19:30:15.113Z] Fetched 50 messages via REST API
 [2025-04-14T19:30:15.121Z] Finished processing REST API messages
+[2025-04-14T19:31:14.647Z] Fetching recent messages using REST API
+[2025-04-14T19:31:15.030Z] Fetched 50 messages via REST API
+[2025-04-14T19:31:15.030Z] Finished processing REST API messages
+[2025-04-14T19:32:14.648Z] Fetching recent messages using REST API
+[2025-04-14T19:32:15.016Z] Fetched 50 messages via REST API
+[2025-04-14T19:32:15.017Z] Finished processing REST API messages
+[2025-04-14T19:33:14.649Z] Fetching recent messages using REST API
+[2025-04-14T19:33:14.895Z] Fetched 50 messages via REST API
+[2025-04-14T19:33:14.895Z] Finished processing REST API messages
+[2025-04-14T19:34:14.650Z] Fetching recent messages using REST API
+[2025-04-14T19:34:14.981Z] Fetched 50 messages via REST API
+[2025-04-14T19:34:14.981Z] Finished processing REST API messages
+[2025-04-14T19:35:14.651Z] Fetching recent messages using REST API
+[2025-04-14T19:35:14.920Z] Fetched 50 messages via REST API
+[2025-04-14T19:35:14.921Z] Finished processing REST API messages
+[2025-04-14T19:36:14.653Z] Fetching recent messages using REST API
+[2025-04-14T19:36:14.936Z] Fetched 50 messages via REST API
+[2025-04-14T19:36:14.936Z] Finished processing REST API messages
+[2025-04-14T19:37:14.654Z] Fetching recent messages using REST API
+[2025-04-14T19:37:14.947Z] Fetched 50 messages via REST API
+[2025-04-14T19:37:14.950Z] Finished processing REST API messages
+[2025-04-14T19:38:14.654Z] Fetching recent messages using REST API
+[2025-04-14T19:38:15.089Z] Fetched 50 messages via REST API
+[2025-04-14T19:38:15.090Z] Finished processing REST API messages
+[2025-04-14T19:39:14.656Z] Fetching recent messages using REST API
+[2025-04-14T19:39:14.980Z] Fetched 50 messages via REST API
+[2025-04-14T19:39:14.981Z] Finished processing REST API messages
+[2025-04-14T19:40:14.656Z] Fetching recent messages using REST API
+[2025-04-14T19:40:15.084Z] Fetched 50 messages via REST API
+[2025-04-14T19:40:15.085Z] Finished processing REST API messages
+[2025-04-14T19:41:14.657Z] Fetching recent messages using REST API
+[2025-04-14T19:41:15.056Z] Fetched 50 messages via REST API
+[2025-04-14T19:41:15.057Z] Finished processing REST API messages
+[2025-04-14T19:42:24.783Z] Fetching recent messages using REST API
+[2025-04-14T19:42:25.856Z] Fetched 50 messages via REST API
+[2025-04-14T19:42:25.873Z] Finished processing REST API messages
+[2025-04-14T19:43:34.864Z] Fetching recent messages using REST API
+[2025-04-14T19:43:35.475Z] Fetched 50 messages via REST API
+[2025-04-14T19:43:35.483Z] Finished processing REST API messages
+[2025-04-14T19:44:34.867Z] Fetching recent messages using REST API
+[2025-04-14T19:44:35.109Z] Fetched 50 messages via REST API
+[2025-04-14T19:44:35.110Z] Finished processing REST API messages
+[2025-04-14T19:45:34.869Z] Fetching recent messages using REST API
+[2025-04-14T19:45:35.181Z] Fetched 50 messages via REST API
+[2025-04-14T19:45:35.182Z] Finished processing REST API messages
+[2025-04-14T19:46:34.871Z] Fetching recent messages using REST API
+[2025-04-14T19:46:35.134Z] Fetched 50 messages via REST API
+[2025-04-14T19:46:35.134Z] Finished processing REST API messages
+[2025-04-14T19:47:34.872Z] Fetching recent messages using REST API
+[2025-04-14T19:47:35.338Z] Fetched 50 messages via REST API
+[2025-04-14T19:47:35.346Z] Finished processing REST API messages
+[2025-04-14T19:48:34.873Z] Fetching recent messages using REST API
+[2025-04-14T19:48:35.240Z] Fetched 50 messages via REST API
+[2025-04-14T19:48:35.240Z] Finished processing REST API messages
+[2025-04-14T19:49:34.874Z] Fetching recent messages using REST API
+[2025-04-14T19:49:35.485Z] Fetched 50 messages via REST API
+[2025-04-14T19:49:35.485Z] Finished processing REST API messages
+[2025-04-14T19:50:34.875Z] Fetching recent messages using REST API
+[2025-04-14T19:50:35.100Z] Fetched 50 messages via REST API
+[2025-04-14T19:50:35.101Z] Finished processing REST API messages
+[2025-04-14T19:51:34.877Z] Fetching recent messages using REST API
+[2025-04-14T19:51:35.200Z] Fetched 50 messages via REST API
+[2025-04-14T19:51:35.200Z] Finished processing REST API messages
+[2025-04-14T19:52:34.878Z] Fetching recent messages using REST API
+[2025-04-14T19:52:35.243Z] Fetched 50 messages via REST API
+[2025-04-14T19:52:35.244Z] Finished processing REST API messages
+[2025-04-14T19:53:34.879Z] Fetching recent messages using REST API
+[2025-04-14T19:53:35.358Z] Fetched 50 messages via REST API
+[2025-04-14T19:53:35.358Z] Finished processing REST API messages
+[2025-04-14T19:54:34.880Z] Fetching recent messages using REST API
+[2025-04-14T19:54:35.221Z] Fetched 50 messages via REST API
+[2025-04-14T19:54:35.221Z] Finished processing REST API messages
+[2025-04-14T19:55:34.882Z] Fetching recent messages using REST API
+[2025-04-14T19:55:35.246Z] Fetched 50 messages via REST API
+[2025-04-14T19:55:35.247Z] Finished processing REST API messages
+[2025-04-14T19:56:34.884Z] Fetching recent messages using REST API
+[2025-04-14T19:56:35.372Z] Fetched 50 messages via REST API
+[2025-04-14T19:56:35.373Z] Finished processing REST API messages
+[2025-04-14T19:57:34.885Z] Fetching recent messages using REST API
+[2025-04-14T19:57:35.302Z] Fetched 50 messages via REST API
+[2025-04-14T19:57:35.303Z] Finished processing REST API messages
+[2025-04-14T19:58:34.888Z] Fetching recent messages using REST API
+[2025-04-14T19:58:35.149Z] Fetched 50 messages via REST API
+[2025-04-14T19:58:35.150Z] Finished processing REST API messages
+[2025-04-14T19:59:34.889Z] Fetching recent messages using REST API
+[2025-04-14T19:59:35.285Z] Fetched 50 messages via REST API
+[2025-04-14T19:59:35.286Z] Finished processing REST API messages
+[2025-04-14T20:00:34.890Z] Fetching recent messages using REST API
+[2025-04-14T20:00:35.172Z] Fetched 50 messages via REST API
+[2025-04-14T20:00:35.173Z] Finished processing REST API messages
+[2025-04-14T20:01:34.892Z] Fetching recent messages using REST API
+[2025-04-14T20:01:35.253Z] Fetched 50 messages via REST API
+[2025-04-14T20:01:35.253Z] Finished processing REST API messages
+[2025-04-14T20:02:34.892Z] Fetching recent messages using REST API
+[2025-04-14T20:02:35.162Z] Fetched 50 messages via REST API
+[2025-04-14T20:02:35.163Z] Finished processing REST API messages
+[2025-04-14T20:03:34.893Z] Fetching recent messages using REST API
+[2025-04-14T20:03:35.280Z] Fetched 50 messages via REST API
+[2025-04-14T20:03:35.281Z] Finished processing REST API messages
+[2025-04-14T20:04:34.895Z] Fetching recent messages using REST API
+[2025-04-14T20:04:35.297Z] Fetched 50 messages via REST API
+[2025-04-14T20:04:35.298Z] Finished processing REST API messages
+[2025-04-14T20:05:34.897Z] Fetching recent messages using REST API
+[2025-04-14T20:05:35.188Z] Fetched 50 messages via REST API
+[2025-04-14T20:05:35.188Z] Finished processing REST API messages
+[2025-04-14T20:06:34.898Z] Fetching recent messages using REST API
+[2025-04-14T20:06:35.143Z] Fetched 50 messages via REST API
+[2025-04-14T20:06:35.143Z] Finished processing REST API messages
+[2025-04-14T20:07:34.899Z] Fetching recent messages using REST API
+[2025-04-14T20:07:35.457Z] Fetched 50 messages via REST API
+[2025-04-14T20:07:35.466Z] Finished processing REST API messages
+[2025-04-14T20:08:34.901Z] Fetching recent messages using REST API
+[2025-04-14T20:08:35.235Z] Fetched 50 messages via REST API
+[2025-04-14T20:08:35.236Z] Finished processing REST API messages
+[2025-04-14T20:09:34.901Z] Fetching recent messages using REST API
+[2025-04-14T20:09:35.274Z] Fetched 50 messages via REST API
+[2025-04-14T20:09:35.275Z] Finished processing REST API messages
+[2025-04-14T20:10:34.903Z] Fetching recent messages using REST API
+[2025-04-14T20:10:36.152Z] Fetched 50 messages via REST API
+[2025-04-14T20:10:36.169Z] Finished processing REST API messages
+[2025-04-14T20:11:34.904Z] Fetching recent messages using REST API
+[2025-04-14T20:11:35.246Z] Fetched 50 messages via REST API
+[2025-04-14T20:11:35.246Z] Finished processing REST API messages
+[2025-04-14T20:12:34.905Z] Fetching recent messages using REST API
+[2025-04-14T20:12:35.146Z] Fetched 50 messages via REST API
+[2025-04-14T20:12:35.146Z] Finished processing REST API messages
+[2025-04-14T20:13:34.907Z] Fetching recent messages using REST API
+[2025-04-14T20:13:35.298Z] Fetched 50 messages via REST API
+[2025-04-14T20:13:35.299Z] Finished processing REST API messages
+[2025-04-14T20:14:34.908Z] Fetching recent messages using REST API
+[2025-04-14T20:14:35.146Z] Fetched 50 messages via REST API
+[2025-04-14T20:14:35.147Z] Finished processing REST API messages
+[2025-04-14T20:15:34.910Z] Fetching recent messages using REST API
+[2025-04-14T20:15:35.326Z] Fetched 50 messages via REST API
+[2025-04-14T20:15:35.327Z] Finished processing REST API messages
+[2025-04-14T20:16:34.911Z] Fetching recent messages using REST API
+[2025-04-14T20:16:35.181Z] Fetched 50 messages via REST API
+[2025-04-14T20:16:35.192Z] Finished processing REST API messages
+[2025-04-14T20:17:34.913Z] Fetching recent messages using REST API
+[2025-04-14T20:17:35.319Z] Fetched 50 messages via REST API
+[2025-04-14T20:17:35.320Z] Finished processing REST API messages
+[2025-04-14T20:18:34.914Z] Fetching recent messages using REST API
+[2025-04-14T20:18:35.303Z] Fetched 50 messages via REST API
+[2025-04-14T20:18:35.304Z] Finished processing REST API messages
+[2025-04-14T20:19:34.917Z] Fetching recent messages using REST API
+[2025-04-14T20:19:35.313Z] Fetched 50 messages via REST API
+[2025-04-14T20:19:35.314Z] Finished processing REST API messages
+[2025-04-14T20:20:34.917Z] Fetching recent messages using REST API
+[2025-04-14T20:20:35.164Z] Fetched 50 messages via REST API
+[2025-04-14T20:20:35.164Z] Finished processing REST API messages
+[2025-04-14T20:21:34.919Z] Fetching recent messages using REST API
+[2025-04-14T20:21:35.441Z] Fetched 50 messages via REST API
+[2025-04-14T20:21:35.441Z] Finished processing REST API messages
+[2025-04-14T20:22:34.920Z] Fetching recent messages using REST API
+[2025-04-14T20:22:35.181Z] Fetched 50 messages via REST API
+[2025-04-14T20:22:35.182Z] Finished processing REST API messages
+[2025-04-14T20:23:34.921Z] Fetching recent messages using REST API
+[2025-04-14T20:23:35.210Z] Fetched 50 messages via REST API
+[2025-04-14T20:23:35.210Z] Finished processing REST API messages
+[2025-04-14T20:24:34.923Z] Fetching recent messages using REST API
+[2025-04-14T20:24:35.296Z] Fetched 50 messages via REST API
+[2025-04-14T20:24:35.297Z] Finished processing REST API messages
+[2025-04-14T20:25:34.924Z] Fetching recent messages using REST API
+[2025-04-14T20:25:35.294Z] Fetched 50 messages via REST API
+[2025-04-14T20:25:35.295Z] Finished processing REST API messages
+[2025-04-14T20:26:34.925Z] Fetching recent messages using REST API
+[2025-04-14T20:26:35.349Z] Fetched 50 messages via REST API
+[2025-04-14T20:26:35.350Z] Finished processing REST API messages
+[2025-04-14T20:27:34.926Z] Fetching recent messages using REST API
+[2025-04-14T20:27:35.273Z] Fetched 50 messages via REST API
+[2025-04-14T20:27:35.274Z] Finished processing REST API messages
+[2025-04-14T20:28:34.929Z] Fetching recent messages using REST API
+[2025-04-14T20:28:35.354Z] Fetched 50 messages via REST API
+[2025-04-14T20:28:35.355Z] Finished processing REST API messages
+[2025-04-14T20:29:34.930Z] Fetching recent messages using REST API
+[2025-04-14T20:29:35.322Z] Fetched 50 messages via REST API
+[2025-04-14T20:29:35.322Z] Finished processing REST API messages
+[2025-04-14T20:30:34.932Z] Fetching recent messages using REST API
+[2025-04-14T20:30:35.241Z] Fetched 50 messages via REST API
+[2025-04-14T20:30:35.242Z] Finished processing REST API messages
+[2025-04-14T20:31:34.933Z] Fetching recent messages using REST API
+[2025-04-14T20:31:35.228Z] Fetched 50 messages via REST API
+[2025-04-14T20:31:35.240Z] Finished processing REST API messages
+[2025-04-14T20:32:34.934Z] Fetching recent messages using REST API
+[2025-04-14T20:32:35.278Z] Fetched 50 messages via REST API
+[2025-04-14T20:32:35.279Z] Finished processing REST API messages
+[2025-04-14T20:33:34.935Z] Fetching recent messages using REST API
+[2025-04-14T20:33:35.388Z] Fetched 50 messages via REST API
+[2025-04-14T20:33:35.389Z] Finished processing REST API messages
+[2025-04-14T20:34:34.937Z] Fetching recent messages using REST API
+[2025-04-14T20:34:35.205Z] Fetched 50 messages via REST API
+[2025-04-14T20:34:35.206Z] Finished processing REST API messages
+[2025-04-14T20:35:34.938Z] Fetching recent messages using REST API
+[2025-04-14T20:35:35.398Z] Fetched 50 messages via REST API
+[2025-04-14T20:35:35.398Z] Finished processing REST API messages
+[2025-04-14T20:36:34.940Z] Fetching recent messages using REST API
+[2025-04-14T20:36:35.271Z] Fetched 50 messages via REST API
+[2025-04-14T20:36:35.271Z] Finished processing REST API messages
+[2025-04-14T20:37:34.941Z] Fetching recent messages using REST API
+[2025-04-14T20:37:35.245Z] Fetched 50 messages via REST API
+[2025-04-14T20:37:35.254Z] Finished processing REST API messages
+[2025-04-14T20:38:34.942Z] Fetching recent messages using REST API
+[2025-04-14T20:38:35.237Z] Fetched 50 messages via REST API
+[2025-04-14T20:38:35.246Z] Finished processing REST API messages
+[2025-04-14T20:40:02.032Z] Fetching recent messages using REST API
+[2025-04-14T20:40:03.114Z] Fetched 50 messages via REST API
+[2025-04-14T20:40:03.129Z] Finished processing REST API messages
+[2025-04-14T20:41:02.034Z] Fetching recent messages using REST API
+[2025-04-14T20:41:02.278Z] Fetched 50 messages via REST API
+[2025-04-14T20:41:02.279Z] Finished processing REST API messages
+[2025-04-14T20:42:02.034Z] Fetching recent messages using REST API
+[2025-04-14T20:42:02.374Z] Fetched 50 messages via REST API
+[2025-04-14T20:42:02.375Z] Finished processing REST API messages
