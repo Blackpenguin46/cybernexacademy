@@ -174,54 +174,44 @@ jobs:
         if: steps.fetch_links.outputs.exists == 'true' && steps.check_list_content.outputs.url_list_has_content == 'true'
         id: run_lychee
         run: |
-          echo "Running Lychee with enhanced retry mechanism..."
-          MAX_RETRIES=5
-          RETRY_COUNT=0
+          echo "Running Lychee..."
+          # Removed retry loop - Lychee will run only once.
           LYCHEE_EXIT_CODE=2 # Initialize with failure code
+          LYCHEE_ERROR_LOG="lychee_stderr.log"
+          
+          # Clear previous log if exists
+          rm -f $LYCHEE_ERROR_LOG
 
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            echo "Lychee attempt $(($RETRY_COUNT + 1)) of $MAX_RETRIES..."
-            # Ensure lychee is in PATH (may be redundant, but safe)
-            echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          # Ensure lychee is in PATH (may be redundant, but safe)
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-            # Run lychee with necessary flags
-            lychee --verbose --timeout 60 \
-              --max-concurrency 3 --format json \
-              --output broken-links.json \
-              --exclude "https://hackinparis.com/" \
-              --exclude "https://awssecworkshops.com/" \
-              --exclude "https://dvwa.co.uk/" \
-              --exclude "https://via.placeholder.com/150" \
-              --exclude "https://overflow.today/pdfs/bof-checklist.pdf" \
-              --insecure \
-              url-list.txt
-            LYCHEE_EXIT_CODE=$?
-            echo "Lychee exited with code: $LYCHEE_EXIT_CODE"
+          # Run lychee once, redirecting stderr to the log file (2>)
+          lychee --verbose --timeout 60 \
+            --max-concurrency 3 --format json \
+            --output broken-links.json \
+            --exclude "https://hackinparis.com/" \
+            --exclude "https://awssecworkshops.com/" \
+            --exclude "https://dvwa.co.uk/" \
+            --exclude "https://via.placeholder.com/150" \
+            --exclude "https://overflow.today/pdfs/bof-checklist.pdf" \
+            --insecure \
+            url-list.txt 2> $LYCHEE_ERROR_LOG
+          LYCHEE_EXIT_CODE=$?
+          echo "Lychee exited with code: $LYCHEE_EXIT_CODE"
 
-            # Break loop if successful (0) or found broken links (1)
-            if [ $LYCHEE_EXIT_CODE -eq 0 ] || [ $LYCHEE_EXIT_CODE -eq 1 ]; then
-              echo "Lychee finished successfully (code $LYCHEE_EXIT_CODE)."
-              break
-            fi
-
-            RETRY_COUNT=$((RETRY_COUNT + 1))
-            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
-              echo "Lychee failed (code $LYCHEE_EXIT_CODE). Retrying in 10 seconds..."
-              sleep 10
-            else
-               echo "Lychee failed on final attempt (code $LYCHEE_EXIT_CODE)."
-            fi
-          done
-
-          # After loop, log the final exit code for info
-          echo "Lychee finished retry loop with final exit code: $LYCHEE_EXIT_CODE"
-
+          # If Lychee failed with an unexpected code, print stderr for immediate debugging
+          if [ $LYCHEE_EXIT_CODE -ne 0 ] && [ $LYCHEE_EXIT_CODE -ne 1 ]; then
+            echo "--- Lychee Stderr Start ---"
+            cat $LYCHEE_ERROR_LOG
+            echo "--- Lychee Stderr End ---"
+          fi
+          
           # Base step success *solely* on whether the output file was generated, regardless of exit code.
           if [[ -f broken-links.json ]]; then
              echo "broken-links.json exists. Setting output to true and allowing workflow to continue."
              echo "broken_links_generated=true" >> $GITHUB_OUTPUT
           else
-             echo "Error: broken-links.json does NOT exist after Lychee attempts. Setting output to false and failing step."
+             echo "Error: broken-links.json does NOT exist after Lychee attempt. Setting output to false and failing step."
              echo "broken_links_generated=false" >> $GITHUB_OUTPUT
              exit 1 # Fail the step *only* if the output file is missing, as later steps depend on it.
           fi
