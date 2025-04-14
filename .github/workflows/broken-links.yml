@@ -272,4 +272,8 @@ jobs:
         if: steps.run_lychee.outputs.broken_links_generated == 'true' && steps.check_broken.outputs.has_broken == 'true'
         run: node .github/scripts/sendBrokenLinksEmail.js
         env:
-          PROTON_SMTP_PASS: ${{ secrets.EMAIL_PASSWORD }} 
+          # Pass all necessary email secrets to the script
+          EMAIL_SMTP_HOST: ${{ secrets.EMAIL_SMTP_HOST }}
+          EMAIL_SMTP_PORT: ${{ secrets.EMAIL_SMTP_PORT }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }} 

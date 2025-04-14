@@ -52804,3 +52804,109 @@ A threat actor posted about the zero-day exploit on the same day that Fortinet p
 [2025-04-14T20:42:02.034Z] Fetching recent messages using REST API
 [2025-04-14T20:42:02.374Z] Fetched 50 messages via REST API
 [2025-04-14T20:42:02.375Z] Finished processing REST API messages
+[2025-04-14T20:43:02.035Z] Fetching recent messages using REST API
+[2025-04-14T20:43:02.399Z] Fetched 50 messages via REST API
+[2025-04-14T20:43:02.400Z] Finished processing REST API messages
+[2025-04-14T20:44:02.033Z] Fetching recent messages using REST API
+[2025-04-14T20:44:02.358Z] Fetched 50 messages via REST API
+[2025-04-14T20:44:02.358Z] Finished processing REST API messages
+[2025-04-14T20:45:02.032Z] Fetching recent messages using REST API
+[2025-04-14T20:45:02.416Z] Fetched 50 messages via REST API
+[2025-04-14T20:45:02.416Z] Finished processing REST API messages
+[2025-04-14T20:46:02.032Z] Fetching recent messages using REST API
+[2025-04-14T20:46:02.325Z] Fetched 50 messages via REST API
+[2025-04-14T20:46:02.336Z] Finished processing REST API messages
+[2025-04-14T20:47:02.032Z] Fetching recent messages using REST API
+[2025-04-14T20:47:02.264Z] Fetched 50 messages via REST API
+[2025-04-14T20:47:02.265Z] Finished processing REST API messages
+[2025-04-14T20:47:37.037Z] Received message from CyberSecurity Bot
+[2025-04-14T20:47:37.094Z] Message via WebSocket: {
+  "channelId": "1299032261470978159",
+  "guildId": "1299032261470978152",
+  "id": "1361442796212322496",
+  "createdTimestamp": 1744663657001,
+  "type": 0,
+  "system": false,
+  "content": "",
+  "authorId": "1024363293189611581",
+  "pinned": false,
+  "tts": false,
+  "nonce": null,
+  "embeds": [
+    {
+      "url": "https://www.darkreading.com/threat-intelligence/threat-intel-firm-crypto-dark-web-accounts",
+      "type": "rich",
+      "title": "Threat Intel Firm Offers Crypto in Exchange for Dark Web Accounts",
+      "timestamp": "2025-04-14T20:25:04+00:00",
+      "thumbnail": {
+        "width": 720,
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "placeholder_version": 1,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "height": 113,
+        "flags": 0
+      },
+      "description": "Prodaft is currently buying accounts from five Dark Web forums and offers to pay extra for administrator or moderator accounts. The idea is to infiltrate forums to boost its threat intelligence.",
+      "color": 44678
+    }
+  ],
+  "components": [],
+  "attachments": [],
+  "stickers": [],
+  "position": null,
+  "roleSubscriptionData": null,
+  "resolved": null,
+  "editedTimestamp": null,
+  "mentions": {
+    "everyone": false,
+    "users": [],
+    "roles": [],
+    "crosspostedChannels": [],
+    "repliedUser": null,
+    "members": [],
+    "channels": []
+  },
+  "webhookId": null,
+  "groupActivityApplicationId": null,
+  "applicationId": null,
+  "activity": null,
+  "flags": 0,
+  "reference": null,
+  "interactionMetadata": null,
+  "interaction": null,
+  "poll": null,
+  "messageSnapshots": [],
+  "call": null,
+  "cleanContent": ""
+}
+[2025-04-14T20:47:37.095Z] Processing message 1361442796212322496 from websocket
+[2025-04-14T20:47:37.095Z] Message content: ""
+[2025-04-14T20:47:37.095Z] Has embeds: true
+[2025-04-14T20:47:37.095Z] Message has 1 embeds
+[2025-04-14T20:47:37.095Z] Embed data: {
+  "url": "https://www.darkreading.com/threat-intelligence/threat-intel-firm-crypto-dark-web-accounts",
+  "type": "rich",
+  "title": "Threat Intel Firm Offers Crypto in Exchange for Dark Web Accounts",
+  "timestamp": "2025-04-14T20:25:04+00:00",
+  "thumbnail": {
+    "width": 720,
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "placeholder_version": 1,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "height": 113,
+    "flags": 0
+  },
+  "description": "Prodaft is currently buying accounts from five Dark Web forums and offers to pay extra for administrator or moderator accounts. The idea is to infiltrate forums to boost its threat intelligence.",
+  "color": 44678
+}
+[2025-04-14T20:47:37.095Z] Found embed title: Threat Intel Firm Offers Crypto in Exchange for Dark Web Accounts
+[2025-04-14T20:47:37.095Z] Found embed description: Prodaft is currently buying accounts from five Dark Web forums and offers to pay extra for administrator or moderator accounts. The idea is to infiltrate forums to boost its threat intelligence.
+[2025-04-14T20:47:37.096Z] Inserting content into Supabase: Threat Intel Firm Offers Crypto in Exchange for Dark Web Accounts
+
+Prodaft is currently buying accounts from five Dark Web forums and offers to pay extra for administrator or moderator accounts. The idea is to infiltrate forums to boost its threat intelligence.
+[2025-04-14T20:47:37.304Z] Successfully saved to Supabase: null
+[2025-04-14T20:48:02.033Z] Fetching recent messages using REST API
+[2025-04-14T20:48:02.348Z] Fetched 50 messages via REST API
+[2025-04-14T20:48:02.349Z] Finished processing REST API messages

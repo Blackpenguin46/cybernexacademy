@@ -3,10 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 const reportPath = path.join(__dirname, '..', '..' , 'broken-links.json'); // Adjust path relative to script location
-const emailPass = process.env.PROTON_SMTP_PASS;
 
-if (!emailPass) {
-    console.error('Error: PROTON_SMTP_PASS environment variable not set.');
+// Read email configuration from environment variables provided by the workflow
+const emailHost = process.env.EMAIL_SMTP_HOST;
+const emailPort = parseInt(process.env.EMAIL_SMTP_PORT || '587', 10); // Default to 587 if not set
+const emailUser = process.env.EMAIL_USERNAME;
+const emailPass = process.env.EMAIL_PASSWORD; // Read the password directly
+
+if (!emailHost || !emailUser || !emailPass) {
+    console.error('Error: EMAIL_SMTP_HOST, EMAIL_USERNAME, and EMAIL_PASSWORD environment variables must be set.');
     process.exit(1);
 }
 
@@ -77,19 +82,20 @@ emailBody += '</ul>';
 
 // Configure Nodemailer transporter using environment variables
 const transporter = nodemailer.createTransport({
-    host: 'smtp.protonmail.ch', // ProtonMail SMTP host
-    port: 587, // ProtonMail SMTP port (STARTTLS)
-    secure: false, // STARTTLS uses secure: false
+    host: emailHost, 
+    port: emailPort,
+    // Determine secure based on standard ports (true for 465, false otherwise)
+    secure: emailPort === 465, 
     auth: {
-        user: 'cybernex.reports@proton.me', // Your ProtonMail address
-        pass: emailPass
+        user: emailUser, 
+        pass: emailPass 
     }
 });
 
-// Email options
+// Email options - Use EMAIL_USERNAME for 'from'
 const mailOptions = {
-    from: 'cybernex.reports@proton.me', // Sender address
-    to: 'samoakes1@proton.me', // List of receivers
+    from: emailUser, // Sender address from environment variable
+    to: 'cybernexacademy@cybernexacademy.com', // Recipient address
     subject: 'Weekly Broken Link Scan Report', // Subject line
     html: emailBody // HTML body content
 };
