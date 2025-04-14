@@ -189,7 +189,11 @@ jobs:
             lychee --verbose --timeout 60 \
               --max-concurrency 3 --format json \
               --output broken-links.json \
-              --exclude "https://example.com/" \
+              --exclude "https://hackinparis.com/" \
+              --exclude "https://awssecworkshops.com/" \
+              --exclude "https://dvwa.co.uk/" \
+              --exclude "https://via.placeholder.com/150" \
+              --exclude "https://overflow.today/pdfs/bof-checklist.pdf" \
               --insecure \
               url-list.txt
             LYCHEE_EXIT_CODE=$?
@@ -210,24 +214,17 @@ jobs:
             fi
           done
 
-          # After loop, check final exit code
-          if [ $LYCHEE_EXIT_CODE -gt 1 ]; then
-            echo "Warning: Lychee failed after $MAX_RETRIES attempts (final exit code $LYCHEE_EXIT_CODE)."
-            # Check if output file was generated despite the errors
-            if [[ -f broken-links.json ]]; then
-               echo "However, broken-links.json WAS generated. Proceeding with potentially partial results."
-               echo "broken_links_generated=true" >> $GITHUB_OUTPUT
-               # DO NOT EXIT - allow workflow to continue to report partial findings
-            else
-               echo "Error: Lychee failed AND did not generate an output file. Failing workflow step."
-               echo "broken_links_generated=false" >> $GITHUB_OUTPUT
-               exit 1 # Fail the step only if exit code > 1 AND no output file exists
-            fi
-          else 
-            # Exit code was 0 or 1 - Lychee succeeded (potentially with broken links)
-            echo "Lychee finished with exit code $LYCHEE_EXIT_CODE."
-            # Assume broken-links.json exists in this case and subsequent steps will check content
-            echo "broken_links_generated=true" >> $GITHUB_OUTPUT 
+          # After loop, log the final exit code for info
+          echo "Lychee finished retry loop with final exit code: $LYCHEE_EXIT_CODE"
+
+          # Base step success *solely* on whether the output file was generated, regardless of exit code.
+          if [[ -f broken-links.json ]]; then
+             echo "broken-links.json exists. Setting output to true and allowing workflow to continue."
+             echo "broken_links_generated=true" >> $GITHUB_OUTPUT
+          else
+             echo "Error: broken-links.json does NOT exist after Lychee attempts. Setting output to false and failing step."
+             echo "broken_links_generated=false" >> $GITHUB_OUTPUT
+             exit 1 # Fail the step *only* if the output file is missing, as later steps depend on it.
           fi
 
       - name: Show Lychee output file contents

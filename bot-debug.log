@@ -52152,3 +52152,142 @@ Blind spots in network visibility, including in firewalls, IoT devices, and the 
 [2025-04-14T17:16:39.270Z] Fetching recent messages using REST API
 [2025-04-14T17:16:39.607Z] Fetched 50 messages via REST API
 [2025-04-14T17:16:39.620Z] Finished processing REST API messages
+[2025-04-14T17:17:39.271Z] Fetching recent messages using REST API
+[2025-04-14T17:17:39.520Z] Fetched 50 messages via REST API
+[2025-04-14T17:17:39.520Z] Finished processing REST API messages
+[2025-04-14T17:18:39.273Z] Fetching recent messages using REST API
+[2025-04-14T17:18:39.541Z] Fetched 50 messages via REST API
+[2025-04-14T17:18:39.541Z] Finished processing REST API messages
+[2025-04-14T17:19:39.274Z] Fetching recent messages using REST API
+[2025-04-14T17:19:39.615Z] Fetched 50 messages via REST API
+[2025-04-14T17:19:39.622Z] Finished processing REST API messages
+[2025-04-14T17:20:39.275Z] Fetching recent messages using REST API
+[2025-04-14T17:20:39.650Z] Fetched 50 messages via REST API
+[2025-04-14T17:20:39.650Z] Finished processing REST API messages
+[2025-04-14T17:21:39.277Z] Fetching recent messages using REST API
+[2025-04-14T17:21:39.489Z] Fetched 50 messages via REST API
+[2025-04-14T17:21:39.490Z] Finished processing REST API messages
+[2025-04-14T17:22:39.278Z] Fetching recent messages using REST API
+[2025-04-14T17:22:39.533Z] Fetched 50 messages via REST API
+[2025-04-14T17:22:39.545Z] Finished processing REST API messages
+[2025-04-14T17:23:39.280Z] Fetching recent messages using REST API
+[2025-04-14T17:23:39.532Z] Fetched 50 messages via REST API
+[2025-04-14T17:23:39.545Z] Finished processing REST API messages
+[2025-04-14T17:24:39.281Z] Fetching recent messages using REST API
+[2025-04-14T17:24:39.610Z] Fetched 50 messages via REST API
+[2025-04-14T17:24:39.618Z] Finished processing REST API messages
+[2025-04-14T17:25:39.281Z] Fetching recent messages using REST API
+[2025-04-14T17:25:39.680Z] Fetched 50 messages via REST API
+[2025-04-14T17:25:39.682Z] Finished processing REST API messages
+[2025-04-14T17:26:39.282Z] Fetching recent messages using REST API
+[2025-04-14T17:26:39.601Z] Fetched 50 messages via REST API
+[2025-04-14T17:26:39.601Z] Finished processing REST API messages
+[2025-04-14T17:27:39.282Z] Fetching recent messages using REST API
+[2025-04-14T17:27:39.693Z] Fetched 50 messages via REST API
+[2025-04-14T17:27:39.701Z] Finished processing REST API messages
+[2025-04-14T17:28:39.284Z] Fetching recent messages using REST API
+[2025-04-14T17:28:39.668Z] Fetched 50 messages via REST API
+[2025-04-14T17:28:39.669Z] Finished processing REST API messages
+[2025-04-14T17:29:39.286Z] Fetching recent messages using REST API
+[2025-04-14T17:29:39.541Z] Fetched 50 messages via REST API
+[2025-04-14T17:29:39.550Z] Finished processing REST API messages
+[2025-04-14T17:30:39.286Z] Fetching recent messages using REST API
+[2025-04-14T17:30:39.588Z] Fetched 50 messages via REST API
+[2025-04-14T17:30:39.604Z] Finished processing REST API messages
+[2025-04-14T17:31:39.287Z] Fetching recent messages using REST API
+[2025-04-14T17:31:39.572Z] Fetched 50 messages via REST API
+[2025-04-14T17:31:39.580Z] Finished processing REST API messages
+[2025-04-14T17:32:19.964Z] Received message from CyberSecurity Bot
+[2025-04-14T17:32:19.979Z] Message via WebSocket: {
+  "channelId": "1299032261470978159",
+  "guildId": "1299032261470978152",
+  "id": "1361393650868944936",
+  "createdTimestamp": 1744651939838,
+  "type": 0,
+  "system": false,
+  "content": "",
+  "authorId": "1024363293189611581",
+  "pinned": false,
+  "tts": false,
+  "nonce": null,
+  "embeds": [
+    {
+      "url": "https://www.darkreading.com/vulnerabilities-threats/fortinet-zero-day-arbitrary-code-execution",
+      "type": "rich",
+      "title": "Fortinet Zero-Day Bug May Lead to Arbitrary Code Execution",
+      "timestamp": "2025-04-14T17:20:30+00:00",
+      "thumbnail": {
+        "width": 720,
+        "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+        "placeholder_version": 1,
+        "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+        "height": 113,
+        "flags": 0
+      },
+      "description": "A threat actor posted about the zero-day exploit on the same day that Fortinet published a warning about known vulnerabilities under active exploitation.",
+      "color": 44678
+    }
+  ],
+  "components": [],
+  "attachments": [],
+  "stickers": [],
+  "position": null,
+  "roleSubscriptionData": null,
+  "resolved": null,
+  "editedTimestamp": null,
+  "mentions": {
+    "everyone": false,
+    "users": [],
+    "roles": [],
+    "crosspostedChannels": [],
+    "repliedUser": null,
+    "members": [],
+    "channels": []
+  },
+  "webhookId": null,
+  "groupActivityApplicationId": null,
+  "applicationId": null,
+  "activity": null,
+  "flags": 0,
+  "reference": null,
+  "interactionMetadata": null,
+  "interaction": null,
+  "poll": null,
+  "messageSnapshots": [],
+  "call": null,
+  "cleanContent": ""
+}
+[2025-04-14T17:32:19.979Z] Processing message 1361393650868944936 from websocket
+[2025-04-14T17:32:19.980Z] Message content: ""
+[2025-04-14T17:32:19.980Z] Has embeds: true
+[2025-04-14T17:32:19.980Z] Message has 1 embeds
+[2025-04-14T17:32:19.980Z] Embed data: {
+  "url": "https://www.darkreading.com/vulnerabilities-threats/fortinet-zero-day-arbitrary-code-execution",
+  "type": "rich",
+  "title": "Fortinet Zero-Day Bug May Lead to Arbitrary Code Execution",
+  "timestamp": "2025-04-14T17:20:30+00:00",
+  "thumbnail": {
+    "width": 720,
+    "url": "https://bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "proxy_url": "https://images-ext-1.discordapp.net/external/ePhmgUs6965ue4lqOo7Ay6pvL2H5f8kNDxuKTH5JjZI/https/bitvision.s3.eu-central-1.amazonaws.com/cybersecurity/bot/darkreading.png",
+    "placeholder_version": 1,
+    "placeholder": "P/iBAYAVb+NNqYSQsvrWVH5kmXdgpyk=",
+    "height": 113,
+    "flags": 0
+  },
+  "description": "A threat actor posted about the zero-day exploit on the same day that Fortinet published a warning about known vulnerabilities under active exploitation.",
+  "color": 44678
+}
+[2025-04-14T17:32:19.981Z] Found embed title: Fortinet Zero-Day Bug May Lead to Arbitrary Code Execution
+[2025-04-14T17:32:19.981Z] Found embed description: A threat actor posted about the zero-day exploit on the same day that Fortinet published a warning about known vulnerabilities under active exploitation.
+[2025-04-14T17:32:19.981Z] Inserting content into Supabase: Fortinet Zero-Day Bug May Lead to Arbitrary Code Execution
+
+A threat actor posted about the zero-day exploit on the same day that Fortinet published a warning about known vulnerabilities under active exploitation.
+[2025-04-14T17:32:20.322Z] Successfully saved to Supabase: null
+[2025-04-14T17:32:39.288Z] Fetching recent messages using REST API
+[2025-04-14T17:32:39.576Z] Fetched 50 messages via REST API
+[2025-04-14T17:32:39.576Z] Finished processing REST API messages
+[2025-04-14T17:33:39.289Z] Fetching recent messages using REST API
+[2025-04-14T17:33:39.555Z] Fetched 50 messages via REST API
+[2025-04-14T17:33:39.556Z] Finished processing REST API messages
