@@ -1,83 +1,105 @@
-const fs = require('fs');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
+const path = require('path');
 
-const reportPath = 'broken-links.json';
-let links = [];
+const reportPath = path.join(__dirname, '..', '..' , 'broken-links.json'); // Adjust path relative to script location
+const emailPass = process.env.PROTON_SMTP_PASS;
 
-// Read the JSON file containing broken links
+if (!emailPass) {
+    console.error('Error: PROTON_SMTP_PASS environment variable not set.');
+    process.exit(1);
+}
+
+if (!fs.existsSync(reportPath)) {
+    console.error(`Error: Report file not found at ${reportPath}`);
+    process.exit(1);
+}
+
+let reportContent;
 try {
-  if (fs.existsSync(reportPath)) {
-    const fileContent = fs.readFileSync(reportPath, 'utf-8');
-    // Lychee JSON output is typically an array of objects, one for each file scanned.
-    // Each object contains 'links' which is an array of link statuses.
-    // We need to flatten this structure to get all links.
-    const reportData = JSON.parse(fileContent);
-    
-    // Check if reportData is an array (expected format)
-    if (Array.isArray(reportData)) {
-      links = reportData.flatMap(fileResult => 
-        fileResult.links ? fileResult.links.filter(link => link.status.type !== 'success') : []
-      );
-    } else {
-      console.error('Unexpected format in broken-links.json:', reportData);
-      // Handle cases where the format might be different, e.g., directly an array of links
-      if (Array.isArray(reportData.links)) {
-         links = reportData.links.filter(link => link.status.type !== 'success');
-      } else {
-        console.error('Cannot extract links from broken-links.json');
-      }
+    reportContent = fs.readFileSync(reportPath, 'utf8');
+} catch (err) {
+    console.error(`Error reading report file: ${err}`);
+    process.exit(1);
+}
+
+let jsonData;
+try {
+    jsonData = JSON.parse(reportContent);
+} catch (err) {
+    console.error(`Error parsing JSON from report file: ${err}`);
+    console.error("File content:", reportContent); // Log content on parse error
+    process.exit(1);
+}
+
+// --- Updated Logic to Handle Detailed Summary Format ---
+let allErrors = [];
+if (jsonData.error_map && typeof jsonData.error_map === 'object') {
+    // Iterate through the arrays of errors for each input source
+    Object.values(jsonData.error_map).forEach(errorArray => {
+        if (Array.isArray(errorArray)) {
+            allErrors = allErrors.concat(errorArray);
+        }
+    });
+}
+
+if (allErrors.length === 0) {
+    console.log('No broken links found in the report (error_map is empty or invalid). No email sent.');
+    process.exit(0);
+}
+
+console.log(`Found ${allErrors.length} broken links/errors. Preparing email...`);
+
+// Prepare email content
+let emailBody = '<h1>Broken Link Report</h1>';
+emailBody += `<p>Found ${allErrors.length} broken links or errors during the latest scan.</p>`;
+emailBody += '<ul>';
+
+allErrors.forEach(error => {
+    const url = error.url || 'URL not found';
+    // Handle different ways status/error might be represented
+    let statusText = 'Status unknown';
+    if (error.status && typeof error.status === 'object' && error.status.text) {
+        statusText = error.status.text;
+    } else if (typeof error.status === 'string') { // Fallback if status is just a string
+        statusText = error.status;
+    } else if (error.error) { // Some errors might be directly under an 'error' key
+         statusText = typeof error.error === 'object' ? JSON.stringify(error.error) : String(error.error);
     }
 
-  } else {
-    console.log('No broken links report file found. Nothing to email.');
-    process.exit(0); // Exit gracefully if no report exists
-  }
-} catch (error) {
-  console.error('Error reading or parsing broken-links.json:', error);
-  process.exit(1); // Exit with error
-}
-
-// If no broken links were found after parsing
-if (links.length === 0) {
-  console.log('No broken links found in the report. No email sent.');
-  process.exit(0);
-}
-
-// Construct the HTML email body
-const html = `
-  <h2>CyberNex Broken Links Report</h2>
-  <p>Found ${links.length} potentially broken link(s):</p>
-  <ul>
-    ${links.map(link => `
-      <li>
-        <strong>URL:</strong> ${link.url || 'N/A'}<br/>
-        <strong>Status:</strong> ${link.status ? (link.status.code || link.status.type || 'Unknown') : 'Unknown Status'}<br/>
-        ${link.source ? `<strong>Found in:</strong> ${link.source}<br/>` : ''}
-        <a href="https://www.cybernexacademy.com/admin/links">Review in Admin Panel</a>
-      </li>`).join('')}
-  </ul>
-`;
-
-// Configure the Nodemailer transporter for ProtonMail
-const transporter = nodemailer.createTransport({
-  host: "smtp.protonmail.com",
-  port: 465,
-  secure: true, // Use true for port 465
-  auth: {
-    user: "cybernexacademy@proton.me",
-    pass: process.env.PROTON_SMTP_PASS // Use the secret passed from the workflow
-  }
+    emailBody += `<li><a href="${url}">${url}</a> - Status: ${statusText}</li>`;
 });
 
-// Send the email
-transporter.sendMail({
-  from: '"CyberNex Bot" <cybernexacademy@proton.me>',
-  to: "cybernexacademy@proton.me", // Sending to self
-  subject: "⚠️ CyberNex Weekly Broken Links Report",
-  html: html
-}).then(() => {
-  console.log('Broken links report email sent successfully!');
-}).catch(error => {
-  console.error('Error sending email:', error);
-  process.exit(1); // Exit with error if email fails
+emailBody += '</ul>';
+
+// --- End of Updated Logic ---
+
+
+// Configure Nodemailer transporter using environment variables
+const transporter = nodemailer.createTransport({
+    host: 'smtp.protonmail.ch', // ProtonMail SMTP host
+    port: 587, // ProtonMail SMTP port (STARTTLS)
+    secure: false, // STARTTLS uses secure: false
+    auth: {
+        user: 'cybernex.reports@proton.me', // Your ProtonMail address
+        pass: emailPass
+    }
+});
+
+// Email options
+const mailOptions = {
+    from: 'cybernex.reports@proton.me', // Sender address
+    to: 'samoakes1@proton.me', // List of receivers
+    subject: 'Weekly Broken Link Scan Report', // Subject line
+    html: emailBody // HTML body content
+};
+
+// Send mail
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.error('Error sending email:', error);
+        return process.exit(1);
+    }
+    console.log('Email sent successfully:', info.messageId);
+    console.log('Preview URL:', nodemailer.getTestMessageUrl(info)); // May not work with ProtonMail
 }); 
