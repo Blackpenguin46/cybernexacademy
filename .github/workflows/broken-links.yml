@@ -120,7 +120,6 @@ jobs:
 
           # Always output the size for debugging
           echo "urls.json size: $(wc -c < urls.json) bytes"
-        # REMOVED -e from bash shell to allow script's retry logic
         shell: /usr/bin/bash {0}
 
       - name: Upload Curl Trace Log on Failure
