@@ -225,6 +225,7 @@ jobs:
              echo "broken_links_generated=false" >> $GITHUB_OUTPUT
              exit 1 # Fail the step *only* if the output file is missing, as later steps depend on it.
           fi
+        shell: /usr/bin/bash {0}
 
       - name: Show Lychee output file contents
         # Only show the file if the lychee step indicates it was generated
