@@ -1,4 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cybernex Academy
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Table of Contents
+
+1.  [Introduction](#introduction)
+2.  [Project Purpose](#project-purpose)
+3.  [Key Features](#key-features)
+4.  [Technologies Used](#technologies-used)
+5.  [Getting Started](#getting-started)
+    *   [Prerequisites](#prerequisites)
+    *   [Installation](#installation)
+    *   [Running the Project](#running-the-project)
+6.  [Contributing](#contributing)
+7. [Discord Bot](#discord-bot)
+8.  [Deployment](#deployment)
+9.  [Learn More](#learn-more)
+
+
+## Introduction
+
+Welcome to Cybernex Academy! This project is a comprehensive platform designed to provide resources, education, and community for cybersecurity enthusiasts and professionals.
+
+## Project Purpose
+
+Cybernex Academy aims to be a central hub for all things cybersecurity. Our goal is to create a space where users can learn about cybersecurity, connect with others in the field, find relevant resources, and stay updated on the latest industry news and trends.
+
+## Key Features
+
+*   **Educational Resources:** Access to courses, tutorials, articles, and other learning materials.
+*   **Community Forums:** Connect with other cybersecurity enthusiasts, ask questions, and share knowledge.
+*   **Resource Directory:** A curated list of tools, websites, and other resources relevant to cybersecurity.
+*   **News and Updates:** Stay informed about the latest cybersecurity news, trends, and threats.
+*   **Discord Integration:** Links to join our community discord servers.
+
+## Technologies Used
+
+*   **Next.js:** A React framework for building user interfaces.
+*   **TypeScript:** A typed superset of JavaScript for enhanced code quality.
+*   **Supabase:** A backend-as-a-service platform for database and authentication.
+*   **Tailwind CSS:** A utility-first CSS framework.
+*   **Radix UI:** A library of unstyled, accessible UI components.
+* **Discord.js**: A Powerful node module to interact with the discord API.
+*   **Vercel:** For deployment and hosting.
+* **uploadthing**: File management service.
+
+
+## Getting Started
+
+### Prerequisites
+
+*   Node.js (v18 or later)
+*   npm (or yarn, pnpm, bun)
+*   Git
+
+### Installation
+
+1.  Clone the repository:
+
+    
 
 ## Getting Started
 
