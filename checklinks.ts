@@ -60,23 +60,23 @@ async function checkAllLinks() {
       last_status_code = response.status;
     } catch (err: any) {
       status = 'BROKEN';
-      if (axios.isAxiosError(err)) {
+      if (err && typeof err === 'object' && 'isAxiosError' in err && err.isAxiosError === true) {
         last_status_code = err.response?.status ?? -1;
         last_error_message = err.message;
 
         if (err.response) {
-          last_error_message += ` - ${JSON.stringify(err.response.data)}`.substring(0, 200);
+          last_error_message = (last_error_message ?? '') + ` - ${JSON.stringify(err.response.data)}`.substring(0, 200);
         } else if (err.request) {
-          last_error_message += ' - No response received';
+          last_error_message = (last_error_message ?? '') + ' - No response received';
         } else {
-          last_error_message += ' - Request setup failed';
+          last_error_message = (last_error_message ?? '') + ' - Request setup failed';
         }
       } else {
         last_status_code = -2;
         last_error_message = String(err);
       }
 
-      if (last_error_message.length > 500) {
+      if (last_error_message && last_error_message.length > 500) {
         last_error_message = last_error_message.substring(0, 497) + '...';
       }
     }
