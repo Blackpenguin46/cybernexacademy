@@ -12,7 +12,6 @@ import { CTAButton, TerminalDisplay } from "./components/ClientComponents";
 
 // Force dynamic rendering for this page
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 export default function HomePage() {
   const mainSections = [
