@@ -6,12 +6,13 @@ import { useRouter } from 'next/navigation'
 import { Shield, User, Mail, Lock, AtSign } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import CyberBackground from '@/app/components/CyberBackground'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 
 // No need to initialize supabase client here, we're importing it from lib/supabase
 
 export default function SignupPage() {
   const router = useRouter()
+  const supabase = createClient(); // Create the client instance here
   
   // Form fields
   const [email, setEmail] = useState('')

@@ -31,7 +31,7 @@ console.log("📧 Resend client initialized");
 interface MonitoredLink {
   id: string;
   url: string;
-  status: 'WORKING' | 'BROKEN' | null; // Allow null for initial state
+  status: 'active' | 'broken' | 'resolved' | 'ignored' | null; // Use actual allowed values
   last_status_code: number | null;
   last_error_message: string | null;
   last_checked_at: string | null;
@@ -69,7 +69,7 @@ async function checkAllLinks() {
 
     console.log(`➡️ Checking: ${url}`);
 
-    let currentStatus: 'WORKING' | 'BROKEN' = 'BROKEN';
+    let currentDbStatus: 'active' | 'broken' = 'broken'; // Use allowed lowercase values
     let last_status_code: number | null = null;
     let last_error_message: string | null = null;
     const checkTimestamp = new Date().toISOString();
@@ -77,16 +77,16 @@ async function checkAllLinks() {
     try {
       const response = await axios.get(url, {
         timeout: 15000,
-        validateStatus: status => status < 500,
+        validateStatus: status => status >= 200 && status < 300,
         headers: {
           'User-Agent': 'CyberNexLinkChecker/1.0 (+https://www.cybernexacademy.com)'
         }
       });
-      currentStatus = 'WORKING';
+      currentDbStatus = 'active'; // Map working state to 'active'
       last_status_code = response.status;
       last_error_message = null; // Clear error message if working
     } catch (err: any) {
-      currentStatus = 'BROKEN';
+      currentDbStatus = 'broken'; // Map broken state to 'broken'
       if (err && typeof err === 'object' && 'isAxiosError' in err && err.isAxiosError === true) {
         last_status_code = err.response?.status ?? -1;
         last_error_message = err.message;
@@ -107,10 +107,10 @@ async function checkAllLinks() {
     }
 
     // --- Notification Logic ---
-    if (currentStatus === 'BROKEN' && previousStatus !== 'BROKEN') {
+    if (currentDbStatus === 'broken' && previousStatus !== 'broken') {
       newlyBrokenLinks.push({
         ...link, // Include existing link data
-        status: currentStatus,
+        status: currentDbStatus,
         last_status_code: last_status_code,
         last_error_message: last_error_message,
         last_checked_at: checkTimestamp
@@ -120,9 +120,9 @@ async function checkAllLinks() {
 
     // --- Database Update ---
     const updatePayload = {
-      status: currentStatus,
+      status: currentDbStatus, // Use the corrected status value
       last_status_code,
-      last_error_message: currentStatus === 'BROKEN' ? last_error_message : null,
+      last_error_message: currentDbStatus === 'broken' ? last_error_message : null,
       last_checked_at: checkTimestamp,
       updated_at: checkTimestamp, // Keep updated_at field consistent
     };
@@ -135,7 +135,7 @@ async function checkAllLinks() {
     if (updateError) {
       console.error(`❌ Failed to update ${url} (ID ${link.id}): ${updateError.message}`);
     } else {
-      console.log(`✅ Updated ${url} (ID ${link.id}): ${currentStatus} (${last_status_code})`);
+      console.log(`✅ Updated ${url} (ID ${link.id}): ${currentDbStatus} (${last_status_code})`);
     }
     // --- End Database Update ---
 
