@@ -3,6 +3,17 @@ import type { NextRequest } from 'next/server';
 
 // This middleware runs for all requests
 export function middleware(request: NextRequest) {
+  // --- GEO BLOCKING START ---
+  const country = request.geo?.country || 'US'; // default fallback
+
+  if (country === 'CN') {
+    return new Response('Access Denied from this region.', {
+      status: 403,
+    });
+  }
+  // --- GEO BLOCKING END ---
+
+  // --- SECURITY HEADERS START ---
   // Get response
   const response = NextResponse.next();
 
@@ -61,6 +72,7 @@ export function middleware(request: NextRequest) {
     },
     headers: securityHeaders,
   });
+  // --- SECURITY HEADERS END ---
 }
 
 // Updated matcher configuration to protect against recent vulnerabilities
