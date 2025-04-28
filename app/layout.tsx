@@ -11,8 +11,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'CyberNex Academy',
-  description: 'Your comprehensive cybersecurity education platform with courses, community resources, and insights.',
+  title: 'CyberNex Academy: Learn Cybersecurity | Free Resources & Beginner Guides',
+  description: 'Start your cybersecurity journey with free resources, beginner-friendly labs, and expert guides. CyberNex Academy helps you break into cybersecurity.',
   generator: 'Next.js',
   applicationName: 'CyberNex Academy',
   referrer: 'origin-when-cross-origin',
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico', type: 'image/x-icon', sizes: 'any' },
-      { url: '/favicon.png', type: 'image/png' },
+      { url: '/apple-touch-icon.png', type: 'image/png', sizes: '192x192' },
     ],
     apple: '/apple-touch-icon.png',
   },
@@ -76,9 +76,21 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Cybernex Academy",
+    "url": "https://www.cybernexacademy.com",
+    "logo": "https://www.cybernexacademy.com/apple-touch-icon.png"
+  };
+
   return (
     <html lang="en" className="scroll-smooth">
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <meta httpEquiv="X-XSS-Protection" content="1; mode=block" />
         <meta httpEquiv="X-Content-Type-Options" content="nosniff" />
         <meta httpEquiv="Referrer-Policy" content="strict-origin-when-cross-origin" />

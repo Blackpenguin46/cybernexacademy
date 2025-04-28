@@ -6,8 +6,11 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Menu, X, Terminal, Zap, Home, Heart, ChevronDown, MessageSquare, Code, Award, BookOpen, AlertTriangle, Newspaper, LineChart, ArrowRight, Linkedin, Users, MessageCircle, Server, Building, Target, TrendingUp, Lightbulb, PenTool, FileText, GraduationCap, Youtube, Database } from 'lucide-react';
 import Image from 'next/image';
-import { DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { FaDiscord, FaReddit, FaGithub } from 'react-icons/fa';
+import { createClient } from '@/lib/supabase/client';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { Button } from '@/components/ui/button';
 
 // Define interface for theme classes
 interface ThemeClasses {
@@ -25,6 +28,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const navRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const supabase = createClient();
+  const [openMobileSection, setOpenMobileSection] = useState<string | null>(null); // State for mobile accordion
   
   // Main navigation sections with updated content to match pages
   const navSections = [
@@ -105,6 +112,34 @@ export default function Navbar() {
   // Find the current section data based on activeDropdown
   const currentSection = navSections.find(sec => sec.id === activeDropdown);
 
+  // Fetch user session on mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoadingUser(true);
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setUser(session?.user ?? null);
+      } catch (error) {
+        console.error("Error fetching user session:", error);
+        setUser(null);
+      } finally {
+        setLoadingUser(false);
+      }
+    };
+
+    fetchUser();
+
+    // Listen for auth changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user ?? null);
+      setLoadingUser(false); // Update loading state on change
+    });
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, [supabase]);
+
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -119,11 +154,15 @@ export default function Navbar() {
     setMobileMenuOpen(false);
   }, [pathname]);
 
-  // Active link detection
+  // Active link detection - highlight section if on sub-page
   const isActive = (href: string) => {
+    // Handle homepage separately
     if (href === '/') {
       return pathname === '/';
     }
+    // Check if the current pathname starts with the link's base path
+    // Ensure a trailing slash for base path comparison if necessary, 
+    // or handle specific base paths more robustly if needed.
     return pathname?.startsWith(href);
   };
 
@@ -197,191 +236,271 @@ export default function Navbar() {
 
             {/* Desktop navbar links */} 
             <div className="hidden lg:flex items-center justify-center mx-auto space-x-10 lg:space-x-16">
-              {navSections.map((section) => (
-                <div 
-                  key={section.id} 
-                  onMouseEnter={() => handleMouseEnter(section.id)}
-                  onMouseLeave={handleMouseLeave}
-                  ref={el => navRefs.current[section.id] = el}
-                >
-                  <Link 
-                    href={section.href}
-                    className={`flex items-center gap-2 px-3 py-2 cursor-pointer ${
-                      isActive(section.href)
-                        ? `${section.themeClasses.text} font-semibold` // Use theme color for active link
-                        : 'text-gray-300 hover:text-white'
-                    }`}
+              {navSections.map((section) => {
+                const active = isActive(section.href);
+                return (
+                  <div 
+                    key={section.id} 
+                    onMouseEnter={() => handleMouseEnter(section.id)}
+                    onMouseLeave={handleMouseLeave}
+                    ref={el => navRefs.current[section.id] = el}
+                    className="relative" // Needed for absolute positioning of border
                   >
-                    <section.icon className="w-4 h-4" />
-                    <span>{section.title}</span>
-                  </Link>
-
-                  {/* Desktop Dropdown Menu - Themed */}
-                  <AnimatePresence>
-                    {currentSection && activeDropdown === section.id && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        // Use theme border color
-                        className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[700px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl shadow-inner ${currentSection.themeClasses.border} overflow-hidden z-50 transform-origin-top`}
-                      >
-                        <div className="flex">
-                          {/* Section overview - Use theme gradient and border */}
-                          <div className={`w-1/4 p-6 bg-gradient-to-br ${currentSection.themeClasses.gradientFrom} ${currentSection.themeClasses.gradientTo} border-r ${currentSection.themeClasses.border}`}>
-                            <div className="flex items-center gap-2 mb-2">
-                              {/* Use theme icon color */}
-                              <section.icon className={`w-5 h-5 ${currentSection.themeClasses.icon}`} /> 
-                              <h3 className="text-lg font-semibold text-white">{section.title}</h3>
-                            </div>
-                            <p className="text-sm text-gray-300 mb-3">{section.description}</p>
-                            <Link 
-                              href={section.href} 
-                              // Use theme text color and hover color
-                              className={`inline-flex items-center text-sm ${currentSection.themeClasses.text} ${currentSection.themeClasses.hoverText} group`}
-                            >
-                              Explore all {section.title.toLowerCase()}
-                              <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                          </div>
-                          
-                          {/* Unified links grid - Use theme hover colors */}
-                          <div className="w-3/4 p-5">
-                            <div className="grid grid-cols-3 gap-4">
-                              {section.items.map((item) => (
-                                <Link
-                                  key={item.title}
-                                  href={item.href}
-                                  // Use theme hover background and text color
-                                  className={`flex items-center p-3 rounded-md ${currentSection.themeClasses.hoverBg} transition-all duration-150 group transform hover:scale-[1.02]`}
-                                >
-                                  <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
-                                    {/* Use theme icon color and hover color */}
-                                    <item.icon className={`w-5 h-5 ${currentSection.themeClasses.icon} ${currentSection.themeClasses.hoverText} transition-colors`} />
-                                  </div>
-                                  {/* Use theme hover text color */}
-                                  <span className={`text-sm font-medium text-white ${currentSection.themeClasses.hoverText} transition-colors`}>{item.title}</span>
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
+                    <Link 
+                      href={section.href}
+                      className={`flex items-center gap-2 px-3 py-2 cursor-pointer transition-colors duration-200 ${
+                        active
+                          ? `${section.themeClasses.text} font-semibold` // Use theme color for active link
+                          : 'text-gray-300 hover:text-white'
+                      }`}
+                    >
+                      <section.icon className="w-4 h-4" />
+                      <span>{section.title}</span>
+                    </Link>
+                    {/* Active link indicator (bottom border) */}
+                    {active && (
+                      <motion.div 
+                        className={`absolute bottom-0 left-0 right-0 h-0.5 ${section.themeClasses.icon.replace('text-', 'bg-')}`}
+                        layoutId="activeLinkBorder"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      />
                     )}
-                  </AnimatePresence>
-                </div>
-              ))}
+
+                    {/* Desktop Dropdown Menu - Themed */}
+                    <AnimatePresence>
+                      {currentSection && activeDropdown === section.id && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          // Use theme border color
+                          className={`absolute ${getDropdownPosition(section.id)} mt-2 w-[700px] max-w-[95vw] bg-gray-900/95 backdrop-blur-md rounded-lg shadow-xl shadow-inner ${currentSection.themeClasses.border} overflow-hidden z-50 transform-origin-top`}
+                        >
+                          <div className="flex">
+                            {/* Section overview - Use theme gradient and border */}
+                            <div className={`w-1/4 p-6 bg-gradient-to-br ${currentSection.themeClasses.gradientFrom} ${currentSection.themeClasses.gradientTo} border-r ${currentSection.themeClasses.border}`}>
+                              <div className="flex items-center gap-2 mb-2">
+                                {/* Use theme icon color */}
+                                <section.icon className={`w-5 h-5 ${currentSection.themeClasses.icon}`} /> 
+                                <h3 className="text-lg font-semibold text-white">{section.title}</h3>
+                              </div>
+                              <p className="text-sm text-gray-300 mb-3">{section.description}</p>
+                              <Link 
+                                href={section.href} 
+                                // Use theme text color and hover color
+                                className={`inline-flex items-center text-sm ${currentSection.themeClasses.text} ${currentSection.themeClasses.hoverText} group`}
+                              >
+                                Explore all {section.title.toLowerCase()}
+                                <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                              </Link>
+                            </div>
+                            
+                            {/* Unified links grid - Use theme hover colors */}
+                            <div className="w-3/4 p-5">
+                              <div className="grid grid-cols-3 gap-4">
+                                {section.items.map((item) => (
+                                  <Link
+                                    key={item.title}
+                                    href={item.href}
+                                    // Use theme hover background and text color
+                                    className={`flex items-center p-3 rounded-md ${currentSection.themeClasses.hoverBg} transition-all duration-150 group transform hover:scale-[1.02]`}
+                                  >
+                                    <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
+                                      {/* Use theme icon color and hover color */}
+                                      <item.icon className={`w-5 h-5 ${currentSection.themeClasses.icon} ${currentSection.themeClasses.hoverText} transition-colors`} />
+                                    </div>
+                                    {/* Use theme hover text color */}
+                                    <span className={`text-sm font-medium text-white ${currentSection.themeClasses.hoverText} transition-colors`}>{item.title}</span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Right actions section */} 
-            <div className="flex-none flex items-center ml-auto space-x-4">
-              {/* Donate button */} 
-              <Link 
-                href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white px-4 py-2 rounded-md transition-all duration-300 border border-pink-500/50 hover:bg-pink-500/10 group"
-              >
-                <Heart className="w-4 h-4 text-pink-400 group-hover:text-pink-300" />
-                <span className="group-hover:text-pink-300">Donate</span>
-              </Link>
+            {/* User Auth Section (Desktop) */}
+            <div className="hidden lg:flex items-center space-x-4 ml-auto">
+              {loadingUser ? (
+                <div className="h-8 w-20 bg-gray-700 rounded animate-pulse"></div> // Placeholder
+              ) : user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full hover:bg-gray-700/50">
+                      {/* Basic user icon for now, could use profile avatar later */}
+                      <User className="h-5 w-5 text-gray-300" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56 bg-gray-900 border-gray-700 text-white" align="end" forceMount>
+                    <DropdownMenuItem className="cursor-pointer hover:bg-gray-800 focus:bg-gray-800">
+                      <Link href="/dashboard">Dashboard</Link> {/* Assuming /dashboard exists */}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer hover:bg-gray-800 focus:bg-gray-800">
+                      <button onClick={async () => { await supabase.auth.signOut(); setUser(null); }} className="w-full text-left">
+                        Log out
+                      </button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <>
+                  <Link href="/auth/login">
+                    <Button variant="outline" size="sm" className="border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white">
+                      Log In
+                    </Button>
+                  </Link>
+                  <Link href="/auth/signup">
+                    <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                      Sign Up
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
 
-              {/* Mobile menu button */} 
+            {/* Mobile menu button */} 
+            <div className="lg:hidden flex items-center ml-auto">
               <button 
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-gray-400 hover:text-blue-500 border border-transparent hover:border-blue-500/30 rounded-md transition-all bg-black/30"
+                className="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
               >
-                {mobileMenuOpen ? 
-                  <X className="w-6 h-6" /> : 
-                  <Menu className="w-6 h-6" />
-                }
+                <span className="sr-only">Open main menu</span>
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
           </div>
 
-          {/* Mobile menu */} 
-          {/* Mobile menu themeing can be added similarly if desired */} 
+          {/* Mobile Menu */} 
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div 
+                id="mobile-menu"
+                variants={mobileMenuVariants}
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
-                variants={mobileMenuVariants}
-                className="lg:hidden bg-black/95 backdrop-blur-md border-t border-blue-500/30 overflow-hidden"
+                className="lg:hidden bg-gray-900/95 backdrop-blur-md overflow-hidden"
               >
-                <div className="px-4 py-6 space-y-4">
-                  <Link
-                    href="/"
-                    className={`flex items-center gap-2 px-4 py-2 rounded-md ${
-                      pathname === '/' ? 'text-blue-500 bg-blue-500/10 border border-blue-500/40' : 'text-gray-300 hover:text-white'
-                    }`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Home className="w-5 h-5" />
-                    <span>Home</span>
-                  </Link>
-                  
-                  {navSections.map((section) => (
-                    <div key={section.id} className="space-y-2">
-                      <div
-                        className={`flex items-center justify-between px-4 py-2 rounded-md ${
-                          isActive(section.href) ? 'text-blue-500 bg-blue-500/10 border border-blue-500/40' : 'text-gray-300'
-                        }`}
-                        onClick={() => setActiveDropdown(activeDropdown === section.id ? null : section.id)}
-                      >
-                        <div className="flex items-center gap-2">
-                          <section.icon className="w-5 h-5" />
-                          <span>{section.title}</span>
-                        </div>
-                        <ChevronDown className={`w-5 h-5 transition-transform duration-200 ${
-                          activeDropdown === section.id ? 'rotate-180' : ''
-                        }`} />
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t border-gray-700">
+                  {/* Mobile Nav Links with Accordion */}
+                  {navSections.map((section) => {
+                    const isSectionActive = isActive(section.href); // Check if the main section path is active
+                    const isAccordionOpen = openMobileSection === section.id;
+                    return (
+                      <div key={section.id} className="mb-1">
+                        {/* Button to toggle accordion */}
+                        <button
+                          onClick={() => setOpenMobileSection(isAccordionOpen ? null : section.id)}
+                          className={`flex items-center justify-between w-full gap-2 px-3 py-2 rounded-md text-base font-medium transition-colors ${ 
+                            isSectionActive && !isAccordionOpen // Highlight only if section active AND accordion closed
+                              ? `bg-gray-800 ${section.themeClasses.text}`
+                              : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                          }`}
+                          aria-expanded={isAccordionOpen}
+                          aria-controls={`mobile-submenu-${section.id}`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <section.icon className="w-5 h-5" />
+                            <span>{section.title}</span>
+                          </div>
+                          <ChevronDown 
+                            className={`w-5 h-5 transition-transform duration-200 ${isAccordionOpen ? 'rotate-180' : ''}`}
+                          />
+                        </button>
+                        
+                        {/* Submenu Items */}
+                        <AnimatePresence initial={false}>
+                          {isAccordionOpen && (
+                            <motion.div
+                              id={`mobile-submenu-${section.id}`}
+                              key="content"
+                              initial="collapsed"
+                              animate="open"
+                              exit="collapsed"
+                              variants={{
+                                open: { opacity: 1, height: "auto", transition: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] } },
+                                collapsed: { opacity: 0, height: 0, transition: { duration: 0.2, ease: [0.04, 0.62, 0.23, 0.98] } }
+                              }}
+                              className="overflow-hidden pl-6 mt-1 space-y-1"
+                            >
+                              {/* Link to main section page first */}
+                              <Link
+                                href={section.href}
+                                className={`block pl-5 pr-3 py-2 rounded-md text-sm font-medium transition-colors ${ 
+                                  pathname === section.href // Exact match for section index
+                                    ? `${section.themeClasses.text} bg-gray-700/50`
+                                    : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                }`}
+                                onClick={() => setMobileMenuOpen(false)} // Close main menu on click
+                              >
+                                All {section.title}
+                              </Link>
+                              {/* Sub-item links */}
+                              {section.items.map((item) => {
+                                const subItemActive = pathname === item.href;
+                                return (
+                                  <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    className={`flex items-center gap-2 pl-5 pr-3 py-2 rounded-md text-sm font-medium transition-colors ${ 
+                                      subItemActive
+                                        ? `${section.themeClasses.text} bg-gray-700/50`
+                                        : 'text-gray-400 hover:text-white hover:bg-gray-700/50'
+                                    }`}
+                                    onClick={() => setMobileMenuOpen(false)} // Close main menu on click
+                                  >
+                                    <item.icon className={`w-4 h-4 ${subItemActive ? section.themeClasses.text : 'text-gray-500'}`} />
+                                    {item.title}
+                                  </Link>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-
-                      <AnimatePresence>
-                        {activeDropdown === section.id && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            className="pl-4 space-y-2"
-                          >
-                            <p className="px-3 py-2 text-sm text-gray-400">{section.description}</p>
-                            
-                            <div className="grid grid-cols-2 gap-2">
-                              {section.items.map((item) => (
-                                <Link
-                                  key={item.title}
-                                  href={item.href}
-                                  className="flex items-center p-2 rounded-md hover:bg-blue-500/10 transition-colors"
-                                  onClick={() => setMobileMenuOpen(false)}
-                                >
-                                  <div className="flex-shrink-0 w-6 h-6 mr-2 flex items-center justify-center">
-                                    <item.icon className="w-5 h-5 text-blue-400" />
-                                  </div>
-                                  <span className="text-sm font-medium text-white">{item.title}</span>
-                                </Link>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  ))}
-
-                  {/* Mobile donate section */}
-                  <div className="pt-4 border-t border-pink-500/30">
-                    <Link 
-                      href="https://buy.stripe.com/9AQ5lrdly9Dg3Oo28b"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-3 bg-black/50 border-2 border-pink-500/40 rounded-md w-full hover:bg-pink-500/10 transition-colors"
-                    >
-                      <Heart className="w-5 h-5 text-pink-400" />
-                      <span className="text-white">Support Our Mission</span>
-                    </Link>
+                    );
+                  })}
+                  
+                  {/* Mobile User Auth Section */}
+                  <div className="border-t border-gray-700 pt-4 mt-4">
+                    {loadingUser ? (
+                      <div className="h-8 w-full bg-gray-700 rounded animate-pulse mb-2"></div> // Placeholder
+                    ) : user ? (
+                      <div className="px-3 py-2">
+                        <p className="text-sm text-gray-400 mb-2">Signed in as {user.email}</p>
+                        <Link href="/dashboard" className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Dashboard</Link>
+                        <button 
+                          onClick={async () => { await supabase.auth.signOut(); setUser(null); }} 
+                          className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                        >
+                          Log out
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="space-y-2 px-3">
+                        <Link href="/auth/login">
+                          <Button variant="outline" className="w-full border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white">
+                            Log In
+                          </Button>
+                        </Link>
+                        <Link href="/auth/signup">
+                          <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                            Sign Up
+                          </Button>
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
               </motion.div>

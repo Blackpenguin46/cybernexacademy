@@ -23,6 +23,7 @@ const footerLinks = {
   social: [
     // Add other social links as needed
     { href: "https://cybernexacademy.substack.com/", label: "Substack", title: "CyberNex on Substack" },
+    { href: "https://www.instagram.com/cybernex_academy/", label: "Instagram", title: "CyberNex on Instagram" },
     // { href: "https://twitter.com/yourhandle", label: "Twitter", title: "CyberNex on Twitter" },
     // { href: "https://linkedin.com/yourhandle", label: "LinkedIn", title: "CyberNex on LinkedIn" },
   ],
