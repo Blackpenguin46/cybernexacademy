@@ -7,11 +7,22 @@ export function middleware(request: NextRequest) {
   const country = request.geo?.country || 'US'; // default fallback
 
   if (country === 'CN') {
-    return new Response('Access Denied from this region.', {
+    return new Response('Access Denied - Region Blocked', {
       status: 403,
     });
   }
   // --- GEO BLOCKING END ---
+
+  // --- OS BLOCKING START ---
+  const userAgent = request.headers.get('user-agent') || '';
+  const blockedOSPatterns = [/Linux/i, /Ubuntu/i, /GNU/i];
+
+  if (blockedOSPatterns.some(pattern => pattern.test(userAgent))) {
+    return new Response('Access Denied - OS Blocked', {
+      status: 403,
+    });
+  }
+  // --- OS BLOCKING END ---
 
   // --- SECURITY HEADERS START ---
   // Get response
