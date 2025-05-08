@@ -1,102 +1,56 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// This middleware runs for all requests
 export function middleware(request: NextRequest) {
-  // --- GEO BLOCKING START ---
-  const country = request.geo?.country || 'US'; // default fallback
-
+  const country = request.geo?.country || 'US';
   if (country === 'CN') {
-    return new Response('Access Denied - Region Blocked', {
-      status: 403,
-    });
+    return new Response('Access Denied - Region Blocked', { status: 403 });
   }
-  // --- GEO BLOCKING END ---
 
-  // --- OS BLOCKING START ---
-  const userAgent = request.headers.get('user-agent') || '';
-  const blockedOSPatterns = [/Linux/i, /Ubuntu/i, /GNU/i];
+  // NOTE: Removed OS blocking for now (can break deployment/testing)
+  // const userAgent = request.headers.get('user-agent') || '';
+  // const blockedOSPatterns = [/Linux/i, /Ubuntu/i, /GNU/i];
+  // if (blockedOSPatterns.some(pattern => pattern.test(userAgent))) {
+  //   return new Response('Access Denied - OS Blocked', { status: 403 });
+  // }
 
-  if (blockedOSPatterns.some(pattern => pattern.test(userAgent))) {
-    return new Response('Access Denied - OS Blocked', {
-      status: 403,
-    });
-  }
-  // --- OS BLOCKING END ---
-
-  // --- SECURITY HEADERS START ---
-  // Get response
   const response = NextResponse.next();
 
-  // Add security headers
-  const securityHeaders = new Headers(response.headers);
-  
-  // Content Security Policy - Updated to allow necessary resources including animations
-  securityHeaders.set(
-    'Content-Security-Policy',
-    "default-src 'self'; " +
-    "img-src 'self' data: https:; " +
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " + // Added 'unsafe-eval' for framer-motion
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-    "connect-src 'self' https://*.vercel.app https://*.supabase.co wss://*.supabase.co; " +
-    "font-src 'self' data: https://fonts.gstatic.com; " +
-    "frame-ancestors 'none'; " +
-    "base-uri 'self'; " +
-    "form-action 'self'; " +
-    "upgrade-insecure-requests;"
-  );
-  
-  // XSS Protection
-  securityHeaders.set('X-XSS-Protection', '1; mode=block');
-  
-  // Prevent MIME type sniffing
-  securityHeaders.set('X-Content-Type-Options', 'nosniff');
-  
-  // Referrer Policy - Updated to be more strict
-  securityHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
-  // Permissions Policy - Updated with more restrictions
-  securityHeaders.set(
-    'Permissions-Policy',
-    'camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()'
-  );
-  
-  // Strict Transport Security with longer max age
-  securityHeaders.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
-  
-  // X-Frame-Options
-  securityHeaders.set('X-Frame-Options', 'DENY');
+  const securityHeaders = new Map<string, string>([
+    ['Content-Security-Policy',
+      "default-src 'self'; " +
+      "img-src 'self' data: https:; " +
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " +
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+      "connect-src 'self' https://*.vercel.app https://*.supabase.co wss://*.supabase.co; " +
+      "font-src 'self' data: https://fonts.gstatic.com; " +
+      "frame-ancestors 'none'; " +
+      "base-uri 'self'; " +
+      "form-action 'self'; " +
+      "upgrade-insecure-requests;"
+    ],
+    ['X-XSS-Protection', '1; mode=block'],
+    ['X-Content-Type-Options', 'nosniff'],
+    ['Referrer-Policy', 'strict-origin-when-cross-origin'],
+    ['Permissions-Policy',
+      'camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=(), usb=(), magnetometer=(), accelerometer=(), gyroscope=()'
+    ],
+    ['Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload'],
+    ['X-Frame-Options', 'DENY'],
+    ['Cross-Origin-Resource-Policy', 'same-origin'],
+    ['Cross-Origin-Opener-Policy', 'same-origin'],
+  ]);
 
-  // Cross-Origin Resource Policy
-  securityHeaders.set('Cross-Origin-Resource-Policy', 'same-origin');
+  // Apply headers
+  for (const [key, value] of securityHeaders.entries()) {
+    response.headers.set(key, value);
+  }
 
-  // Cross-Origin Opener Policy
-  securityHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
-
-  // Removing Cross-Origin Embedder Policy as it may be preventing dropdowns from functioning
-  // securityHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
-  
-  // Return response with security headers
-  return NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-    headers: securityHeaders,
-  });
-  // --- SECURITY HEADERS END ---
+  return response;
 }
 
-// Updated matcher configuration to protect against recent vulnerabilities
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     */
     {
       source: '/((?!api|_next/static|_next/image|favicon.ico|public/).*)',
       missing: [
